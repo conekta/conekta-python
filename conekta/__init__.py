@@ -60,8 +60,8 @@ class _Endpoint(object):
     def expand_path(self, path):
         return API_BASE + path
 
-    def build_request(self, method, path, params):
-        HEADERS['Authorization'] = 'Token token="%s"' % (api_key)
+    def build_request(self, method, path, params, other_api_key=None):
+        HEADERS['Authorization'] = 'Token token="%s"' % (api_key if other_api_key is None else other_api_key)
         absolute_url = self.expand_path(path)
         request = Http({}).request
         headers, body = request(absolute_url, method, headers=HEADERS, body=json.dumps(params))
@@ -69,21 +69,21 @@ class _Endpoint(object):
             return _CkObject(json.loads(body))
         return _CkObject({'error': json.loads(body)})
 
-    def load_url(self, path, method='get', params={}):
-        response = self.build_request(method, path, params)
+    def load_url(self, path, method='get', params={}, other_api_key=None):
+        response = self.build_request(method, path, params, other_api_key)
         return response
 
 class _Charges(_Endpoint):
 
-    def create(self, params):
+    def create(self, params, other_api_key=None):
         endpoint = 'charges.json'
-        return self.load_url(endpoint, method='post', params=params)
+        return self.load_url(endpoint, method='post', params=params, other_api_key=other_api_key)
 
 class _Event(_Endpoint):
 
-    def all(self):
+    def all(self, other_api_key=None):
         endpoint = 'events.json'
-        return self.load_url(endpoint)
+        return self.load_url(endpoint, other_api_key=other_api_key)
 
 
 Charge = _Charges()
