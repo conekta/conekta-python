@@ -1,5 +1,9 @@
 syntax: glob;
 
+*.swp
+*.swo
+*.swn
+*.swm
 *.pyc
 test.py
 .DS_Store

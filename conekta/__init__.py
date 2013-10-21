@@ -2,6 +2,7 @@
 #coding: utf-8
 #(c) 2013 Julian Ceballos <@jceb>
 
+import base64
 import inspect
 from httplib2 import Http
 
@@ -10,15 +11,15 @@ try:
 except ImportError:
     import simplejson as json
 
-API_VERSION = '0.6'
+API_VERSION = '0.2.0'
 
-__version__ = API_VERSION
+__version__ = '0.6'
 __author__ = 'Julian Ceballos'
 
 API_BASE = 'https://api.conekta.io/'
 
 HEADERS = {
-    'Accept': 'application/vnd.example.v1',
+    'Accept': 'application/vnd.conekta-v%s+json' % (API_VERSION),
     'Content-type': 'application/json'
 }
 
@@ -61,7 +62,9 @@ class _Endpoint(object):
         return API_BASE + path
 
     def build_request(self, method, path, params, other_api_key=None):
-        HEADERS['Authorization'] = 'Token token="%s"' % (api_key if other_api_key is None else other_api_key)
+        r_api_key = api_key if other_api_key is None else other_api_key
+        HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode(r_api_key + ':'))
+
         absolute_url = self.expand_path(path)
         request = Http({}).request
         headers, body = request(absolute_url, method, headers=HEADERS, body=json.dumps(params))
