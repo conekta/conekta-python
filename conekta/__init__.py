@@ -66,7 +66,7 @@ class _Endpoint(object):
         HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode(r_api_key + ':'))
 
         absolute_url = self.expand_path(path)
-        request = Http({}).request
+        request = Http(disable_ssl_certificate_validation=True).request
         headers, body = request(absolute_url, method, headers=HEADERS, body=json.dumps(params))
         if headers['status'] == '200' or headers['status'] == '201':
             return _CkObject(json.loads(body))
