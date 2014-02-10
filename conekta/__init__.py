@@ -2,6 +2,7 @@
 #coding: utf-8
 #(c) 2013 Julian Ceballos <@jceb>
 
+import os
 import base64
 import inspect
 from httplib2 import Http
@@ -66,7 +67,9 @@ class _Endpoint(object):
         HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode(r_api_key + ':'))
 
         absolute_url = self.expand_path(path)
-        request = Http(disable_ssl_certificate_validation=True).request
+        # request = Http(disable_ssl_certificate_validation=True).request
+        request = Http(ca_certs=os.path.join(os.path.dirname(__file__), 'ssl_data/ca_bundle.crt'), disable_ssl_certificate_validation=True).request
+
         headers, body = request(absolute_url, method, headers=HEADERS, body=json.dumps(params))
         if headers['status'] == '200' or headers['status'] == '201':
             return _CkObject(json.loads(body))
