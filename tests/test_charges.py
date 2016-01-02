@@ -154,7 +154,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_18_spei_charge_done(self):
         self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
         charge = self.client.Charge.create(self.spei_charge_object)
-        print charge
+        print(charge)
         assert charge.id
 
     def test_19_spei_charge_authentication_fail(self):
