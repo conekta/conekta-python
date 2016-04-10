@@ -17,7 +17,20 @@ class BaseEndpointTestCase(unittest.TestCase):
         "amount": 20000,
         "currency": "MXN",
         "reference_id": "9893-cohib_s1_wolf_pack",
-        "card": "tok_test_visa_4242"
+        "card": "tok_test_visa_4242",
+        "details": {
+            "name": "Wolverine",
+            "email": "logan.thomas@xmen.org",
+            "phone": "403-342-0642",
+            "line_items": [{
+              "name": "Shades",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "eyewear"
+           }]
+        }
     }
 
     cash_charge_object = {
@@ -31,7 +44,15 @@ class BaseEndpointTestCase(unittest.TestCase):
         "details": {
             "name": "Wolverine",
             "email": "logan.thomas@xmen.org",
-            "phone": "403-342-0642"
+            "phone": "403-342-0642",
+            "line_items": [{
+              "name": "Shades",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "eyewear"
+           }]
         }
     }
 
@@ -46,7 +67,15 @@ class BaseEndpointTestCase(unittest.TestCase):
         "details": {
             "name": "Wolverine",
             "email": "logan.thomas@xmen.org",
-            "phone": "403-342-0642"
+            "phone": "403-342-0642",
+            "line_items": [{
+              "name": "Shades",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "eyewear"
+           }]
         }
     }
 
@@ -61,7 +90,15 @@ class BaseEndpointTestCase(unittest.TestCase):
         "details": {
             "name": "Wolverine",
             "email": "logan.thomas@xmen.org",
-            "phone": "403-342-0642"
+            "phone": "403-342-0642",
+            "line_items": [{
+              "name": "Shades",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "eyewear"
+           }]
         }
     }
 

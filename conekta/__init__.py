@@ -172,28 +172,6 @@ class Card(_UpdatableResource, _DeletableResource):
     def instance_url(self):
         return "customers/%s/cards/%s" % (self.parent.id, self.id)
 
-class Subscription(_UpdatableResource):
-
-    def instance_url(self):
-        return "customers/%s/subscription" % (self.parent.id)
-
-    def pause(self, finish_billing_cycle=False, until=None, api_key=None):
-        return self.load_via_http_request("%s/pause" % self.instance_url(), 'POST', {'until': until}, api_key=api_key)
-
-    def resume(self, api_key=None):
-        return self.load_via_http_request("%s/resume" % self.instance_url(), 'POST', None, api_key=api_key)
-
-    def cancel(self, finish_billing_cycle=False, api_key=None):
-        return self.load_via_http_request("%s/cancel" % self.instance_url(), 'POST', None, api_key=api_key)
-
-    @property
-    def card(self):
-        return [card for card in self.parent.cards if card.id == self.card_id][0]
-
-    @property
-    def plan(self):
-        return Plan.retrieve(self.plan_id)
-
 class Charge(_CreatableResource, _FindableResource):
 
     def refund(self, amount=None, api_key=None):
@@ -204,40 +182,6 @@ class Charge(_CreatableResource, _FindableResource):
 
     def capture(self, api_key=None):
         return self.load_via_http_request("%s/capture" % self.instance_url(), api_key=api_key)
-
-class Payout(_CreatableResource, _FindableResource): pass
-
-class PayoutMethod(_UpdatableResource, _DeletableResource): 
-
-    def instance_url(self):
-        return "payees/%s/payout_methods/%s" % (self.parent.id, self.id)
-
-class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
-
-    def __init__(self, *args, **kwargs):
-        super(Payee, self).__init__(*args, **kwargs)
-
-        attributes = args[0]
-        self.payout_methods = []
-        if 'payout_methods' in attributes.keys():
-            for payout_method in attributes['payout_methods']:
-                payout_method['parent'] = self
-                self.payout_methods.append(PayoutMethod(payout_method))
-
-    def createPayoutMethod(self, params, api_key=None):
-        payout_method = PayoutMethod(PayoutMethod.load_url("%s/payout_methods" % self.instance_url(), 'POST', params, api_key=api_key))
-        payout_method.parent = self
-        self.payout_methods.append(payout_method)
-        return payout_method
-
-    @property
-    def default_payout_method(self):
-        if self.default_payout_method_id:
-            return [payout_method for payout_method in self.payout_methods if payout_method.id == self.default_payout_method_id][0]
-        else:
-            return None
-
-class Plan(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
 
 class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
     
@@ -276,7 +220,65 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
         else:
             return None
 
+class Event(_FindableResource): pass
+
 class Log(_FindableResource): pass
 
-class Event(_FindableResource): pass
+class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+
+    def __init__(self, *args, **kwargs):
+        super(Payee, self).__init__(*args, **kwargs)
+
+        attributes = args[0]
+        self.payout_methods = []
+        if 'payout_methods' in attributes.keys():
+            for payout_method in attributes['payout_methods']:
+                payout_method['parent'] = self
+                self.payout_methods.append(PayoutMethod(payout_method))
+
+    def createPayoutMethod(self, params, api_key=None):
+        payout_method = PayoutMethod(PayoutMethod.load_url("%s/payout_methods" % self.instance_url(), 'POST', params, api_key=api_key))
+        payout_method.parent = self
+        self.payout_methods.append(payout_method)
+        return payout_method
+
+    @property
+    def default_payout_method(self):
+        if self.default_payout_method_id:
+            return [payout_method for payout_method in self.payout_methods if payout_method.id == self.default_payout_method_id][0]
+        else:
+            return None
+
+class Payout(_CreatableResource, _FindableResource): pass
+
+class PayoutMethod(_UpdatableResource, _DeletableResource): 
+
+    def instance_url(self):
+        return "payees/%s/payout_methods/%s" % (self.parent.id, self.id)
+
+class Plan(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
+
+class Subscription(_UpdatableResource):
+
+    def instance_url(self):
+        return "customers/%s/subscription" % (self.parent.id)
+
+    def pause(self, finish_billing_cycle=False, until=None, api_key=None):
+        return self.load_via_http_request("%s/pause" % self.instance_url(), 'POST', {'until': until}, api_key=api_key)
+
+    def resume(self, api_key=None):
+        return self.load_via_http_request("%s/resume" % self.instance_url(), 'POST', None, api_key=api_key)
+
+    def cancel(self, finish_billing_cycle=False, api_key=None):
+        return self.load_via_http_request("%s/cancel" % self.instance_url(), 'POST', None, api_key=api_key)
+
+    @property
+    def card(self):
+        return [card for card in self.parent.cards if card.id == self.card_id][0]
+
+    @property
+    def plan(self):
+        return Plan.retrieve(self.plan_id)
+
+class Webhook(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
 
