@@ -29,8 +29,21 @@ try:
     "currency": "MXN",
     "description": "Pizza Delivery",
     "reference_id": "orden_de_id_interno",
-    "card": request.POST["conektaTokenId"] 
     #request.form["conektaTokenId"], request.params["conektaTokenId"], "tok_a4Ff0dD2xYZZq82d9"
+    "card": request.POST["conektaTokenId"],
+    "details": {
+      "name": "Wolverine",
+      "email": "logan.thomas@xmen.org",
+      "phone": "403-342-0642",
+      "line_items": [{
+        "name": "Shades",
+        "description": "Imported From Mex.",
+        "unit_price": 20000,
+        "quantity": 1,
+        "sku": "cohb_s1",
+        "category": "eyewear"
+      }]
+    }
   })
 
 except conekta.ConektaError as e:
@@ -61,7 +74,15 @@ var data = {
   "details": {
     "name": "Wolverine",
     "email": "logan.thomas@xmen.org",
-    "phone": "403-342-0642"
+    "phone": "403-342-0642",
+    "line_items": [{
+      "name": "Shades",
+      "description": "Imported From Mex.",
+      "unit_price": 20000,
+      "quantity": 1,
+      "sku": "cohb_s1",
+      "category": "eyewear"
+    }]
   }
 }
 
@@ -89,9 +110,17 @@ var data = {
     "type": "banorte"
   },
   "details": {
-  "name": "Wolverine",
-  "email": "logan.thomas@xmen.org",
-  "phone": "403-342-0642"
+    "name": "Wolverine",
+    "email": "logan.thomas@xmen.org",
+    "phone": "403-342-0642",
+    "line_items": [{
+      "name": "Shades",
+      "description": "Imported From Mex.",
+      "unit_price": 20000,
+      "quantity": 1,
+      "sku": "cohb_s1",
+      "category": "eyewear"
+    }]
   }
 }
 
