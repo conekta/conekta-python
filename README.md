@@ -173,9 +173,9 @@ docker run -ti conekta/conekta-python2.7 /bin/bash --login
 and in python 3.4:
 
 ```shell
-docker pull conekta/conekta-python3.4
+docker pull conekta/conekta-python3.5
 
-docker run -ti conekta/conekta-python3.4 /bin/bash --login
+docker run -ti conekta/conekta-python3.5 /bin/bash --login
 ```
 
 License
