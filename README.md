@@ -156,10 +156,26 @@ conekta.Log.retrieve('log_id')
 
 ## Tests
 
-You can test the conekta library with nose on the conekta library root:
+You can test the conekta library with nose from the conekta library root:
 
 ```sh
 $ nosetests
+```
+
+To simplify the development and testing process we have provided dockers with the code preloaded, in python 2.7:
+
+```shell
+docker pull conekta/conekta-python2.7
+
+docker run -ti conekta/conekta-python2.7 /bin/bash --login
+```
+
+and in python 3.4:
+
+```shell
+docker pull conekta/conekta-python3.4
+
+docker run -ti conekta/conekta-python3.4 /bin/bash --login
 ```
 
 License
