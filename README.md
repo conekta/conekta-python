@@ -154,7 +154,7 @@ conekta.Log.all()
 conekta.Log.retrieve('log_id')
 ```
 
-## Tests
+## Library Development and Testing
 
 You can test the conekta library with nose from the conekta library root:
 
