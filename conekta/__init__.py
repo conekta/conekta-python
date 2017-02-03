@@ -13,7 +13,7 @@ try:
 except ImportError:
     import simplejson as json
 
-API_VERSION = '1.0.0'
+API_VERSION = '2.0.0'
 
 __version__ = '1.1.0'
 __author__ = 'Leo Fischer'
@@ -32,6 +32,13 @@ class ConektaError(Exception):
   def __init__(self, error_json):
       super(ConektaError, self).__init__(error_json)
       self.error_json = error_json
+
+class MalformedRequestError(ConektaError): pass
+class AuthenticationError(ConektaError): pass
+class ProcessingError(ConektaError): pass
+class ResourceNotFoundError(ConektaError): pass
+class ParameterValidationError(ConektaError): pass
+class ApiError(ConektaError): pass
 
 class _Resource(object):
     def __init__(self, attributes):
@@ -83,7 +90,21 @@ class _Resource(object):
         if headers['status'] == '200' or headers['status'] == '201':
             response_body = json.loads(body)
             return response_body
-        raise ConektaError(json.loads(body))
+        
+        if headers['status'] == '400' or headers['status'] == '400':
+            raise MalformedRequestError(json.loads(body))    
+        elif headers['status'] == '401' or headers['status'] == '401':
+            raise AuthenticationError(json.loads(body))
+        elif headers['status'] == '402' or headers['status'] == '402':
+            raise ProcessingError(json.loads(body))
+        elif headers['status'] == '404' or headers['status'] == '404':
+            raise ResourceNotFoundError(json.loads(body))
+        elif headers['status'] == '422' or headers['status'] == '422':
+            raise ParameterValidationError(json.loads(body))
+        elif headers['status'] == '500' or headers['status'] == '500':
+            raise ApiError(json.loads(body))                 
+        else:
+            raise ConektaError(json.loads(body))
 
     @classmethod
     def load_url(cls, path, method='GET', params=None, api_key=None):
@@ -130,15 +151,45 @@ class _Resource(object):
 
         return self
 
+class _EventableResource(_Resource):
+
+    def events(self, params={}, api_key=None):
+        uri = self.instance_url()
+        if hasattr(self, 'parent'):
+            uri = "%s/%s" % (self.instance_url(), self.id)
+
+        event = Event.load_url("%s/events" % uri, 'GET', params, api_key=api_key)
+        return Event(event)
+
 class _DeletableResource(_Resource):
 
-    def delete(self, params={}, api_key=None):
-        return self.load_via_http_request(self.instance_url(), 'DELETE', {}, api_key=api_key)
+    def delete(self, params={}, list_to_remove=None, uri=None, api_key=None):
+        if uri is None:
+            uri = self.instance_url()
+            
+            if hasattr(self, 'parent'):
+                uri = "%s/%s" % (self.instance_url(), self.id)
+
+        
+        
+        object_reponse = self.load_via_http_request(uri, 'DELETE', {}, api_key=api_key)
+
+        if list_to_remove != None:
+            for remove_object in list_to_remove:
+                if remove_object.id == self.id:
+                    list_to_remove.remove(remove_object)
+                    break
+
+        return object_reponse
 
 class _UpdatableResource(_Resource):
 
     def update(self, params={}, api_key=None):
-        return self.load_via_http_request(self.instance_url(), 'PUT', params, api_key=api_key)
+        uri = self.instance_url()
+        
+        if hasattr(self, 'parent'):
+            uri = "%s/%s" % (self.instance_url(), self.id)
+        return self.load_via_http_request(uri, 'PUT', params, api_key=api_key)
 
 class _CreatableResource(_Resource):
 
@@ -158,9 +209,30 @@ class _FindableResource(_Resource):
     def where(cls, query={}, limit=10, offset=0, sort=[], api_key=None):
         endpoint = cls.class_url()
         query['limit'] = limit
-        query['offset'] = offset
-        query['sort'] = sort
-        return [cls(attributes) for attributes in cls.load_url(endpoint, 'GET', query, api_key=api_key)]
+        
+        response = cls.load_url(endpoint, 'GET', query, api_key=api_key)
+        pag = Pagination(response)
+        data = response["data"]
+
+        pag.data = []
+        for obj in data:
+            new_obj = None
+            if obj["object"] == "customer":
+                new_obj = Customer(obj)
+                pag.class_name = Customer
+
+            elif obj["object"] == "order":
+                new_obj = Order(obj)
+                pag.class_name = Order
+
+            elif obj["object"] == "log":
+                new_obj = Log(obj)
+                pag.class_name = Log
+
+            pag.data.append(new_obj)        
+
+
+        return pag
 
     #DEPRECATED aliased method, will be removed in next major release
     @classmethod
@@ -174,6 +246,9 @@ class Card(_UpdatableResource, _DeletableResource):
 
 class Charge(_CreatableResource, _FindableResource):
 
+    def instance_url(self):
+        return "orders/%s/charges" % (self.parent.id)
+
     def refund(self, amount=None, api_key=None):
         if amount is None:
             return self.load_via_http_request("%s/refund" % self.instance_url(), api_key=api_key)
@@ -183,29 +258,173 @@ class Charge(_CreatableResource, _FindableResource):
     def capture(self, api_key=None):
         return self.load_via_http_request("%s/capture" % self.instance_url(), api_key=api_key)
 
-class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+    def __init__(self, *args, **kwargs):
+        super(Order, self).__init__(*args, **kwargs)
+        attributes = args[0]
+        self.currency = attributes['currency']
+        self.line_items = []
+        self.tax_lines = []
+        self.shipping_lines = []
+        self.discount_lines = []
+        self.charges = []
+        if 'line_items' in attributes.keys():
+            for line_item in attributes['line_items']["data"]:
+                new_line_item = LineItem(line_item)
+                new_line_item.parent = self
+                self.line_items.append(new_line_item)
+        
+        if 'tax_lines' in attributes.keys():
+            for tax_line in attributes['tax_lines']["data"]:
+                new_tax_line = TaxLine(tax_line)
+                new_tax_line.parent = self
+                self.tax_lines.append(new_tax_line)
+
+        if 'shipping_lines' in attributes.keys():
+            for shipping_line in attributes['shipping_lines']["data"]:
+                new_shipping_line = ShippingLine(shipping_line)
+                new_shipping_line.parent = self
+                self.shipping_lines.append(new_shipping_line)
+
+        if 'discount_lines' in attributes.keys():
+            for discount_line in attributes['discount_lines']["data"]:
+                new_discount_line = DiscountLine(discount_line)
+                new_discount_line.parent = self
+                self.discount_lines.append(new_discount_line)
+
+        if 'customer_info' in attributes.keys():
+            self.customer_info = CustomerInfo(attributes['customer_info'])
+
+        if 'shipping_contact' in attributes.keys():
+            self.shipping_contact = ShippingContact(attributes['shipping_contact'])
+
+        if 'fiscal_entity' in attributes.keys():
+            self.fiscal_entity = FiscalEntity(attributes['fiscal_entity'])
+        
+        if 'charges' in attributes.keys():
+            for charge in attributes['charges']["data"]:
+                payment_method = None
+                if charge['payment_method'] is not None:
+                    payment_method = PaymentMethod(charge['payment_method'])
+                charge = Charge(charge)
+                charge.payment_method = payment_method
+                self.charges.append(charge)
+
+
+    def capture(self, params={}, api_key=None):
+        order = Order.load_url("%s/capture" % (self.instance_url()), 'PUT', params, api_key=api_key)
+        new_order = Order.find(self.id)
+        self.charges = new_order.charges
+        self.status = new_order.status
+        self.preauthorize = new_order.preauthorize
+        return new_order
+
+    def returns(self, params={}, api_key=None):
+        order_returns = Order.load_url("%s/returns" % (self.instance_url()), 'POST', params, api_key=api_key)
+        new_order = Order.find(self.id)
+        self.charges = new_order.charges
+        self.status = new_order.status
+        self.preauthorize = new_order.preauthorize
+        return OrderReturns(order_returns)
+
+    def charge(self, params, api_key=None):
+        charge = Charge(Charge.load_url("%s/charges" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.charges.append(charge)
+        return charge
+    
+    def createShippingContact(self, params, api_key=None):
+        orders = self.update(params)
+        self.shipping_contact = ShippingContact(orders['shipping_contact'])
+        return self.shipping_contact
+
+    def createFiscalEntity(self, params, api_key=None):
+        orders = self.update(params)
+        self.shipping_contact =  FiscalEntity(orders['fiscal_entity'])
+        return self.shipping_contact
+
+    def createLineItem(self, params, api_key=None):
+        line_item = LineItem(LineItem.load_url("%s/line_items" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.line_items.append(line_item)
+        return line_item
+
+    def createTaxLine(self, params, api_key=None):
+        tax_line = TaxLine(TaxLine.load_url("%s/tax_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.tax_lines.append(tax_line)
+        return tax_line
+
+    def createShippingLine(self, params, api_key=None):
+        shipping_line = ShippingLine(ShippingLine.load_url("%s/shipping_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.shipping_lines.append(shipping_line)
+        return shipping_line
+
+    def createDiscountLine(self, params, api_key=None):
+        discount_line = DiscountLine(DiscountLine.load_url("%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.discount_lines.append(discount_line)
+        return discount_line
+
+class CustomerInfo(_UpdatableResource): pass
+
+class OrderReturns(_UpdatableResource): pass
+
+class PaymentMethod(_UpdatableResource): pass
+
+class Address(_FindableResource): pass
+
+class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
     
     def __init__(self, *args, **kwargs):
         super(Customer, self).__init__(*args, **kwargs)
 
         attributes = args[0]
-        self.cards = []
-        if 'cards' in attributes.keys():
-            for card in attributes['cards']:
-                card['parent'] = self
-                self.cards.append(Card(card))
+        self.payment_sources   = []
+        self.fiscal_entities   = []
+        self.shipping_contacts = []
+        if 'payment_sources' in attributes.keys():
+            for payment_source in attributes['payment_sources']['data']:
+                new_payment_source = PaymentSource(payment_source)
+                new_payment_source.parent = self
+                self.payment_sources.append(new_payment_source)
 
+        if 'fiscal_entities' in attributes.keys():
+            for fiscal_entity in attributes['fiscal_entities']['data']:
+                new_fiscal_entity = FiscalEntity(fiscal_entity)
+                new_fiscal_entity.address = Address(fiscal_entity["address"])
+                new_fiscal_entity.parent = self
+                self.fiscal_entities.append(new_fiscal_entity)
+        
+        if 'shipping_contacts' in attributes.keys():
+            for shipping_contact in attributes['shipping_contacts']['data']:
+                new_shipping_contact = ShippingContact(shipping_contact)
+                new_shipping_contact.address = Address(shipping_contact["address"])
+                new_shipping_contact.parent = self
+                self.shipping_contacts.append(new_shipping_contact)
+        
         if 'subscription' in attributes.keys() and isinstance(attributes['subscription'], dict):
             attributes['subscription']['parent'] = self
             self.subscription = Subscription(attributes['subscription'])
         else:
             self.subscription = None
 
-    def createCard(self, params, api_key=None):
-        card = Card(Card.load_url("%s/cards" % self.instance_url(), 'POST', params, api_key=api_key))
-        card.parent = self
-        self.cards.append(card)
-        return card
+    def createPaymentSource(self, params, api_key=None):
+        pay_src = PaymentSource.load_url("%s/payment_sources" % self.instance_url(), 'POST', params, api_key=api_key)
+        payment_source = PaymentSource(pay_src)
+        payment_source.parent = self
+        self.payment_sources.append(payment_source)
+        return payment_source
+
+    def createFiscalEntity(self, params, api_key=None):
+        fiscal_ent = PaymentSource.load_url("%s/fiscal_entities" % self.instance_url(), 'POST', params, api_key=api_key)
+        fiscal_entity = FiscalEntity(fiscal_ent)
+        fiscal_entity.parent = self
+        self.fiscal_entities.append(fiscal_entity)
+        return fiscal_entity
+
+    def createShippingContact(self, params, api_key=None):
+        shipping = PaymentSource.load_url("%s/shipping_contacts" % self.instance_url(), 'POST', params, api_key=api_key)
+        shipping_contact = ShippingContact(shipping)
+        shipping_contact.parent = self
+        self.shipping_contacts.append(shipping_contact)
+        return shipping_contact
 
     def createSubscription(self, params, api_key=None):
         subscription = Subscription(Subscription.load_url("%s/subscription" % self.instance_url(), 'POST', params, api_key=api_key))
@@ -250,6 +469,27 @@ class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
             return None
 
 class Payout(_CreatableResource, _FindableResource): pass
+class Pagination(_CreatableResource):
+    def next(self):
+        if not hasattr(self, 'next_page_url'):
+            return None
+
+        raw_params = self.next_page_url.split("?")[1]
+        query = {}
+        for elemet_params in raw_params.split("&"):
+            key_and_param = elemet_params.split("=")
+            query[key_and_param[0]] = key_and_param[1]
+        return self.class_name.where(query)
+
+    def before(self):
+        if not hasattr(self, 'previous_page_url'):
+            return None
+        raw_params = self.previous_page_url.split("?")[1]
+        query = {}
+        for elemet_params in raw_params.split("&"):
+            key_and_param = elemet_params.split("=")
+            query[key_and_param[0]] = key_and_param[1]
+        return self.class_name.where(query)
 
 class PayoutMethod(_UpdatableResource, _DeletableResource): 
 
@@ -281,4 +521,84 @@ class Subscription(_UpdatableResource):
         return Plan.retrieve(self.plan_id)
 
 class Webhook(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
+
+class LineItem(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+    
+    def instance_url(self):
+        return "orders/%s/line_items" % (self.parent.id)
+
+    def delete(self, params={}, api_key=None):
+        return super(LineItem, self).delete(params, self.parent.line_items)
+
+class TaxLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+    
+    def instance_url(self):
+        return "orders/%s/tax_lines" % (self.parent.id)
+
+    def delete(self, params={}, api_key=None):
+        return super(TaxLine, self).delete(params, self.parent.tax_lines)
+
+class ShippingLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+    
+    def instance_url(self):
+        return "orders/%s/shipping_lines" % (self.parent.id)
+
+    def delete(self, params={}, api_key=None):
+        return super(ShippingLine, self).delete(params, self.parent.shipping_lines)
+
+class DiscountLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+    
+    def instance_url(self):
+        return "orders/%s/discount_lines" % (self.parent.id)
+
+    def delete(self, params={}, api_key=None):
+        return super(DiscountLine, self).delete(params, self.parent.discount_lines)
+
+class FiscalEntity(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+    
+    def instance_url(self):
+        return "customer/%s/fiscal_entity" % (self.parent.id)
+
+    def update(self, params={}, api_key=None):
+        uri = "%s/fiscal_entities/%s" % (self.parent.instance_url(), self.id)
+        return self.load_via_http_request(uri, 'PUT', params, api_key=api_key)
+    
+    def delete(self, params={}, api_key=None):
+        uri = "%s/fiscal_entities/%s" % (self.parent.instance_url(), self.id)
+        return super(FiscalEntity, self).delete(params, self.parent.fiscal_entities, uri)
+
+    def events(self, params={}, api_key=None):
+        uri = "%s/fiscal_entities/%s/events" % (self.parent.instance_url(), self.id)
+        event = Event.load_url(uri, 'GET', params, api_key=api_key)
+        return Event(event)
+
+class PaymentSource(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+    def instance_url(self):
+        return "customers/%s/payment_sources" % (self.parent.id)
+
+    def delete(self, params={}, api_key=None):
+        return super(PaymentSource, self).delete(params, self.parent.payment_sources)
+
+    def events(self, params={}, api_key=None):
+        uri = "%s/payment_sources/%s/events" % (self.parent.instance_url(), self.id)
+        event = Event.load_url(uri, 'GET', params, api_key=api_key)
+        return Event(event)
+
+class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+    
+    def instance_url(self):
+        return "customers/%s/shipping_contacts" % (self.parent.id)
+
+    def update(self, params={}, api_key=None):
+        uri = "%s/shipping_contacts/%s" % (self.parent.instance_url(), self.id)
+        return self.load_via_http_request(uri, 'PUT', params, api_key=api_key)
+
+    def delete(self, params={}, api_key=None):
+        uri = "%s/shipping_contacts/%s" % (self.parent.instance_url(), self.id)
+        return super(ShippingContact, self).delete(params, self.parent.shipping_contacts, uri)
+
+    def events(self, params={}, api_key=None):
+        uri = "%s/shipping_contacts/%s/events" % (self.parent.instance_url(), self.id)
+        return Event(Event.load_url(uri, 'GET', params, api_key=api_key))
+
 

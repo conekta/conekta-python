@@ -1,6 +1,6 @@
 ![alt tag](https://raw.github.com/conekta/conekta-python/master/readme_files/cover.png)
 
-Conekta Python v 1.1.1
+Conekta Python v 2.0.0
 ======================
 
 Wrapper for api.conekta.io
@@ -24,39 +24,83 @@ conekta.api_key = '1tv5yJp3xnVZ7eK67m4h'
 conekta.locale = 'es'
 
 try:
-  charge = conekta.Charge.create({
-    "amount": 51000,
-    "currency": "MXN",
-    "description": "Pizza Delivery",
-    "reference_id": "orden_de_id_interno",
-    #request.form["conektaTokenId"], request.params["conektaTokenId"], "tok_a4Ff0dD2xYZZq82d9"
-    "card": request.POST["conektaTokenId"],
-    "details": {
-      "name": "Wolverine",
-      "email": "logan.thomas@xmen.org",
-      "phone": "403-342-0642",
-      "line_items": [{
-        "name": "Shades",
-        "description": "Imported From Mex.",
-        "unit_price": 20000,
-        "quantity": 1,
-        "sku": "cohb_s1",
-        "category": "eyewear"
-      }]
-    }
-  })
+  order = conekta.Order.create({
+      "line_items": [
+          {
+              "name": "Box of Cohiba S1s",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "food",
+              "type" : "physical",
+              "tags" : ["food", "mexican food"]
+          }
+      ],
+      "shipping_lines":[
+        {
+          "amount": 0,
+          "tracking_number": "TRACK123",
+          "carrier": "USPS",
+          "method": "Train",
+          "metadata": {
+             "random_key": "random_value"
+          }
+        }],
+      "customer_info":{   
+          "name": "John Constantine",
+          "phone": "+525533445566",
+          "email": "john@meh.com",
+          "corporate": False,
+          "vertical_info": {}
+        },
+      "shipping_contact":{
+          "phone" : "5544332211",
+          "receiver": "Marvin Fuller",
+          "between_streets": "Ackerman Crescent",
+          "address": {
+              "street1": "250 Alexis St",
+              "state": "Alberta",
+              "country": "MX",
+              "postal_code": "23455",
+              "metadata":{ "soft_validations": True}
+          }
+      },
+      "fiscal_entity":{
+        "tax_id": "AMGH851205MN1",
+        "name": "Nike SA de CV",
+        "address": {
+            "street1": "250 Alexis St",
+            "internal_number": "19",
+            "external_number": "91",
+            "city": "Red Deer",
+            "state": "Alberta",
+            "country": "CA",
+            "postal_code": "33242"
+        }
+      },
+      "charges": [{
+        "payment_source":{
+          "type": "card",
+          "token_id": "tok_test_visa_4242"
+        },
+        "amount": 20000
+      }],
+      "currency" : "mxn",
+      "metadata" : {"test" : "extra info"}
+    })
 
 except conekta.ConektaError as e:
   print e.message 
   #El pago no pudo ser procesado
 
 #You can also get the attributes from the conekta response class:
-print charge.id
+print order.id
 
 #Or in the event of an error, you can expect a ConektaError to be raised
 ```
 
-Charge via oxxo
+Order via oxxo
 
 ```python
 import conekta
@@ -64,32 +108,74 @@ import conekta
 conekta.api_key = '1tv5yJp3xnVZ7eK67m4h'
 
 var data = {
-  "currency": "MXN",
-  "amount": 20000,
-  "description": "Grad Stogies: Second Class",
-  "reference_id": "9893-cohib_s1_wolf_pack",
-  "cash": {
-    "type": "oxxo"
-  },
-  "details": {
-    "name": "Wolverine",
-    "email": "logan.thomas@xmen.org",
-    "phone": "403-342-0642",
-    "line_items": [{
-      "name": "Shades",
-      "description": "Imported From Mex.",
-      "unit_price": 20000,
-      "quantity": 1,
-      "sku": "cohb_s1",
-      "category": "eyewear"
-    }]
-  }
-}
+      "line_items": [
+          {
+              "name": "Box of Cohiba S1s",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "food",
+              "type" : "physical",
+              "tags" : ["food", "mexican food"]
+          }
+      ],
+      "shipping_lines":[
+        {
+          "amount": 0,
+          "tracking_number": "TRACK123",
+          "carrier": "USPS",
+          "method": "Train",
+          "metadata": {
+             "random_key": "random_value"
+          }
+        }],
+      "customer_info":{   
+          "name": "John Constantine",
+          "phone": "+525533445566",
+          "email": "john@meh.com",
+          "corporate": False,
+          "vertical_info": {}
+        },
+      "shipping_contact":{
+          "phone" : "5544332211",
+          "receiver": "Marvin Fuller",
+          "between_streets": "Ackerman Crescent",
+          "address": {
+              "street1": "250 Alexis St",
+              "state": "Alberta",
+              "country": "MX",
+              "postal_code": "23455",
+              "metadata":{ "soft_validations": True}
+          }
+      },
+      "fiscal_entity":{
+        "tax_id": "AMGH851205MN1",
+        "name": "Nike SA de CV",
+        "address": {
+            "street1": "250 Alexis St",
+            "internal_number": "19",
+            "external_number": "91",
+            "city": "Red Deer",
+            "state": "Alberta",
+            "country": "CA",
+            "postal_code": "33242"
+        }
+      },
+      "charges": [{
+        "payment_source":{
+      "type":"oxxo_cash"
+        },
+        "amount": 20000
+      }],
+      "currency" : "mxn",
+      "metadata" : {"test" : "extra info"}
+    }
 
-charge = conekta.Charge.create(data)
+order = conekta.Order.create(data)
 
 #Also you can get the attributes from the conekta response class:
-print charge.id
+print order.id
 
 #Or in the event of an error, you can expect a ConektaError to be raised
 ```
@@ -102,32 +188,75 @@ import conekta
 conekta.api_key = '1tv5yJp3xnVZ7eK67m4h'
 
 var data = {
-  "currency": "MXN",
-  "amount": 20000,
-  "description": "Grad Stogies: Second Class",
-  "reference_id": "9893-cohib_s1_wolf_pack",
-  "bank": {
-    "type": "banorte"
-  },
-  "details": {
-    "name": "Wolverine",
-    "email": "logan.thomas@xmen.org",
-    "phone": "403-342-0642",
-    "line_items": [{
-      "name": "Shades",
-      "description": "Imported From Mex.",
-      "unit_price": 20000,
-      "quantity": 1,
-      "sku": "cohb_s1",
-      "category": "eyewear"
-    }]
-  }
-}
+      "line_items": [
+          {
+              "name": "Box of Cohiba S1s",
+              "description": "Imported From Mex.",
+              "unit_price": 20000,
+              "quantity": 1,
+              "sku": "cohb_s1",
+              "category": "food",
+              "type" : "physical",
+              "tags" : ["food", "mexican food"]
+          }
+      ],
+      "shipping_lines":[
+        {
+          "amount": 0,
+          "tracking_number": "TRACK123",
+          "carrier": "USPS",
+          "method": "Train",
+          "metadata": {
+             "random_key": "random_value"
+          }
+        }],
+      "customer_info":{   
+          "name": "John Constantine",
+          "phone": "+525533445566",
+          "email": "john@meh.com",
+          "corporate": False,
+          "vertical_info": {}
+        },
+      "shipping_contact":{
+          "phone" : "5544332211",
+          "receiver": "Marvin Fuller",
+          "between_streets": "Ackerman Crescent",
+          "address": {
+              "street1": "250 Alexis St",
+              "state": "Alberta",
+              "country": "MX",
+              "postal_code": "23455",
+              "metadata":{ "soft_validations": True}
+          }
+      },
+      "fiscal_entity":{
+        "tax_id": "AMGH851205MN1",
+        "name": "Nike SA de CV",
+        "address": {
+            "street1": "250 Alexis St",
+            "internal_number": "19",
+            "external_number": "91",
+            "city": "Red Deer",
+            "state": "Alberta",
+            "country": "CA",
+            "postal_code": "33242"
+        }
+      },
+      "charges": [{
+        "payment_source":{
+      "type":"banorte"
+        },
+        "amount": 20000
+      }],
+      "currency" : "mxn",
+      "metadata" : {"test" : "extra info"}
+    }
 
-charge = conekta.Charge.create(data)
+
+order = conekta.Order.create(data)
 
 #Also you can get the attributes from the conekta response class:
-print charge.id
+print Order.id
 
 #Or in the event of an error, you can expect a ConektaError to be raised
 ```
@@ -138,20 +267,38 @@ print charge.id
 import conekta
 
 conekta.api_key = '1tv5yJp3xnVZ7eK67m4h'
-events = conekta.Event.all()
+order.events()
+customer.events()
 ```
 
 ## Endpoints
 
 ```python
-conekta.Charge.create()
-conekta.Charge.all()
-conekta.Charge.retrieve('charge_id')
-charge.refund(amount)
-conekta.Event.all()
-conekta.Event.retrieve('event_id')
-conekta.Log.all()
-conekta.Log.retrieve('log_id')
+conekta.Order.create()
+conekta.Order.find()
+conekta.Order.where()
+conekta.Order.update()
+conekta.Order.capture()
+conekta.Order.returns()
+conekta.Order.charge()
+conekta.Order.createShippingContact()
+conekta.Order.createFiscalEntity()
+conekta.Order.createLineItem()
+conekta.Order.createTaxLine()
+conekta.Order.createShippingLine()
+conekta.Order.createDiscountLine()
+conekta.Order.events()
+
+conekta.Customer.create()
+conekta.Customer.find()
+conekta.Customer.where()
+conekta.Customer.update()
+conekta.Customer.createPaymentSource()
+conekta.Customer.createFiscalEntity()
+conekta.Customer.createShippingContact()
+conekta.Customer.events()
+
+conekta.Log.where({})
 ```
 
 ## Library Development and Testing
