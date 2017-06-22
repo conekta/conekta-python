@@ -1,12 +1,13 @@
 #!/usr/bin/python
-#coding: utf-8
+# coding: utf-8
 #(c) 2013 Julian Ceballos <@jceb>
 
-import os
 import base64
 import inspect
-import urllib
+import os
 import time
+import urllib
+
 from httplib2 import Http
 
 try:
@@ -29,19 +30,40 @@ HEADERS = {
 api_key = ''
 locale = 'en'
 
-class ConektaError(Exception):
-  def __init__(self, error_json):
-      super(ConektaError, self).__init__(error_json)
-      self.error_json = error_json
 
-class MalformedRequestError(ConektaError): pass
-class AuthenticationError(ConektaError): pass
-class ProcessingError(ConektaError): pass
-class ResourceNotFoundError(ConektaError): pass
-class ParameterValidationError(ConektaError): pass
-class ApiError(ConektaError): pass
+class ConektaError(Exception):
+
+    def __init__(self, error_json):
+        super(ConektaError, self).__init__(error_json)
+        self.error_json = error_json
+
+
+class MalformedRequestError(ConektaError):
+    pass
+
+
+class AuthenticationError(ConektaError):
+    pass
+
+
+class ProcessingError(ConektaError):
+    pass
+
+
+class ResourceNotFoundError(ConektaError):
+    pass
+
+
+class ParameterValidationError(ConektaError):
+    pass
+
+
+class ApiError(ConektaError):
+    pass
+
 
 class _Resource(object):
+
     def __init__(self, attributes):
         self.initialize_instance(attributes)
 
@@ -54,62 +76,98 @@ class _Resource(object):
     @classmethod
     def build_http_request(cls, method, path, params, _api_key=None):
         if _api_key is None:
-            HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode((api_key + ':').encode('utf-8'))).decode('ascii')
+            HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode(
+                (api_key + ':').encode('utf-8'))).decode('ascii')
         else:
-            HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode((_api_key + ':').encode("utf-8"))).decode('ascii')
+            HEADERS['Authorization'] = 'Basic %s' % (base64.b64encode(
+                (_api_key + ':').encode("utf-8"))).decode('ascii')
 
         if not locale is None:
             HEADERS['Accept-Language'] = locale
 
         absolute_url = API_BASE + path
-        request = Http(ca_certs=os.path.join(os.path.dirname(__file__), 'ssl_data/ca_bundle.crt')).request
+        request = Http(ca_certs=os.path.join(os.path.dirname(
+            __file__), 'ssl_data/ca_bundle.crt')).request
         if method == 'GET':
             if params is None:
                 url = absolute_url
             else:
                 try:
-                    url = "%s?%s" % (absolute_url, urllib.parse.urlencode(params, True))
+                    url = "%s?%s" % (
+                        absolute_url, urllib.parse.urlencode(params, True))
                 except AttributeError:
-                    url = "%s?%s" % (absolute_url, urllib.urlencode(params, True))
+                    url = "%s?%s" % (
+                        absolute_url, urllib.urlencode(params, True))
 
             headers, body = request(url, method, headers=HEADERS)
         else:
             if params is None:
                 HEADERS['Content-type'] = 'application/x-www-form-urlencoded'
                 HEADERS['Content-length'] = '0'
-                headers, body = request(absolute_url, method, headers=HEADERS, body='')
+                headers, body = request(
+                    absolute_url, method, headers=HEADERS, body='')
                 del HEADERS['Content-length']
                 HEADERS['Content-type'] = 'application/json'
             else:
-                headers, body = request(absolute_url, method, headers=HEADERS, body=json.dumps(params))
+                headers, body = request(
+                    absolute_url, method, headers=HEADERS, body=json.dumps(params))
 
         try:
             body = str(body, 'utf-8')
         except TypeError:
             body = str(body)
 
-        if headers['status'] == '200' or headers['status'] == '201':
-            response_body = json.loads(body)
-            return response_body
+        # If/elif/else sentences implemented as fake switch
+        # elif sentences in line 139, 151 could be deleted if the server sends a json response when a 504 error is present
+        def get_response_body(status, message_body):
+            response_body = {
+                '200': message_body,
+                '201': message_body,
+                '400': MalformedRequestError(message_body),
+                '401': AuthenticationError(message_body),
+                '402': ProcessingError(message_body),
+                '404': ResourceNotFoundError(message_body),
+                '422': ParameterValidationError(message_body),
+                '500': ApiError(message_body),
+                '504': ApiError(message_body)
+            }
+            return response_body.get(status)
 
-        if headers['status'] == '400' or headers['status'] == '400':
-            raise MalformedRequestError(json.loads(body))
-        elif headers['status'] == '401' or headers['status'] == '401':
-            raise AuthenticationError(json.loads(body))
-        elif headers['status'] == '402' or headers['status'] == '402':
-            raise ProcessingError(json.loads(body))
-        elif headers['status'] == '404' or headers['status'] == '404':
-            raise ResourceNotFoundError(json.loads(body))
-        elif headers['status'] == '422' or headers['status'] == '422':
-            raise ParameterValidationError(json.loads(body))
-        elif headers['status'] == '500' or headers['status'] == '500':
-            raise ApiError(json.loads(body))
+        status = headers['status']
+        if body:
+            return get_response_body(status, json.loads(body))
+        elif not body and status == '504':
+            message_body = json.dumps({
+                'status': '504',
+                'object': 'error',
+                'type': 'server_error',
+                'details': {
+                    'debug_message': "504 Gateway Timeout Error",
+                    'message': 'Gateway timeout',
+                    'code': 'conekta.errors.server'
+                }
+            })
+            return get_response_body(status, message_body)
+        elif not body:
+            # In 504 error body is null
+            message_body = json.dumps({
+                'status': '500',
+                'object': 'error',
+                'type': 'server_error',
+                'details': {
+                    'debug_message': "Response could not be retrieved",
+                    'message': 'Response could not be retrieved',
+                    'code': 'conekta.errors.server'
+                }
+            })
+            return get_response_body(status, message_body)
         else:
             raise ConektaError(json.loads(body))
 
     @classmethod
     def load_url(cls, path, method='GET', params=None, api_key=None):
-        response = cls.build_http_request(method, path, params, _api_key = api_key)
+        response = cls.build_http_request(
+            method, path, params, _api_key=api_key)
         return response
 
     @classmethod
@@ -140,17 +198,18 @@ class _Resource(object):
         for key in new_keys:
             self.__dict__[key] = attributes[key]
 
-
     def load_via_http_request(self, url=None, method='POST', params=None, api_key=None):
         if url is None:
             url = self.instance_url()
             method = 'GET'
 
-        response = self.load_url(url, method=method, params=params, api_key=api_key)
+        response = self.load_url(
+            url, method=method, params=params, api_key=api_key)
 
         self.initialize_instance(response)
 
         return self
+
 
 class _EventableResource(_Resource):
 
@@ -159,8 +218,10 @@ class _EventableResource(_Resource):
         if hasattr(self, 'parent'):
             uri = "%s/%s" % (self.instance_url(), self.id)
 
-        event = Event.load_url("%s/events" % uri, 'GET', params, api_key=api_key)
+        event = Event.load_url("%s/events" % uri, 'GET',
+                               params, api_key=api_key)
         return Event(event)
+
 
 class _DeletableResource(_Resource):
 
@@ -171,9 +232,8 @@ class _DeletableResource(_Resource):
             if hasattr(self, 'parent'):
                 uri = "%s/%s" % (self.instance_url(), self.id)
 
-
-
-        object_reponse = self.load_via_http_request(uri, 'DELETE', {}, api_key=api_key)
+        object_reponse = self.load_via_http_request(
+            uri, 'DELETE', {}, api_key=api_key)
 
         if list_to_remove != None:
             for remove_object in list_to_remove:
@@ -183,15 +243,17 @@ class _DeletableResource(_Resource):
 
         return object_reponse
 
+
 class _UpdatableResource(_Resource):
 
     def update(self, params={}, api_key=None):
         uri = self.instance_url()
-        
+
         if hasattr(self, 'parent') and not isinstance(self, Subscription):
             uri = "%s/%s" % (self.instance_url(), self.id)
 
         return self.load_via_http_request(uri, 'PUT', params, api_key=api_key)
+
 
 class _CreatableResource(_Resource):
 
@@ -200,12 +262,13 @@ class _CreatableResource(_Resource):
         endpoint = cls.class_url()
         return cls(cls.load_url(endpoint, method='POST', params=params, api_key=api_key))
 
+
 class _FindableResource(_Resource):
 
     @classmethod
     def find(cls, _id, api_key=None):
         endpoint = cls.class_url()
-        return cls(cls.load_url("%s/%s" % (endpoint, _id), api_key=api_key ))
+        return cls(cls.load_url("%s/%s" % (endpoint, _id), api_key=api_key))
 
     @classmethod
     def where(cls, query={}, limit=10, offset=0, sort=[], api_key=None):
@@ -233,18 +296,19 @@ class _FindableResource(_Resource):
 
             pag.data.append(new_obj)
 
-
         return pag
 
-    #DEPRECATED aliased method, will be removed in next major release
+    # DEPRECATED aliased method, will be removed in next major release
     @classmethod
     def get(cls, _id, api_key=None):
         cls.find(_id, api_key)
+
 
 class Card(_UpdatableResource, _DeletableResource):
 
     def instance_url(self):
         return "customers/%s/cards/%s" % (self.parent.id, self.id)
+
 
 class Charge(_CreatableResource, _FindableResource):
 
@@ -255,12 +319,14 @@ class Charge(_CreatableResource, _FindableResource):
         if amount is None:
             return self.load_via_http_request("%s/refund" % self.instance_url(), api_key=api_key)
         else:
-            return self.load_via_http_request("%s/refund" % self.instance_url(), 'POST', {'amount':amount}, api_key=api_key)
+            return self.load_via_http_request("%s/refund" % self.instance_url(), 'POST', {'amount': amount}, api_key=api_key)
 
     def capture(self, api_key=None):
         return self.load_via_http_request("%s/capture" % self.instance_url(), api_key=api_key)
 
+
 class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
+
     def __init__(self, *args, **kwargs):
         super(Order, self).__init__(*args, **kwargs)
         attributes = args[0]
@@ -298,7 +364,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
             self.customer_info = CustomerInfo(attributes['customer_info'])
 
         if 'shipping_contact' in attributes.keys():
-            self.shipping_contact = ShippingContact(attributes['shipping_contact'])
+            self.shipping_contact = ShippingContact(
+                attributes['shipping_contact'])
 
         if 'charges' in attributes.keys():
             for charge in attributes['charges']["data"]:
@@ -309,9 +376,9 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
                 charge.payment_method = payment_method
                 self.charges.append(charge)
 
-
     def capture(self, params={}, api_key=None):
-        order = Order.load_url("%s/capture" % (self.instance_url()), 'PUT', params, api_key=api_key)
+        order = Order.load_url(
+            "%s/capture" % (self.instance_url()), 'PUT', params, api_key=api_key)
         time.sleep(2)
         new_order = Order.find(self.id)
         self.charges = new_order.charges
@@ -319,7 +386,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         return new_order
 
     def refund(self, params={}, api_key=None):
-        order_refund = Order.load_url("%s/refund" % (self.instance_url()), 'POST', params, api_key=api_key)
+        order_refund = Order.load_url(
+            "%s/refund" % (self.instance_url()), 'POST', params, api_key=api_key)
         time.sleep(2)
         new_order = Order.find(self.id)
         self.charges = new_order.charges
@@ -327,7 +395,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         return new_order
 
     def void(self, params={}, api_key=None):
-        order_refund = Order.load_url("%s/void" % (self.instance_url()), 'POST', params, api_key=api_key)
+        order_refund = Order.load_url(
+            "%s/void" % (self.instance_url()), 'POST', params, api_key=api_key)
         time.sleep(2)
         new_order = Order.find(self.id)
         self.charges = new_order.charges
@@ -335,7 +404,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         return new_order
 
     def charge(self, params, api_key=None):
-        charge = Charge(Charge.load_url("%s/charges" % self.instance_url(), 'POST', params, api_key=api_key))
+        charge = Charge(Charge.load_url("%s/charges" %
+                                        self.instance_url(), 'POST', params, api_key=api_key))
         self.charges.append(charge)
         return charge
 
@@ -345,32 +415,45 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         return self.shipping_contact
 
     def createLineItem(self, params, api_key=None):
-        line_item = LineItem(LineItem.load_url("%s/line_items" % self.instance_url(), 'POST', params, api_key=api_key))
+        line_item = LineItem(LineItem.load_url(
+            "%s/line_items" % self.instance_url(), 'POST', params, api_key=api_key))
         self.line_items.append(line_item)
         return line_item
 
     def createTaxLine(self, params, api_key=None):
-        tax_line = TaxLine(TaxLine.load_url("%s/tax_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        tax_line = TaxLine(TaxLine.load_url("%s/tax_lines" %
+                                            self.instance_url(), 'POST', params, api_key=api_key))
         self.tax_lines.append(tax_line)
         return tax_line
 
     def createShippingLine(self, params, api_key=None):
-        shipping_line = ShippingLine(ShippingLine.load_url("%s/shipping_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        shipping_line = ShippingLine(ShippingLine.load_url(
+            "%s/shipping_lines" % self.instance_url(), 'POST', params, api_key=api_key))
         self.shipping_lines.append(shipping_line)
         return shipping_line
 
     def createDiscountLine(self, params, api_key=None):
-        discount_line = DiscountLine(DiscountLine.load_url("%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
+        discount_line = DiscountLine(DiscountLine.load_url(
+            "%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
         self.discount_lines.append(discount_line)
         return discount_line
 
-class CustomerInfo(_UpdatableResource): pass
 
-class OrderReturns(_UpdatableResource): pass
+class CustomerInfo(_UpdatableResource):
+    pass
 
-class PaymentMethod(_UpdatableResource): pass
 
-class Address(_FindableResource): pass
+class OrderReturns(_UpdatableResource):
+    pass
+
+
+class PaymentMethod(_UpdatableResource):
+    pass
+
+
+class Address(_FindableResource):
+    pass
+
 
 class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
 
@@ -378,7 +461,7 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
         super(Customer, self).__init__(*args, **kwargs)
 
         attributes = args[0]
-        self.payment_sources   = []
+        self.payment_sources = []
         self.shipping_contacts = []
         if 'payment_sources' in attributes.keys():
             for payment_source in attributes['payment_sources']['data']:
@@ -389,7 +472,8 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
         if 'shipping_contacts' in attributes.keys():
             for shipping_contact in attributes['shipping_contacts']['data']:
                 new_shipping_contact = ShippingContact(shipping_contact)
-                new_shipping_contact.address = Address(shipping_contact["address"])
+                new_shipping_contact.address = Address(
+                    shipping_contact["address"])
                 new_shipping_contact.parent = self
                 self.shipping_contacts.append(new_shipping_contact)
 
@@ -400,21 +484,24 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
             self.subscription = None
 
     def createPaymentSource(self, params, api_key=None):
-        pay_src = PaymentSource.load_url("%s/payment_sources" % self.instance_url(), 'POST', params, api_key=api_key)
+        pay_src = PaymentSource.load_url(
+            "%s/payment_sources" % self.instance_url(), 'POST', params, api_key=api_key)
         payment_source = PaymentSource(pay_src)
         payment_source.parent = self
         self.payment_sources.append(payment_source)
         return payment_source
 
     def createShippingContact(self, params, api_key=None):
-        shipping = PaymentSource.load_url("%s/shipping_contacts" % self.instance_url(), 'POST', params, api_key=api_key)
+        shipping = PaymentSource.load_url(
+            "%s/shipping_contacts" % self.instance_url(), 'POST', params, api_key=api_key)
         shipping_contact = ShippingContact(shipping)
         shipping_contact.parent = self
         self.shipping_contacts.append(shipping_contact)
         return shipping_contact
 
     def createSubscription(self, params, api_key=None):
-        subscription = Subscription(Subscription.load_url("%s/subscription" % self.instance_url(), 'POST', params, api_key=api_key))
+        subscription = Subscription(Subscription.load_url(
+            "%s/subscription" % self.instance_url(), 'POST', params, api_key=api_key))
         subscription.parent = self
         self.subscription = subscription
         return subscription
@@ -426,9 +513,14 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
         else:
             return None
 
-class Event(_FindableResource): pass
 
-class Log(_FindableResource): pass
+class Event(_FindableResource):
+    pass
+
+
+class Log(_FindableResource):
+    pass
+
 
 class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
 
@@ -443,7 +535,8 @@ class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
                 self.payout_methods.append(PayoutMethod(payout_method))
 
     def createPayoutMethod(self, params, api_key=None):
-        payout_method = PayoutMethod(PayoutMethod.load_url("%s/payout_methods" % self.instance_url(), 'POST', params, api_key=api_key))
+        payout_method = PayoutMethod(PayoutMethod.load_url(
+            "%s/payout_methods" % self.instance_url(), 'POST', params, api_key=api_key))
         payout_method.parent = self
         self.payout_methods.append(payout_method)
         return payout_method
@@ -455,8 +548,13 @@ class Payee(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         else:
             return None
 
-class Payout(_CreatableResource, _FindableResource): pass
+
+class Payout(_CreatableResource, _FindableResource):
+    pass
+
+
 class Pagination(_CreatableResource):
+
     def next(self):
         if not hasattr(self, 'next_page_url'):
             return None
@@ -478,12 +576,16 @@ class Pagination(_CreatableResource):
             query[key_and_param[0]] = key_and_param[1]
         return self.class_name.where(query)
 
+
 class PayoutMethod(_UpdatableResource, _DeletableResource):
 
     def instance_url(self):
         return "payees/%s/payout_methods/%s" % (self.parent.id, self.id)
 
-class Plan(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
+
+class Plan(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+    pass
+
 
 class Subscription(_UpdatableResource):
 
@@ -507,7 +609,10 @@ class Subscription(_UpdatableResource):
     def plan(self):
         return Plan.retrieve(self.plan_id)
 
-class Webhook(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource): pass
+
+class Webhook(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+    pass
+
 
 class LineItem(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
 
@@ -517,6 +622,7 @@ class LineItem(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
     def delete(self, params={}, api_key=None):
         return super(LineItem, self).delete(params, self.parent.line_items)
 
+
 class TaxLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
 
     def instance_url(self):
@@ -524,6 +630,7 @@ class TaxLine(_CreatableResource, _UpdatableResource, _DeletableResource, _Finda
 
     def delete(self, params={}, api_key=None):
         return super(TaxLine, self).delete(params, self.parent.tax_lines)
+
 
 class ShippingLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
 
@@ -533,6 +640,7 @@ class ShippingLine(_CreatableResource, _UpdatableResource, _DeletableResource, _
     def delete(self, params={}, api_key=None):
         return super(ShippingLine, self).delete(params, self.parent.shipping_lines)
 
+
 class DiscountLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
 
     def instance_url(self):
@@ -541,7 +649,9 @@ class DiscountLine(_CreatableResource, _UpdatableResource, _DeletableResource, _
     def delete(self, params={}, api_key=None):
         return super(DiscountLine, self).delete(params, self.parent.discount_lines)
 
+
 class PaymentSource(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+
     def instance_url(self):
         return "customers/%s/payment_sources" % (self.parent.id)
 
@@ -549,9 +659,11 @@ class PaymentSource(_CreatableResource, _UpdatableResource, _DeletableResource, 
         return super(PaymentSource, self).delete(params, self.parent.payment_sources)
 
     def events(self, params={}, api_key=None):
-        uri = "%s/payment_sources/%s/events" % (self.parent.instance_url(), self.id)
+        uri = "%s/payment_sources/%s/events" % (
+            self.parent.instance_url(), self.id)
         event = Event.load_url(uri, 'GET', params, api_key=api_key)
         return Event(event)
+
 
 class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
 
@@ -567,5 +679,6 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
         return super(ShippingContact, self).delete(params, self.parent.shipping_contacts, uri)
 
     def events(self, params={}, api_key=None):
-        uri = "%s/shipping_contacts/%s/events" % (self.parent.instance_url(), self.id)
+        uri = "%s/shipping_contacts/%s/events" % (
+            self.parent.instance_url(), self.id)
         return Event(Event.load_url(uri, 'GET', params, api_key=api_key))
