@@ -8,7 +8,7 @@ from . import BaseEndpointTestCase
 class OrdersEndpointTestCase(BaseEndpointTestCase):
 
     def test_01_order_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         order = self.client.Order.create(self.order_object.copy())
         event = order.events()
 
@@ -16,7 +16,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
 
 
     def test_02_line_item_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -30,7 +30,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_03_tax_line_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -44,7 +44,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_04_shipping_lines_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -58,7 +58,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_05_discount_lines_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -72,7 +72,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_06_discount_lines_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -86,7 +86,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_07_customer_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
 
         event = customer.events()
@@ -94,7 +94,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.data
 
     def test_08_customer_payment_source_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         payment_source = customer.payment_sources[0]
         payment_source.update(self.update_payment_source_object.copy())
@@ -104,7 +104,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert event.object
 
     def test_09_customer_shipping_contact_event(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         shipping_contact = customer.shipping_contacts[0]
         shipping_contact.update(self.shipping_contact_object.copy())

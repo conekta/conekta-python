@@ -9,7 +9,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         url = 'https://www.example.com'
         url2 = url + '/new_endpoint' 
 
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         webhook = self.client.Webhook.create({'url':url})
         assert webhook.url == url
         webhook.update({'url':url2})

@@ -4,7 +4,7 @@
 
 from setuptools import setup, find_packages
 
-version = "2.3.4"
+version = "2.3.6"
 author = "Conekta"
 
 setup(

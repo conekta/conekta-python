@@ -7,7 +7,7 @@ from . import BaseEndpointTestCase
 class OrdersEndpointTestCase(BaseEndpointTestCase):
 
     def test_01_order_create(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         order = self.client.Order.create(self.order_object.copy())
         assert order.currency
         line_item = order.line_items[0]
@@ -25,7 +25,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert charge.amount == 20000
 
     def test_02_order_create_line_item(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -34,7 +34,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert line_item.unit_price == 10000
 
     def test_03_order_create_tax_item(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -43,7 +43,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert tax_line.amount == 600
 
     def test_04_order_create_shipping_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -51,7 +51,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_line.tracking_number == "TRACK123"
 
     def test_05_order_create_discount_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         order = self.client.Order.create(raw_order)
@@ -60,7 +60,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert discount_line.amount == 100
 
     def test_06_order_create_shipping_contact(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         raw_order["charges"] = None
         del raw_order["shipping_contact"]
@@ -69,7 +69,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_contact.phone == "+525511223399"
 
     def test_07_order_create_charge(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -78,7 +78,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert charge.status == "pending_payment"
 
     def test_08_order_update_line_item(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -94,16 +94,16 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert line_item.description == "some description"
 
     def test_09_order_get_all_line_items(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
 
-        large_order_by_find  = self.client.Order.find('ord_2gm57Wc4cVQ2yfqR3')
-        large_order_by_where = self.client.Order.where({'id':'ord_2gm57Wc4cVQ2yfqR3'})
+        large_order_by_find  = self.client.Order.find('ord_2h9umNjHAzx8ZMtPA')
+        large_order_by_where = self.client.Order.where({'id':'ord_2h9umNjHAzx8ZMtPA'})
 
         assert len(large_order_by_where.data[0].line_items) == 15
         assert len(large_order_by_find.line_items) == 15
 
     def test_10_order_update_tax_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -117,7 +117,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert valid_tax_line.amount == 321
 
     def test_11_order_update_shipping_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -130,7 +130,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_line.tracking_number == "fake track number"
 
     def test_12_order_update_discount_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -142,7 +142,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert discount_line.code == "promocion"
 
     def test_13_order_with_token_id(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         charge = {}
         charge["payment_method"] = {}
@@ -156,7 +156,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert charge.amount == 20000
 
     def test_14_order_capture(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         charge = {}
         charge["payment_method"] = {}
@@ -179,7 +179,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert order.payment_status == "paid"
 
     def test_15_order_refund(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         charge = {}
         charge["payment_method"] = {}
@@ -198,7 +198,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert refunded_order.payment_status == "refunded"
 
     def test_15_order_void(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         charge = {}
         charge["payment_method"] = {}
@@ -217,7 +217,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert refunded_order.payment_status == "voided"
 
     def test_16_order_delete_line_item(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -232,7 +232,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert line_item.description == "Imported From Mex."
 
     def test_17_order_delete_tax_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -247,7 +247,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert tax_line.amount == 600
 
     def test_18_order_delete_shipping_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -262,7 +262,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_line.amount == 0
 
     def test_18_order_delete_discount_line(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
         del raw_order["charges"]
         order = self.client.Order.create(raw_order)
@@ -278,7 +278,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
 
 
     def test_19_order_create_with_customer_id(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         order_params = self.order_object.copy()
         del order_params["customer_info"]

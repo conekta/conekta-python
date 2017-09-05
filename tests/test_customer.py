@@ -6,7 +6,7 @@ from . import BaseEndpointTestCase
 class OrdersEndpointTestCase(BaseEndpointTestCase):
 
     def test_01_customer_create(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         payment_source = customer.payment_sources[0]
         shipping_contact = customer.shipping_contacts[0]
@@ -23,7 +23,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_contact.address.city    == "Red Deer"
 
     def test_02_customer_add_token(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer_params = self.customer_object.copy()
         del customer_params["payment_sources"]
         customer = self.client.Customer.create(customer_params)
@@ -33,7 +33,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert payment_source.last4 == "4242"
 
     def test_03_customer_update_payment_source(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         payment_source = customer.payment_sources[0]
         payment_source.update(self.update_payment_source_object.copy())
@@ -42,7 +42,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert payment_source.last4 == '4242' or payment_source.last4 == '5100'
 
     def test_04_customer_delete_payment_source(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         payment_source = customer.payment_sources[0]
 
@@ -56,7 +56,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert payment_source.last4 == '4242' or payment_source.last4 == '5100'
 
     def test_08_customer_add_shipping_contact(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer_params = self.customer_object.copy()
         del customer_params["shipping_contacts"]
         customer = self.client.Customer.create(customer_params)
@@ -67,7 +67,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert shipping_contact.between_streets == "some streets"
 
     def test_09_customer_update_plan(self):
-        self.client.api_key = '1tv5yJp3xnVZ7eK67m4h'
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())
         customer.createSubscription({"plan":"gold-plan"})
         customer.subscription.update({"plan":"opal-plan"})
