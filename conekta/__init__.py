@@ -239,6 +239,7 @@ class _FindableResource(_Resource):
         query['limit'] = limit
 
         response = cls.load_url(endpoint, 'GET', query, api_key=api_key)
+        del response["total"]
         pag = Pagination(response)
         data = response["data"]
 
