@@ -45,6 +45,7 @@ class ConektaError(Exception):
       self.error_json = error_json
       try:
         self.details = self.error_json['details']
+        self.http_status = self.error_json['http_status']
         self.message = self.details[0]['message']
         self.debug_message = self.details[0]['debug_message']
         self.code = self.details[0]['code']
@@ -114,24 +115,25 @@ class _Resource(object):
         except TypeError:
             body = str(body)
 
+        response_body = json.loads(body)
         if headers['status'] == '200' or headers['status'] == '201':
-            response_body = json.loads(body)
             return response_body
 
+        response_body['http_status'] = headers['status']
         if headers['status'] == '400' or headers['status'] == '400':
-            raise MalformedRequestError(json.loads(body))
+            raise MalformedRequestError(response_body)
         elif headers['status'] == '401' or headers['status'] == '401':
-            raise AuthenticationError(json.loads(body))
+            raise AuthenticationError(response_body)
         elif headers['status'] == '402' or headers['status'] == '402':
-            raise ProcessingError(json.loads(body))
+            raise ProcessingError(response_body)
         elif headers['status'] == '404' or headers['status'] == '404':
-            raise ResourceNotFoundError(json.loads(body))
+            raise ResourceNotFoundError(response_body)
         elif headers['status'] == '422' or headers['status'] == '422':
-            raise ParameterValidationError(json.loads(body))
+            raise ParameterValidationError(response_body)
         elif headers['status'] == '500' or headers['status'] == '500':
-            raise ApiError(json.loads(body))
+            raise ApiError(response_body)
         else:
-            raise ConektaError(json.loads(body))
+            raise ConektaError(response_body)
 
     @classmethod
     def load_url(cls, path, method='GET', params=None, api_key=None):
