@@ -338,6 +338,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
                 charge.payment_method = payment_method
                 self.charges.append(charge)
 
+        if 'checkout' in attributes.keys():
+            self.checkout = CheckoutOrder(attributes['checkout'])
 
     def capture(self, params={}, api_key=None):
         order = Order.load_url("%s/capture" % (self.instance_url()), 'PUT', params, api_key=api_key)
@@ -392,6 +394,11 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         discount_line = DiscountLine(DiscountLine.load_url("%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
         self.discount_lines.append(discount_line)
         return discount_line
+
+    def createCheckout(self, params, api_key=None):
+        checkout = CheckoutOrder(DiscountLine.load_url("%s/orders" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.checkout.append(checkout)
+        return checkout
 
 class CustomerInfo(_UpdatableResource): pass
 
@@ -615,3 +622,8 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
     def events(self, params={}, api_key=None):
         uri = "%s/shipping_contacts/%s/events" % (self.parent.instance_url(), self.id)
         return Event(Event.load_url(uri, 'GET', params, api_key=api_key))
+
+class CheckoutOrder(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+
+        def instance_url(self):
+        return "orders" 

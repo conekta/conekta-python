@@ -1,4 +1,4 @@
-## [2.5.2](https://github.com/conekta/conekta-python/releases/tag/v2.5.2) - 2020-12-30
+## [2.6.0](https://github.com/conekta/conekta-python/releases/tag/v2.6.0) - 2020-12-30
 ### Change
 - Support creation of a payment link in the SDK.
 

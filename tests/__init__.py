@@ -424,3 +424,99 @@ class BaseEndpointTestCase(unittest.TestCase):
         }
       }
     }
+
+
+    checkout_order_object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": False,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }
+
+    checkout_msi_order__object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "type":"Integration",
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": True,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }
+
+
+          checkout_order__redirect_object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "type":"HostedPayment",
+           "success_url": "testredirect.com",
+           "failure_url": "testredirect.com",
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": False,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }
