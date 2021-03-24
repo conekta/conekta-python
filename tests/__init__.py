@@ -302,5 +302,221 @@ class BaseEndpointTestCase(unittest.TestCase):
             "country": "CA",
             "postal_code": "T4N 0B8"
         }
-
     }
+
+    checkout_object = {
+        "name": "Payment Link Name",
+        "type": "PaymentLink",
+        "recurrent": False,
+        "expired_at": 1590882634,
+        "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+        "needs_shipping_contact": True,
+        "monthly_installments_enabled": False,
+        "monthly_installments_options": [3, 6, 9, 12],
+        "order_template": {
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
+        "currency": "MXN",
+        "customer_info": {
+              "name": "Juan Perez",
+              "email": "test@conekta.com",
+              "phone": "5566982090"
+        }
+      }
+    }
+
+    checkout_object_multiple = {
+        "name": "Payment Link Name",
+        "type": "PaymentLink",
+        "recurrent": True,
+        "expired_at": 1590882634,
+        "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+        "needs_shipping_contact": True,
+        "monthly_installments_enabled": False,
+        "monthly_installments_options": [3, 6, 9, 12],
+        "order_template": {
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
+        "currency": "MXN",
+        "customer_info": {
+              "name": "Juan Perez",
+              "email": "test@conekta.com",
+              "phone": "5566982090"
+        }
+      }
+    }
+
+    checkout_object_msi = {
+        "name": "Payment Link Name",
+        "type": "PaymentLink",
+        "recurrent": True,
+        "expired_at": 1590882634,
+        "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+        "needs_shipping_contact": True,
+        "monthly_installments_enabled": True,
+        "monthly_installments_options": [3, 6, 9, 12],
+        "order_template": {
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
+        "currency": "MXN",
+        "customer_info": {
+              "name": "Juan Perez",
+              "email": "test@conekta.com",
+              "phone": "5566982090"
+        }
+      }
+    }
+
+    checkout_object_type_checkout = {
+        "name": "Payment Link Name",
+        "type": "checkout",
+        "recurrent": True,
+        "expired_at": 1590882634,
+        "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+        "needs_shipping_contact": True,
+        "monthly_installments_enabled": True,
+        "monthly_installments_options": [3, 6, 9, 12],
+        "order_template": {
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
+        "currency": "MXN",
+        "customer_info": {
+              "name": "Juan Perez",
+              "email": "test@conekta.com",
+              "phone": "5566982090"
+        }
+      }
+    }
+
+        checkout_object_send = {
+        "id": "05b25724-df59-4925-8762-105d627875fd"
+        "name": "Payment Link Name",
+        "type": "checkout",
+        "recurrent": True,
+        "expired_at": 1590882634,
+        "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+        "needs_shipping_contact": True,
+        "monthly_installments_enabled": True,
+        "monthly_installments_options": [3, 6, 9, 12],
+        "order_template": {
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
+        "currency": "MXN",
+        "customer_info": {
+              "name": "Juan Perez",
+              "email": "test@conekta.com",
+              "phone": "5566982090"
+        }
+      }
+    }
+
+
+    checkout_order_object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": False,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }
+
+    checkout_msi_order__object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "type":"Integration",
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": True,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }
+
+
+          checkout_order__redirect_object = 
+        "currency": "MXN",
+        "customer_info": {
+           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+        },
+       "line_items": [{
+           "name": "Box of Cohiba S1s",
+           "unit_price": 300000,
+           "quantity": 1
+       }],
+       "shipping_lines": [{
+           "amount": 0
+       }],
+       "checkout": {
+           "type":"HostedPayment",
+           "success_url": "testredirect.com",
+           "failure_url": "testredirect.com",
+           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+           "multifactor_authentication": False,
+           "monthly_installments_enabled": False,
+           "monthly_installments_options": [3,6,9,12,18],
+           "expires_at": 1609891200
+        },
+       "shipping_contact": {
+          "phone": "+5215555555555",
+          "receiver": "Marvin Fuller",
+          "address": {
+            "street1": "Nuevo Leon 4",
+            "country": "MX",
+            "postal_code": "06100"
+          }
+       }

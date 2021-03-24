@@ -17,7 +17,7 @@ except ImportError:
 
 API_VERSION = '2.0.0'
 
-__version__ = '2.4.0'
+__version__ = '2.6.0'
 __author__ = 'Leo Fischer'
 
 API_BASE = 'https://api.conekta.io/'
@@ -340,6 +340,8 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
                 charge.payment_method = payment_method
                 self.charges.append(charge)
 
+        if 'checkout' in attributes.keys():
+            self.checkout = CheckoutOrder(attributes['checkout'])
 
     def capture(self, params={}, api_key=None):
         order = Order.load_url("%s/capture" % (self.instance_url()), 'PUT', params, api_key=api_key)
@@ -394,6 +396,11 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         discount_line = DiscountLine(DiscountLine.load_url("%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
         self.discount_lines.append(discount_line)
         return discount_line
+
+    def createCheckout(self, params, api_key=None):
+        checkout = CheckoutOrder(DiscountLine.load_url("%s/orders" % self.instance_url(), 'POST', params, api_key=api_key))
+        self.checkout.append(checkout)
+        return checkout
 
 class CustomerInfo(_UpdatableResource): pass
 
@@ -456,6 +463,23 @@ class Customer(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
             return [card for card in self.cards if card.id == self.default_card_id][0]
         else:
             return None
+
+class Checkout(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+
+    def __init__(self, *args, **kwargs):
+        super(Checkouts, self).__init__(*args, **kwargs)
+        
+    def create(self, params, api_key=None):
+        return self.load_via_http_request("%s/checkouts" % self.instance_url(), 'POST', params, api_key=api_key)
+
+    def cancel(self, params, api_key=None):
+        return self.load_via_http_request("%s/checkouts/cancel/%s" % (self.instance_url(), self.id), 'PUT', None, api_key=api_key)
+
+    def sendEmail(self, params, api_key=None):
+        return self.load_via_http_request("%s/checkouts/email" % self.instance_url(), 'POST', params, api_key=api_key)
+
+    def sendSms(self, params, api_key=None):
+        return self.load_via_http_request("%s/checkouts/sms" % self.instance_url(), 'POST', params, api_key=api_key)
 
 class Event(_FindableResource): pass
 
@@ -600,3 +624,8 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
     def events(self, params={}, api_key=None):
         uri = "%s/shipping_contacts/%s/events" % (self.parent.instance_url(), self.id)
         return Event(Event.load_url(uri, 'GET', params, api_key=api_key))
+
+class CheckoutOrder(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
+
+        def instance_url(self):
+        return "orders" 
