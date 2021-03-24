@@ -45,6 +45,7 @@ class ConektaError(Exception):
       self.error_json = error_json
       try:
         self.details = self.error_json['details']
+        self.http_status = self.error_json['http_status']
         self.message = self.details[0]['message']
         self.debug_message = self.details[0]['debug_message']
         self.code = self.details[0]['code']
