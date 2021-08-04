@@ -400,8 +400,8 @@ class BaseEndpointTestCase(unittest.TestCase):
       }
     }
 
-        checkout_object_send = {
-        "id": "05b25724-df59-4925-8762-105d627875fd"
+    checkout_object_send = {
+        "id": "05b25724-df59-4925-8762-105d627875fd",
         "name": "Payment Link Name",
         "type": "checkout",
         "recurrent": True,
@@ -426,7 +426,7 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
 
-    checkout_order_object = 
+    checkout_order_object = {
         "currency": "MXN",
         "customer_info": {
            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
@@ -455,8 +455,8 @@ class BaseEndpointTestCase(unittest.TestCase):
             "postal_code": "06100"
           }
        }
-
-    checkout_msi_order__object = 
+    }
+    checkout_msi_order__object = {
         "currency": "MXN",
         "customer_info": {
            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
@@ -486,9 +486,9 @@ class BaseEndpointTestCase(unittest.TestCase):
             "postal_code": "06100"
           }
        }
+    }
 
-
-          checkout_order__redirect_object = 
+    checkout_order__redirect_object = {
         "currency": "MXN",
         "customer_info": {
            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
@@ -520,3 +520,4 @@ class BaseEndpointTestCase(unittest.TestCase):
             "postal_code": "06100"
           }
        }
+    }

@@ -105,7 +105,7 @@ class _Resource(object):
             if params is None:
                 params = ''
             body = requests.request(method, absolute_url, headers=HEADERS, verify=CA_PATH, data=json.dumps(params))
-            
+
         headers = body.headers
         headers['status'] = str(body.status_code)
         body = body._content
@@ -625,5 +625,5 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
 
 class CheckoutOrder(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
 
-        def instance_url(self):
-        return "orders" 
+    def instance_url(self):
+        return "orders"
