@@ -277,7 +277,6 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert discount_line.code == "descuento"
         assert discount_line.type == "loyalty"
 
-
     def test_19_order_create_with_customer_id(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         customer = self.client.Customer.create(self.customer_object.copy())

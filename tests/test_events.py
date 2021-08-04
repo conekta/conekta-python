@@ -14,7 +14,6 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
 
         assert event.data
 
-
     def test_02_line_item_event(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
