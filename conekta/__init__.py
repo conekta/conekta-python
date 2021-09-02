@@ -625,5 +625,5 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
 
 class CheckoutOrder(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
 
-        def instance_url(self):
+    def instance_url(self):
         return "orders" 
