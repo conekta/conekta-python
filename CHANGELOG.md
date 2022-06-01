@@ -1,3 +1,8 @@
+## [2.7.0](https://github.com/conekta/conekta-python/releases/tag/v2.6.0) - 2020-06-08
+### Change
+- Remove List.total attribute in favor of List.has_more attribute for performance
+  reasons
+
 ## [2.6.0](https://github.com/conekta/conekta-python/releases/tag/v2.6.0) - 2020-12-30
 ### Change
 - Support creation of a payment link in the SDK.
