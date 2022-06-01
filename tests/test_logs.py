@@ -11,5 +11,6 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         logs = self.client.Log.where({})
         self.assertIsInstance(logs.data[0], self.client.Log)
+        assert("total" not in logs.__dict__)
         retrieved_log = self.client.Log.find(logs.data[0].id)
         assert retrieved_log.id

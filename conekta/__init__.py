@@ -17,7 +17,7 @@ except ImportError:
 
 API_VERSION = '2.0.0'
 
-__version__ = '2.6.0'
+__version__ = '2.7.0'
 __author__ = 'Leo Fischer'
 
 API_BASE = 'https://api.conekta.io/'
@@ -239,6 +239,7 @@ class _FindableResource(_Resource):
         query['limit'] = limit
 
         response = cls.load_url(endpoint, 'GET', query, api_key=api_key)
+        del response["total"]
         pag = Pagination(response)
         data = response["data"]
 
