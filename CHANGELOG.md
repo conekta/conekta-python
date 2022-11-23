@@ -1,3 +1,7 @@
+## [2.6.1](https://github.com/conekta/conekta-python/releases/tag/v2.6.1) - 2020-12-30
+### Change
+- Fix indentation error
+
 ## [2.6.0](https://github.com/conekta/conekta-python/releases/tag/v2.6.0) - 2020-12-30
 ### Change
 - Support creation of a payment link in the SDK.
