@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
-#(c) 2013 Julian Ceballos <@jceb>
+# (c) 2013 Julian Ceballos <@jceb>
 
 import unittest
 import random
@@ -23,13 +23,13 @@ class BaseEndpointTestCase(unittest.TestCase):
             "email": "logan.thomas@xmen.org",
             "phone": "403-342-0642",
             "line_items": [{
-              "name": "Shades",
-              "description": "Imported From Mex.",
-              "unit_price": 20000,
-              "quantity": 1,
-              "sku": "cohb_s1",
-              "category": "eyewear"
-           }]
+                "name": "Shades",
+                "description": "Imported From Mex.",
+                "unit_price": 20000,
+                "quantity": 1,
+                "sku": "cohb_s1",
+                "category": "eyewear"
+            }]
         }
     }
 
@@ -46,13 +46,13 @@ class BaseEndpointTestCase(unittest.TestCase):
             "email": "logan.thomas@xmen.org",
             "phone": "403-342-0642",
             "line_items": [{
-              "name": "Shades",
-              "description": "Imported From Mex.",
-              "unit_price": 20000,
-              "quantity": 1,
-              "sku": "cohb_s1",
-              "category": "eyewear"
-           }]
+                "name": "Shades",
+                "description": "Imported From Mex.",
+                "unit_price": 20000,
+                "quantity": 1,
+                "sku": "cohb_s1",
+                "category": "eyewear"
+            }]
         }
     }
 
@@ -69,13 +69,13 @@ class BaseEndpointTestCase(unittest.TestCase):
             "email": "logan.thomas@xmen.org",
             "phone": "403-342-0642",
             "line_items": [{
-              "name": "Shades",
-              "description": "Imported From Mex.",
-              "unit_price": 20000,
-              "quantity": 1,
-              "sku": "cohb_s1",
-              "category": "eyewear"
-           }]
+                "name": "Shades",
+                "description": "Imported From Mex.",
+                "unit_price": 20000,
+                "quantity": 1,
+                "sku": "cohb_s1",
+                "category": "eyewear"
+            }]
         }
     }
 
@@ -92,18 +92,18 @@ class BaseEndpointTestCase(unittest.TestCase):
             "email": "logan.thomas@xmen.org",
             "phone": "403-342-0642",
             "line_items": [{
-              "name": "Shades",
-              "description": "Imported From Mex.",
-              "unit_price": 20000,
-              "quantity": 1,
-              "sku": "cohb_s1",
-              "category": "eyewear"
-           }]
+                "name": "Shades",
+                "description": "Imported From Mex.",
+                "unit_price": 20000,
+                "quantity": 1,
+                "sku": "cohb_s1",
+                "category": "eyewear"
+            }]
         }
     }
 
     plan_object = {
-        'id':'py_test_plan_' + str(random.randint(1, 1000000)),
+        'id': 'py_test_plan_' + str(random.randint(1, 1000000)),
         'name': 'Python Test Subscription',
         'amount': 10000,
         'currency': 'MXN',
@@ -112,28 +112,28 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
     customer_object = {
-        'name':'James Howlett',
-        'email':'logan@x-men.org',
-        'phone':'+525511223344',
-        'payment_sources':[
-          { 'token_id': 'tok_test_visa_4242',
-            'type': 'card'},
-          { 'token_id': 'tok_test_mastercard_5100',
-            'type': 'card'}
+        'name': 'James Howlett',
+        'email': 'logan@x-men.org',
+        'phone': '+525511223344',
+        'payment_sources': [
+            {'token_id': 'tok_test_visa_4242',
+             'type': 'card'},
+            {'token_id': 'tok_test_mastercard_5100',
+                'type': 'card'}
         ],
-    "shipping_contacts": [{
-        "phone": "+525511223344",
-        "receiver": "Marvin Fuller",
-        "between_streets": "Ackerman Crescent",
-        "address": {
-            "street1": "250 Alexis St",
-            "city": "Red Deer",
-            "state": "Alberta",
-            "country": "CA",
-            "postal_code": "T4N 0B8"
-        }
+        "shipping_contacts": [{
+            "phone": "+525511223344",
+            "receiver": "Marvin Fuller",
+            "between_streets": "Ackerman Crescent",
+            "address": {
+                "street1": "250 Alexis St",
+                "city": "Red Deer",
+                "state": "Alberta",
+                "country": "CA",
+                "postal_code": "T4N 0B8"
+            }
 
-    }]
+        }]
     }
 
     payee_object = {
@@ -153,69 +153,69 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
     order_object = {
-      "line_items": [
-          {
-              "name": "Box of Cohiba S1s",
-              "description": "Imported From Mex.",
-              "unit_price": 20000,
-              "quantity": 1,
-              "sku": "cohb_s1",
-              "category": "food",
-              "type" : "physical",
-              "tags" : ["food", "mexican food"]
-          }
-      ],
-      "tax_lines":[
-        {
-          "description": "IVA",
-          "amount": 600,
-          "metadata": {
-            "random_key": "random_value"
-          }
-        }],
-      "shipping_lines":[
-        {
-          "amount": 0,
-          "tracking_number": "TRACK123",
-          "carrier": "USPS",
-          "method": "Train",
-          "metadata": {
-             "random_key": "random_value"
-          }
-        }],
-      "discount_lines":[
-        {
-          "code": "descuento",
-          "type": "loyalty",
-          "amount": 600
-        }],
-      "customer_info":{
-          "name": "John Constantine",
-          "phone": "+525533445566",
-          "email": "john@meh.com",
-          "corporate": False,
-          "vertical_info": {}
+        "line_items": [
+            {
+                "name": "Box of Cohiba S1s",
+                "description": "Imported From Mex.",
+                "unit_price": 20000,
+                "quantity": 1,
+                "sku": "cohb_s1",
+                "category": "food",
+                "type": "physical",
+                "tags": ["food", "mexican food"]
+            }
+        ],
+        "tax_lines": [
+            {
+                "description": "IVA",
+                "amount": 600,
+                "metadata": {
+                    "random_key": "random_value"
+                }
+            }],
+        "shipping_lines": [
+            {
+                "amount": 0,
+                "tracking_number": "TRACK123",
+                "carrier": "USPS",
+                "method": "Train",
+                "metadata": {
+                    "random_key": "random_value"
+                }
+            }],
+        "discount_lines": [
+            {
+                "code": "descuento",
+                "type": "loyalty",
+                "amount": 600
+            }],
+        "customer_info": {
+            "name": "John Constantine",
+            "phone": "+525533445566",
+            "email": "john@meh.com",
+            "corporate": False,
+            "vertical_info": {}
         },
-      "shipping_contact":{
-          "phone" : "5544332211",
-          "receiver": "Marvin Fuller",
-          "between_streets": "Ackerman Crescent",
-          "address": {
-              "street1": "250 Alexis St",
-              "state": "Alberta",
-              "country": "MX",
-              "postal_code": "23455",
-              "metadata":{ "soft_validations": True}
-          }
-      },
-      "charges": [{
-        "payment_method":{
-          "type":"oxxo_cash"
+        "shipping_contact": {
+            "phone": "5544332211",
+            "receiver": "Marvin Fuller",
+            "between_streets": "Ackerman Crescent",
+            "address": {
+                "street1": "250 Alexis St",
+                "state": "Alberta",
+                "country": "MX",
+                "postal_code": "23455",
+                "metadata": {"soft_validations": True}
+            }
         },
-        "amount": 20000
-      }],
-      "currency" : "mxn",
-      "metadata" : {"test" : "extra info"}
+        "charges": [{
+            "payment_method": {
+                "type": "oxxo_cash"
+            },
+            "amount": 20000
+        }],
+        "currency": "mxn",
+        "metadata": {"test": "extra info"}
     }
     line_item_object = {
         "name": "test line item",
@@ -224,14 +224,14 @@ class BaseEndpointTestCase(unittest.TestCase):
         "quantity": 2,
         "sku": "noSKU",
         "category": "food",
-        "type" : "physical",
-        "tags" : ["food", "mexican food"]
+        "type": "physical",
+        "tags": ["food", "mexican food"]
     }
     tax_line_object = {
         "description": "IVA2",
         "amount": 600,
         "metadata": {
-        "random_key": "random_value"
+            "random_key": "random_value"
         }
     }
 
@@ -241,7 +241,7 @@ class BaseEndpointTestCase(unittest.TestCase):
         "carrier": "USPS",
         "method": "Train",
         "metadata": {
-           "random_key": "random_value"
+            "random_key": "random_value"
         }
     }
 
@@ -252,30 +252,30 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
     order_shipping_contact_object = {
-      "shipping_contact": {
-        "phone" : "+525511223399",
-        "receiver": "Marvin Fuller",
-        "between_streets": "Ackerman Crescent",
-        "address": {
-            "street1": "250 Alexis St",
-            "state": "Alberta",
-            "country": "MX",
-            "postal_code": "23455",
-            "metadata":{ "soft_validations": True}
-          }
-      }
+        "shipping_contact": {
+            "phone": "+525511223399",
+            "receiver": "Marvin Fuller",
+            "between_streets": "Ackerman Crescent",
+            "address": {
+                "street1": "250 Alexis St",
+                "state": "Alberta",
+                "country": "MX",
+                "postal_code": "23455",
+                "metadata": {"soft_validations": True}
+            }
+        }
     }
 
     charge_object = {
-      "payment_method":{
-        "type":"oxxo_cash"
-      },
-      "amount": 20000
+        "payment_method": {
+            "type": "oxxo_cash"
+        },
+        "amount": 20000
     }
 
     payment_source_object = {
-      'token_id': 'tok_test_visa_4242',
-      'type': 'card'
+        'token_id': 'tok_test_visa_4242',
+        'type': 'card'
     }
 
     update_payment_source_object = {
@@ -319,13 +319,13 @@ class BaseEndpointTestCase(unittest.TestCase):
                 "unit_price": 1000,
                 "quantity": 10
             }],
-        "currency": "MXN",
-        "customer_info": {
-              "name": "Juan Perez",
-              "email": "test@conekta.com",
-              "phone": "5566982090"
+            "currency": "MXN",
+            "customer_info": {
+                "name": "Juan Perez",
+                "email": "test@conekta.com",
+                "phone": "5566982090"
+            }
         }
-      }
     }
 
     checkout_object_multiple = {
@@ -343,13 +343,13 @@ class BaseEndpointTestCase(unittest.TestCase):
                 "unit_price": 1000,
                 "quantity": 10
             }],
-        "currency": "MXN",
-        "customer_info": {
-              "name": "Juan Perez",
-              "email": "test@conekta.com",
-              "phone": "5566982090"
+            "currency": "MXN",
+            "customer_info": {
+                "name": "Juan Perez",
+                "email": "test@conekta.com",
+                "phone": "5566982090"
+            }
         }
-      }
     }
 
     checkout_object_msi = {
@@ -367,13 +367,13 @@ class BaseEndpointTestCase(unittest.TestCase):
                 "unit_price": 1000,
                 "quantity": 10
             }],
-        "currency": "MXN",
-        "customer_info": {
-              "name": "Juan Perez",
-              "email": "test@conekta.com",
-              "phone": "5566982090"
+            "currency": "MXN",
+            "customer_info": {
+                "name": "Juan Perez",
+                "email": "test@conekta.com",
+                "phone": "5566982090"
+            }
         }
-      }
     }
 
     checkout_object_type_checkout = {
@@ -391,17 +391,17 @@ class BaseEndpointTestCase(unittest.TestCase):
                 "unit_price": 1000,
                 "quantity": 10
             }],
-        "currency": "MXN",
-        "customer_info": {
-              "name": "Juan Perez",
-              "email": "test@conekta.com",
-              "phone": "5566982090"
+            "currency": "MXN",
+            "customer_info": {
+                "name": "Juan Perez",
+                "email": "test@conekta.com",
+                "phone": "5566982090"
+            }
         }
-      }
     }
 
-        checkout_object_send = {
-        "id": "05b25724-df59-4925-8762-105d627875fd"
+    checkout_object_send = {
+        "id": "05b25724-df59-4925-8762-105d627875fd",
         "name": "Payment Link Name",
         "type": "checkout",
         "recurrent": True,
@@ -411,112 +411,112 @@ class BaseEndpointTestCase(unittest.TestCase):
         "monthly_installments_enabled": True,
         "monthly_installments_options": [3, 6, 9, 12],
         "order_template": {
-            "line_items": [{
-                "name": "Red Wine",
-                "unit_price": 1000,
-                "quantity": 10
-            }],
-        "currency": "MXN",
-        "customer_info": {
-              "name": "Juan Perez",
-              "email": "test@conekta.com",
-              "phone": "5566982090"
+                "line_items": [{
+                    "name": "Red Wine",
+                    "unit_price": 1000,
+                    "quantity": 10
+                }],
+            "currency": "MXN",
+            "customer_info": {
+                    "name": "Juan Perez",
+                    "email": "test@conekta.com",
+                    "phone": "5566982090"
+            }
         }
-      }
     }
 
-
-    checkout_order_object = 
+    checkout_order_object = {
         "currency": "MXN",
         "customer_info": {
-           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
         },
-       "line_items": [{
-           "name": "Box of Cohiba S1s",
-           "unit_price": 300000,
-           "quantity": 1
-       }],
-       "shipping_lines": [{
-           "amount": 0
-       }],
-       "checkout": {
-           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
-           "multifactor_authentication": False,
-           "monthly_installments_enabled": False,
-           "monthly_installments_options": [3,6,9,12,18],
-           "expires_at": 1609891200
+        "line_items": [{
+            "name": "Box of Cohiba S1s",
+            "unit_price": 300000,
+            "quantity": 1
+        }],
+        "shipping_lines": [{
+            "amount": 0
+        }],
+        "checkout": {
+            "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+            "multifactor_authentication": False,
+            "monthly_installments_enabled": False,
+            "monthly_installments_options": [3, 6, 9, 12, 18],
+            "expires_at": 1609891200
         },
-       "shipping_contact": {
-          "phone": "+5215555555555",
-          "receiver": "Marvin Fuller",
-          "address": {
-            "street1": "Nuevo Leon 4",
-            "country": "MX",
-            "postal_code": "06100"
-          }
-       }
+        "shipping_contact": {
+            "phone": "+5215555555555",
+            "receiver": "Marvin Fuller",
+            "address": {
+                "street1": "Nuevo Leon 4",
+                "country": "MX",
+                "postal_code": "06100"
+            }
+        }}
 
-    checkout_msi_order__object = 
+    checkout_msi_order__object = {
         "currency": "MXN",
         "customer_info": {
-           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
         },
-       "line_items": [{
-           "name": "Box of Cohiba S1s",
-           "unit_price": 300000,
-           "quantity": 1
-       }],
-       "shipping_lines": [{
-           "amount": 0
-       }],
-       "checkout": {
-           "type":"Integration",
-           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
-           "multifactor_authentication": False,
-           "monthly_installments_enabled": True,
-           "monthly_installments_options": [3,6,9,12,18],
-           "expires_at": 1609891200
+        "line_items": [{
+            "name": "Box of Cohiba S1s",
+            "unit_price": 300000,
+            "quantity": 1
+        }],
+        "shipping_lines": [{
+            "amount": 0
+        }],
+        "checkout": {
+            "type": "Integration",
+            "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+            "multifactor_authentication": False,
+            "monthly_installments_enabled": True,
+            "monthly_installments_options": [3, 6, 9, 12, 18],
+            "expires_at": 1609891200
         },
-       "shipping_contact": {
-          "phone": "+5215555555555",
-          "receiver": "Marvin Fuller",
-          "address": {
-            "street1": "Nuevo Leon 4",
-            "country": "MX",
-            "postal_code": "06100"
-          }
-       }
+        "shipping_contact": {
+            "phone": "+5215555555555",
+            "receiver": "Marvin Fuller",
+            "address": {
+                "street1": "Nuevo Leon 4",
+                "country": "MX",
+                "postal_code": "06100"
+            }
+        }
+    }
 
-
-          checkout_order__redirect_object = 
+    checkout_order__redirect_object = {
         "currency": "MXN",
         "customer_info": {
-           "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
         },
-       "line_items": [{
-           "name": "Box of Cohiba S1s",
-           "unit_price": 300000,
-           "quantity": 1
-       }],
-       "shipping_lines": [{
-           "amount": 0
-       }],
-       "checkout": {
-           "type":"HostedPayment",
-           "success_url": "testredirect.com",
-           "failure_url": "testredirect.com",
-           "allowed_payment_methods": ["cash", "card", "bank_transfer"],
-           "multifactor_authentication": False,
-           "monthly_installments_enabled": False,
-           "monthly_installments_options": [3,6,9,12,18],
-           "expires_at": 1609891200
+        "line_items": [{
+            "name": "Box of Cohiba S1s",
+            "unit_price": 300000,
+            "quantity": 1
+        }],
+        "shipping_lines": [{
+            "amount": 0
+        }],
+        "checkout": {
+            "type": "HostedPayment",
+            "success_url": "testredirect.com",
+            "failure_url": "testredirect.com",
+            "allowed_payment_methods": ["cash", "card", "bank_transfer"],
+            "multifactor_authentication": False,
+            "monthly_installments_enabled": False,
+            "monthly_installments_options": [3, 6, 9, 12, 18],
+            "expires_at": 1609891200
         },
-       "shipping_contact": {
-          "phone": "+5215555555555",
-          "receiver": "Marvin Fuller",
-          "address": {
-            "street1": "Nuevo Leon 4",
-            "country": "MX",
-            "postal_code": "06100"
-          }
-       }
+        "shipping_contact": {
+            "phone": "+5215555555555",
+            "receiver": "Marvin Fuller",
+            "address": {
+                "street1": "Nuevo Leon 4",
+                "country": "MX",
+                "postal_code": "06100"
+            }
+        }
+    }
