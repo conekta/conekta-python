@@ -17,7 +17,7 @@ except ImportError:
 
 API_VERSION = '2.0.0'
 
-__version__ = '2.6.0'
+__version__ = '2.6.1'
 __author__ = 'Leo Fischer'
 
 API_BASE = 'https://api.conekta.io/'
@@ -626,4 +626,4 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
 class CheckoutOrder(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
 
     def instance_url(self):
-        return "orders" 
+        return "orders"
