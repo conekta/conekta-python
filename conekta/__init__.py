@@ -17,7 +17,7 @@ except ImportError:
 
 API_VERSION = '2.0.0'
 
-__version__ = '2.6.1'
+__version__ = '2.6.2'
 __author__ = 'Leo Fischer'
 
 API_BASE = 'https://api.conekta.io/'
@@ -410,7 +410,7 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         return charge
 
     def createShippingContact(self, params, api_key=None):
-        orders = self.update(params)
+        orders = self.update(params, api_key=api_key)
         self.shipping_contact = ShippingContact(orders['shipping_contact'])
         return self.shipping_contact
 
@@ -437,12 +437,6 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
             "%s/discount_lines" % self.instance_url(), 'POST', params, api_key=api_key))
         self.discount_lines.append(discount_line)
         return discount_line
-
-    def createCheckout(self, params, api_key=None):
-        checkout = CheckoutOrder(DiscountLine.load_url(
-            "%s/orders" % self.instance_url(), 'POST', params, api_key=api_key))
-        self.checkout.append(checkout)
-        return checkout
 
 
 class CustomerInfo(_UpdatableResource):
@@ -525,17 +519,14 @@ class Checkout(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
     def __init__(self, *args, **kwargs):
         super(Checkout, self).__init__(*args, **kwargs)
 
-    def create(self, params, api_key=None):
-        return self.load_via_http_request("%s/checkouts" % self.instance_url(), 'POST', params, api_key=api_key)
-
     def cancel(self, params, api_key=None):
-        return self.load_via_http_request("%s/checkouts/cancel/%s" % (self.instance_url(), self.id), 'PUT', None, api_key=api_key)
+        return self.load_via_http_request("%s/cancel" % (self.instance_url()), 'PUT', None, api_key=api_key)
 
     def sendEmail(self, params, api_key=None):
-        return self.load_via_http_request("%s/checkouts/email" % self.instance_url(), 'POST', params, api_key=api_key)
+        return self.load_via_http_request("%s/email" % self.instance_url(), 'POST', params, api_key=api_key)
 
     def sendSms(self, params, api_key=None):
-        return self.load_via_http_request("%s/checkouts/sms" % self.instance_url(), 'POST', params, api_key=api_key)
+        return self.load_via_http_request("%s/sms" % self.instance_url(), 'POST', params, api_key=api_key)
 
 
 class Event(_FindableResource):

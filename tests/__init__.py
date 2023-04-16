@@ -5,6 +5,7 @@
 import unittest
 import random
 import conekta
+from datetime import datetime, timedelta
 
 
 class BaseEndpointTestCase(unittest.TestCase):
@@ -119,7 +120,7 @@ class BaseEndpointTestCase(unittest.TestCase):
             {'token_id': 'tok_test_visa_4242',
              'type': 'card'},
             {'token_id': 'tok_test_mastercard_5100',
-                'type': 'card'}
+             'type': 'card'}
         ],
         "shipping_contacts": [{
             "phone": "+525511223344",
@@ -308,7 +309,7 @@ class BaseEndpointTestCase(unittest.TestCase):
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": False,
-        "expired_at": 1590882634,
+        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": False,
@@ -329,10 +330,11 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
     checkout_object_multiple = {
+        "payments_limit_count": 2,
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": True,
-        "expired_at": 1590882634,
+        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": False,
@@ -353,10 +355,11 @@ class BaseEndpointTestCase(unittest.TestCase):
     }
 
     checkout_object_msi = {
+        "payments_limit_count" : 2,
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": True,
-        "expired_at": 1590882634,
+        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": True,
@@ -411,16 +414,16 @@ class BaseEndpointTestCase(unittest.TestCase):
         "monthly_installments_enabled": True,
         "monthly_installments_options": [3, 6, 9, 12],
         "order_template": {
-                "line_items": [{
-                    "name": "Red Wine",
-                    "unit_price": 1000,
-                    "quantity": 10
-                }],
+            "line_items": [{
+                "name": "Red Wine",
+                "unit_price": 1000,
+                "quantity": 10
+            }],
             "currency": "MXN",
             "customer_info": {
-                    "name": "Juan Perez",
-                    "email": "test@conekta.com",
-                    "phone": "5566982090"
+                "name": "Juan Perez",
+                "email": "test@conekta.com",
+                "phone": "5566982090"
             }
         }
     }
@@ -428,7 +431,7 @@ class BaseEndpointTestCase(unittest.TestCase):
     checkout_order_object = {
         "currency": "MXN",
         "customer_info": {
-            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2tgwCPgJZR56HvkKK"
         },
         "line_items": [{
             "name": "Box of Cohiba S1s",
@@ -443,7 +446,7 @@ class BaseEndpointTestCase(unittest.TestCase):
             "multifactor_authentication": False,
             "monthly_installments_enabled": False,
             "monthly_installments_options": [3, 6, 9, 12, 18],
-            "expires_at": 1609891200
+            "expired_at": int((datetime.today() + timedelta(days=1)).timestamp())
         },
         "shipping_contact": {
             "phone": "+5215555555555",
@@ -458,7 +461,7 @@ class BaseEndpointTestCase(unittest.TestCase):
     checkout_msi_order__object = {
         "currency": "MXN",
         "customer_info": {
-            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2tgwCPgJZR56HvkKK"
         },
         "line_items": [{
             "name": "Box of Cohiba S1s",
@@ -490,7 +493,7 @@ class BaseEndpointTestCase(unittest.TestCase):
     checkout_order__redirect_object = {
         "currency": "MXN",
         "customer_info": {
-            "customer_id": "cus_2o3FvMEBiKitVK1vQ"
+            "customer_id": "cus_2tgwCPgJZR56HvkKK"
         },
         "line_items": [{
             "name": "Box of Cohiba S1s",
@@ -502,13 +505,13 @@ class BaseEndpointTestCase(unittest.TestCase):
         }],
         "checkout": {
             "type": "HostedPayment",
-            "success_url": "testredirect.com",
-            "failure_url": "testredirect.com",
+            "success_url": "https://testredirect.com",
+            "failure_url": "https://testredirect.com",
             "allowed_payment_methods": ["cash", "card", "bank_transfer"],
             "multifactor_authentication": False,
             "monthly_installments_enabled": False,
             "monthly_installments_options": [3, 6, 9, 12, 18],
-            "expires_at": 1609891200
+            "expired_at": int((datetime.today() + timedelta(days=1)).timestamp())
         },
         "shipping_contact": {
             "phone": "+5215555555555",
