@@ -5,7 +5,7 @@
 from . import BaseEndpointTestCase
 
 
-class OrdersEndpointTestCase(BaseEndpointTestCase):
+class WebhooksEndpointTestCase(BaseEndpointTestCase):
     def test_1_webhooks(self):
         url = 'https://www.example.com'
         url2 = url + '/new_endpoint'

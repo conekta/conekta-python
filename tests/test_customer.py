@@ -4,7 +4,7 @@
 from . import BaseEndpointTestCase
 
 
-class OrdersEndpointTestCase(BaseEndpointTestCase):
+class CustomersEndpointTestCase(BaseEndpointTestCase):
 
     def test_01_customer_create(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
@@ -15,7 +15,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert customer.name == 'James Howlett'
         assert customer.email == 'logan@x-men.org'
         assert customer.phone == '+525511223344'
-        assert payment_source.brand.lower() == 'visa' or payment_source.brand.lower() == 'mc'
+        assert payment_source.brand.lower() == 'visa' or payment_source.brand.lower() == 'mastercard'
         assert payment_source.last4 == '4242' or payment_source.last4 == '5100'
         assert payment_source.type == 'card'
 
@@ -39,7 +39,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         payment_source = customer.payment_sources[0]
         payment_source.update(self.update_payment_source_object.copy())
         payment_source = customer.payment_sources[0]
-        assert payment_source.brand.lower() == 'visa' or payment_source.brand.lower() == 'mc'
+        assert payment_source.brand.lower() == 'visa' or payment_source.brand.lower() == 'mastercard'
         assert payment_source.last4 == '4242' or payment_source.last4 == '5100'
 
     def test_04_customer_delete_payment_source(self):

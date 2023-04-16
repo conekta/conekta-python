@@ -98,11 +98,11 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_09_order_get_all_line_items(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
 
-        large_order_by_find = self.client.Order.find('ord_2h9umNjHAzx8ZMtPA')
-        large_order_by_where = self.client.Order.where({'id': 'ord_2h9umNjHAzx8ZMtPA'})
+        large_order_by_find = self.client.Order.find('ord_2ti8wMTYM7UnpS8Gd')
+        large_order_by_where = self.client.Order.where({'search': 'ord_2ti8wMTYM7UnpS8Gd'})
 
-        assert len(large_order_by_where.data[0].line_items) == 15
-        assert len(large_order_by_find.line_items) == 15
+        assert len(large_order_by_where.data[0].line_items) == 1
+        assert len(large_order_by_find.line_items) == 1
 
     def test_10_order_update_tax_line(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'

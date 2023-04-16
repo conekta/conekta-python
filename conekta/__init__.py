@@ -568,7 +568,7 @@ class Payout(_CreatableResource, _FindableResource):
     pass
 
 
-class Pagination(_CreatableResource):
+class Pagination(_CreatableResource, _FindableResource):
     def next(self):
         if not hasattr(self, 'next_page_url'):
             return None
