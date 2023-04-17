@@ -75,3 +75,12 @@ class CustomersEndpointTestCase(BaseEndpointTestCase):
         customer2 = self.client.Customer.find(customer.id)
 
         assert customer2.subscription.plan_id == "opal-plan"
+
+    def test_21_delete_payment_source(self):
+        self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
+        customer = self.client.Customer.create(self.customer_object.copy())
+        payment_source = customer.payment_sources[0]
+
+        response = payment_source.delete()
+
+        assert payment_source.id == response.id

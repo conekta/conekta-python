@@ -634,7 +634,7 @@ class LineItem(_CreatableResource, _UpdatableResource, _DeletableResource, _Find
         return "orders/%s/line_items" % (self.parent.id)
 
     def delete(self, params={}, api_key=None):
-        return super(LineItem, self).delete(params, self.parent.line_items)
+        return super(LineItem, self).delete(params, self.parent.line_items, api_key=api_key)
 
 
 class TaxLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
@@ -643,7 +643,7 @@ class TaxLine(_CreatableResource, _UpdatableResource, _DeletableResource, _Finda
         return "orders/%s/tax_lines" % (self.parent.id)
 
     def delete(self, params={}, api_key=None):
-        return super(TaxLine, self).delete(params, self.parent.tax_lines)
+        return super(TaxLine, self).delete(params, self.parent.tax_lines, api_key=api_key)
 
 
 class ShippingLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
@@ -652,7 +652,7 @@ class ShippingLine(_CreatableResource, _UpdatableResource, _DeletableResource, _
         return "orders/%s/shipping_lines" % (self.parent.id)
 
     def delete(self, params={}, api_key=None):
-        return super(ShippingLine, self).delete(params, self.parent.shipping_lines)
+        return super(ShippingLine, self).delete(params, self.parent.shipping_lines, api_key=api_key)
 
 
 class DiscountLine(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource, _EventableResource):
@@ -661,15 +661,15 @@ class DiscountLine(_CreatableResource, _UpdatableResource, _DeletableResource, _
         return "orders/%s/discount_lines" % (self.parent.id)
 
     def delete(self, params={}, api_key=None):
-        return super(DiscountLine, self).delete(params, self.parent.discount_lines)
+        return super(DiscountLine, self).delete(params, self.parent.discount_lines, api_key=api_key)
 
 
 class PaymentSource(_CreatableResource, _UpdatableResource, _DeletableResource, _FindableResource):
     def instance_url(self):
         return "customers/%s/payment_sources" % (self.parent.id)
 
-    def delete(self, params={}, api_key=None):
-        return super(PaymentSource, self).delete(params, self.parent.payment_sources)
+    def delete(self, params={}, list_to_remove=None, uri=None, api_key=None):
+        return super(PaymentSource, self).delete(params, self.parent.payment_sources, api_key=api_key)
 
     def events(self, params={}, api_key=None):
         uri = "%s/payment_sources/%s/events" % (
@@ -689,7 +689,7 @@ class ShippingContact(_CreatableResource, _UpdatableResource, _DeletableResource
 
     def delete(self, params={}, api_key=None):
         uri = "%s/shipping_contacts/%s" % (self.parent.instance_url(), self.id)
-        return super(ShippingContact, self).delete(params, self.parent.shipping_contacts, uri)
+        return super(ShippingContact, self).delete(params, self.parent.shipping_contacts, uri, api_key=api_key)
 
     def events(self, params={}, api_key=None):
         uri = "%s/shipping_contacts/%s/events" % (
