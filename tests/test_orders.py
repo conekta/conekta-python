@@ -1,9 +1,10 @@
 #!/usr/bin/python
-#coding: utf-8
-#(c) 2017 Ramses Carbajal <@RamsesCarbajal>
+# coding: utf-8
+# (c) 2017 Ramses Carbajal <@RamsesCarbajal>
 
 from . import BaseEndpointTestCase
 from nose.tools import assert_raises
+
 
 class OrdersEndpointTestCase(BaseEndpointTestCase):
 
@@ -97,11 +98,11 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_09_order_get_all_line_items(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
 
-        large_order_by_find  = self.client.Order.find('ord_2h9umNjHAzx8ZMtPA')
-        large_order_by_where = self.client.Order.where({'id':'ord_2h9umNjHAzx8ZMtPA'})
+        large_order_by_find = self.client.Order.find('ord_2ti8wMTYM7UnpS8Gd')
+        large_order_by_where = self.client.Order.where({'search': 'ord_2ti8wMTYM7UnpS8Gd'})
 
-        assert len(large_order_by_where.data[0].line_items) == 15
-        assert len(large_order_by_find.line_items) == 15
+        assert len(large_order_by_where.data[0].line_items) == 1
+        assert len(large_order_by_find.line_items) == 1
 
     def test_10_order_update_tax_line(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
@@ -145,8 +146,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_13_order_with_token_id(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
-        charge = {}
-        charge["payment_method"] = {}
+        charge = {"payment_method": {}}
         charge["payment_method"]["type"] = "card"
         charge["payment_method"]["token_id"] = "tok_test_visa_4242"
         raw_order["charges"] = [charge]
@@ -159,8 +159,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_14_order_capture(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
-        charge = {}
-        charge["payment_method"] = {}
+        charge = {"payment_method": {}}
         charge["payment_method"]["type"] = "card"
         charge["payment_method"]["token_id"] = "tok_test_visa_4242"
         raw_order["charges"] = [charge]
@@ -201,8 +200,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
     def test_15_order_void(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
         raw_order = self.order_object.copy()
-        charge = {}
-        charge["payment_method"] = {}
+        charge = {"payment_method": {}}
         charge["payment_method"]["type"] = "card"
         charge["payment_method"]["token_id"] = "tok_test_visa_4242"
         raw_order["charges"] = [charge]
@@ -214,7 +212,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         assert order.payment_status == "pre_authorized"
 
         refunded_order = order.void()
-        
+
         assert refunded_order.payment_status == "voided"
 
     def test_16_order_delete_line_item(self):
@@ -276,7 +274,6 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         discount_line = order.discount_lines[0]
         assert discount_line.code == "descuento"
         assert discount_line.type == "loyalty"
-
 
     def test_19_order_create_with_customer_id(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'

@@ -1,3 +1,9 @@
+## [2.6.2](https://github.com/conekta/conekta-python/releases/tag/v2.6.2) - 2023-04-17
+### Change
+- Fix checkout errors
+- Fix checkout tests
+- Delete unused methods
+
 ## [2.6.1](https://github.com/conekta/conekta-python/releases/tag/v2.6.1) - 2020-12-30
 ### Change
 - Fix indentation error

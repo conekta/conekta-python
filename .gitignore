@@ -13,3 +13,4 @@ conekta/.DS_Store
 build
 conekta.egg-info
 dist
+.idea

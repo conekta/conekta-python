@@ -1,11 +1,12 @@
 #!/usr/bin/python
-#coding: utf-8
-#(c) 2013 Julian Ceballos <@jceb>
-#(c) 2014- Leo Fischer / Conekta <@leofischer/@conektaio>
+# coding: utf-8
+# (c) 2013 Julian Ceballos <@jceb>
+# (c) 2014- Leo Fischer / Conekta <@leofischer/@conektaio>
 
 from . import BaseEndpointTestCase
 
-class OrdersEndpointTestCase(BaseEndpointTestCase):
+
+class EventsEndpointTestCase(BaseEndpointTestCase):
 
     def test_01_order_event(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
@@ -13,7 +14,6 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         event = order.events()
 
         assert event.data
-
 
     def test_02_line_item_event(self):
         self.client.api_key = 'key_ZLy4aP2szht1HqzkCezDEA'
