@@ -283,8 +283,7 @@ class OrdersEndpointTestCase(BaseEndpointTestCase):
         order_params["customer_info"] = {}
         order_params["customer_info"]["customer_id"] = customer.id
 
-        charge_params = {}
-        charge_params["payment_method"] = {}
+        charge_params = {"payment_method": {}}
         charge_params["payment_method"]["type"] = "card"
         charge_params["payment_method"]["token_id"] = "tok_test_visa_4242"
         order_params["charges"] = [charge_params]
