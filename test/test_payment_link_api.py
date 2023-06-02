@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.payment_link_api import PaymentLinkApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestPaymentLinkApi(unittest.TestCase):
     """PaymentLinkApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.payment_link_api.PaymentLinkApi()  # noqa: E501
+        self.api = conekta.api.payment_link_api.PaymentLinkApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,42 +37,75 @@ class TestPaymentLinkApi(unittest.TestCase):
 
         Cancel Payment Link  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.cancel_checkout('ff6918c6-5043-43b9-a7ec-d40d407d62c1', accept_language)
+        self.assertIsNotNone(response)
 
     def test_create_checkout(self):
         """Test case for create_checkout
 
         Create Unique Payment Link  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.Checkout(
+            allowed_payment_methods=['cash'],
+            expires_at=1231223,
+            name='test',
+            recurrent=False,
+            type='PaymentLink',
+            order_template=conekta.CheckoutOrderTemplate(
+                currency='MXN',
+                line_items=[conekta.Product(
+                    name='Product',
+                    unit_price=10000,
+                    quantity=1
+                )]
+            )
+        )
+        response = self.api.create_checkout(rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_email_checkout(self):
         """Test case for email_checkout
 
         Send an email  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.EmailCheckoutRequest(
+            email='foo@email.com'
+        )
+        response = self.api.email_checkout('ff6918c6-5043-43b9-a7ec-d40d407d62c1', rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_checkout(self):
         """Test case for get_checkout
 
         Get a payment link by ID  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_checkout('ff6918c6-5043-43b9-a7ec-d40d407d62c1', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_checkouts(self):
         """Test case for get_checkouts
 
         Get a list of payment links  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_checkouts(accept_language, limit=2)
+        self.assertIsNotNone(response)
 
     def test_sms_checkout(self):
         """Test case for sms_checkout
 
         Send an sms  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.SmsCheckoutRequest(
+            phonenumber='5534234343'
+        )
+        response = self.api.sms_checkout('ff6918c6-5043-43b9-a7ec-d40d407d62c1', rq, accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':
