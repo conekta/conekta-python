@@ -19,6 +19,7 @@ import conekta
 from conekta import ApiClient
 from conekta.api.shippings_api import ShippingsApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestShippingsApi(unittest.TestCase):
@@ -26,7 +27,7 @@ class TestShippingsApi(unittest.TestCase):
 
     def setUp(self):
         self.api = conekta.api.shippings_api.ShippingsApi(ApiClient(
-            configuration=conekta.Configuration(host='http://localhost:3000')
+            configuration=conekta.Configuration(host=get_base_path())
         ))  # noqa: E501
 
     def tearDown(self):
