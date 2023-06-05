@@ -38,5 +38,6 @@ jobs:
           npm install -g @mockoon/cli
           npx mockoon-cli start --data https://raw.githubusercontent.com/conekta/openapi/main/mocks/conekta_api.json --port 3000
       - name: Test with pytest
-        run: |
-          pytest
+        run: pytest
+        env:
+          BASE_PATH: http://localhost:3000
