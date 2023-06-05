@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.transactions_api import TransactionsApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestTransactionsApi(unittest.TestCase):
     """TransactionsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.transactions_api.TransactionsApi()  # noqa: E501
+        self.api = conekta.api.transactions_api.TransactionsApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,14 +37,18 @@ class TestTransactionsApi(unittest.TestCase):
 
         Get transaction  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_transaction('6456b6dfac0fd40001a64eb8', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_transactions(self):
         """Test case for get_transactions
 
         Get List transactions  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_transactions(accept_language, limit=2)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

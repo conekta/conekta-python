@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.payment_methods_api import PaymentMethodsApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestPaymentMethodsApi(unittest.TestCase):
     """PaymentMethodsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.payment_methods_api.PaymentMethodsApi()  # noqa: E501
+        self.api = conekta.api.payment_methods_api.PaymentMethodsApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,28 +37,47 @@ class TestPaymentMethodsApi(unittest.TestCase):
 
         Create Payment Method  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.CreateCustomerPaymentMethodsRequest(
+            oneof_schema_1_validator=conekta.PaymentMethodCardRequest(
+                type='card',
+                token_id='token'
+            )
+        )
+        response = self.api.create_customer_payment_methods('cus_2tYENskzTjjgkGQLt', rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_delete_customer_payment_methods(self):
         """Test case for delete_customer_payment_methods
 
         Delete Payment Method  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.delete_customer_payment_methods('cus_2tYENskzTjjgkGQLt', 'src_2tbd5Bgy67RL9oycM',
+                                                            accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_customer_payment_methods(self):
         """Test case for get_customer_payment_methods
 
         Get Payment Methods  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_customer_payment_methods('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_update_customer_payment_methods(self):
         """Test case for update_customer_payment_methods
 
         Update Payment Method  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.UpdatePaymentMethods(
+            name='test'
+        )
+        response = self.api.update_customer_payment_methods('cus_2tYENskzTjjgkGQLt', 'src_2tbd5Bgy67RL9oycM', rq,
+                                                            accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

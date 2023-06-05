@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.webhook_keys_api import WebhookKeysApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestWebhookKeysApi(unittest.TestCase):
     """WebhookKeysApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.webhook_keys_api.WebhookKeysApi()  # noqa: E501
+        self.api = conekta.api.webhook_keys_api.WebhookKeysApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,35 +37,51 @@ class TestWebhookKeysApi(unittest.TestCase):
 
         Create Webhook Key  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.WebhookKeyRequest(
+            active=True
+        )
+        response = self.api.create_webhook_key(accept_language, rq)
+        self.assertIsNotNone(response)
 
     def test_delete_webhook_key(self):
         """Test case for delete_webhook_key
 
         Delete Webhook key  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.delete_webhook_key('645a59da22e7da0001cad283', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_webhook_key(self):
         """Test case for get_webhook_key
 
         Get Webhook Key  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_webhook_key('645a5eb022e7da0001cad2a4', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_webhook_keys(self):
         """Test case for get_webhook_keys
 
         Get List of Webhook Keys  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_webhook_keys(accept_language, limit=2)
+        self.assertIsNotNone(response)
 
     def test_update_webhook_key(self):
         """Test case for update_webhook_key
 
         Update Webhook Key  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.WebhookKeyUpdateRequest(
+            active=False
+        )
+        response = self.api.update_webhook_key('645a613622e7da0001cad882', accept_language, rq)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

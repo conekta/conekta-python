@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.shippings_api import ShippingsApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestShippingsApi(unittest.TestCase):
     """ShippingsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.shippings_api.ShippingsApi()  # noqa: E501
+        self.api = conekta.api.shippings_api.ShippingsApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,21 +37,35 @@ class TestShippingsApi(unittest.TestCase):
 
         Create Shipping  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.ShippingRequest(
+            amount=100
+        )
+        response = self.api.orders_create_shipping('ord_2tUigJ8DgBhbp6w5D', rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_orders_delete_shipping(self):
         """Test case for orders_delete_shipping
 
         Delete Shipping  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.orders_delete_shipping('ord_2tUigJ8DgBhbp6w5D', 'ship_lin_2tVzNuDGSaDwreMg6',
+                                                   accept_language)
+        self.assertIsNotNone(response)
 
     def test_orders_update_shipping(self):
         """Test case for orders_update_shipping
 
         Update Shipping  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.ShippingRequest(
+            amount=100
+        )
+        response = self.api.orders_update_shipping('ord_2tUigJ8DgBhbp6w5D', 'ship_lin_2tVzNuDGSaDwreMg6', rq,
+                                                   accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

@@ -16,6 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.subscriptions_api import SubscriptionsApi  # noqa: E501
 from conekta.rest import ApiException
 
@@ -24,7 +25,9 @@ class TestSubscriptionsApi(unittest.TestCase):
     """SubscriptionsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.subscriptions_api.SubscriptionsApi()  # noqa: E501
+        self.api = conekta.api.subscriptions_api.SubscriptionsApi(ApiClient(
+            configuration=conekta.Configuration(host='http://localhost:3000')
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,49 +37,69 @@ class TestSubscriptionsApi(unittest.TestCase):
 
         Cancel Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.cancel_subscription('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_create_subscription(self):
         """Test case for create_subscription
 
         Create Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.SubscriptionRequest(
+            plan_id='plan_id'
+        )
+        response = self.api.create_subscription('cus_2tYENskzTjjgkGQLt', rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_all_events_from_subscription(self):
         """Test case for get_all_events_from_subscription
 
         Get Events By Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_all_events_from_subscription('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_subscription(self):
         """Test case for get_subscription
 
         Get Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_subscription('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_pause_subscription(self):
         """Test case for pause_subscription
 
         Pause Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.pause_subscription('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_resume_subscription(self):
         """Test case for resume_subscription
 
         Resume Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.resume_subscription('cus_2tYENskzTjjgkGQLt', accept_language)
+        self.assertIsNotNone(response)
 
     def test_update_subscription(self):
         """Test case for update_subscription
 
         Update Subscription  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.SubscriptionUpdateRequest(
+            plan_id='plan_id'
+        )
+        response = self.api.update_subscription('cus_2tYENskzTjjgkGQLt', rq, accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':
