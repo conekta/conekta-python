@@ -33,7 +33,7 @@ setup(
     name=NAME,
     version=VERSION,
     description="Conekta API",
-    author="Api support client",
+    author="Engineering Conekta",
     author_email="engineering@conekta.com",
     url="https://developers.conekta.com/",
     keywords=["OpenAPI", "OpenAPI-Generator", "Conekta API"],
