@@ -40,13 +40,14 @@ class TestPaymentMethodsApi(unittest.TestCase):
         """
         accept_language = 'es'
         rq = conekta.CreateCustomerPaymentMethodsRequest(
-            oneof_schema_1_validator=conekta.PaymentMethodCardRequest(
-                type='card',
-                token_id='token'
+            oneof_schema_2_validator=conekta.PaymentMethodCashRequest(
+                type='oxxo_recurrent'
             )
         )
         response = self.api.create_customer_payment_methods('cus_2tYENskzTjjgkGQLt', rq, accept_language)
         self.assertIsNotNone(response)
+        self.assertIsInstance(response.actual_instance, conekta.PaymentMethodCashResponse)
+        self.assertEqual('oxxo_recurrent', response.actual_instance.type)
 
     def test_delete_customer_payment_methods(self):
         """Test case for delete_customer_payment_methods
@@ -66,6 +67,9 @@ class TestPaymentMethodsApi(unittest.TestCase):
         accept_language = 'es'
         response = self.api.get_customer_payment_methods('cus_2tYENskzTjjgkGQLt', accept_language)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertIsInstance(response.data[0].actual_instance, conekta.PaymentMethodCardResponse)
+        self.assertEqual('card', response.data[0].actual_instance.type)
 
     def test_update_customer_payment_methods(self):
         """Test case for update_customer_payment_methods

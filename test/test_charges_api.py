@@ -41,6 +41,10 @@ class TestChargesApi(unittest.TestCase):
         accept_language = 'es'
         response = self.api.get_charges(accept_language, limit=20)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertIsNotNone(response.data[0].payment_method)
+        self.assertIsInstance(response.data[0].payment_method.actual_instance, conekta.PaymentMethodCash)
+        self.assertEqual('oxxo', response.data[0].payment_method.actual_instance.type)
 
     def test_orders_create_charge(self):
         """Test case for orders_create_charge
@@ -54,6 +58,9 @@ class TestChargesApi(unittest.TestCase):
         )
         response = self.api.orders_create_charge('ord_2tUigJ8DgBhbp6w5D', charge_request, accept_language)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.payment_method)
+        self.assertIsInstance(response.payment_method.actual_instance, conekta.PaymentMethodCard)
+        self.assertEqual('credit', response.payment_method.actual_instance.type)
 
 
 if __name__ == '__main__':
