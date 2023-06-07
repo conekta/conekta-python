@@ -16,15 +16,19 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.transfers_api import TransfersApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestTransfersApi(unittest.TestCase):
     """TransfersApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.transfers_api.TransfersApi()  # noqa: E501
+        self.api = conekta.api.transfers_api.TransfersApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path())
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,14 +38,18 @@ class TestTransfersApi(unittest.TestCase):
 
         Get Transfer  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_transfer('64462930651b2600017b6d43', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_transfers(self):
         """Test case for get_transfers
 
         Get a list of transfers  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_transfers(accept_language, limit=5)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

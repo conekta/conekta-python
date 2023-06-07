@@ -19,6 +19,7 @@ import conekta
 from conekta import ApiClient
 from conekta.api.api_keys_api import ApiKeysApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestApiKeysApi(unittest.TestCase):
@@ -26,7 +27,7 @@ class TestApiKeysApi(unittest.TestCase):
 
     def setUp(self):
         self.api = conekta.api.api_keys_api.ApiKeysApi(ApiClient(
-            configuration=conekta.Configuration(host='http://localhost:3000')
+            configuration=conekta.Configuration(host=get_base_path())
         ))  # noqa: E501
 
     def tearDown(self):

@@ -16,15 +16,19 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.discounts_api import DiscountsApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestDiscountsApi(unittest.TestCase):
     """DiscountsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.discounts_api.DiscountsApi()  # noqa: E501
+        self.api = conekta.api.discounts_api.DiscountsApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path())
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,21 +38,35 @@ class TestDiscountsApi(unittest.TestCase):
 
         Create Discount  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.OrderDiscountLinesRequest(
+            amount=2000,
+            code='CD',
+            type='type'
+        )
+        response = self.api.orders_create_discount_line('ord_2tUigJ8DgBhbp6w5D', rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_orders_delete_discount_lines(self):
         """Test case for orders_delete_discount_lines
 
         Delete Discount  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.orders_delete_discount_lines('ord_2tUigJ8DgBhbp6w5D', 'dis_lin_2tQQ58HPgPw7StE8z', accept_language)
+        self.assertIsNotNone(response)
 
     def test_orders_update_discount_lines(self):
         """Test case for orders_update_discount_lines
 
         Update Discount  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.UpdateOrderDiscountLinesRequest(
+            amount=2000
+        )
+        response = self.api.orders_update_discount_lines('ord_2tUigJ8DgBhbp6w5D', 'dis_lin_2tQQ58HPgPw7StE8z', rq, accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

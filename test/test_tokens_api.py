@@ -16,15 +16,19 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.tokens_api import TokensApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestTokensApi(unittest.TestCase):
     """TokensApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.tokens_api.TokensApi()  # noqa: E501
+        self.api = conekta.api.tokens_api.TokensApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path())
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,7 +38,18 @@ class TestTokensApi(unittest.TestCase):
 
         Create Token  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.Token(
+            card=conekta.TokenCard(
+                cvc='123',
+                exp_month='07',
+                exp_year='27',
+                name='Foo Foo',
+                number='5475040095304607'
+            )
+        )
+        response = self.api.create_token(rq, accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

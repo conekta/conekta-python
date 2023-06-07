@@ -16,15 +16,19 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.webhooks_api import WebhooksApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestWebhooksApi(unittest.TestCase):
     """WebhooksApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.webhooks_api.WebhooksApi()  # noqa: E501
+        self.api = conekta.api.webhooks_api.WebhooksApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path())
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,42 +38,62 @@ class TestWebhooksApi(unittest.TestCase):
 
         Create Webhook  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.WebhookRequest(
+            url='http://api.test.com',
+            synchronous=False
+        )
+        response = self.api.create_webhook(rq, accept_language)
+        self.assertIsNotNone(response)
 
     def test_delete_webhook(self):
         """Test case for delete_webhook
 
         Delete Webhook  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.delete_webhook('641b1d5662d7e00001eaa46b', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_webhook(self):
         """Test case for get_webhook
 
         Get Webhook  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_webhook('641b1d5662d7e00001eaa46b', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_webhooks(self):
         """Test case for get_webhooks
 
         Get List of Webhooks  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_webhooks(accept_language, limit=20)
+        self.assertIsNotNone(response)
 
     def test_test_webhook(self):
         """Test case for test_webhook
 
         Test Webhook  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.test_webhook('641b1d5662d7e00001eaa46b', accept_language)
+        self.assertIsNotNone(response)
 
     def test_update_webhook(self):
         """Test case for update_webhook
 
         Update Webhook  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        rq = conekta.WebhookUpdateRequest(
+            url='http://api.test.com',
+            synchronous=False
+        )
+        response = self.api.update_webhook('641b1d5662d7e00001eaa46b', rq, accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':

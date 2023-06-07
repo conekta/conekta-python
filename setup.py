@@ -19,7 +19,7 @@ from setuptools import setup, find_packages  # noqa: H301
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
-NAME = "conekta-python"
+NAME = "conekta"
 VERSION = "6.0.0"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
@@ -33,9 +33,9 @@ setup(
     name=NAME,
     version=VERSION,
     description="Conekta API",
-    author="Api support client",
+    author="Engineering Conekta",
     author_email="engineering@conekta.com",
-    url="https://developers.conekta.com/",
+    url="https://github.com/conekta/conekta-python",
     keywords=["OpenAPI", "OpenAPI-Generator", "Conekta API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),

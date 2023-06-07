@@ -19,6 +19,7 @@ import conekta
 from conekta import ApiClient
 from conekta.api.charges_api import ChargesApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestChargesApi(unittest.TestCase):
@@ -26,7 +27,7 @@ class TestChargesApi(unittest.TestCase):
 
     def setUp(self):
         self.api = conekta.api.charges_api.ChargesApi(ApiClient(
-            configuration=conekta.Configuration(host='http://localhost:3000')
+            configuration=conekta.Configuration(host=get_base_path())
         ))  # noqa: E501
 
     def tearDown(self):
@@ -40,6 +41,10 @@ class TestChargesApi(unittest.TestCase):
         accept_language = 'es'
         response = self.api.get_charges(accept_language, limit=20)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertIsNotNone(response.data[0].payment_method)
+        self.assertIsInstance(response.data[0].payment_method.actual_instance, conekta.PaymentMethodCash)
+        self.assertEqual('oxxo', response.data[0].payment_method.actual_instance.type)
 
     def test_orders_create_charge(self):
         """Test case for orders_create_charge
@@ -53,6 +58,9 @@ class TestChargesApi(unittest.TestCase):
         )
         response = self.api.orders_create_charge('ord_2tUigJ8DgBhbp6w5D', charge_request, accept_language)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.payment_method)
+        self.assertIsInstance(response.payment_method.actual_instance, conekta.PaymentMethodCard)
+        self.assertEqual('credit', response.payment_method.actual_instance.type)
 
 
 if __name__ == '__main__':

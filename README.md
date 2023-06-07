@@ -50,6 +50,7 @@ from __future__ import print_function
 
 import time
 import conekta
+import os
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -73,17 +74,21 @@ configuration = conekta.Configuration(
 # Enter a context with an instance of the API client
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conekta.AntifraudApi(api_client)
-    create_risk_rules_data = conekta.CreateRiskRulesData() # CreateRiskRulesData | requested field for blacklist rule
+    api_instance = conekta.CustomersApi(api_client)
+    customer = conekta.Customer(
+        email='customer@customer.com',
+        name='Customer Name',
+        phone='5534343434'
+    ) # Customer | requested field for create Customer
     accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
-        # Create blacklisted rule
-        api_response = api_instance.create_rule_blacklist(create_risk_rules_data, accept_language=accept_language)
-        print("The response of AntifraudApi->create_rule_blacklist:\n")
+        # Create Customer
+        api_response = api_instance.create_customer(customer, accept_language=accept_language)
+        print("The response of CustomersApi->create_customer:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling AntifraudApi->create_rule_blacklist: %s\n" % e)
+        print("Exception when calling CustomersApi->create_customer: %s\n" % e)
 
 ```
 

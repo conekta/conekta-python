@@ -19,6 +19,7 @@ import conekta
 from conekta import ApiClient
 from conekta.api.customers_api import CustomersApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestCustomersApi(unittest.TestCase):
@@ -26,7 +27,7 @@ class TestCustomersApi(unittest.TestCase):
 
     def setUp(self):
         self.api = conekta.api.customers_api.CustomersApi(ApiClient(
-            configuration=conekta.Configuration(host='http://localhost:3000')
+            configuration=conekta.Configuration(host=get_base_path())
         ))  # noqa: E501
 
     def tearDown(self):
@@ -82,6 +83,10 @@ class TestCustomersApi(unittest.TestCase):
         accept_language = 'es'
         response = self.api.get_customer_by_id('cus_2tYENskzTjjgkGQLt', accept_language)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.payment_sources)
+        self.assertIsNotNone(response.payment_sources.data)
+        self.assertIsInstance(response.payment_sources.data[0].actual_instance, conekta.PaymentMethodCardResponse)
+        self.assertEqual('card', response.payment_sources.data[0].actual_instance.type)
 
     def test_get_customers(self):
         """Test case for get_customers
@@ -91,6 +96,12 @@ class TestCustomersApi(unittest.TestCase):
         accept_language = 'es'
         response = self.api.get_customers(accept_language, limit=20)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertIsNotNone(response.data[0].payment_sources)
+        self.assertIsNotNone(response.data[0].payment_sources.data)
+        self.assertIsInstance(response.data[0].payment_sources.data[0].actual_instance,
+                              conekta.PaymentMethodSpeiRecurrent)
+        self.assertEqual('spei_recurrent', response.data[0].payment_sources.data[0].actual_instance.type)
 
     def test_update_customer(self):
         """Test case for update_customer

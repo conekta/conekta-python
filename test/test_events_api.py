@@ -16,15 +16,19 @@ from __future__ import absolute_import
 import unittest
 
 import conekta
+from conekta import ApiClient
 from conekta.api.events_api import EventsApi  # noqa: E501
 from conekta.rest import ApiException
+from test.test_utils import get_base_path
 
 
 class TestEventsApi(unittest.TestCase):
     """EventsApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.events_api.EventsApi()  # noqa: E501
+        self.api = conekta.api.events_api.EventsApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path())
+        ))  # noqa: E501
 
     def tearDown(self):
         pass
@@ -34,21 +38,27 @@ class TestEventsApi(unittest.TestCase):
 
         Get Event  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_event('63fe3d2ddf70970001cfb41a', accept_language)
+        self.assertIsNotNone(response)
 
     def test_get_events(self):
         """Test case for get_events
 
         Get list of Events  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.get_events(accept_language, limit=20)
+        self.assertIsNotNone(response)
 
     def test_resend_event(self):
         """Test case for resend_event
 
         Resend Event  # noqa: E501
         """
-        pass
+        accept_language = 'es'
+        response = self.api.resend_event('63fe3d2ddf70970001cfb41a', accept_language)
+        self.assertIsNotNone(response)
 
 
 if __name__ == '__main__':
