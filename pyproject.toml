@@ -21,8 +21,10 @@ tox = ">=3.9.0"
 flake8 = ">=4.0.0"
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
 
 [tool.pylint.'MESSAGES CONTROL']
 extension-pkg-whitelist = "pydantic"
