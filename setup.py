@@ -22,7 +22,6 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "conekta"
-VERSION = "6.0.0"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3",
@@ -33,7 +32,6 @@ REQUIRES = [
 
 setup(
     name=NAME,
-    version=VERSION,
     description="Conekta API",
     author="Engineering Conekta",
     author_email="engineering@conekta.com",
