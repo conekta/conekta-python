@@ -20,12 +20,14 @@ Create new shipping for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.shipping_order_response import ShippingOrderResponse
+from conekta.models.shipping_request import ShippingRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingsApi->orders_create_shipping: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +106,13 @@ Delete shipping
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.shipping_order_response import ShippingOrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -142,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingsApi->orders_delete_shipping: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -187,12 +192,14 @@ Update existing shipping for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.shipping_order_response import ShippingOrderResponse
+from conekta.models.shipping_request import ShippingRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -227,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingsApi->orders_update_shipping: %s\n" % e)
 ```
+
 
 ### Parameters
 

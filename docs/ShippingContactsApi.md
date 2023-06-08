@@ -20,12 +20,14 @@ Create a shipping contacts for a customer.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_shipping_contacts import CustomerShippingContacts
+from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingContactsApi->create_customer_shipping_contacts: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -104,12 +107,13 @@ Delete shipping contact that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -143,6 +147,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingContactsApi->delete_customer_shipping_contacts: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -188,12 +193,14 @@ Update shipping contact that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
+from conekta.models.customer_update_shipping_contacts import CustomerUpdateShippingContacts
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -228,6 +235,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingContactsApi->update_customer_shipping_contacts: %s\n" % e)
 ```
+
 
 ### Parameters
 

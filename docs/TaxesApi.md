@@ -20,12 +20,14 @@ Create new taxes for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_tax_request import OrderTaxRequest
+from conekta.models.update_order_tax_response import UpdateOrderTaxResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TaxesApi->orders_create_taxes: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +106,13 @@ Delete taxes for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.update_order_tax_response import UpdateOrderTaxResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -142,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TaxesApi->orders_delete_taxes: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -187,12 +192,14 @@ Update taxes for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.update_order_tax_request import UpdateOrderTaxRequest
+from conekta.models.update_order_tax_response import UpdateOrderTaxResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -227,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TaxesApi->orders_update_taxes: %s\n" % e)
 ```
+
 
 ### Parameters
 

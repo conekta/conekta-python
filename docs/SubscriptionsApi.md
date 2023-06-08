@@ -24,12 +24,13 @@ You can cancel the subscription to stop the plans that your customers consume
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_response import SubscriptionResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -62,6 +63,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->cancel_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -105,12 +107,14 @@ You can create the subscription to include the plans that your customers consume
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_request import SubscriptionRequest
+from conekta.models.subscription_response import SubscriptionResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -144,6 +148,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->create_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -189,12 +194,13 @@ You can get the events of the subscription(s) of a client, with the customer id
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_events_response import SubscriptionEventsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -227,6 +233,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->get_all_events_from_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -270,12 +277,13 @@ Get Subscription
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_response import SubscriptionResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -307,6 +315,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->get_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -349,12 +358,13 @@ You can pause the subscription to stop the plans that your customers consume
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_response import SubscriptionResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -387,6 +397,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->pause_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -431,12 +442,13 @@ You can resume the subscription to start the plans that your customers consume
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_response import SubscriptionResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -469,6 +481,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->resume_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -514,12 +527,14 @@ You can modify the subscription to change the plans that your customers consume
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.subscription_response import SubscriptionResponse
+from conekta.models.subscription_update_request import SubscriptionUpdateRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -553,6 +568,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling SubscriptionsApi->update_subscription: %s\n" % e)
 ```
+
 
 ### Parameters
 

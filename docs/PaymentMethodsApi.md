@@ -21,12 +21,14 @@ Create a payment method for a customer.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.create_customer_payment_methods_request import CreateCustomerPaymentMethodsRequest
+from conekta.models.create_customer_payment_methods_response import CreateCustomerPaymentMethodsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -60,6 +62,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentMethodsApi->create_customer_payment_methods: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -105,12 +108,13 @@ Delete an existing payment method
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.update_customer_payment_methods_response import UpdateCustomerPaymentMethodsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -144,6 +148,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentMethodsApi->delete_customer_payment_methods: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -189,12 +194,13 @@ Get a list of Payment Methods
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_payment_method_response import GetPaymentMethodResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -231,6 +237,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentMethodsApi->get_customer_payment_methods: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -278,12 +285,14 @@ Gets a payment Method that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.update_customer_payment_methods_response import UpdateCustomerPaymentMethodsResponse
+from conekta.models.update_payment_methods import UpdatePaymentMethods
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -318,6 +327,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentMethodsApi->update_customer_payment_methods: %s\n" % e)
 ```
+
 
 ### Parameters
 

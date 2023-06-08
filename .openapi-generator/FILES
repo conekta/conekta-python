@@ -2,7 +2,7 @@
 AUTHORS.md
 CODE_OF_CONDUCT.md
 LICENSE
-README.md
+VERSION
 conekta/__init__.py
 conekta/api/__init__.py
 conekta/api/antifraud_api.py
@@ -28,6 +28,7 @@ conekta/api/transfers_api.py
 conekta/api/webhook_keys_api.py
 conekta/api/webhooks_api.py
 conekta/api_client.py
+conekta/api_response.py
 conekta/configuration.py
 conekta/exceptions.py
 conekta/models/__init__.py
@@ -446,6 +447,7 @@ docs/WebhookResponse.md
 docs/WebhookUpdateRequest.md
 docs/WebhooksApi.md
 docs/WhitelistlistRuleResponse.md
+pyproject.toml
 requirements.txt
 setup.cfg
 setup.py

@@ -17,12 +17,13 @@ Get A List of Charges
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_charges_response import GetChargesResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -58,6 +59,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ChargesApi->get_charges: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +105,14 @@ Create charge for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.charge_order_response import ChargeOrderResponse
+from conekta.models.charge_request import ChargeRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -142,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ChargesApi->orders_create_charge: %s\n" % e)
 ```
+
 
 ### Parameters
 

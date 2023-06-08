@@ -40,11 +40,12 @@ class TestPaymentMethodsApi(unittest.TestCase):
         """
         accept_language = 'es'
         rq = conekta.CreateCustomerPaymentMethodsRequest(
-            oneof_schema_2_validator=conekta.PaymentMethodCashRequest(
+            conekta.PaymentMethodCashRequest(
                 type='oxxo_recurrent'
             )
         )
-        response = self.api.create_customer_payment_methods('cus_2tYENskzTjjgkGQLt', rq, accept_language)
+            
+        response = self.api.create_customer_payment_methods('cus_2tXyF9BwPG14UMkkg', rq, accept_language)
         self.assertIsNotNone(response)
         self.assertIsInstance(response.actual_instance, conekta.PaymentMethodCashResponse)
         self.assertEqual('oxxo_recurrent', response.actual_instance.type)

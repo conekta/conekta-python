@@ -20,12 +20,14 @@ Create discount lines for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.discount_lines_response import DiscountLinesResponse
+from conekta.models.order_discount_lines_request import OrderDiscountLinesRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DiscountsApi->orders_create_discount_line: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +106,13 @@ Delete an existing discount lines for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.discount_lines_response import DiscountLinesResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -142,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DiscountsApi->orders_delete_discount_lines: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -187,12 +192,14 @@ Update an existing discount lines for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.discount_lines_response import DiscountLinesResponse
+from conekta.models.update_order_discount_lines_request import UpdateOrderDiscountLinesRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -227,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DiscountsApi->orders_update_discount_lines: %s\n" % e)
 ```
+
 
 ### Parameters
 

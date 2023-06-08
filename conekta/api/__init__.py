@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 # flake8: noqa
 
 # import apis into api package
@@ -25,3 +23,4 @@ from conekta.api.transactions_api import TransactionsApi
 from conekta.api.transfers_api import TransfersApi
 from conekta.api.webhook_keys_api import WebhookKeysApi
 from conekta.api.webhooks_api import WebhooksApi
+
