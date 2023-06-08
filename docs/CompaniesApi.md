@@ -19,12 +19,13 @@ Consume the list of child companies.  This is used for holding companies with se
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_companies_response import GetCompaniesResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +60,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CompaniesApi->get_companies: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -101,12 +103,13 @@ Get Company
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.company_response import CompanyResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -138,6 +141,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CompaniesApi->get_company: %s\n" % e)
 ```
+
 
 ### Parameters
 

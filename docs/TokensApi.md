@@ -18,12 +18,14 @@ Generate a payment token, to associate it with a card
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.token import Token
+from conekta.models.token_response import TokenResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -55,6 +57,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TokensApi->create_token: %s\n" % e)
 ```
+
 
 ### Parameters
 

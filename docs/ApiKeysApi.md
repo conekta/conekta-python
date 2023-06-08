@@ -22,12 +22,14 @@ Create a api key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.api_key_create_response import ApiKeyCreateResponse
+from conekta.models.api_key_request import ApiKeyRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -60,6 +62,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ApiKeysApi->create_api_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +106,13 @@ Deletes a api key that corresponds to a api key ID
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.delete_api_keys_response import DeleteApiKeysResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -140,6 +144,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ApiKeysApi->delete_api_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -182,12 +187,13 @@ Gets a api key that corresponds to a api key ID
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.api_key_response import ApiKeyResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -220,6 +226,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ApiKeysApi->get_api_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -263,12 +270,13 @@ Consume the list of api keys you have
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_api_keys_response import GetApiKeysResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -304,6 +312,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ApiKeysApi->get_api_keys: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -349,12 +358,14 @@ Update an existing api key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.api_key_response import ApiKeyResponse
+from conekta.models.api_key_update_request import ApiKeyUpdateRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -387,6 +398,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ApiKeysApi->update_api_key: %s\n" % e)
 ```
+
 
 ### Parameters
 

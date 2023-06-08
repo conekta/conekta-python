@@ -20,12 +20,13 @@ Returns a single event
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.event_response import EventResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -58,6 +59,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling EventsApi->get_event: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -99,12 +101,13 @@ Get list of Events
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_events_response import GetEventsResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -140,6 +143,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling EventsApi->get_events: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -185,12 +189,13 @@ Try to send an event
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.events_resend_response import EventsResendResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -223,6 +228,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling EventsApi->resend_event: %s\n" % e)
 ```
+
 
 ### Parameters
 

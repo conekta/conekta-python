@@ -22,12 +22,14 @@ Create a new plan for an existing order
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.plan_request import PlanRequest
+from conekta.models.plan_response import PlanResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -60,6 +62,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PlansApi->create_plan: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -101,12 +104,13 @@ Delete Plan
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.plan_response import PlanResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -138,6 +142,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PlansApi->delete_plan: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -179,12 +184,13 @@ Get Plan
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.plan_response import PlanResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -217,6 +223,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PlansApi->get_plan: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -259,12 +266,13 @@ Get A List of Plans
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_plans_response import GetPlansResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -300,6 +308,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PlansApi->get_plans: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -344,12 +353,14 @@ Update Plan
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.plan_response import PlanResponse
+from conekta.models.plan_update_request import PlanUpdateRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -383,6 +394,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PlansApi->update_plan: %s\n" % e)
 ```
+
 
 ### Parameters
 

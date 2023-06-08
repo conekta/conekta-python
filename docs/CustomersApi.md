@@ -24,12 +24,14 @@ The purpose of business is to create and keep a customer, you will learn what el
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer import Customer
+from conekta.models.customer_response import CustomerResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -62,6 +64,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->create_customer: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -106,12 +109,14 @@ Create Fiscal entity resource that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.create_customer_fiscal_entities_response import CreateCustomerFiscalEntitiesResponse
+from conekta.models.customer_fiscal_entities_request import CustomerFiscalEntitiesRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -145,6 +150,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->create_customer_fiscal_entities: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -190,12 +196,13 @@ Deleted a customer resource that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_response import CustomerResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -228,6 +235,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->delete_customer_by_id: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -272,12 +280,13 @@ Gets a customer resource that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_response import CustomerResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -310,6 +319,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->get_customer_by_id: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -353,12 +363,13 @@ The purpose of business is to create and maintain a client, you will learn what 
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customers_response import CustomersResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -394,6 +405,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->get_customers: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -439,12 +451,14 @@ You can update customer-related data
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_response import CustomerResponse
+from conekta.models.update_customer import UpdateCustomer
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -478,6 +492,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->update_customer: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -523,12 +538,14 @@ Update Fiscal Entity resource that corresponds to a customer ID.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.customer_update_fiscal_entities_request import CustomerUpdateFiscalEntitiesRequest
+from conekta.models.update_customer_fiscal_entities_response import UpdateCustomerFiscalEntitiesResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -563,6 +580,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->update_customer_fiscal_entities: %s\n" % e)
 ```
+
 
 ### Parameters
 

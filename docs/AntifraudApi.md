@@ -21,12 +21,14 @@ Create blacklisted rule
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.blacklist_rule_response import BlacklistRuleResponse
+from conekta.models.create_risk_rules_data import CreateRiskRulesData
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -58,6 +60,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->create_rule_blacklist: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -97,12 +100,14 @@ Create whitelisted rule
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.create_risk_rules_data import CreateRiskRulesData
+from conekta.models.whitelistlist_rule_response import WhitelistlistRuleResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -134,6 +139,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->create_rule_whitelist: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -174,12 +180,13 @@ Delete blacklisted rule
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.deleted_blacklist_rule_response import DeletedBlacklistRuleResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -212,6 +219,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->delete_rule_blacklist: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -253,12 +261,13 @@ Delete whitelisted rule
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.deleted_whitelist_rule_response import DeletedWhitelistRuleResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -291,6 +300,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->delete_rule_whitelist: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -335,12 +345,13 @@ Return all rules
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.risk_rules_list import RiskRulesList
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -371,6 +382,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->get_rule_blacklist: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -411,12 +423,13 @@ Return all rules
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.risk_rules_list import RiskRulesList
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -447,6 +460,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AntifraudApi->get_rule_whitelist: %s\n" % e)
 ```
+
 
 ### Parameters
 

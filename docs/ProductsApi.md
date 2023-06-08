@@ -20,12 +20,14 @@ Create a new product for an existing order.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.product import Product
+from conekta.models.product_order_response import ProductOrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ProductsApi->orders_create_product: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -103,12 +106,13 @@ Delete product for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.product_order_response import ProductOrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -142,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ProductsApi->orders_delete_product: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -187,12 +192,14 @@ Update an existing product for an existing orden
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.product_order_response import ProductOrderResponse
+from conekta.models.update_product import UpdateProduct
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -227,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ProductsApi->orders_update_product: %s\n" % e)
 ```
+
 
 ### Parameters
 

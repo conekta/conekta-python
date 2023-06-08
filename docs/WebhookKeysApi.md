@@ -22,12 +22,14 @@ Create a webhook key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.webhook_key_create_response import WebhookKeyCreateResponse
+from conekta.models.webhook_key_request import WebhookKeyRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -59,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling WebhookKeysApi->create_webhook_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -98,12 +101,13 @@ Delete Webhook key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.webhook_key_delete_response import WebhookKeyDeleteResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -135,6 +139,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling WebhookKeysApi->delete_webhook_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -175,12 +180,13 @@ Get Webhook Key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.webhook_key_response import WebhookKeyResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -213,6 +219,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling WebhookKeysApi->get_webhook_key: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -256,12 +263,13 @@ Consume the list of webhook keys you have
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_webhook_keys_response import GetWebhookKeysResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -297,6 +305,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling WebhookKeysApi->get_webhook_keys: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -342,12 +351,14 @@ updates an existing webhook key
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.webhook_key_response import WebhookKeyResponse
+from conekta.models.webhook_key_update_request import WebhookKeyUpdateRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -380,6 +391,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling WebhookKeysApi->update_webhook_key: %s\n" % e)
 ```
+
 
 ### Parameters
 

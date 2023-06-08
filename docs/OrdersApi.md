@@ -25,12 +25,13 @@ Cancel an order that has been previously created.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -63,6 +64,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->cancel_order: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -108,12 +110,14 @@ Create a new order.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_request import OrderRequest
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -146,6 +150,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->create_order: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -190,12 +195,13 @@ Info for a specific order
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -228,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->get_order_by_id: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -271,12 +278,13 @@ Get order details in the form of a list
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.get_orders_response import GetOrdersResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -312,6 +320,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->get_orders: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -357,12 +366,13 @@ A refunded order describes the items, amount, and reason an order is being refun
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -396,6 +406,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->order_cancel_refund: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -442,12 +453,14 @@ A refunded order describes the items, amount, and reason an order is being refun
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_refund_request import OrderRefundRequest
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -481,6 +494,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->order_refund: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -527,12 +541,14 @@ Processes an order that has been previously authorized.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_capture_request import OrderCaptureRequest
+from conekta.models.order_response import OrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -566,6 +582,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->orders_create_capture: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -611,12 +628,14 @@ Update an existing Order.
 
 * Bearer Authentication (bearerAuth):
 ```python
-from __future__ import print_function
 import time
 import os
 import conekta
+from conekta.models.order_response import OrderResponse
+from conekta.models.order_update_request import OrderUpdateRequest
 from conekta.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api.conekta.io
 # See configuration.py for a list of all supported configuration parameters.
 configuration = conekta.Configuration(
@@ -649,6 +668,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling OrdersApi->update_order: %s\n" % e)
 ```
+
 
 ### Parameters
 
