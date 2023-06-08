@@ -2,7 +2,6 @@
 AUTHORS.md
 CODE_OF_CONDUCT.md
 LICENSE
-README.md
 VERSION
 conekta/__init__.py
 conekta/api/__init__.py
