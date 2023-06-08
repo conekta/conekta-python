@@ -33,7 +33,7 @@ name = "conekta"
 authors = [
   { name="Engineering Conekta", email="engineering@conekta.com" },
 ]
-description = "A small example package"
+description = "This is a Python library that allows interaction with https://api.conekta.io API."
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
