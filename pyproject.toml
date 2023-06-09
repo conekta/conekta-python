@@ -25,5 +25,26 @@ flake8 = ">=4.0.0"
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools_scm]
+
 [tool.pylint.'MESSAGES CONTROL']
 extension-pkg-whitelist = "pydantic"
+
+[project]
+name = "conekta"
+version = "6.0.0"
+authors = [
+  { name="Engineering Conekta", email="engineering@conekta.com" },
+]
+description = "This is a Python library that allows interaction with https://api.conekta.io API."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/conekta/conekta-python"
+"Bug Tracker" = "https://github.com/conekta/conekta-python/issues"

@@ -1,0 +1,40 @@
+name: publish on pypi
+on:
+  release:
+    types: [published]
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Check if release creator is an authors
+        run: |
+          if [[ $(jq '.sender.type' $GITHUB_EVENT_PATH) == '"User"' ]]; then
+            creator_login=${{ github.event.release.author.login }}
+            if ! grep -q $creator_login AUTHORS.md; then
+              echo "Release creator is not an code owner, skipping the rest of the workflow."
+              exit 1
+            fi
+          fi
+      - name: Validate release version
+        run: |
+          tag_name=${{ github.event.release.tag_name }}
+          version=$(cat VERSION)
+          if [ $tag_name != $version ]; then
+            echo "Release tag_name is not the same that in file VERSION"
+            exit 1
+          fi
+      - name: Build project
+        run: python3 -m pip install --upgrade build && python3 -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          verbose: true

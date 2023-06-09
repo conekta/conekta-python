@@ -41,6 +41,10 @@ Then import the package:
 import conekta
 ```
 
+### Tests
+
+Execute `pytest` to run the tests.
+
 ## Getting Started
 
 Please follow the [installation procedure](#installation--usage) and then run the following:
@@ -51,12 +55,6 @@ import time
 import conekta
 from conekta.rest import ApiException
 from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.conekta.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = conekta.Configuration(
-    host = "https://api.conekta.io"
-)
 
 # The client must configure the authentication and authorization parameters
 # in accordance with the API server security policy.
@@ -385,11 +383,14 @@ Class | Method | HTTP request | Description
  - [WebhookUpdateRequest](docs/WebhookUpdateRequest.md)
  - [WhitelistlistRuleResponse](docs/WhitelistlistRuleResponse.md)
 
+
 <a id="documentation-for-authorization"></a>
 ## Documentation For Authorization
 
 
-## bearerAuth
+Authentication schemes defined for the API:
+<a id="bearerAuth"></a>
+### bearerAuth
 
 - **Type**: Bearer authentication
 

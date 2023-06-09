@@ -17,4 +17,3 @@ appveyor.yml
 .openapi-generator/
 .openapi-generator
 .github/workflows/python.yml
-README.md
