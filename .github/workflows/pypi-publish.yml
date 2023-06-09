@@ -23,10 +23,18 @@ jobs:
               exit 1
             fi
           fi
+      - name: Validate release version
+        run: |
+          tag_name=${{ github.event.release.tag_name }}
+          if ! grep -q tag_name VERSION; then
+            echo "Release tag_name is not the same that in file VERSION"
+            exit 1
+          fi
       - name: Build project
         run: python3 -m pip install --upgrade build && python3 -m build
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
           verbose: true
