@@ -26,18 +26,18 @@ from conekta.models.customer_info_just_customer_id import CustomerInfoJustCustom
 from typing import Any, List
 from pydantic import StrictStr, Field
 
-ORDERREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoJustCustomerId"]
+ORDERUPDATEREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoJustCustomerId"]
 
-class OrderRequestCustomerInfo(BaseModel):
+class OrderUpdateRequestCustomerInfo(BaseModel):
     """
-    Customer information
+    OrderUpdateRequestCustomerInfo
     """
     # data type: CustomerInfo
     oneof_schema_1_validator: Optional[CustomerInfo] = None
     # data type: CustomerInfoJustCustomerId
     oneof_schema_2_validator: Optional[CustomerInfoJustCustomerId] = None
     actual_instance: Any
-    one_of_schemas: List[str] = Field(ORDERREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS, const=True)
+    one_of_schemas: List[str] = Field(ORDERUPDATEREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS, const=True)
 
     class Config:
         validate_assignment = True
@@ -54,7 +54,7 @@ class OrderRequestCustomerInfo(BaseModel):
 
     @validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
-        instance = OrderRequestCustomerInfo.construct()
+        instance = OrderUpdateRequestCustomerInfo.construct()
         error_messages = []
         match = 0
         # validate data type: CustomerInfo
@@ -69,21 +69,21 @@ class OrderRequestCustomerInfo(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in OrderUpdateRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in OrderUpdateRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
         else:
             return v
 
     @classmethod
-    def from_dict(cls, obj: dict) -> OrderRequestCustomerInfo:
+    def from_dict(cls, obj: dict) -> OrderUpdateRequestCustomerInfo:
         return cls.from_json(json.dumps(obj))
 
     @classmethod
-    def from_json(cls, json_str: str) -> OrderRequestCustomerInfo:
+    def from_json(cls, json_str: str) -> OrderUpdateRequestCustomerInfo:
         """Returns the object represented by the json string"""
-        instance = OrderRequestCustomerInfo.construct()
+        instance = OrderUpdateRequestCustomerInfo.construct()
         error_messages = []
         match = 0
 
@@ -102,10 +102,10 @@ class OrderRequestCustomerInfo(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into OrderUpdateRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into OrderUpdateRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
         else:
             return instance
 

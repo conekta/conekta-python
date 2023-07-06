@@ -20,7 +20,7 @@ import json
 
 
 from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from pydantic import BaseModel, Field, StrictStr, conlist, constr
 
 class PaymentMethodCard(BaseModel):
     """
@@ -31,6 +31,7 @@ class PaymentMethodCard(BaseModel):
     account_type: Optional[StrictStr] = None
     auth_code: Optional[StrictStr] = None
     brand: Optional[StrictStr] = None
+    contract_id: Optional[constr(strict=True, max_length=10, min_length=10)] = Field(None, description="Id sent for recurrent charges.")
     country: Optional[StrictStr] = None
     exp_month: Optional[StrictStr] = None
     exp_year: Optional[StrictStr] = None
@@ -38,7 +39,7 @@ class PaymentMethodCard(BaseModel):
     issuer: Optional[StrictStr] = None
     last4: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
-    __properties = ["type", "object", "account_type", "auth_code", "brand", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name"]
+    __properties = ["type", "object", "account_type", "auth_code", "brand", "contract_id", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name"]
 
     class Config:
         """Pydantic configuration"""
@@ -81,6 +82,7 @@ class PaymentMethodCard(BaseModel):
             "account_type": obj.get("account_type"),
             "auth_code": obj.get("auth_code"),
             "brand": obj.get("brand"),
+            "contract_id": obj.get("contract_id"),
             "country": obj.get("country"),
             "exp_month": obj.get("exp_month"),
             "exp_year": obj.get("exp_year"),

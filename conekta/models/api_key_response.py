@@ -27,14 +27,17 @@ class ApiKeyResponse(BaseModel):
     api keys model
     """
     active: Optional[StrictBool] = Field(None, description="Indicates if the api key is active")
-    created_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds with the creation date of the api key")
-    description: Optional[StrictStr] = Field(None, description="Detail of the use that will be given to the api key")
+    created_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was created")
+    updated_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was last updated")
+    deactivated_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was deleted")
+    description: Optional[StrictStr] = Field(None, description="A name or brief explanation of what this api key is used for")
     id: Optional[StrictStr] = Field(None, description="Unique identifier of the api key")
-    livemode: Optional[StrictBool] = Field(None, description="Indicates if the api key is in live mode")
-    object: Optional[StrictStr] = Field(None, description="Object name, value is api_key")
+    livemode: Optional[StrictBool] = Field(None, description="Indicates if the api key is in production")
+    deleted: Optional[StrictBool] = Field(None, description="Indicates if the api key was deleted")
+    object: Optional[StrictStr] = Field(None, description="Object name, value is 'api_key'")
     prefix: Optional[StrictStr] = Field(None, description="The first few characters of the authentication_token")
-    role: Optional[StrictStr] = Field(None, description="Indicates the user account private=owner or public=public")
-    __properties = ["active", "created_at", "description", "id", "livemode", "object", "prefix", "role"]
+    role: Optional[StrictStr] = Field(None, description="Indicates if the api key is private or public")
+    __properties = ["active", "created_at", "updated_at", "deactivated_at", "description", "id", "livemode", "deleted", "object", "prefix", "role"]
 
     class Config:
         """Pydantic configuration"""
@@ -60,6 +63,11 @@ class ApiKeyResponse(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if deactivated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.deactivated_at is None and "deactivated_at" in self.__fields_set__:
+            _dict['deactivated_at'] = None
+
         return _dict
 
     @classmethod
@@ -74,9 +82,12 @@ class ApiKeyResponse(BaseModel):
         _obj = ApiKeyResponse.parse_obj({
             "active": obj.get("active"),
             "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
+            "deactivated_at": obj.get("deactivated_at"),
             "description": obj.get("description"),
             "id": obj.get("id"),
             "livemode": obj.get("livemode"),
+            "deleted": obj.get("deleted"),
             "object": obj.get("object"),
             "prefix": obj.get("prefix"),
             "role": obj.get("role")

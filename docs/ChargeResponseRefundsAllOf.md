@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**List[ChargeResponseRefundsData]**](ChargeResponseRefundsData.md) |  | [optional] 
+**data** | [**List[ChargeResponseRefundsData]**](ChargeResponseRefundsData.md) | refunds | [optional] 
 
 ## Example
 

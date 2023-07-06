@@ -3,6 +3,7 @@
 # import apis into api package
 from conekta.api.antifraud_api import AntifraudApi
 from conekta.api.api_keys_api import ApiKeysApi
+from conekta.api.balances_api import BalancesApi
 from conekta.api.charges_api import ChargesApi
 from conekta.api.companies_api import CompaniesApi
 from conekta.api.customers_api import CustomersApi

@@ -22,23 +22,20 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
 
-class ApiKeyCreateResponse(BaseModel):
+class ApiKeyResponseOnDelete(BaseModel):
     """
-    ApiKeyCreateResponse
+    api keys model
     """
-    authentication_token: Optional[StrictStr] = Field(None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.")
     active: Optional[StrictBool] = Field(None, description="Indicates if the api key is active")
     created_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was created")
-    updated_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was last updated")
-    deactivated_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was deleted")
     description: Optional[StrictStr] = Field(None, description="A name or brief explanation of what this api key is used for")
-    id: Optional[StrictStr] = Field(None, description="Unique identifier of the api key")
     livemode: Optional[StrictBool] = Field(None, description="Indicates if the api key is in production")
-    deleted: Optional[StrictBool] = Field(None, description="Indicates if the api key was deleted")
-    object: Optional[StrictStr] = Field(None, description="Object name, value is 'api_key'")
     prefix: Optional[StrictStr] = Field(None, description="The first few characters of the authentication_token")
+    id: Optional[StrictStr] = Field(None, description="Unique identifier of the api key")
+    object: Optional[StrictStr] = Field(None, description="Object name, value is 'api_key'")
+    deleted: Optional[StrictBool] = Field(None, description="Indicates if the api key was deleted")
     role: Optional[StrictStr] = Field(None, description="Indicates if the api key is private or public")
-    __properties = ["authentication_token", "active", "created_at", "updated_at", "deactivated_at", "description", "id", "livemode", "deleted", "object", "prefix", "role"]
+    __properties = ["active", "created_at", "description", "livemode", "prefix", "id", "object", "deleted", "role"]
 
     class Config:
         """Pydantic configuration"""
@@ -54,8 +51,8 @@ class ApiKeyCreateResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ApiKeyCreateResponse:
-        """Create an instance of ApiKeyCreateResponse from a JSON string"""
+    def from_json(cls, json_str: str) -> ApiKeyResponseOnDelete:
+        """Create an instance of ApiKeyResponseOnDelete from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -64,34 +61,26 @@ class ApiKeyCreateResponse(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # set to None if deactivated_at (nullable) is None
-        # and __fields_set__ contains the field
-        if self.deactivated_at is None and "deactivated_at" in self.__fields_set__:
-            _dict['deactivated_at'] = None
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ApiKeyCreateResponse:
-        """Create an instance of ApiKeyCreateResponse from a dict"""
+    def from_dict(cls, obj: dict) -> ApiKeyResponseOnDelete:
+        """Create an instance of ApiKeyResponseOnDelete from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ApiKeyCreateResponse.parse_obj(obj)
+            return ApiKeyResponseOnDelete.parse_obj(obj)
 
-        _obj = ApiKeyCreateResponse.parse_obj({
-            "authentication_token": obj.get("authentication_token"),
+        _obj = ApiKeyResponseOnDelete.parse_obj({
             "active": obj.get("active"),
             "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
-            "deactivated_at": obj.get("deactivated_at"),
             "description": obj.get("description"),
-            "id": obj.get("id"),
             "livemode": obj.get("livemode"),
-            "deleted": obj.get("deleted"),
-            "object": obj.get("object"),
             "prefix": obj.get("prefix"),
+            "id": obj.get("id"),
+            "object": obj.get("object"),
+            "deleted": obj.get("deleted"),
             "role": obj.get("role")
         })
         return _obj

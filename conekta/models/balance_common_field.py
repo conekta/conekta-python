@@ -19,17 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
-from pydantic import BaseModel, Field, StrictStr
-
-class DiscountLinesResponseAllOf(BaseModel):
+class BalanceCommonField(BaseModel):
     """
-    DiscountLinesResponseAllOf
+    balance common fields model
     """
-    id: StrictStr = Field(..., description="The discount line id")
-    object: StrictStr = Field(..., description="The object name")
-    parent_id: StrictStr = Field(..., description="The order id")
-    __properties = ["id", "object", "parent_id"]
+    amount: Optional[StrictInt] = Field(None, description="The balance's amount")
+    currency: Optional[StrictStr] = Field(None, description="The balance's currency")
+    __properties = ["amount", "currency"]
 
     class Config:
         """Pydantic configuration"""
@@ -45,8 +44,8 @@ class DiscountLinesResponseAllOf(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DiscountLinesResponseAllOf:
-        """Create an instance of DiscountLinesResponseAllOf from a JSON string"""
+    def from_json(cls, json_str: str) -> BalanceCommonField:
+        """Create an instance of BalanceCommonField from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -58,18 +57,17 @@ class DiscountLinesResponseAllOf(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DiscountLinesResponseAllOf:
-        """Create an instance of DiscountLinesResponseAllOf from a dict"""
+    def from_dict(cls, obj: dict) -> BalanceCommonField:
+        """Create an instance of BalanceCommonField from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DiscountLinesResponseAllOf.parse_obj(obj)
+            return BalanceCommonField.parse_obj(obj)
 
-        _obj = DiscountLinesResponseAllOf.parse_obj({
-            "id": obj.get("id"),
-            "object": obj.get("object"),
-            "parent_id": obj.get("parent_id")
+        _obj = BalanceCommonField.parse_obj({
+            "amount": obj.get("amount"),
+            "currency": obj.get("currency")
         })
         return _obj
 

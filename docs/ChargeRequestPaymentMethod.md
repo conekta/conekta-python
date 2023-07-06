@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **token_id** | **str** |  | [optional] 
 **payment_source_id** | **str** |  | [optional] 
+**contract_id** | **str** | Optional id sent to indicate the bank contract for recurrent card charges. | [optional] 
 
 ## Example
 

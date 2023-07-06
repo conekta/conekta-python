@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+
 from pydantic import BaseModel, Field, StrictStr, conint
 
 class DiscountLinesResponse(BaseModel):
@@ -29,9 +29,9 @@ class DiscountLinesResponse(BaseModel):
     amount: conint(strict=True, ge=0) = Field(..., description="The amount to be deducted from the total sum of all payments, in cents.")
     code: StrictStr = Field(..., description="Discount code.")
     type: StrictStr = Field(..., description="It can be 'loyalty', 'campaign', 'coupon' o 'sign'")
-    id: Optional[StrictStr] = None
-    object: Optional[StrictStr] = None
-    parent_id: Optional[StrictStr] = None
+    id: StrictStr = Field(..., description="The discount line id")
+    object: StrictStr = Field(..., description="The object name")
+    parent_id: StrictStr = Field(..., description="The order id")
     __properties = ["amount", "code", "type", "id", "object", "parent_id"]
 
     class Config:

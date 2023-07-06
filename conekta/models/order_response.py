@@ -51,9 +51,10 @@ class OrderResponse(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(None, description="Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.")
     object: Optional[StrictStr] = Field(None, description="String representing the object’s type. Objects of the same type share the same value.")
     payment_status: Optional[StrictStr] = Field(None, description="The payment status of the order.")
+    processing_mode: Optional[StrictStr] = Field(None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.")
     shipping_contact: Optional[OrderResponseShippingContact] = None
     updated_at: Optional[StrictInt] = Field(None, description="The time at which the object was last updated in seconds since the Unix epoch")
-    __properties = ["amount", "amount_refunded", "channel", "charges", "checkout", "created_at", "currency", "customer_info", "discount_lines", "fiscal_entity", "id", "is_refundable", "line_items", "livemode", "metadata", "object", "payment_status", "shipping_contact", "updated_at"]
+    __properties = ["amount", "amount_refunded", "channel", "charges", "checkout", "created_at", "currency", "customer_info", "discount_lines", "fiscal_entity", "id", "is_refundable", "line_items", "livemode", "metadata", "object", "payment_status", "processing_mode", "shipping_contact", "updated_at"]
 
     class Config:
         """Pydantic configuration"""
@@ -132,6 +133,7 @@ class OrderResponse(BaseModel):
             "metadata": obj.get("metadata"),
             "object": obj.get("object"),
             "payment_status": obj.get("payment_status"),
+            "processing_mode": obj.get("processing_mode"),
             "shipping_contact": OrderResponseShippingContact.from_dict(obj.get("shipping_contact")) if obj.get("shipping_contact") is not None else None,
             "updated_at": obj.get("updated_at")
         })

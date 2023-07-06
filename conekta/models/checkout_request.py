@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist
 
 class CheckoutRequest(BaseModel):
     """
-    [Checkout](https://developers.conekta.com/reference/checkout) details 
+    [Checkout](https://developers.conekta.com/v2.1.0/reference/payment-link) details 
     """
     allowed_payment_methods: conlist(StrictStr) = Field(..., description="Are the payment methods available for this link")
     expires_at: Optional[StrictInt] = Field(None, description="Unix timestamp of checkout expiration")

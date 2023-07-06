@@ -20,14 +20,14 @@ import json
 
 
 from typing import List, Optional
-from pydantic import BaseModel, conlist
+from pydantic import BaseModel, Field, conlist
 from conekta.models.charge_response_refunds_data import ChargeResponseRefundsData
 
 class ChargeResponseRefundsAllOf(BaseModel):
     """
     ChargeResponseRefundsAllOf
     """
-    data: Optional[conlist(ChargeResponseRefundsData)] = None
+    data: Optional[conlist(ChargeResponseRefundsData)] = Field(None, description="refunds")
     __properties = ["data"]
 
     class Config:

@@ -27,15 +27,15 @@ class DeleteApiKeysResponse(BaseModel):
     DeleteApiKeysResponse
     """
     active: Optional[StrictBool] = Field(None, description="Indicates if the api key is active")
-    created_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds with the creation date of the api key")
-    description: Optional[StrictStr] = Field(None, description="Detail of the use that will be given to the api key")
-    id: Optional[StrictStr] = Field(None, description="Unique identifier of the api key")
-    livemode: Optional[StrictBool] = Field(None, description="Indicates if the api key is in live mode")
-    object: Optional[StrictStr] = Field(None, description="Object name, value is api_key")
+    created_at: Optional[StrictInt] = Field(None, description="Unix timestamp in seconds of when the api key was created")
+    description: Optional[StrictStr] = Field(None, description="A name or brief explanation of what this api key is used for")
+    livemode: Optional[StrictBool] = Field(None, description="Indicates if the api key is in production")
     prefix: Optional[StrictStr] = Field(None, description="The first few characters of the authentication_token")
-    role: Optional[StrictStr] = Field(None, description="Indicates the user account private=owner or public=public")
+    id: Optional[StrictStr] = Field(None, description="Unique identifier of the api key")
+    object: Optional[StrictStr] = Field(None, description="Object name, value is 'api_key'")
     deleted: Optional[StrictBool] = None
-    __properties = ["active", "created_at", "description", "id", "livemode", "object", "prefix", "role", "deleted"]
+    role: Optional[StrictStr] = Field(None, description="Indicates if the api key is private or public")
+    __properties = ["active", "created_at", "description", "livemode", "prefix", "id", "object", "deleted", "role"]
 
     class Config:
         """Pydantic configuration"""
@@ -76,12 +76,12 @@ class DeleteApiKeysResponse(BaseModel):
             "active": obj.get("active"),
             "created_at": obj.get("created_at"),
             "description": obj.get("description"),
-            "id": obj.get("id"),
             "livemode": obj.get("livemode"),
-            "object": obj.get("object"),
             "prefix": obj.get("prefix"),
-            "role": obj.get("role"),
-            "deleted": obj.get("deleted")
+            "id": obj.get("id"),
+            "object": obj.get("object"),
+            "deleted": obj.get("deleted"),
+            "role": obj.get("role")
         })
         return _obj
 
