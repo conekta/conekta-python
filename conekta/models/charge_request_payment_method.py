@@ -20,7 +20,7 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from pydantic import BaseModel, Field, StrictInt, StrictStr, constr
 
 class ChargeRequestPaymentMethod(BaseModel):
     """
@@ -30,7 +30,8 @@ class ChargeRequestPaymentMethod(BaseModel):
     type: StrictStr = Field(...)
     token_id: Optional[StrictStr] = None
     payment_source_id: Optional[StrictStr] = None
-    __properties = ["expires_at", "type", "token_id", "payment_source_id"]
+    contract_id: Optional[constr(strict=True, max_length=10, min_length=10)] = Field(None, description="Optional id sent to indicate the bank contract for recurrent card charges.")
+    __properties = ["expires_at", "type", "token_id", "payment_source_id", "contract_id"]
 
     class Config:
         """Pydantic configuration"""
@@ -71,7 +72,8 @@ class ChargeRequestPaymentMethod(BaseModel):
             "expires_at": obj.get("expires_at"),
             "type": obj.get("type"),
             "token_id": obj.get("token_id"),
-            "payment_source_id": obj.get("payment_source_id")
+            "payment_source_id": obj.get("payment_source_id"),
+            "contract_id": obj.get("contract_id")
         })
         return _obj
 

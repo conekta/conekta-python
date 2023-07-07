@@ -525,14 +525,14 @@ class ApiKeysApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_api_keys(self, accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, search : Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, **kwargs) -> GetApiKeysResponse:  # noqa: E501
+    def get_api_keys(self, accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, search : Annotated[Optional[StrictStr], Field(description="General search, e.g. by id, description, prefix")] = None, **kwargs) -> GetApiKeysResponse:  # noqa: E501
         """Get list of Api Keys  # noqa: E501
 
         Consume the list of api keys you have  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_api_keys(accept_language, x_child_company_id, limit, search, next, previous, async_req=True)
+        >>> thread = api.get_api_keys(accept_language, x_child_company_id, limit, next, previous, search, async_req=True)
         >>> result = thread.get()
 
         :param accept_language: Use for knowing which language to use
@@ -541,12 +541,12 @@ class ApiKeysApi(object):
         :type x_child_company_id: str
         :param limit: The numbers of items to return, the maximum value is 250
         :type limit: int
-        :param search: General order search, e.g. by mail, reference etc.
-        :type search: str
         :param next: next page
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param search: General search, e.g. by id, description, prefix
+        :type search: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request. If one
@@ -561,17 +561,17 @@ class ApiKeysApi(object):
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
             raise ValueError("Error! Please call the get_api_keys_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
-        return self.get_api_keys_with_http_info(accept_language, x_child_company_id, limit, search, next, previous, **kwargs)  # noqa: E501
+        return self.get_api_keys_with_http_info(accept_language, x_child_company_id, limit, next, previous, search, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_api_keys_with_http_info(self, accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, search : Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def get_api_keys_with_http_info(self, accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, search : Annotated[Optional[StrictStr], Field(description="General search, e.g. by id, description, prefix")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get list of Api Keys  # noqa: E501
 
         Consume the list of api keys you have  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_api_keys_with_http_info(accept_language, x_child_company_id, limit, search, next, previous, async_req=True)
+        >>> thread = api.get_api_keys_with_http_info(accept_language, x_child_company_id, limit, next, previous, search, async_req=True)
         >>> result = thread.get()
 
         :param accept_language: Use for knowing which language to use
@@ -580,12 +580,12 @@ class ApiKeysApi(object):
         :type x_child_company_id: str
         :param limit: The numbers of items to return, the maximum value is 250
         :type limit: int
-        :param search: General order search, e.g. by mail, reference etc.
-        :type search: str
         :param next: next page
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param search: General search, e.g. by id, description, prefix
+        :type search: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -617,9 +617,9 @@ class ApiKeysApi(object):
             'accept_language',
             'x_child_company_id',
             'limit',
-            'search',
             'next',
-            'previous'
+            'previous',
+            'search'
         ]
         _all_params.extend(
             [
@@ -653,14 +653,14 @@ class ApiKeysApi(object):
         if _params.get('limit') is not None:  # noqa: E501
             _query_params.append(('limit', _params['limit']))
 
-        if _params.get('search') is not None:  # noqa: E501
-            _query_params.append(('search', _params['search']))
-
         if _params.get('next') is not None:  # noqa: E501
             _query_params.append(('next', _params['next']))
 
         if _params.get('previous') is not None:  # noqa: E501
             _query_params.append(('previous', _params['previous']))
+
+        if _params.get('search') is not None:  # noqa: E501
+            _query_params.append(('search', _params['search']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

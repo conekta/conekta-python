@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **account_type** | **str** |  | [optional] 
 **auth_code** | **str** |  | [optional] 
 **brand** | **str** |  | [optional] 
+**contract_id** | **str** | Id sent for recurrent charges. | [optional] 
 **country** | **str** |  | [optional] 
 **exp_month** | **str** |  | [optional] 
 **exp_year** | **str** |  | [optional] 

@@ -27,7 +27,7 @@ class ApiKeyUpdateRequest(BaseModel):
     ApiKeyUpdateRequest
     """
     active: Optional[StrictBool] = Field(None, description="Indicates if the webhook key is active")
-    description: Optional[StrictStr] = Field(None, description="Detail of the use that will be given to the api key")
+    description: Optional[StrictStr] = Field(None, description="A name or brief explanation of what this api key is used for")
     __properties = ["active", "description"]
 
     class Config:

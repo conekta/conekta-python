@@ -20,7 +20,7 @@ import json
 
 
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, conlist, constr
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, constr
 from conekta.models.charge_request import ChargeRequest
 from conekta.models.checkout_request import CheckoutRequest
 from conekta.models.customer_shipping_contacts import CustomerShippingContacts
@@ -40,13 +40,14 @@ class OrderRequest(BaseModel):
     customer_info: OrderRequestCustomerInfo = Field(...)
     discount_lines: Optional[conlist(OrderDiscountLinesRequest)] = Field(None, description="List of [discounts](https://developers.conekta.com/v2.1.0/reference/orderscreatediscountline) that are applied to the order. You must have at least one discount.")
     line_items: conlist(Product) = Field(..., description="List of [products](https://developers.conekta.com/v2.1.0/reference/orderscreateproduct) that are sold in the order. You must have at least one product.")
-    metadata: Optional[Dict[str, Any]] = None
+    metadata: Optional[Dict[str, Any]] = Field(None, description="Metadata associated with the order")
     needs_shipping_contact: Optional[StrictBool] = Field(None, description="Allows you to fill out the shipping information at checkout")
     pre_authorize: Optional[StrictBool] = Field(False, description="Indicates whether the order charges must be preauthorized")
+    processing_mode: Optional[StrictStr] = Field(None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.")
     shipping_contact: Optional[CustomerShippingContacts] = None
     shipping_lines: Optional[conlist(ShippingRequest)] = Field(None, description="List of [shipping costs](https://developers.conekta.com/v2.1.0/reference/orderscreateshipping). If the online store offers digital products.")
     tax_lines: Optional[conlist(OrderTaxRequest)] = Field(None, description="List of [taxes](https://developers.conekta.com/v2.1.0/reference/orderscreatetaxes) that are applied to the order.")
-    __properties = ["charges", "checkout", "currency", "customer_info", "discount_lines", "line_items", "metadata", "needs_shipping_contact", "pre_authorize", "shipping_contact", "shipping_lines", "tax_lines"]
+    __properties = ["charges", "checkout", "currency", "customer_info", "discount_lines", "line_items", "metadata", "needs_shipping_contact", "pre_authorize", "processing_mode", "shipping_contact", "shipping_lines", "tax_lines"]
 
     class Config:
         """Pydantic configuration"""
@@ -137,6 +138,7 @@ class OrderRequest(BaseModel):
             "metadata": obj.get("metadata"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
             "pre_authorize": obj.get("pre_authorize") if obj.get("pre_authorize") is not None else False,
+            "processing_mode": obj.get("processing_mode"),
             "shipping_contact": CustomerShippingContacts.from_dict(obj.get("shipping_contact")) if obj.get("shipping_contact") is not None else None,
             "shipping_lines": [ShippingRequest.from_dict(_item) for _item in obj.get("shipping_lines")] if obj.get("shipping_lines") is not None else None,
             "tax_lines": [OrderTaxRequest.from_dict(_item) for _item in obj.get("tax_lines")] if obj.get("tax_lines") is not None else None

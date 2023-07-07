@@ -21,17 +21,17 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
-from conekta.models.charge_response_refunds_data import ChargeResponseRefundsData
+from conekta.models.discount_lines_response import DiscountLinesResponse
 
-class ChargeResponseRefunds(BaseModel):
+class GetOrderDiscountLinesResponse(BaseModel):
     """
-    ChargeResponseRefunds
+    GetOrderDiscountLinesResponse
     """
     has_more: StrictBool = Field(..., description="Indicates if there are more pages to be requested")
     object: StrictStr = Field(..., description="Object type, in this case is list")
     next_page_url: Optional[StrictStr] = Field(None, description="URL of the next page.")
     previous_page_url: Optional[StrictStr] = Field(None, description="Url of the previous page.")
-    data: Optional[conlist(ChargeResponseRefundsData)] = Field(None, description="refunds")
+    data: Optional[conlist(DiscountLinesResponse)] = None
     __properties = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
 
     class Config:
@@ -48,8 +48,8 @@ class ChargeResponseRefunds(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ChargeResponseRefunds:
-        """Create an instance of ChargeResponseRefunds from a JSON string"""
+    def from_json(cls, json_str: str) -> GetOrderDiscountLinesResponse:
+        """Create an instance of GetOrderDiscountLinesResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -78,20 +78,20 @@ class ChargeResponseRefunds(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ChargeResponseRefunds:
-        """Create an instance of ChargeResponseRefunds from a dict"""
+    def from_dict(cls, obj: dict) -> GetOrderDiscountLinesResponse:
+        """Create an instance of GetOrderDiscountLinesResponse from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ChargeResponseRefunds.parse_obj(obj)
+            return GetOrderDiscountLinesResponse.parse_obj(obj)
 
-        _obj = ChargeResponseRefunds.parse_obj({
+        _obj = GetOrderDiscountLinesResponse.parse_obj({
             "has_more": obj.get("has_more"),
             "object": obj.get("object"),
             "next_page_url": obj.get("next_page_url"),
             "previous_page_url": obj.get("previous_page_url"),
-            "data": [ChargeResponseRefundsData.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None
+            "data": [DiscountLinesResponse.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None
         })
         return _obj
 

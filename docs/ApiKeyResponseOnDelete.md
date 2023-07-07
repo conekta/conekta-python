@@ -1,5 +1,6 @@
-# DeleteApiKeysResponse
+# ApiKeyResponseOnDelete
 
+api keys model
 
 ## Properties
 Name | Type | Description | Notes
@@ -11,25 +12,25 @@ Name | Type | Description | Notes
 **prefix** | **str** | The first few characters of the authentication_token | [optional] 
 **id** | **str** | Unique identifier of the api key | [optional] 
 **object** | **str** | Object name, value is &#39;api_key&#39; | [optional] 
-**deleted** | **bool** |  | [optional] 
+**deleted** | **bool** | Indicates if the api key was deleted | [optional] 
 **role** | **str** | Indicates if the api key is private or public | [optional] 
 
 ## Example
 
 ```python
-from conekta.models.delete_api_keys_response import DeleteApiKeysResponse
+from conekta.models.api_key_response_on_delete import ApiKeyResponseOnDelete
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of DeleteApiKeysResponse from a JSON string
-delete_api_keys_response_instance = DeleteApiKeysResponse.from_json(json)
+# create an instance of ApiKeyResponseOnDelete from a JSON string
+api_key_response_on_delete_instance = ApiKeyResponseOnDelete.from_json(json)
 # print the JSON string representation of the object
-print DeleteApiKeysResponse.to_json()
+print ApiKeyResponseOnDelete.to_json()
 
 # convert the object into a dict
-delete_api_keys_response_dict = delete_api_keys_response_instance.to_dict()
-# create an instance of DeleteApiKeysResponse from a dict
-delete_api_keys_response_form_dict = delete_api_keys_response.from_dict(delete_api_keys_response_dict)
+api_key_response_on_delete_dict = api_key_response_on_delete_instance.to_dict()
+# create an instance of ApiKeyResponseOnDelete from a dict
+api_key_response_on_delete_form_dict = api_key_response_on_delete.from_dict(api_key_response_on_delete_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

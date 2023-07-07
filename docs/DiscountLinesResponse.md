@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 **amount** | **int** | The amount to be deducted from the total sum of all payments, in cents. | 
 **code** | **str** | Discount code. | 
 **type** | **str** | It can be &#39;loyalty&#39;, &#39;campaign&#39;, &#39;coupon&#39; o &#39;sign&#39; | 
-**id** | **str** |  | [optional] 
-**object** | **str** |  | [optional] 
-**parent_id** | **str** |  | [optional] 
+**id** | **str** | The discount line id | 
+**object** | **str** | The object name | 
+**parent_id** | **str** | The order id | 
 
 ## Example
 

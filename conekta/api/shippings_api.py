@@ -367,6 +367,7 @@ class ShippingsApi(object):
             '401': "Error",
             '404': "Error",
             '422': "Error",
+            '428': "Error",
             '500': "Error",
         }
 

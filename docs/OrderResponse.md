@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **metadata** | **Dict[str, object]** | Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. | [optional] 
 **object** | **str** | String representing the object’s type. Objects of the same type share the same value. | [optional] 
 **payment_status** | **str** | The payment status of the order. | [optional] 
+**processing_mode** | **str** | Indicates the processing mode for the order, either ecommerce, recurrent or validation. | [optional] 
 **shipping_contact** | [**OrderResponseShippingContact**](OrderResponseShippingContact.md) |  | [optional] 
 **updated_at** | **int** | The time at which the object was last updated in seconds since the Unix epoch | [optional] 
 

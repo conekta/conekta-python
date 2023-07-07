@@ -25,8 +25,8 @@ from conekta.models.charge_request import ChargeRequest
 from conekta.models.checkout_request import CheckoutRequest
 from conekta.models.customer_shipping_contacts import CustomerShippingContacts
 from conekta.models.order_discount_lines_request import OrderDiscountLinesRequest
-from conekta.models.order_request_customer_info import OrderRequestCustomerInfo
 from conekta.models.order_tax_request import OrderTaxRequest
+from conekta.models.order_update_request_customer_info import OrderUpdateRequestCustomerInfo
 from conekta.models.product import Product
 from conekta.models.shipping_request import ShippingRequest
 
@@ -37,7 +37,7 @@ class OrderUpdateRequest(BaseModel):
     charges: Optional[conlist(ChargeRequest)] = None
     checkout: Optional[CheckoutRequest] = None
     currency: Optional[constr(strict=True, max_length=3)] = Field(None, description="Currency with which the payment will be made. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)")
-    customer_info: Optional[OrderRequestCustomerInfo] = None
+    customer_info: Optional[OrderUpdateRequestCustomerInfo] = None
     discount_lines: Optional[conlist(OrderDiscountLinesRequest)] = Field(None, description="List of [discounts](https://developers.conekta.com/v2.1.0/reference/orderscreatediscountline) that are applied to the order. You must have at least one discount.")
     line_items: Optional[conlist(Product)] = Field(None, description="List of [products](https://developers.conekta.com/v2.1.0/reference/orderscreateproduct) that are sold in the order. You must have at least one product.")
     metadata: Optional[Dict[str, StrictStr]] = None
@@ -130,7 +130,7 @@ class OrderUpdateRequest(BaseModel):
             "charges": [ChargeRequest.from_dict(_item) for _item in obj.get("charges")] if obj.get("charges") is not None else None,
             "checkout": CheckoutRequest.from_dict(obj.get("checkout")) if obj.get("checkout") is not None else None,
             "currency": obj.get("currency"),
-            "customer_info": OrderRequestCustomerInfo.from_dict(obj.get("customer_info")) if obj.get("customer_info") is not None else None,
+            "customer_info": OrderUpdateRequestCustomerInfo.from_dict(obj.get("customer_info")) if obj.get("customer_info") is not None else None,
             "discount_lines": [OrderDiscountLinesRequest.from_dict(_item) for _item in obj.get("discount_lines")] if obj.get("discount_lines") is not None else None,
             "line_items": [Product.from_dict(_item) for _item in obj.get("line_items")] if obj.get("line_items") is not None else None,
             "metadata": obj.get("metadata"),

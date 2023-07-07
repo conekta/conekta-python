@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**object** | **str** |  | [optional] 
-**parent_id** | **str** |  | [optional] 
+**id** | **str** | The discount line id | 
+**object** | **str** | The object name | 
+**parent_id** | **str** | The order id | 
 
 ## Example
 

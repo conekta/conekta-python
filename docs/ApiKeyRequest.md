@@ -4,8 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**active** | **bool** | Indicates if the api key is active | 
-**description** | **str** | Detail of the use that will be given to the api key | 
+**description** | **str** | A name or brief explanation of what this api key is used for | [optional] 
 **role** | **str** |  | 
 
 ## Example

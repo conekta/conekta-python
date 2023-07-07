@@ -19,17 +19,16 @@ import re  # noqa: F401
 import json
 
 
+from typing import List, Optional
+from pydantic import BaseModel, conlist
+from conekta.models.discount_lines_response import DiscountLinesResponse
 
-from pydantic import BaseModel, Field, StrictStr
-
-class DiscountLinesResponseAllOf(BaseModel):
+class GetOrderDiscountLinesResponseAllOf(BaseModel):
     """
-    DiscountLinesResponseAllOf
+    GetOrderDiscountLinesResponseAllOf
     """
-    id: StrictStr = Field(..., description="The discount line id")
-    object: StrictStr = Field(..., description="The object name")
-    parent_id: StrictStr = Field(..., description="The order id")
-    __properties = ["id", "object", "parent_id"]
+    data: Optional[conlist(DiscountLinesResponse)] = None
+    __properties = ["data"]
 
     class Config:
         """Pydantic configuration"""
@@ -45,8 +44,8 @@ class DiscountLinesResponseAllOf(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> DiscountLinesResponseAllOf:
-        """Create an instance of DiscountLinesResponseAllOf from a JSON string"""
+    def from_json(cls, json_str: str) -> GetOrderDiscountLinesResponseAllOf:
+        """Create an instance of GetOrderDiscountLinesResponseAllOf from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -55,21 +54,26 @@ class DiscountLinesResponseAllOf(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item in self.data:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['data'] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> DiscountLinesResponseAllOf:
-        """Create an instance of DiscountLinesResponseAllOf from a dict"""
+    def from_dict(cls, obj: dict) -> GetOrderDiscountLinesResponseAllOf:
+        """Create an instance of GetOrderDiscountLinesResponseAllOf from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return DiscountLinesResponseAllOf.parse_obj(obj)
+            return GetOrderDiscountLinesResponseAllOf.parse_obj(obj)
 
-        _obj = DiscountLinesResponseAllOf.parse_obj({
-            "id": obj.get("id"),
-            "object": obj.get("object"),
-            "parent_id": obj.get("parent_id")
+        _obj = GetOrderDiscountLinesResponseAllOf.parse_obj({
+            "data": [DiscountLinesResponse.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None
         })
         return _obj
 

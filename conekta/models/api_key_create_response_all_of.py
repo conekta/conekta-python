@@ -26,7 +26,7 @@ class ApiKeyCreateResponseAllOf(BaseModel):
     """
     ApiKeyCreateResponseAllOf
     """
-    authentication_token: Optional[StrictStr] = Field(None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key")
+    authentication_token: Optional[StrictStr] = Field(None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.")
     __properties = ["authentication_token"]
 
     class Config:

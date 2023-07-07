@@ -6,13 +6,16 @@ api keys model
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **active** | **bool** | Indicates if the api key is active | [optional] 
-**created_at** | **int** | Unix timestamp in seconds with the creation date of the api key | [optional] 
-**description** | **str** | Detail of the use that will be given to the api key | [optional] 
+**created_at** | **int** | Unix timestamp in seconds of when the api key was created | [optional] 
+**updated_at** | **int** | Unix timestamp in seconds of when the api key was last updated | [optional] 
+**deactivated_at** | **int** | Unix timestamp in seconds of when the api key was deleted | [optional] 
+**description** | **str** | A name or brief explanation of what this api key is used for | [optional] 
 **id** | **str** | Unique identifier of the api key | [optional] 
-**livemode** | **bool** | Indicates if the api key is in live mode | [optional] 
-**object** | **str** | Object name, value is api_key | [optional] 
+**livemode** | **bool** | Indicates if the api key is in production | [optional] 
+**deleted** | **bool** | Indicates if the api key was deleted | [optional] 
+**object** | **str** | Object name, value is &#39;api_key&#39; | [optional] 
 **prefix** | **str** | The first few characters of the authentication_token | [optional] 
-**role** | **str** | Indicates the user account private&#x3D;owner or public&#x3D;public | [optional] 
+**role** | **str** | Indicates if the api key is private or public | [optional] 
 
 ## Example
 

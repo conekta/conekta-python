@@ -19,17 +19,16 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from typing import Optional
+from pydantic import BaseModel, Field, StrictStr
 
 class ApiKeyRequest(BaseModel):
     """
     ApiKeyRequest
     """
-    active: StrictBool = Field(..., description="Indicates if the api key is active")
-    description: StrictStr = Field(..., description="Detail of the use that will be given to the api key")
+    description: Optional[StrictStr] = Field(None, description="A name or brief explanation of what this api key is used for")
     role: StrictStr = Field(...)
-    __properties = ["active", "description", "role"]
+    __properties = ["description", "role"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,7 +66,6 @@ class ApiKeyRequest(BaseModel):
             return ApiKeyRequest.parse_obj(obj)
 
         _obj = ApiKeyRequest.parse_obj({
-            "active": obj.get("active"),
             "description": obj.get("description"),
             "role": obj.get("role")
         })

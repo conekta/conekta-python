@@ -15,11 +15,12 @@
 """
 
 
-__version__ = "6.0.0"
+__version__ = "6.0.1"
 
 # import apis into sdk package
 from conekta.api.antifraud_api import AntifraudApi
 from conekta.api.api_keys_api import ApiKeysApi
+from conekta.api.balances_api import BalancesApi
 from conekta.api.charges_api import ChargesApi
 from conekta.api.companies_api import CompaniesApi
 from conekta.api.customers_api import CustomersApi
@@ -57,7 +58,10 @@ from conekta.models.api_key_create_response import ApiKeyCreateResponse
 from conekta.models.api_key_create_response_all_of import ApiKeyCreateResponseAllOf
 from conekta.models.api_key_request import ApiKeyRequest
 from conekta.models.api_key_response import ApiKeyResponse
+from conekta.models.api_key_response_on_delete import ApiKeyResponseOnDelete
 from conekta.models.api_key_update_request import ApiKeyUpdateRequest
+from conekta.models.balance_common_field import BalanceCommonField
+from conekta.models.balance_response import BalanceResponse
 from conekta.models.blacklist_rule_response import BlacklistRuleResponse
 from conekta.models.charge_data_payment_method_bank_transfer_response import ChargeDataPaymentMethodBankTransferResponse
 from conekta.models.charge_data_payment_method_card_response import ChargeDataPaymentMethodCardResponse
@@ -143,6 +147,8 @@ from conekta.models.get_companies_response_all_of import GetCompaniesResponseAll
 from conekta.models.get_customer_payment_method_data_response import GetCustomerPaymentMethodDataResponse
 from conekta.models.get_events_response import GetEventsResponse
 from conekta.models.get_events_response_all_of import GetEventsResponseAllOf
+from conekta.models.get_order_discount_lines_response import GetOrderDiscountLinesResponse
+from conekta.models.get_order_discount_lines_response_all_of import GetOrderDiscountLinesResponseAllOf
 from conekta.models.get_orders_response import GetOrdersResponse
 from conekta.models.get_payment_method_response import GetPaymentMethodResponse
 from conekta.models.get_payment_method_response_all_of import GetPaymentMethodResponseAllOf
@@ -181,6 +187,7 @@ from conekta.models.order_response_shipping_contact import OrderResponseShipping
 from conekta.models.order_response_shipping_contact_all_of import OrderResponseShippingContactAllOf
 from conekta.models.order_tax_request import OrderTaxRequest
 from conekta.models.order_update_request import OrderUpdateRequest
+from conekta.models.order_update_request_customer_info import OrderUpdateRequestCustomerInfo
 from conekta.models.orders_response import OrdersResponse
 from conekta.models.page import Page
 from conekta.models.pagination import Pagination

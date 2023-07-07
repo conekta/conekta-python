@@ -20,11 +20,12 @@ import warnings
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
 from conekta.models.discount_lines_response import DiscountLinesResponse
+from conekta.models.get_order_discount_lines_response import GetOrderDiscountLinesResponse
 from conekta.models.order_discount_lines_request import OrderDiscountLinesRequest
 from conekta.models.update_order_discount_lines_request import UpdateOrderDiscountLinesRequest
 
@@ -222,7 +223,7 @@ class DiscountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def orders_delete_discount_lines(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> DiscountLinesResponse:  # noqa: E501
+    def orders_delete_discount_lines(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> DiscountLinesResponse:  # noqa: E501
         """Delete Discount  # noqa: E501
 
         Delete an existing discount lines for an existing orden  # noqa: E501
@@ -234,7 +235,7 @@ class DiscountsApi(object):
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param discount_lines_id: identifier (required)
+        :param discount_lines_id: discount line id identifier (required)
         :type discount_lines_id: str
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
@@ -257,7 +258,7 @@ class DiscountsApi(object):
         return self.orders_delete_discount_lines_with_http_info(id, discount_lines_id, accept_language, x_child_company_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def orders_delete_discount_lines_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def orders_delete_discount_lines_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Discount  # noqa: E501
 
         Delete an existing discount lines for an existing orden  # noqa: E501
@@ -269,7 +270,7 @@ class DiscountsApi(object):
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param discount_lines_id: identifier (required)
+        :param discount_lines_id: discount line id identifier (required)
         :type discount_lines_id: str
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
@@ -389,7 +390,363 @@ class DiscountsApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def orders_update_discount_lines(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="identifier")], update_order_discount_lines_request : Annotated[UpdateOrderDiscountLinesRequest, Field(..., description="requested field for a discount lines")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> DiscountLinesResponse:  # noqa: E501
+    def orders_get_discount_line(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> DiscountLinesResponse:  # noqa: E501
+        """Get Discount  # noqa: E501
+
+        Get an existing discount lines for an existing orden  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.orders_get_discount_line(id, discount_lines_id, accept_language, x_child_company_id, async_req=True)
+        >>> result = thread.get()
+
+        :param id: Identifier of the resource (required)
+        :type id: str
+        :param discount_lines_id: discount line id identifier (required)
+        :type discount_lines_id: str
+        :param accept_language: Use for knowing which language to use
+        :type accept_language: str
+        :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
+        :type x_child_company_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: DiscountLinesResponse
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the orders_get_discount_line_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
+        return self.orders_get_discount_line_with_http_info(id, discount_lines_id, accept_language, x_child_company_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def orders_get_discount_line_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Discount  # noqa: E501
+
+        Get an existing discount lines for an existing orden  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.orders_get_discount_line_with_http_info(id, discount_lines_id, accept_language, x_child_company_id, async_req=True)
+        >>> result = thread.get()
+
+        :param id: Identifier of the resource (required)
+        :type id: str
+        :param discount_lines_id: discount line id identifier (required)
+        :type discount_lines_id: str
+        :param accept_language: Use for knowing which language to use
+        :type accept_language: str
+        :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
+        :type x_child_company_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(DiscountLinesResponse, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'id',
+            'discount_lines_id',
+            'accept_language',
+            'x_child_company_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method orders_get_discount_line" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['id']:
+            _path_params['id'] = _params['id']
+
+        if _params['discount_lines_id']:
+            _path_params['discount_lines_id'] = _params['discount_lines_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        if _params['accept_language']:
+            _header_params['Accept-Language'] = _params['accept_language']
+
+        if _params['x_child_company_id']:
+            _header_params['X-Child-Company-Id'] = _params['x_child_company_id']
+
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/vnd.conekta-v2.1.0+json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['bearerAuth']  # noqa: E501
+
+        _response_types_map = {
+            '200': "DiscountLinesResponse",
+            '401': "Error",
+            '404': "Error",
+            '422': "Error",
+            '500': "Error",
+        }
+
+        return self.api_client.call_api(
+            '/orders/{id}/discount_lines/{discount_lines_id}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def orders_get_discount_lines(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, search : Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, **kwargs) -> GetOrderDiscountLinesResponse:  # noqa: E501
+        """Get a List of Discount  # noqa: E501
+
+        Get discount lines for an existing orden  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.orders_get_discount_lines(id, accept_language, x_child_company_id, limit, search, next, previous, async_req=True)
+        >>> result = thread.get()
+
+        :param id: Identifier of the resource (required)
+        :type id: str
+        :param accept_language: Use for knowing which language to use
+        :type accept_language: str
+        :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
+        :type x_child_company_id: str
+        :param limit: The numbers of items to return, the maximum value is 250
+        :type limit: int
+        :param search: General order search, e.g. by mail, reference etc.
+        :type search: str
+        :param next: next page
+        :type next: str
+        :param previous: previous page
+        :type previous: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: GetOrderDiscountLinesResponse
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the orders_get_discount_lines_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
+        return self.orders_get_discount_lines_with_http_info(id, accept_language, x_child_company_id, limit, search, next, previous, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def orders_get_discount_lines_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, limit : Annotated[Optional[conint(strict=True, le=250, ge=1)], Field(description="The numbers of items to return, the maximum value is 250")] = None, search : Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None, next : Annotated[Optional[StrictStr], Field(description="next page")] = None, previous : Annotated[Optional[StrictStr], Field(description="previous page")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Get a List of Discount  # noqa: E501
+
+        Get discount lines for an existing orden  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.orders_get_discount_lines_with_http_info(id, accept_language, x_child_company_id, limit, search, next, previous, async_req=True)
+        >>> result = thread.get()
+
+        :param id: Identifier of the resource (required)
+        :type id: str
+        :param accept_language: Use for knowing which language to use
+        :type accept_language: str
+        :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
+        :type x_child_company_id: str
+        :param limit: The numbers of items to return, the maximum value is 250
+        :type limit: int
+        :param search: General order search, e.g. by mail, reference etc.
+        :type search: str
+        :param next: next page
+        :type next: str
+        :param previous: previous page
+        :type previous: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(GetOrderDiscountLinesResponse, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'id',
+            'accept_language',
+            'x_child_company_id',
+            'limit',
+            'search',
+            'next',
+            'previous'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method orders_get_discount_lines" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['id']:
+            _path_params['id'] = _params['id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('search') is not None:  # noqa: E501
+            _query_params.append(('search', _params['search']))
+
+        if _params.get('next') is not None:  # noqa: E501
+            _query_params.append(('next', _params['next']))
+
+        if _params.get('previous') is not None:  # noqa: E501
+            _query_params.append(('previous', _params['previous']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        if _params['accept_language']:
+            _header_params['Accept-Language'] = _params['accept_language']
+
+        if _params['x_child_company_id']:
+            _header_params['X-Child-Company-Id'] = _params['x_child_company_id']
+
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/vnd.conekta-v2.1.0+json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['bearerAuth']  # noqa: E501
+
+        _response_types_map = {
+            '200': "GetOrderDiscountLinesResponse",
+            '401': "Error",
+            '500': "Error",
+        }
+
+        return self.api_client.call_api(
+            '/orders/{id}/discount_lines', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def orders_update_discount_lines(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], update_order_discount_lines_request : Annotated[UpdateOrderDiscountLinesRequest, Field(..., description="requested field for a discount lines")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> DiscountLinesResponse:  # noqa: E501
         """Update Discount  # noqa: E501
 
         Update an existing discount lines for an existing orden  # noqa: E501
@@ -401,7 +758,7 @@ class DiscountsApi(object):
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param discount_lines_id: identifier (required)
+        :param discount_lines_id: discount line id identifier (required)
         :type discount_lines_id: str
         :param update_order_discount_lines_request: requested field for a discount lines (required)
         :type update_order_discount_lines_request: UpdateOrderDiscountLinesRequest
@@ -426,7 +783,7 @@ class DiscountsApi(object):
         return self.orders_update_discount_lines_with_http_info(id, discount_lines_id, update_order_discount_lines_request, accept_language, x_child_company_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def orders_update_discount_lines_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="identifier")], update_order_discount_lines_request : Annotated[UpdateOrderDiscountLinesRequest, Field(..., description="requested field for a discount lines")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def orders_update_discount_lines_with_http_info(self, id : Annotated[StrictStr, Field(..., description="Identifier of the resource")], discount_lines_id : Annotated[StrictStr, Field(..., description="discount line id identifier")], update_order_discount_lines_request : Annotated[UpdateOrderDiscountLinesRequest, Field(..., description="requested field for a discount lines")], accept_language : Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None, x_child_company_id : Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Discount  # noqa: E501
 
         Update an existing discount lines for an existing orden  # noqa: E501
@@ -438,7 +795,7 @@ class DiscountsApi(object):
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param discount_lines_id: identifier (required)
+        :param discount_lines_id: discount line id identifier (required)
         :type discount_lines_id: str
         :param update_order_discount_lines_request: requested field for a discount lines (required)
         :type update_order_discount_lines_request: UpdateOrderDiscountLinesRequest

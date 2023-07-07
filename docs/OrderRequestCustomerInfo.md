@@ -1,5 +1,6 @@
 # OrderRequestCustomerInfo
 
+Customer information
 
 ## Properties
 Name | Type | Description | Notes
