@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **parent_id** | **str** |  | [optional] 
 **default** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
+**metadata** | **Dict[str, object]** | Metadata associated with the shipping contact | [optional] 
 **id** | **str** |  | 
 **object** | **str** |  | 
 **created_at** | **int** |  | 

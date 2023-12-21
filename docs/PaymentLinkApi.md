@@ -62,6 +62,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -144,6 +145,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentLinkApi->create_checkout: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -230,6 +232,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -312,6 +315,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentLinkApi->get_checkout: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -402,6 +406,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -487,6 +492,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PaymentLinkApi->sms_checkout: %s\n" % e)
 ```
+
 
 
 ### Parameters

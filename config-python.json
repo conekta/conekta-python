@@ -1,0 +1,29 @@
+{
+  "packageName": "conekta",
+  "developerEmail": "core@conekta.com",
+  "developerName": "Conekta API Core Team",
+  "developerOrganization": "Grupo Conektame, S.A. de C.V",
+  "developerOrganizationUrl": "https://www.conekta.com",
+  "licenseName": "MIT License",
+  "licenseUrl": "https://www.opensource.org/licenses/mit-license.php",
+  "generateSourceCodeOnly": "false",
+  "packageVersion": "6.0.2",
+  "packageUrl": "https://github.com/conekta/conekta-python",
+  "projectName": "conekta",
+  "templateDir": "/local/templates/python",
+  "hasBearerMethods" : true,
+  "useOneOfDiscriminatorLookup" : true,
+  "nonCompliantUseDiscriminatorIfCompositionFails" : false,
+  "httpUserAgent": "Conekta/v2 PythonBindings/6.0.2",
+  "files": {
+    "/local/AUTHORS.md" : {},
+    "/local/CODE_OF_CONDUCT.md": {},
+    "/local/LICENSE" : {},
+    "VERSION.mustache" : {
+      "templateType": "SupportingFiles",
+      "destinationFilename": "VERSION"
+    }
+  },
+  "gitUserId": "conekta",
+  "gitRepoId": "conekta-python"
+}

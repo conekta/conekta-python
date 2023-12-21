@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **address** | [**CustomerShippingContactsResponseAddress**](CustomerShippingContactsResponseAddress.md) |  | [optional] 
 **parent_id** | **str** |  | [optional] 
 **default** | **bool** |  | [optional] 
+**metadata** | **Dict[str, object]** | Metadata associated with the shipping contact | [optional] 
 **deleted** | **bool** |  | [optional] 
 
 ## Example

@@ -62,6 +62,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -141,6 +142,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CompaniesApi->get_company: %s\n" % e)
 ```
+
 
 
 ### Parameters

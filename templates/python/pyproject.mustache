@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "{{{packageName}}}"
+version = "{{packageVersion}}"
+description = "{{{appName}}}"
+authors = ["{{infoName}}{{^infoName}}OpenAPI Generator Community{{/infoName}} <{{infoEmail}}{{^infoEmail}}team@openapitools.org{{/infoEmail}}>"]
+license = "{{{licenseInfo}}}{{^licenseInfo}}NoLicense{{/licenseInfo}}"
+readme = "README.md"
+repository = "https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}"
+keywords = ["OpenAPI", "OpenAPI-Generator", "{{{appName}}}"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+urllib3 = ">= 1.25.3"
+python-dateutil = ">=2.8.2"
+{{#asyncio}}
+aiohttp = ">= 3.8.4"
+{{/asyncio}}
+{{#tornado}}
+tornado = ">=4.2,<5"
+{{/tornado}}
+{{#hasHttpSignatureMethods}}
+pem = ">= 19.3.0"
+pycryptodome = ">= 3.9.0"
+{{/hasHttpSignatureMethods}}
+pydantic = "^1.10.5, <2"
+aenum = ">=3.1.11"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=7.2.1"
+tox = ">=3.9.0"
+flake8 = ">=4.0.0"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.pylint.'MESSAGES CONTROL']
+extension-pkg-whitelist = "pydantic"
+
+[project]
+name = "{{{packageName}}}"
+version = "{{packageVersion}}"
+authors = [
+  { name="{{infoName}}{{^infoName}}OpenAPI Generator Community{{/infoName}}", email="{{infoEmail}}{{^infoEmail}}team@openapitools.org{{/infoEmail}}" },
+]
+description = "This is a Python library that allows interaction with https://api.conekta.io API."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}"
+"Bug Tracker" = "https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}/issues"
