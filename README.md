@@ -63,7 +63,7 @@ from pprint import pprint
 
 # Configure Bearer authorization: bearerAuth
 configuration = conekta.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
+    access_token = os.environ["API_KEY"]
 )
 
 
