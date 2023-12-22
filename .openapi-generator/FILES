@@ -56,6 +56,7 @@ conekta/models/charge_response_payment_method.py
 conekta/models/charge_response_refunds.py
 conekta/models/charge_response_refunds_all_of.py
 conekta/models/charge_response_refunds_data.py
+conekta/models/charge_update_request.py
 conekta/models/charges_data_response.py
 conekta/models/checkout.py
 conekta/models/checkout_order_template.py
@@ -85,7 +86,6 @@ conekta/models/customer_fiscal_entities_response_all_of.py
 conekta/models/customer_info.py
 conekta/models/customer_info_just_customer_id.py
 conekta/models/customer_info_just_customer_id_response.py
-conekta/models/customer_info_response.py
 conekta/models/customer_payment_method_request.py
 conekta/models/customer_payment_methods.py
 conekta/models/customer_payment_methods_data.py
@@ -118,6 +118,7 @@ conekta/models/error.py
 conekta/models/error_all_of.py
 conekta/models/event_response.py
 conekta/models/events_resend_response.py
+conekta/models/fiscal_entity_address.py
 conekta/models/get_api_keys_response.py
 conekta/models/get_api_keys_response_all_of.py
 conekta/models/get_charges_response.py
@@ -146,7 +147,14 @@ conekta/models/log_response.py
 conekta/models/logs_response.py
 conekta/models/logs_response_data.py
 conekta/models/order_capture_request.py
+conekta/models/order_customer_info_response.py
 conekta/models/order_discount_lines_request.py
+conekta/models/order_fiscal_entity_address_response.py
+conekta/models/order_fiscal_entity_address_response_all_of.py
+conekta/models/order_fiscal_entity_request.py
+conekta/models/order_fiscal_entity_response.py
+conekta/models/order_next_action_response.py
+conekta/models/order_next_action_response_redirect_to_url.py
 conekta/models/order_refund_request.py
 conekta/models/order_request.py
 conekta/models/order_request_customer_info.py
@@ -158,14 +166,12 @@ conekta/models/order_response_customer_info.py
 conekta/models/order_response_customer_info_all_of.py
 conekta/models/order_response_discount_lines.py
 conekta/models/order_response_discount_lines_all_of.py
-conekta/models/order_response_fiscal_entity.py
-conekta/models/order_response_fiscal_entity_address.py
-conekta/models/order_response_fiscal_entity_address_all_of.py
 conekta/models/order_response_products.py
 conekta/models/order_response_products_all_of.py
 conekta/models/order_response_shipping_contact.py
 conekta/models/order_response_shipping_contact_all_of.py
 conekta/models/order_tax_request.py
+conekta/models/order_update_fiscal_entity_request.py
 conekta/models/order_update_request.py
 conekta/models/order_update_request_customer_info.py
 conekta/models/orders_response.py
@@ -236,6 +242,7 @@ conekta/models/webhook_request.py
 conekta/models/webhook_response.py
 conekta/models/webhook_update_request.py
 conekta/models/whitelistlist_rule_response.py
+conekta/py.typed
 conekta/rest.py
 docs/AntifraudApi.md
 docs/ApiKeyCreateResponse.md
@@ -262,6 +269,7 @@ docs/ChargeResponsePaymentMethod.md
 docs/ChargeResponseRefunds.md
 docs/ChargeResponseRefundsAllOf.md
 docs/ChargeResponseRefundsData.md
+docs/ChargeUpdateRequest.md
 docs/ChargesApi.md
 docs/ChargesDataResponse.md
 docs/Checkout.md
@@ -293,7 +301,6 @@ docs/CustomerFiscalEntitiesResponseAllOf.md
 docs/CustomerInfo.md
 docs/CustomerInfoJustCustomerId.md
 docs/CustomerInfoJustCustomerIdResponse.md
-docs/CustomerInfoResponse.md
 docs/CustomerPaymentMethodRequest.md
 docs/CustomerPaymentMethods.md
 docs/CustomerPaymentMethodsData.md
@@ -329,6 +336,7 @@ docs/ErrorAllOf.md
 docs/EventResponse.md
 docs/EventsApi.md
 docs/EventsResendResponse.md
+docs/FiscalEntityAddress.md
 docs/GetApiKeysResponse.md
 docs/GetApiKeysResponseAllOf.md
 docs/GetChargesResponse.md
@@ -358,7 +366,14 @@ docs/LogsApi.md
 docs/LogsResponse.md
 docs/LogsResponseData.md
 docs/OrderCaptureRequest.md
+docs/OrderCustomerInfoResponse.md
 docs/OrderDiscountLinesRequest.md
+docs/OrderFiscalEntityAddressResponse.md
+docs/OrderFiscalEntityAddressResponseAllOf.md
+docs/OrderFiscalEntityRequest.md
+docs/OrderFiscalEntityResponse.md
+docs/OrderNextActionResponse.md
+docs/OrderNextActionResponseRedirectToUrl.md
 docs/OrderRefundRequest.md
 docs/OrderRequest.md
 docs/OrderRequestCustomerInfo.md
@@ -370,14 +385,12 @@ docs/OrderResponseCustomerInfo.md
 docs/OrderResponseCustomerInfoAllOf.md
 docs/OrderResponseDiscountLines.md
 docs/OrderResponseDiscountLinesAllOf.md
-docs/OrderResponseFiscalEntity.md
-docs/OrderResponseFiscalEntityAddress.md
-docs/OrderResponseFiscalEntityAddressAllOf.md
 docs/OrderResponseProducts.md
 docs/OrderResponseProductsAllOf.md
 docs/OrderResponseShippingContact.md
 docs/OrderResponseShippingContactAllOf.md
 docs/OrderTaxRequest.md
+docs/OrderUpdateFiscalEntityRequest.md
 docs/OrderUpdateRequest.md
 docs/OrderUpdateRequestCustomerInfo.md
 docs/OrdersApi.md
@@ -468,5 +481,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_balances_api.py
 tox.ini

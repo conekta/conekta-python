@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **city** | **str** |  | 
 **state** | **str** |  | [optional] 
 **country** | **str** | this field follows the [ISO 3166-1 alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) | [optional] 
-**residential** | **bool** |  | [optional] 
+**residential** | **bool** |  | [optional] [default to False]
 **external_number** | **str** |  | [optional] 
 
 ## Example

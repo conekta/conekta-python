@@ -1,20 +1,21 @@
 [tool.poetry]
 name = "conekta"
-version = "6.0.1"
+version = "6.0.2"
 description = "Conekta API"
 authors = ["Engineering Conekta <engineering@conekta.com>"]
 license = "MIT-LICENSE"
 readme = "README.md"
 repository = "https://github.com/conekta/conekta-python"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Conekta API"]
+include = ["conekta/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 
 urllib3 = ">= 1.25.3"
 python-dateutil = ">=2.8.2"
-pydantic = "^1.10.5, <2"
-aenum = ">=3.1.11"
+pydantic = ">=2"
+typing-extensions = ">=4.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=7.2.1"
@@ -25,14 +26,12 @@ flake8 = ">=4.0.0"
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-
 [tool.pylint.'MESSAGES CONTROL']
 extension-pkg-whitelist = "pydantic"
 
 [project]
 name = "conekta"
-version = "6.0.1"
+version = "6.0.2"
 authors = [
   { name="Engineering Conekta", email="engineering@conekta.com" },
 ]

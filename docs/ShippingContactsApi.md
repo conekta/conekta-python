@@ -63,6 +63,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -147,6 +148,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingContactsApi->delete_customer_shipping_contacts: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -235,6 +237,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShippingContactsApi->update_customer_shipping_contacts: %s\n" % e)
 ```
+
 
 
 ### Parameters

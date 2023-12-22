@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **default** | **bool** |  | [optional] 
 **id** | **str** |  | [optional] 
 **created_at** | **int** |  | [optional] 
+**metadata** | **Dict[str, object]** | Metadata associated with the shipping contact | [optional] 
 **object** | **str** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
 

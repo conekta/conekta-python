@@ -66,6 +66,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -150,6 +151,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->create_customer_fiscal_entities: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -237,6 +239,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -319,6 +322,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->get_customer_by_id: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -405,6 +409,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->get_customers: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -494,6 +499,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -580,6 +586,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CustomersApi->update_customer_fiscal_entities: %s\n" % e)
 ```
+
 
 
 ### Parameters

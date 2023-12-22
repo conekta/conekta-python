@@ -4,7 +4,7 @@ All URIs are relative to *https://api.conekta.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_balance**](BalancesApi.md#get_balance) | **GET** /balances | Get a company&#39;s balance
+[**get_balance**](BalancesApi.md#get_balance) | **GET** /balance | Get a company&#39;s balance
 
 
 # **get_balance**
@@ -55,6 +55,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling BalancesApi->get_balance: %s\n" % e)
 ```
+
 
 
 ### Parameters

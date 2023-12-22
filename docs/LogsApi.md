@@ -60,6 +60,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -144,6 +145,7 @@ with conekta.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling LogsApi->get_logs: %s\n" % e)
 ```
+
 
 
 ### Parameters

@@ -6,7 +6,6 @@ The charges to be made
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** |  | [optional] 
-**monthly_installments** | **int** | How many months without interest to apply, it can be 3, 6, 9, 12 or 18 | [optional] 
 **payment_method** | [**ChargeRequestPaymentMethod**](ChargeRequestPaymentMethod.md) |  | 
 **reference_id** | **str** | Custom reference to add to the charge | [optional] 
 

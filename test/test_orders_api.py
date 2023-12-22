@@ -58,7 +58,29 @@ class TestOrdersApi(unittest.TestCase):
                 name='product',
                 quantity=1,
                 unit_price=1000
-            )]
+            )],
+            shipping_contact=conekta.CustomerShippingContacts(
+                address=conekta.CustomerShippingContactsAddress(
+                        street1='Calle 123, int 2',
+                        street2='Col. Condesa',
+                        city='Cuauhtémoc',
+                        state='Ciudad de México',
+                        country='MX',
+                    ),
+                metadata={}
+                ),
+            fiscal_entity=conekta.OrderFiscalEntityRequest(
+                address=conekta.FiscalEntityAddress(
+                        state='Ciudad de México',
+                        street1='Calle 123, int 2',
+                        street2='Col. Condesa',
+                        city='Cuauhtémoc',
+                        country='MX',
+                        postal_code='06100',
+                        external_number='123',
+                    ),
+                metadata={},
+            )
         )
         response = self.api.create_order(rq, accept_language)
         self.assertIsNotNone(response)

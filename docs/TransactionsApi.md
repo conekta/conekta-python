@@ -60,6 +60,7 @@ with conekta.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -92,7 +93,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_transactions**
-> GetTransactionsResponse get_transactions(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> GetTransactionsResponse get_transactions(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, next=next, previous=previous, id=id, charge_id=charge_id, type=type, currency=currency)
 
 Get List transactions
 
@@ -132,18 +133,22 @@ with conekta.ApiClient(configuration) as api_client:
     accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
-    search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
     previous = 'previous_example' # str | previous page (optional)
+    id = '65412a893cd69a0001c25892' # str | id of the object to be retrieved (optional)
+    charge_id = '65412a893cd69a0001c25892' # str | id of the charge used for filtering (optional)
+    type = 'capture' # str | type of the object to be retrieved (optional)
+    currency = 'MXN' # str | currency of the object to be retrieved (optional)
 
     try:
         # Get List transactions
-        api_response = api_instance.get_transactions(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+        api_response = api_instance.get_transactions(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, next=next, previous=previous, id=id, charge_id=charge_id, type=type, currency=currency)
         print("The response of TransactionsApi->get_transactions:\n")
         pprint(api_response)
     except Exception as e:
         print("Exception when calling TransactionsApi->get_transactions: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -153,9 +158,12 @@ Name | Type | Description  | Notes
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
- **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 
  **previous** | **str**| previous page | [optional] 
+ **id** | **str**| id of the object to be retrieved | [optional] 
+ **charge_id** | **str**| id of the charge used for filtering | [optional] 
+ **type** | **str**| type of the object to be retrieved | [optional] 
+ **currency** | **str**| currency of the object to be retrieved | [optional] 
 
 ### Return type
 
