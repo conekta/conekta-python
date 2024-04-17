@@ -2,7 +2,7 @@
 
 ![banner](readme_files/banner.png)
 
-# Conekta Python v2.6.2
+# Conekta Python v2.6.3
 
 ![python badge](readme_files/python-badge.png)
 ![conekta badge](readme_files/conekta-badge.png)

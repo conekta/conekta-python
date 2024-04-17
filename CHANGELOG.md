@@ -1,3 +1,7 @@
+## [2.6.2](https://github.com/conekta/conekta-python/releases/tag/v2.6.3) - 2024-04-16
+### Change
+- Remove find line items when are creating an order
+
 ## [2.6.2](https://github.com/conekta/conekta-python/releases/tag/v2.6.2) - 2023-04-17
 ### Change
 - Fix checkout errors

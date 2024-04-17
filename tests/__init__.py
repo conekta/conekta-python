@@ -309,7 +309,7 @@ class BaseEndpointTestCase(unittest.TestCase):
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": False,
-        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
+        "expired_at": int((datetime.today() + timedelta(days=1)).strftime('%s')),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": False,
@@ -334,7 +334,7 @@ class BaseEndpointTestCase(unittest.TestCase):
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": True,
-        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
+        "expired_at": int((datetime.today() + timedelta(days=1)).strftime('%s')),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": False,
@@ -359,7 +359,7 @@ class BaseEndpointTestCase(unittest.TestCase):
         "name": "Payment Link Name",
         "type": "PaymentLink",
         "recurrent": True,
-        "expired_at": int((datetime.today() + timedelta(days=1)).timestamp()),
+        "expired_at": int((datetime.today() + timedelta(days=1)).strftime('%s')),
         "allowed_payment_methods": ["cash", "card", "bank_transfer"],
         "needs_shipping_contact": True,
         "monthly_installments_enabled": True,
@@ -446,7 +446,7 @@ class BaseEndpointTestCase(unittest.TestCase):
             "multifactor_authentication": False,
             "monthly_installments_enabled": False,
             "monthly_installments_options": [3, 6, 9, 12, 18],
-            "expired_at": int((datetime.today() + timedelta(days=1)).timestamp())
+            "expired_at": int((datetime.today() + timedelta(days=1)).strftime('%s'))
         },
         "shipping_contact": {
             "phone": "+5215555555555",
@@ -511,7 +511,7 @@ class BaseEndpointTestCase(unittest.TestCase):
             "multifactor_authentication": False,
             "monthly_installments_enabled": False,
             "monthly_installments_options": [3, 6, 9, 12, 18],
-            "expired_at": int((datetime.today() + timedelta(days=1)).timestamp())
+            "expired_at": int((datetime.today() + timedelta(days=1)).strftime('%s'))
         },
         "shipping_contact": {
             "phone": "+5215555555555",

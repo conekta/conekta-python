@@ -17,7 +17,7 @@ except ImportError:
 
 API_VERSION = '2.0.0'
 
-__version__ = '2.6.2'
+__version__ = '2.6.3'
 __author__ = 'Leo Fischer'
 
 API_BASE = 'https://api.conekta.io/'
@@ -332,9 +332,7 @@ class Order(_CreatableResource, _UpdatableResource, _DeletableResource, _Findabl
         self.charges = []
         query = {}
         if 'line_items' in attributes.keys():
-            endpoint = 'orders/{}/line_items'.format(attributes['id'])
-            response = self.load_url(endpoint, 'GET', query, api_key=api_key)
-            for line_item in response["data"]:
+            for line_item in attributes['line_items']["data"]:
                 new_line_item = LineItem(line_item)
                 new_line_item.parent = self
                 self.line_items.append(new_line_item)
