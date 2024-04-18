@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** |  | 
@@ -22,12 +23,12 @@ json = "{}"
 # create an instance of ChargeResponseRefundsData from a JSON string
 charge_response_refunds_data_instance = ChargeResponseRefundsData.from_json(json)
 # print the JSON string representation of the object
-print ChargeResponseRefundsData.to_json()
+print(ChargeResponseRefundsData.to_json())
 
 # convert the object into a dict
 charge_response_refunds_data_dict = charge_response_refunds_data_instance.to_dict()
 # create an instance of ChargeResponseRefundsData from a dict
-charge_response_refunds_data_form_dict = charge_response_refunds_data.from_dict(charge_response_refunds_data_dict)
+charge_response_refunds_data_from_dict = ChargeResponseRefundsData.from_dict(charge_response_refunds_data_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** |  | [optional] 
@@ -33,12 +34,12 @@ json = "{}"
 # create an instance of ChargeResponse from a JSON string
 charge_response_instance = ChargeResponse.from_json(json)
 # print the JSON string representation of the object
-print ChargeResponse.to_json()
+print(ChargeResponse.to_json())
 
 # convert the object into a dict
 charge_response_dict = charge_response_instance.to_dict()
 # create an instance of ChargeResponse from a dict
-charge_response_form_dict = charge_response.from_dict(charge_response_dict)
+charge_response_from_dict = ChargeResponse.from_dict(charge_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

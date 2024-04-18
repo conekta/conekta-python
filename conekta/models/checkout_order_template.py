@@ -18,17 +18,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel
-from pydantic import Field
 from typing_extensions import Annotated
 from conekta.models.checkout_order_template_customer_info import CheckoutOrderTemplateCustomerInfo
 from conekta.models.product import Product
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CheckoutOrderTemplate(BaseModel):
     """
@@ -40,10 +36,11 @@ class CheckoutOrderTemplate(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a set of key-value pairs that you can attach to the order. It can be used to store additional information about the order in a structured format.")
     __properties: ClassVar[List[str]] = ["currency", "customer_info", "line_items", "metadata"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -56,7 +53,7 @@ class CheckoutOrderTemplate(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CheckoutOrderTemplate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -70,10 +67,12 @@ class CheckoutOrderTemplate(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of customer_info
@@ -89,7 +88,7 @@ class CheckoutOrderTemplate(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CheckoutOrderTemplate from a dict"""
         if obj is None:
             return None
@@ -99,8 +98,8 @@ class CheckoutOrderTemplate(BaseModel):
 
         _obj = cls.model_validate({
             "currency": obj.get("currency"),
-            "customer_info": CheckoutOrderTemplateCustomerInfo.from_dict(obj.get("customer_info")) if obj.get("customer_info") is not None else None,
-            "line_items": [Product.from_dict(_item) for _item in obj.get("line_items")] if obj.get("line_items") is not None else None,
+            "customer_info": CheckoutOrderTemplateCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
+            "line_items": [Product.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
             "metadata": obj.get("metadata")
         })
         return _obj

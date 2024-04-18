@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | 
@@ -35,12 +36,12 @@ json = "{}"
 # create an instance of UpdateCustomerPaymentMethodsResponse from a JSON string
 update_customer_payment_methods_response_instance = UpdateCustomerPaymentMethodsResponse.from_json(json)
 # print the JSON string representation of the object
-print UpdateCustomerPaymentMethodsResponse.to_json()
+print(UpdateCustomerPaymentMethodsResponse.to_json())
 
 # convert the object into a dict
 update_customer_payment_methods_response_dict = update_customer_payment_methods_response_instance.to_dict()
 # create an instance of UpdateCustomerPaymentMethodsResponse from a dict
-update_customer_payment_methods_response_form_dict = update_customer_payment_methods_response.from_dict(update_customer_payment_methods_response_dict)
+update_customer_payment_methods_response_from_dict = UpdateCustomerPaymentMethodsResponse.from_dict(update_customer_payment_methods_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

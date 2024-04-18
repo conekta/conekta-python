@@ -3,6 +3,7 @@
 Method used to make the transfer.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account_holder** | **str** | Name of the account holder. | [optional] 
@@ -24,12 +25,12 @@ json = "{}"
 # create an instance of TransferDestinationResponse from a JSON string
 transfer_destination_response_instance = TransferDestinationResponse.from_json(json)
 # print the JSON string representation of the object
-print TransferDestinationResponse.to_json()
+print(TransferDestinationResponse.to_json())
 
 # convert the object into a dict
 transfer_destination_response_dict = transfer_destination_response_instance.to_dict()
 # create an instance of TransferDestinationResponse from a dict
-transfer_destination_response_form_dict = transfer_destination_response.from_dict(transfer_destination_response_dict)
+transfer_destination_response_from_dict = TransferDestinationResponse.from_dict(transfer_destination_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

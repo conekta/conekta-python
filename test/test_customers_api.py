@@ -57,7 +57,7 @@ class TestCustomersApi(unittest.TestCase):
             email='foo@foo.com',
             company_name='Foo Foo',
             phone='5534343434',
-            address=conekta.CustomerFiscalEntitiesRequestAddress(
+            address=conekta.CustomerAddress(
                 street1='street',
                 postal_code='1444',
                 city='CDMX'

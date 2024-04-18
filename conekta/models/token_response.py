@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from conekta.models.token_response_checkout import TokenResponseCheckout
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class TokenResponse(BaseModel):
     """
@@ -39,10 +35,11 @@ class TokenResponse(BaseModel):
     used: StrictBool = Field(description="Indicates if the token has been used")
     __properties: ClassVar[List[str]] = ["checkout", "id", "livemode", "object", "used"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -55,7 +52,7 @@ class TokenResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of TokenResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -69,10 +66,12 @@ class TokenResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of checkout
@@ -86,7 +85,7 @@ class TokenResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of TokenResponse from a dict"""
         if obj is None:
             return None
@@ -95,7 +94,7 @@ class TokenResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "checkout": TokenResponseCheckout.from_dict(obj.get("checkout")) if obj.get("checkout") is not None else None,
+            "checkout": TokenResponseCheckout.from_dict(obj["checkout"]) if obj.get("checkout") is not None else None,
             "id": obj.get("id"),
             "livemode": obj.get("livemode"),
             "object": obj.get("object"),

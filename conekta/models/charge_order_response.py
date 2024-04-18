@@ -18,16 +18,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.charge_order_response_payment_method import ChargeOrderResponsePaymentMethod
 from conekta.models.charge_response_channel import ChargeResponseChannel
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class ChargeOrderResponse(BaseModel):
     """
@@ -50,14 +46,15 @@ class ChargeOrderResponse(BaseModel):
     paid_at: Optional[StrictInt] = None
     payment_method: Optional[ChargeOrderResponsePaymentMethod] = None
     reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge")
-    refunds: Optional[List[Union[str, Any]]] = None
+    refunds: Optional[List[Dict[str, Any]]] = None
     status: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["amount", "channel", "created_at", "currency", "customer_id", "description", "device_fingerprint", "failure_code", "failure_message", "id", "livemode", "monthly_installments", "object", "order_id", "paid_at", "payment_method", "reference_id", "refunds", "status"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -70,7 +67,7 @@ class ChargeOrderResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ChargeOrderResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -84,10 +81,12 @@ class ChargeOrderResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of channel
@@ -119,7 +118,7 @@ class ChargeOrderResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ChargeOrderResponse from a dict"""
         if obj is None:
             return None
@@ -129,7 +128,7 @@ class ChargeOrderResponse(BaseModel):
 
         _obj = cls.model_validate({
             "amount": obj.get("amount"),
-            "channel": ChargeResponseChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
+            "channel": ChargeResponseChannel.from_dict(obj["channel"]) if obj.get("channel") is not None else None,
             "created_at": obj.get("created_at"),
             "currency": obj.get("currency"),
             "customer_id": obj.get("customer_id"),
@@ -143,7 +142,7 @@ class ChargeOrderResponse(BaseModel):
             "object": obj.get("object"),
             "order_id": obj.get("order_id"),
             "paid_at": obj.get("paid_at"),
-            "payment_method": ChargeOrderResponsePaymentMethod.from_dict(obj.get("payment_method")) if obj.get("payment_method") is not None else None,
+            "payment_method": ChargeOrderResponsePaymentMethod.from_dict(obj["payment_method"]) if obj.get("payment_method") is not None else None,
             "reference_id": obj.get("reference_id"),
             "refunds": obj.get("refunds"),
             "status": obj.get("status")

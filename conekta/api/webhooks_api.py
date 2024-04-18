@@ -12,30 +12,20 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictStr, field_validator
 
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
-
+from typing_extensions import Annotated
 from conekta.models.get_webhooks_response import GetWebhooksResponse
 from conekta.models.webhook_request import WebhookRequest
 from conekta.models.webhook_response import WebhookResponse
 from conekta.models.webhook_update_request import WebhookUpdateRequest
 
-from conekta.api_client import ApiClient
+from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
 from conekta.rest import RESTResponseType
 
@@ -113,8 +103,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -187,8 +176,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -261,8 +249,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -279,19 +266,18 @@ class WebhooksApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -409,8 +395,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -483,8 +468,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -557,8 +541,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -575,19 +558,18 @@ class WebhooksApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -696,8 +678,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -774,8 +755,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -852,8 +832,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -871,19 +850,18 @@ class WebhooksApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -937,6 +915,7 @@ class WebhooksApi:
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=250, strict=True, ge=1)]], Field(description="The numbers of items to return, the maximum value is 250")] = None,
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
+        url: Annotated[Optional[StrictStr], Field(description="url for webhook filter")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
         _request_timeout: Union[
@@ -964,6 +943,8 @@ class WebhooksApi:
         :type limit: int
         :param search: General order search, e.g. by mail, reference etc.
         :type search: str
+        :param url: url for webhook filter
+        :type url: str
         :param next: next page
         :type next: str
         :param previous: previous page
@@ -995,6 +976,7 @@ class WebhooksApi:
             x_child_company_id=x_child_company_id,
             limit=limit,
             search=search,
+            url=url,
             next=next,
             previous=previous,
             _request_auth=_request_auth,
@@ -1006,8 +988,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetWebhooksResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1027,6 +1008,7 @@ class WebhooksApi:
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=250, strict=True, ge=1)]], Field(description="The numbers of items to return, the maximum value is 250")] = None,
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
+        url: Annotated[Optional[StrictStr], Field(description="url for webhook filter")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
         _request_timeout: Union[
@@ -1054,6 +1036,8 @@ class WebhooksApi:
         :type limit: int
         :param search: General order search, e.g. by mail, reference etc.
         :type search: str
+        :param url: url for webhook filter
+        :type url: str
         :param next: next page
         :type next: str
         :param previous: previous page
@@ -1085,6 +1069,7 @@ class WebhooksApi:
             x_child_company_id=x_child_company_id,
             limit=limit,
             search=search,
+            url=url,
             next=next,
             previous=previous,
             _request_auth=_request_auth,
@@ -1096,8 +1081,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetWebhooksResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1117,6 +1101,7 @@ class WebhooksApi:
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         limit: Annotated[Optional[Annotated[int, Field(le=250, strict=True, ge=1)]], Field(description="The numbers of items to return, the maximum value is 250")] = None,
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
+        url: Annotated[Optional[StrictStr], Field(description="url for webhook filter")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
         _request_timeout: Union[
@@ -1144,6 +1129,8 @@ class WebhooksApi:
         :type limit: int
         :param search: General order search, e.g. by mail, reference etc.
         :type search: str
+        :param url: url for webhook filter
+        :type url: str
         :param next: next page
         :type next: str
         :param previous: previous page
@@ -1175,6 +1162,7 @@ class WebhooksApi:
             x_child_company_id=x_child_company_id,
             limit=limit,
             search=search,
+            url=url,
             next=next,
             previous=previous,
             _request_auth=_request_auth,
@@ -1186,8 +1174,7 @@ class WebhooksApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetWebhooksResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1202,25 +1189,25 @@ class WebhooksApi:
         x_child_company_id,
         limit,
         search,
+        url,
         next,
         previous,
         _request_auth,
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1232,6 +1219,10 @@ class WebhooksApi:
         if search is not None:
             
             _query_params.append(('search', search))
+            
+        if url is not None:
+            
+            _query_params.append(('url', url))
             
         if next is not None:
             
@@ -1342,8 +1333,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1417,8 +1407,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1492,8 +1481,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1510,19 +1498,18 @@ class WebhooksApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1636,8 +1623,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '404': "Error",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1719,8 +1705,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '404': "Error",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1802,8 +1787,7 @@ class WebhooksApi:
             '200': "WebhookResponse",
             '404': "Error",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1822,19 +1806,18 @@ class WebhooksApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

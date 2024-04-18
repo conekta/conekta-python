@@ -3,6 +3,7 @@
 It is a sub-resource of the Order model that can be stipulated in order to configure its corresponding checkout
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed_payment_methods** | **List[str]** | Those are the payment methods that will be available for the link | 
@@ -27,12 +28,12 @@ json = "{}"
 # create an instance of Checkout from a JSON string
 checkout_instance = Checkout.from_json(json)
 # print the JSON string representation of the object
-print Checkout.to_json()
+print(Checkout.to_json())
 
 # convert the object into a dict
 checkout_dict = checkout_instance.to_dict()
 # create an instance of Checkout from a dict
-checkout_form_dict = checkout.from_dict(checkout_dict)
+checkout_from_dict = Checkout.from_dict(checkout_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.charge_request_payment_method import ChargeRequestPaymentMethod
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class ChargeRequest(BaseModel):
     """
@@ -37,10 +33,11 @@ class ChargeRequest(BaseModel):
     reference_id: Optional[StrictStr] = Field(default=None, description="Custom reference to add to the charge")
     __properties: ClassVar[List[str]] = ["amount", "payment_method", "reference_id"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -53,7 +50,7 @@ class ChargeRequest(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ChargeRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -67,10 +64,12 @@ class ChargeRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of payment_method
@@ -79,7 +78,7 @@ class ChargeRequest(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ChargeRequest from a dict"""
         if obj is None:
             return None
@@ -89,7 +88,7 @@ class ChargeRequest(BaseModel):
 
         _obj = cls.model_validate({
             "amount": obj.get("amount"),
-            "payment_method": ChargeRequestPaymentMethod.from_dict(obj.get("payment_method")) if obj.get("payment_method") is not None else None,
+            "payment_method": ChargeRequestPaymentMethod.from_dict(obj["payment_method"]) if obj.get("payment_method") is not None else None,
             "reference_id": obj.get("reference_id")
         })
         return _obj

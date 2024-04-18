@@ -2,9 +2,10 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**address** | [**CustomerFiscalEntitiesRequestAddress**](CustomerFiscalEntitiesRequestAddress.md) |  | 
+**address** | [**CustomerAddress**](CustomerAddress.md) |  | 
 **tax_id** | **str** |  | [optional] 
 **email** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
@@ -26,12 +27,12 @@ json = "{}"
 # create an instance of UpdateCustomerFiscalEntitiesResponse from a JSON string
 update_customer_fiscal_entities_response_instance = UpdateCustomerFiscalEntitiesResponse.from_json(json)
 # print the JSON string representation of the object
-print UpdateCustomerFiscalEntitiesResponse.to_json()
+print(UpdateCustomerFiscalEntitiesResponse.to_json())
 
 # convert the object into a dict
 update_customer_fiscal_entities_response_dict = update_customer_fiscal_entities_response_instance.to_dict()
 # create an instance of UpdateCustomerFiscalEntitiesResponse from a dict
-update_customer_fiscal_entities_response_form_dict = update_customer_fiscal_entities_response.from_dict(update_customer_fiscal_entities_response_dict)
+update_customer_fiscal_entities_response_from_dict = UpdateCustomerFiscalEntitiesResponse.from_dict(update_customer_fiscal_entities_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

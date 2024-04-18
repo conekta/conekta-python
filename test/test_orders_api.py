@@ -16,17 +16,19 @@ import unittest
 
 import conekta
 from conekta import ApiClient
-from conekta.api.orders_api import OrdersApi  # noqa: E501
 from conekta.rest import ApiException
 from test.test_utils import get_base_path
-
+from conekta.models.order_response_charges import OrderResponseCharges
+from conekta.models.order_response import OrderResponse
+from conekta.api.orders_api import OrdersApi
+from conekta.models.payment_method_cash import PaymentMethodCash
 
 class TestOrdersApi(unittest.TestCase):
     """OrdersApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.orders_api.OrdersApi(ApiClient(
-            configuration=conekta.Configuration(host=get_base_path())
+        self.api = OrdersApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path(),access_token='key_xxxx')
         ))  # noqa: E501
 
     def tearDown(self):
@@ -83,7 +85,15 @@ class TestOrdersApi(unittest.TestCase):
             )
         )
         response = self.api.create_order(rq, accept_language)
+        
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.charges)
+        self.assertIsInstance(response.charges, OrderResponseCharges)
+        self.assertIsInstance(response, OrderResponse)
+        self.assertEqual('list', response.charges.object)
+        self.assertEqual(1, len(response.charges.data))
+        self.assertIsInstance(response.charges.data[0].payment_method.actual_instance, PaymentMethodCash)
+        self.assertEqual("oxxo", response.charges.data[0].payment_method.actual_instance.type)
 
     def test_get_order_by_id(self):
         """Test case for get_order_by_id

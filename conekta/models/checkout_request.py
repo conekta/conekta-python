@@ -18,14 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CheckoutRequest(BaseModel):
     """
@@ -38,14 +34,16 @@ class CheckoutRequest(BaseModel):
     monthly_installments_options: Optional[List[StrictInt]] = None
     name: Optional[StrictStr] = Field(default=None, description="Reason for payment")
     on_demand_enabled: Optional[StrictBool] = None
+    redirection_time: Optional[StrictInt] = Field(default=None, description="number of seconds to wait before redirecting to the success_url")
     success_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of successful payment, applies only to HostedPayment")
     type: Optional[StrictStr] = Field(default=None, description="This field represents the type of checkout")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "name", "on_demand_enabled", "success_url", "type"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "name", "on_demand_enabled", "redirection_time", "success_url", "type"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -58,7 +56,7 @@ class CheckoutRequest(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CheckoutRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -72,16 +70,18 @@ class CheckoutRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CheckoutRequest from a dict"""
         if obj is None:
             return None
@@ -97,6 +97,7 @@ class CheckoutRequest(BaseModel):
             "monthly_installments_options": obj.get("monthly_installments_options"),
             "name": obj.get("name"),
             "on_demand_enabled": obj.get("on_demand_enabled"),
+            "redirection_time": obj.get("redirection_time"),
             "success_url": obj.get("success_url"),
             "type": obj.get("type")
         })

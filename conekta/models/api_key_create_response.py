@@ -18,20 +18,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class ApiKeyCreateResponse(BaseModel):
     """
     ApiKeyCreateResponse
     """ # noqa: E501
-    authentication_token: Optional[StrictStr] = Field(default=None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.")
     active: Optional[StrictBool] = Field(default=None, description="Indicates if the api key is active")
     created_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was created")
     updated_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was last updated")
@@ -43,12 +38,14 @@ class ApiKeyCreateResponse(BaseModel):
     object: Optional[StrictStr] = Field(default=None, description="Object name, value is 'api_key'")
     prefix: Optional[StrictStr] = Field(default=None, description="The first few characters of the authentication_token")
     role: Optional[StrictStr] = Field(default=None, description="Indicates if the api key is private or public")
-    __properties: ClassVar[List[str]] = ["authentication_token", "active", "created_at", "updated_at", "deactivated_at", "description", "id", "livemode", "deleted", "object", "prefix", "role"]
+    authentication_token: Optional[StrictStr] = Field(default=None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.")
+    __properties: ClassVar[List[str]] = ["active", "created_at", "updated_at", "deactivated_at", "description", "id", "livemode", "deleted", "object", "prefix", "role", "authentication_token"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -61,7 +58,7 @@ class ApiKeyCreateResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ApiKeyCreateResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -75,10 +72,12 @@ class ApiKeyCreateResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # set to None if deactivated_at (nullable) is None
@@ -89,7 +88,7 @@ class ApiKeyCreateResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ApiKeyCreateResponse from a dict"""
         if obj is None:
             return None
@@ -98,7 +97,6 @@ class ApiKeyCreateResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "authentication_token": obj.get("authentication_token"),
             "active": obj.get("active"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
@@ -109,7 +107,8 @@ class ApiKeyCreateResponse(BaseModel):
             "deleted": obj.get("deleted"),
             "object": obj.get("object"),
             "prefix": obj.get("prefix"),
-            "role": obj.get("role")
+            "role": obj.get("role"),
+            "authentication_token": obj.get("authentication_token")
         })
         return _obj
 

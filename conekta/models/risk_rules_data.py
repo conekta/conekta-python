@@ -18,21 +18,17 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class RiskRulesData(BaseModel):
     """
     RiskRulesData
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="rule id")
-    field: Optional[StrictStr] = Field(default=None, description="field to be used for the rule")
+    var_field: Optional[StrictStr] = Field(default=None, description="field to be used for the rule", alias="field")
     created_at: Optional[StrictStr] = Field(default=None, description="rule creation date")
     value: Optional[StrictStr] = Field(default=None, description="value to be used for the rule")
     is_global: Optional[StrictBool] = Field(default=None, description="if the rule is global")
@@ -40,10 +36,11 @@ class RiskRulesData(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="description of the rule")
     __properties: ClassVar[List[str]] = ["id", "field", "created_at", "value", "is_global", "is_test", "description"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -56,7 +53,7 @@ class RiskRulesData(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of RiskRulesData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -70,16 +67,18 @@ class RiskRulesData(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of RiskRulesData from a dict"""
         if obj is None:
             return None

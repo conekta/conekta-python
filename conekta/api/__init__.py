@@ -13,6 +13,7 @@ from conekta.api.logs_api import LogsApi
 from conekta.api.orders_api import OrdersApi
 from conekta.api.payment_link_api import PaymentLinkApi
 from conekta.api.payment_methods_api import PaymentMethodsApi
+from conekta.api.payout_orders_api import PayoutOrdersApi
 from conekta.api.plans_api import PlansApi
 from conekta.api.products_api import ProductsApi
 from conekta.api.shipping_contacts_api import ShippingContactsApi

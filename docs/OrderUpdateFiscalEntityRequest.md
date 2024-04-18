@@ -3,6 +3,7 @@
 Fiscal entity of the order, Currently it is a purely informative field
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**FiscalEntityAddress**](FiscalEntityAddress.md) |  | 
@@ -22,12 +23,12 @@ json = "{}"
 # create an instance of OrderUpdateFiscalEntityRequest from a JSON string
 order_update_fiscal_entity_request_instance = OrderUpdateFiscalEntityRequest.from_json(json)
 # print the JSON string representation of the object
-print OrderUpdateFiscalEntityRequest.to_json()
+print(OrderUpdateFiscalEntityRequest.to_json())
 
 # convert the object into a dict
 order_update_fiscal_entity_request_dict = order_update_fiscal_entity_request_instance.to_dict()
 # create an instance of OrderUpdateFiscalEntityRequest from a dict
-order_update_fiscal_entity_request_form_dict = order_update_fiscal_entity_request.from_dict(order_update_fiscal_entity_request_dict)
+order_update_fiscal_entity_request_from_dict = OrderUpdateFiscalEntityRequest.from_dict(order_update_fiscal_entity_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

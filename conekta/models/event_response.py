@@ -18,14 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
 from conekta.models.webhook_log import WebhookLog
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class EventResponse(BaseModel):
     """
@@ -41,10 +38,11 @@ class EventResponse(BaseModel):
     webhook_status: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["created_at", "data", "id", "livemode", "object", "type", "webhook_logs", "webhook_status"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -57,7 +55,7 @@ class EventResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of EventResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -71,10 +69,12 @@ class EventResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of each item in webhook_logs (list)
@@ -87,7 +87,7 @@ class EventResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of EventResponse from a dict"""
         if obj is None:
             return None
@@ -102,7 +102,7 @@ class EventResponse(BaseModel):
             "livemode": obj.get("livemode"),
             "object": obj.get("object"),
             "type": obj.get("type"),
-            "webhook_logs": [WebhookLog.from_dict(_item) for _item in obj.get("webhook_logs")] if obj.get("webhook_logs") is not None else None,
+            "webhook_logs": [WebhookLog.from_dict(_item) for _item in obj["webhook_logs"]] if obj.get("webhook_logs") is not None else None,
             "webhook_status": obj.get("webhook_status")
         })
         return _obj

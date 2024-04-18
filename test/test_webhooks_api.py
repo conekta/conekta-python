@@ -17,7 +17,7 @@ import unittest
 
 import conekta
 from conekta import ApiClient
-from conekta.api.webhooks_api import WebhooksApi  # noqa: E501
+from conekta.api.webhooks_api import WebhooksApi
 from conekta.rest import ApiException
 from test.test_utils import get_base_path
 
@@ -26,8 +26,8 @@ class TestWebhooksApi(unittest.TestCase):
     """WebhooksApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.webhooks_api.WebhooksApi(ApiClient(
-            configuration=conekta.Configuration(host=get_base_path())
+        self.api = WebhooksApi(ApiClient(
+            configuration=conekta.Configuration(host=get_base_path(), access_token='key_xxxx')
         ))  # noqa: E501
 
     def tearDown(self):

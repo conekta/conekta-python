@@ -3,6 +3,7 @@
 a plan
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** | The amount in cents that will be charged on the interval specified. | [optional] 
@@ -20,12 +21,12 @@ json = "{}"
 # create an instance of PlanUpdateRequest from a JSON string
 plan_update_request_instance = PlanUpdateRequest.from_json(json)
 # print the JSON string representation of the object
-print PlanUpdateRequest.to_json()
+print(PlanUpdateRequest.to_json())
 
 # convert the object into a dict
 plan_update_request_dict = plan_update_request_instance.to_dict()
 # create an instance of PlanUpdateRequest from a dict
-plan_update_request_form_dict = plan_update_request.from_dict(plan_update_request_dict)
+plan_update_request_from_dict = PlanUpdateRequest.from_dict(plan_update_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

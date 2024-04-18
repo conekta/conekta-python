@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictStr
-from pydantic import Field
 from conekta.models.order_next_action_response_redirect_to_url import OrderNextActionResponseRedirectToUrl
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class OrderNextActionResponse(BaseModel):
     """
@@ -36,10 +32,11 @@ class OrderNextActionResponse(BaseModel):
     type: Optional[StrictStr] = Field(default=None, description="Indicates the type of action to be taken")
     __properties: ClassVar[List[str]] = ["redirect_to_url", "type"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -52,7 +49,7 @@ class OrderNextActionResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of OrderNextActionResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -66,10 +63,12 @@ class OrderNextActionResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of redirect_to_url
@@ -78,7 +77,7 @@ class OrderNextActionResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of OrderNextActionResponse from a dict"""
         if obj is None:
             return None
@@ -87,7 +86,7 @@ class OrderNextActionResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "redirect_to_url": OrderNextActionResponseRedirectToUrl.from_dict(obj.get("redirect_to_url")) if obj.get("redirect_to_url") is not None else None,
+            "redirect_to_url": OrderNextActionResponseRedirectToUrl.from_dict(obj["redirect_to_url"]) if obj.get("redirect_to_url") is not None else None,
             "type": obj.get("type")
         })
         return _obj

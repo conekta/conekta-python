@@ -17,18 +17,19 @@ import unittest
 
 import conekta
 from conekta import ApiClient
-from conekta.api.api_keys_api import ApiKeysApi  # noqa: E501
+from conekta.api.api_keys_api import ApiKeysApi 
 from conekta.rest import ApiException
 from test.test_utils import get_base_path
-
+from conekta.models.get_api_keys_response import GetApiKeysResponse
+from conekta.models.api_key_response import ApiKeyResponse
 
 class TestApiKeysApi(unittest.TestCase):
     """ApiKeysApi unit test stubs"""
 
     def setUp(self):
-        self.api = conekta.api.api_keys_api.ApiKeysApi(ApiClient(
+        self.api = ApiKeysApi(ApiClient(
             configuration=conekta.Configuration(host=get_base_path())
-        ))  # noqa: E501
+        ))  
 
     def tearDown(self):
         pass
@@ -72,7 +73,15 @@ class TestApiKeysApi(unittest.TestCase):
         """
         accept_language = 'es'
         response = self.api.get_api_keys(accept_language, limit=20)
+        
         self.assertIsNotNone(response)
+        self.assertIsInstance(response, GetApiKeysResponse)
+        self.assertIsInstance(response.data[0], ApiKeyResponse)
+        self.assertIsNotNone(response.data)
+        self.assertTrue(response.data[0].active)
+        self.assertEqual(1, len(response.data))
+        self.assertFalse(response.next_page_url)
+        self.assertFalse(response.previous_page_url)
 
     def test_update_api_key(self):
         """Test case for update_api_key

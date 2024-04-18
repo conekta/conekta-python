@@ -3,6 +3,7 @@
 A transfer represents the action of sending an amount to a business bank account including the status, amount and method used to make the transfer.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** | Amount in cents of the transfer. | [optional] 
@@ -26,12 +27,12 @@ json = "{}"
 # create an instance of TransferResponse from a JSON string
 transfer_response_instance = TransferResponse.from_json(json)
 # print the JSON string representation of the object
-print TransferResponse.to_json()
+print(TransferResponse.to_json())
 
 # convert the object into a dict
 transfer_response_dict = transfer_response_instance.to_dict()
 # create an instance of TransferResponse from a dict
-transfer_response_form_dict = transfer_response.from_dict(transfer_response_dict)
+transfer_response_from_dict = TransferResponse.from_dict(transfer_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

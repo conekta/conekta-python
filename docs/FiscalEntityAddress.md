@@ -3,6 +3,7 @@
 Address of the fiscal entity
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **street1** | **str** | Street name and number | 
@@ -23,12 +24,12 @@ json = "{}"
 # create an instance of FiscalEntityAddress from a JSON string
 fiscal_entity_address_instance = FiscalEntityAddress.from_json(json)
 # print the JSON string representation of the object
-print FiscalEntityAddress.to_json()
+print(FiscalEntityAddress.to_json())
 
 # convert the object into a dict
 fiscal_entity_address_dict = fiscal_entity_address_instance.to_dict()
 # create an instance of FiscalEntityAddress from a dict
-fiscal_entity_address_form_dict = fiscal_entity_address.from_dict(fiscal_entity_address_dict)
+fiscal_entity_address_from_dict = FiscalEntityAddress.from_dict(fiscal_entity_address_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

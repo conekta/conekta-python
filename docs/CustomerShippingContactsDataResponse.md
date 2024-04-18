@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **phone** | **str** | Phone contact | [optional] 
@@ -26,12 +27,12 @@ json = "{}"
 # create an instance of CustomerShippingContactsDataResponse from a JSON string
 customer_shipping_contacts_data_response_instance = CustomerShippingContactsDataResponse.from_json(json)
 # print the JSON string representation of the object
-print CustomerShippingContactsDataResponse.to_json()
+print(CustomerShippingContactsDataResponse.to_json())
 
 # convert the object into a dict
 customer_shipping_contacts_data_response_dict = customer_shipping_contacts_data_response_instance.to_dict()
 # create an instance of CustomerShippingContactsDataResponse from a dict
-customer_shipping_contacts_data_response_form_dict = customer_shipping_contacts_data_response.from_dict(customer_shipping_contacts_data_response_dict)
+customer_shipping_contacts_data_response_from_dict = CustomerShippingContactsDataResponse.from_dict(customer_shipping_contacts_data_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

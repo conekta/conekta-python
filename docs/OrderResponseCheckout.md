@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed_payment_methods** | **List[str]** |  | [optional] 
@@ -23,6 +24,7 @@ Name | Type | Description | Notes
 **on_demand_enabled** | **bool** |  | [optional] 
 **paid_payments_count** | **int** |  | [optional] 
 **recurrent** | **bool** |  | [optional] 
+**redirection_time** | **int** | number of seconds to wait before redirecting to the success_url | [optional] 
 **slug** | **str** |  | [optional] 
 **sms_sent** | **int** |  | [optional] 
 **success_url** | **str** |  | [optional] 
@@ -41,12 +43,12 @@ json = "{}"
 # create an instance of OrderResponseCheckout from a JSON string
 order_response_checkout_instance = OrderResponseCheckout.from_json(json)
 # print the JSON string representation of the object
-print OrderResponseCheckout.to_json()
+print(OrderResponseCheckout.to_json())
 
 # convert the object into a dict
 order_response_checkout_dict = order_response_checkout_instance.to_dict()
 # create an instance of OrderResponseCheckout from a dict
-order_response_checkout_form_dict = order_response_checkout.from_dict(order_response_checkout_dict)
+order_response_checkout_from_dict = OrderResponseCheckout.from_dict(order_response_checkout_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -18,31 +18,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from conekta.models.customer_response import CustomerResponse
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CustomersResponse(BaseModel):
     """
     CustomersResponse
     """ # noqa: E501
-    data: Optional[List[CustomerResponse]] = None
     has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
     object: StrictStr = Field(description="Object type, in this case is list")
     next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.")
     previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.")
-    __properties: ClassVar[List[str]] = ["data", "has_more", "object", "next_page_url", "previous_page_url"]
+    data: Optional[List[CustomerResponse]] = None
+    __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -55,7 +52,7 @@ class CustomersResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CustomersResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -69,10 +66,12 @@ class CustomersResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of each item in data (list)
@@ -95,7 +94,7 @@ class CustomersResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CustomersResponse from a dict"""
         if obj is None:
             return None
@@ -104,11 +103,11 @@ class CustomersResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "data": [CustomerResponse.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
             "has_more": obj.get("has_more"),
             "object": obj.get("object"),
             "next_page_url": obj.get("next_page_url"),
-            "previous_page_url": obj.get("previous_page_url")
+            "previous_page_url": obj.get("previous_page_url"),
+            "data": [CustomerResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj
 

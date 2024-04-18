@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **created_at** | **int** |  | [optional] 
@@ -35,12 +36,12 @@ json = "{}"
 # create an instance of LogsResponseData from a JSON string
 logs_response_data_instance = LogsResponseData.from_json(json)
 # print the JSON string representation of the object
-print LogsResponseData.to_json()
+print(LogsResponseData.to_json())
 
 # convert the object into a dict
 logs_response_data_dict = logs_response_data_instance.to_dict()
 # create an instance of LogsResponseData from a dict
-logs_response_data_form_dict = logs_response_data.from_dict(logs_response_data_dict)
+logs_response_data_from_dict = LogsResponseData.from_dict(logs_response_data_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

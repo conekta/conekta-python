@@ -18,13 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
 
 class LogsResponseData(BaseModel):
     """
@@ -40,9 +37,9 @@ class LogsResponseData(BaseModel):
     oauth_token_id: Optional[StrictStr] = None
     query_string: Optional[Dict[str, Any]] = None
     related: Optional[StrictStr] = None
-    request_body: Optional[Union[str, Any]] = None
+    request_body: Optional[Dict[str, Any]] = None
     request_headers: Optional[Dict[str, StrictStr]] = None
-    response_body: Optional[Union[str, Any]] = None
+    response_body: Optional[Dict[str, Any]] = None
     response_headers: Optional[Dict[str, StrictStr]] = None
     searchable_tags: Optional[List[StrictStr]] = None
     status: Optional[StrictStr] = None
@@ -52,10 +49,11 @@ class LogsResponseData(BaseModel):
     version: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["created_at", "id", "ip_address", "livemode", "loggable_id", "loggable_type", "method", "oauth_token_id", "query_string", "related", "request_body", "request_headers", "response_body", "response_headers", "searchable_tags", "status", "updated_at", "url", "user_account_id", "version"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -68,7 +66,7 @@ class LogsResponseData(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of LogsResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -82,10 +80,12 @@ class LogsResponseData(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # set to None if loggable_id (nullable) is None
@@ -106,7 +106,7 @@ class LogsResponseData(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of LogsResponseData from a dict"""
         if obj is None:
             return None

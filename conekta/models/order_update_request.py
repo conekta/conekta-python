@@ -18,10 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from typing_extensions import Annotated
 from conekta.models.charge_request import ChargeRequest
 from conekta.models.checkout_request import CheckoutRequest
@@ -32,10 +30,8 @@ from conekta.models.order_update_fiscal_entity_request import OrderUpdateFiscalE
 from conekta.models.order_update_request_customer_info import OrderUpdateRequestCustomerInfo
 from conekta.models.product import Product
 from conekta.models.shipping_request import ShippingRequest
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class OrderUpdateRequest(BaseModel):
     """
@@ -55,10 +51,11 @@ class OrderUpdateRequest(BaseModel):
     tax_lines: Optional[List[OrderTaxRequest]] = None
     __properties: ClassVar[List[str]] = ["charges", "checkout", "currency", "customer_info", "discount_lines", "fiscal_entity", "line_items", "metadata", "pre_authorize", "shipping_contact", "shipping_lines", "tax_lines"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -71,7 +68,7 @@ class OrderUpdateRequest(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of OrderUpdateRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -85,10 +82,12 @@ class OrderUpdateRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of each item in charges (list)
@@ -141,7 +140,7 @@ class OrderUpdateRequest(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of OrderUpdateRequest from a dict"""
         if obj is None:
             return None
@@ -150,18 +149,18 @@ class OrderUpdateRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "charges": [ChargeRequest.from_dict(_item) for _item in obj.get("charges")] if obj.get("charges") is not None else None,
-            "checkout": CheckoutRequest.from_dict(obj.get("checkout")) if obj.get("checkout") is not None else None,
+            "charges": [ChargeRequest.from_dict(_item) for _item in obj["charges"]] if obj.get("charges") is not None else None,
+            "checkout": CheckoutRequest.from_dict(obj["checkout"]) if obj.get("checkout") is not None else None,
             "currency": obj.get("currency"),
-            "customer_info": OrderUpdateRequestCustomerInfo.from_dict(obj.get("customer_info")) if obj.get("customer_info") is not None else None,
-            "discount_lines": [OrderDiscountLinesRequest.from_dict(_item) for _item in obj.get("discount_lines")] if obj.get("discount_lines") is not None else None,
-            "fiscal_entity": OrderUpdateFiscalEntityRequest.from_dict(obj.get("fiscal_entity")) if obj.get("fiscal_entity") is not None else None,
-            "line_items": [Product.from_dict(_item) for _item in obj.get("line_items")] if obj.get("line_items") is not None else None,
+            "customer_info": OrderUpdateRequestCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
+            "discount_lines": [OrderDiscountLinesRequest.from_dict(_item) for _item in obj["discount_lines"]] if obj.get("discount_lines") is not None else None,
+            "fiscal_entity": OrderUpdateFiscalEntityRequest.from_dict(obj["fiscal_entity"]) if obj.get("fiscal_entity") is not None else None,
+            "line_items": [Product.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
             "metadata": obj.get("metadata"),
             "pre_authorize": obj.get("pre_authorize") if obj.get("pre_authorize") is not None else False,
-            "shipping_contact": CustomerShippingContacts.from_dict(obj.get("shipping_contact")) if obj.get("shipping_contact") is not None else None,
-            "shipping_lines": [ShippingRequest.from_dict(_item) for _item in obj.get("shipping_lines")] if obj.get("shipping_lines") is not None else None,
-            "tax_lines": [OrderTaxRequest.from_dict(_item) for _item in obj.get("tax_lines")] if obj.get("tax_lines") is not None else None
+            "shipping_contact": CustomerShippingContacts.from_dict(obj["shipping_contact"]) if obj.get("shipping_contact") is not None else None,
+            "shipping_lines": [ShippingRequest.from_dict(_item) for _item in obj["shipping_lines"]] if obj.get("shipping_lines") is not None else None,
+            "tax_lines": [OrderTaxRequest.from_dict(_item) for _item in obj["tax_lines"]] if obj.get("tax_lines") is not None else None
         })
         return _obj
 

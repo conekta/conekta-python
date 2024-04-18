@@ -18,10 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.charge_response_channel import ChargeResponseChannel
 from conekta.models.order_fiscal_entity_response import OrderFiscalEntityResponse
 from conekta.models.order_next_action_response import OrderNextActionResponse
@@ -31,10 +29,8 @@ from conekta.models.order_response_customer_info import OrderResponseCustomerInf
 from conekta.models.order_response_discount_lines import OrderResponseDiscountLines
 from conekta.models.order_response_products import OrderResponseProducts
 from conekta.models.order_response_shipping_contact import OrderResponseShippingContact
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class OrderResponse(BaseModel):
     """
@@ -63,10 +59,11 @@ class OrderResponse(BaseModel):
     updated_at: Optional[StrictInt] = Field(default=None, description="The time at which the object was last updated in seconds since the Unix epoch")
     __properties: ClassVar[List[str]] = ["amount", "amount_refunded", "channel", "charges", "checkout", "created_at", "currency", "customer_info", "discount_lines", "fiscal_entity", "id", "is_refundable", "line_items", "livemode", "metadata", "next_action", "object", "payment_status", "processing_mode", "shipping_contact", "updated_at"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -79,7 +76,7 @@ class OrderResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of OrderResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -93,10 +90,12 @@ class OrderResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of channel
@@ -134,7 +133,7 @@ class OrderResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of OrderResponse from a dict"""
         if obj is None:
             return None
@@ -145,24 +144,24 @@ class OrderResponse(BaseModel):
         _obj = cls.model_validate({
             "amount": obj.get("amount"),
             "amount_refunded": obj.get("amount_refunded"),
-            "channel": ChargeResponseChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
-            "charges": OrderResponseCharges.from_dict(obj.get("charges")) if obj.get("charges") is not None else None,
-            "checkout": OrderResponseCheckout.from_dict(obj.get("checkout")) if obj.get("checkout") is not None else None,
+            "channel": ChargeResponseChannel.from_dict(obj["channel"]) if obj.get("channel") is not None else None,
+            "charges": OrderResponseCharges.from_dict(obj["charges"]) if obj.get("charges") is not None else None,
+            "checkout": OrderResponseCheckout.from_dict(obj["checkout"]) if obj.get("checkout") is not None else None,
             "created_at": obj.get("created_at"),
             "currency": obj.get("currency"),
-            "customer_info": OrderResponseCustomerInfo.from_dict(obj.get("customer_info")) if obj.get("customer_info") is not None else None,
-            "discount_lines": OrderResponseDiscountLines.from_dict(obj.get("discount_lines")) if obj.get("discount_lines") is not None else None,
-            "fiscal_entity": OrderFiscalEntityResponse.from_dict(obj.get("fiscal_entity")) if obj.get("fiscal_entity") is not None else None,
+            "customer_info": OrderResponseCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
+            "discount_lines": OrderResponseDiscountLines.from_dict(obj["discount_lines"]) if obj.get("discount_lines") is not None else None,
+            "fiscal_entity": OrderFiscalEntityResponse.from_dict(obj["fiscal_entity"]) if obj.get("fiscal_entity") is not None else None,
             "id": obj.get("id"),
             "is_refundable": obj.get("is_refundable"),
-            "line_items": OrderResponseProducts.from_dict(obj.get("line_items")) if obj.get("line_items") is not None else None,
+            "line_items": OrderResponseProducts.from_dict(obj["line_items"]) if obj.get("line_items") is not None else None,
             "livemode": obj.get("livemode"),
             "metadata": obj.get("metadata"),
-            "next_action": OrderNextActionResponse.from_dict(obj.get("next_action")) if obj.get("next_action") is not None else None,
+            "next_action": OrderNextActionResponse.from_dict(obj["next_action"]) if obj.get("next_action") is not None else None,
             "object": obj.get("object"),
             "payment_status": obj.get("payment_status"),
             "processing_mode": obj.get("processing_mode"),
-            "shipping_contact": OrderResponseShippingContact.from_dict(obj.get("shipping_contact")) if obj.get("shipping_contact") is not None else None,
+            "shipping_contact": OrderResponseShippingContact.from_dict(obj["shipping_contact"]) if obj.get("shipping_contact") is not None else None,
             "updated_at": obj.get("updated_at")
         })
         return _obj

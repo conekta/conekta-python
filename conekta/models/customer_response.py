@@ -18,19 +18,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.customer_antifraud_info_response import CustomerAntifraudInfoResponse
 from conekta.models.customer_fiscal_entities_response import CustomerFiscalEntitiesResponse
 from conekta.models.customer_payment_methods_response import CustomerPaymentMethodsResponse
 from conekta.models.customer_response_shipping_contacts import CustomerResponseShippingContacts
 from conekta.models.subscription_response import SubscriptionResponse
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CustomerResponse(BaseModel):
     """
@@ -56,10 +52,11 @@ class CustomerResponse(BaseModel):
     subscription: Optional[SubscriptionResponse] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "created_at", "custom_reference", "default_fiscal_entity_id", "default_shipping_contact_id", "default_payment_source_id", "email", "fiscal_entities", "id", "livemode", "name", "metadata", "object", "payment_sources", "phone", "shipping_contacts", "subscription"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -72,7 +69,7 @@ class CustomerResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CustomerResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -86,10 +83,12 @@ class CustomerResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of antifraud_info
@@ -125,7 +124,7 @@ class CustomerResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CustomerResponse from a dict"""
         if obj is None:
             return None
@@ -134,7 +133,7 @@ class CustomerResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "antifraud_info": CustomerAntifraudInfoResponse.from_dict(obj.get("antifraud_info")) if obj.get("antifraud_info") is not None else None,
+            "antifraud_info": CustomerAntifraudInfoResponse.from_dict(obj["antifraud_info"]) if obj.get("antifraud_info") is not None else None,
             "corporate": obj.get("corporate"),
             "created_at": obj.get("created_at"),
             "custom_reference": obj.get("custom_reference"),
@@ -142,16 +141,16 @@ class CustomerResponse(BaseModel):
             "default_shipping_contact_id": obj.get("default_shipping_contact_id"),
             "default_payment_source_id": obj.get("default_payment_source_id"),
             "email": obj.get("email"),
-            "fiscal_entities": CustomerFiscalEntitiesResponse.from_dict(obj.get("fiscal_entities")) if obj.get("fiscal_entities") is not None else None,
+            "fiscal_entities": CustomerFiscalEntitiesResponse.from_dict(obj["fiscal_entities"]) if obj.get("fiscal_entities") is not None else None,
             "id": obj.get("id"),
             "livemode": obj.get("livemode"),
             "name": obj.get("name"),
             "metadata": obj.get("metadata"),
             "object": obj.get("object"),
-            "payment_sources": CustomerPaymentMethodsResponse.from_dict(obj.get("payment_sources")) if obj.get("payment_sources") is not None else None,
+            "payment_sources": CustomerPaymentMethodsResponse.from_dict(obj["payment_sources"]) if obj.get("payment_sources") is not None else None,
             "phone": obj.get("phone"),
-            "shipping_contacts": CustomerResponseShippingContacts.from_dict(obj.get("shipping_contacts")) if obj.get("shipping_contacts") is not None else None,
-            "subscription": SubscriptionResponse.from_dict(obj.get("subscription")) if obj.get("subscription") is not None else None
+            "shipping_contacts": CustomerResponseShippingContacts.from_dict(obj["shipping_contacts"]) if obj.get("shipping_contacts") is not None else None,
+            "subscription": SubscriptionResponse.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None
         })
         return _obj
 
