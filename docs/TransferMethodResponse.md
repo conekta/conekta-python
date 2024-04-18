@@ -3,6 +3,7 @@
 Method used to make the transfer.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account_holder** | **str** | Name of the account holder. | [optional] 
@@ -24,12 +25,12 @@ json = "{}"
 # create an instance of TransferMethodResponse from a JSON string
 transfer_method_response_instance = TransferMethodResponse.from_json(json)
 # print the JSON string representation of the object
-print TransferMethodResponse.to_json()
+print(TransferMethodResponse.to_json())
 
 # convert the object into a dict
 transfer_method_response_dict = transfer_method_response_instance.to_dict()
 # create an instance of TransferMethodResponse from a dict
-transfer_method_response_form_dict = transfer_method_response.from_dict(transfer_method_response_dict)
+transfer_method_response_from_dict = TransferMethodResponse.from_dict(transfer_method_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

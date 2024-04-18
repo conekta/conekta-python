@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **active** | **bool** | Indicates if the webhook key is active | [optional] [default to False]
@@ -16,12 +17,12 @@ json = "{}"
 # create an instance of WebhookKeyUpdateRequest from a JSON string
 webhook_key_update_request_instance = WebhookKeyUpdateRequest.from_json(json)
 # print the JSON string representation of the object
-print WebhookKeyUpdateRequest.to_json()
+print(WebhookKeyUpdateRequest.to_json())
 
 # convert the object into a dict
 webhook_key_update_request_dict = webhook_key_update_request_instance.to_dict()
 # create an instance of WebhookKeyUpdateRequest from a dict
-webhook_key_update_request_form_dict = webhook_key_update_request.from_dict(webhook_key_update_request_dict)
+webhook_key_update_request_from_dict = WebhookKeyUpdateRequest.from_dict(webhook_key_update_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

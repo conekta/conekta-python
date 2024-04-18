@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from conekta.models.customer_shipping_contacts_address import CustomerShippingContactsAddress
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CustomerUpdateShippingContacts(BaseModel):
     """
@@ -41,10 +37,11 @@ class CustomerUpdateShippingContacts(BaseModel):
     deleted: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = ["phone", "receiver", "between_streets", "address", "parent_id", "default", "deleted"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -57,7 +54,7 @@ class CustomerUpdateShippingContacts(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CustomerUpdateShippingContacts from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -71,10 +68,12 @@ class CustomerUpdateShippingContacts(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of address
@@ -93,7 +92,7 @@ class CustomerUpdateShippingContacts(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CustomerUpdateShippingContacts from a dict"""
         if obj is None:
             return None
@@ -105,7 +104,7 @@ class CustomerUpdateShippingContacts(BaseModel):
             "phone": obj.get("phone"),
             "receiver": obj.get("receiver"),
             "between_streets": obj.get("between_streets"),
-            "address": CustomerShippingContactsAddress.from_dict(obj.get("address")) if obj.get("address") is not None else None,
+            "address": CustomerShippingContactsAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "parent_id": obj.get("parent_id"),
             "default": obj.get("default"),
             "deleted": obj.get("deleted")

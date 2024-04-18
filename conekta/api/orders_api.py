@@ -12,24 +12,14 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictStr, field_validator
 
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
-
+from typing_extensions import Annotated
 from conekta.models.get_orders_response import GetOrdersResponse
 from conekta.models.order_capture_request import OrderCaptureRequest
 from conekta.models.order_refund_request import OrderRefundRequest
@@ -37,7 +27,7 @@ from conekta.models.order_request import OrderRequest
 from conekta.models.order_response import OrderResponse
 from conekta.models.order_update_request import OrderUpdateRequest
 
-from conekta.api_client import ApiClient
+from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
 from conekta.rest import RESTResponseType
 
@@ -122,8 +112,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -203,8 +192,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -284,8 +272,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -303,19 +290,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -428,8 +414,7 @@ class OrdersApi:
             '422': "Error",
             '401': "Error",
             '402': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -508,8 +493,7 @@ class OrdersApi:
             '422': "Error",
             '401': "Error",
             '402': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -588,8 +572,7 @@ class OrdersApi:
             '422': "Error",
             '401': "Error",
             '402': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -607,19 +590,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -744,8 +726,7 @@ class OrdersApi:
             '200': "OrderResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -823,8 +804,7 @@ class OrdersApi:
             '200': "OrderResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -902,8 +882,7 @@ class OrdersApi:
             '200': "OrderResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -921,19 +900,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1056,8 +1034,7 @@ class OrdersApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrdersResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1146,8 +1123,7 @@ class OrdersApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrdersResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1236,8 +1212,7 @@ class OrdersApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrdersResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1258,19 +1233,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1402,8 +1376,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1487,8 +1460,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1572,8 +1544,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1592,19 +1563,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1724,8 +1694,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1809,8 +1778,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1894,8 +1862,7 @@ class OrdersApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1914,19 +1881,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2058,8 +2024,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2142,8 +2107,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2226,8 +2190,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '428': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2246,19 +2209,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2386,8 +2348,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2466,8 +2427,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2546,8 +2506,7 @@ class OrdersApi:
             '401': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2565,19 +2524,18 @@ class OrdersApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
@@ -50,12 +51,12 @@ json = "{}"
 # create an instance of ChargeOrderResponsePaymentMethod from a JSON string
 charge_order_response_payment_method_instance = ChargeOrderResponsePaymentMethod.from_json(json)
 # print the JSON string representation of the object
-print ChargeOrderResponsePaymentMethod.to_json()
+print(ChargeOrderResponsePaymentMethod.to_json())
 
 # convert the object into a dict
 charge_order_response_payment_method_dict = charge_order_response_payment_method_instance.to_dict()
 # create an instance of ChargeOrderResponsePaymentMethod from a dict
-charge_order_response_payment_method_form_dict = charge_order_response_payment_method.from_dict(charge_order_response_payment_method_dict)
+charge_order_response_payment_method_from_dict = ChargeOrderResponsePaymentMethod.from_dict(charge_order_response_payment_method_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

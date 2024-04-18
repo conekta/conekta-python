@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** | Shipping amount in cents | 
@@ -20,12 +21,12 @@ json = "{}"
 # create an instance of ShippingRequest from a JSON string
 shipping_request_instance = ShippingRequest.from_json(json)
 # print the JSON string representation of the object
-print ShippingRequest.to_json()
+print(ShippingRequest.to_json())
 
 # convert the object into a dict
 shipping_request_dict = shipping_request_instance.to_dict()
 # create an instance of ShippingRequest from a dict
-shipping_request_form_dict = shipping_request.from_dict(shipping_request_dict)
+shipping_request_from_dict = ShippingRequest.from_dict(shipping_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **street1** | **str** |  | 
@@ -23,12 +24,12 @@ json = "{}"
 # create an instance of CustomerAddress from a JSON string
 customer_address_instance = CustomerAddress.from_json(json)
 # print the JSON string representation of the object
-print CustomerAddress.to_json()
+print(CustomerAddress.to_json())
 
 # convert the object into a dict
 customer_address_dict = customer_address_instance.to_dict()
 # create an instance of CustomerAddress from a dict
-customer_address_form_dict = customer_address.from_dict(customer_address_dict)
+customer_address_from_dict = CustomerAddress.from_dict(customer_address_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

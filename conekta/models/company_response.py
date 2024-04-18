@@ -18,16 +18,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr, field_validator
-from pydantic import Field
 from conekta.models.company_fiscal_info_response import CompanyFiscalInfoResponse
 from conekta.models.company_payout_destination_response import CompanyPayoutDestinationResponse
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CompanyResponse(BaseModel):
     """
@@ -49,14 +45,15 @@ class CompanyResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in ('company'):
+        if value not in set(['company']):
             raise ValueError("must be one of enum values ('company')")
         return value
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -69,7 +66,7 @@ class CompanyResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CompanyResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -83,10 +80,12 @@ class CompanyResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of payout_destination
@@ -98,7 +97,7 @@ class CompanyResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CompanyResponse from a dict"""
         if obj is None:
             return None
@@ -113,8 +112,8 @@ class CompanyResponse(BaseModel):
             "object": obj.get("object"),
             "parent_company_id": obj.get("parent_company_id"),
             "use_parent_fiscal_data": obj.get("use_parent_fiscal_data"),
-            "payout_destination": CompanyPayoutDestinationResponse.from_dict(obj.get("payout_destination")) if obj.get("payout_destination") is not None else None,
-            "fiscal_info": CompanyFiscalInfoResponse.from_dict(obj.get("fiscal_info")) if obj.get("fiscal_info") is not None else None
+            "payout_destination": CompanyPayoutDestinationResponse.from_dict(obj["payout_destination"]) if obj.get("payout_destination") is not None else None,
+            "fiscal_info": CompanyFiscalInfoResponse.from_dict(obj["fiscal_info"]) if obj.get("fiscal_info") is not None else None
         })
         return _obj
 

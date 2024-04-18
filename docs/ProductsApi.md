@@ -19,9 +19,8 @@ Create a new product for an existing order.
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.product import Product
 from conekta.models.product_order_response import ProductOrderResponse
@@ -66,6 +65,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -87,6 +87,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  -  |
@@ -106,9 +107,8 @@ Delete product for an existing orden
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.product_order_response import ProductOrderResponse
 from conekta.rest import ApiException
@@ -152,6 +152,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -173,6 +174,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  -  |
@@ -193,9 +195,8 @@ Update an existing product for an existing orden
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.product_order_response import ProductOrderResponse
 from conekta.models.update_product import UpdateProduct
@@ -241,6 +242,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -263,6 +265,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  -  |

@@ -18,14 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CheckoutResponse(BaseModel):
     """
@@ -34,7 +30,7 @@ class CheckoutResponse(BaseModel):
     allowed_payment_methods: Optional[List[StrictStr]] = None
     can_not_expire: Optional[StrictBool] = None
     emails_sent: Optional[StrictInt] = None
-    exclude_card_networks: Optional[List[Union[str, Any]]] = None
+    exclude_card_networks: Optional[List[Dict[str, Any]]] = None
     expires_at: Optional[StrictInt] = None
     failure_url: Optional[StrictStr] = None
     force_3ds_flow: Optional[StrictBool] = None
@@ -58,10 +54,11 @@ class CheckoutResponse(BaseModel):
     url: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "paid_payments_count", "payments_limit_count", "recurrent", "slug", "sms_sent", "starts_at", "status", "success_url", "type", "url"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -74,7 +71,7 @@ class CheckoutResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CheckoutResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -88,10 +85,12 @@ class CheckoutResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # set to None if payments_limit_count (nullable) is None
@@ -102,7 +101,7 @@ class CheckoutResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CheckoutResponse from a dict"""
         if obj is None:
             return None

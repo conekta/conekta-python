@@ -18,32 +18,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class OrderResponseCustomerInfo(BaseModel):
     """
     OrderResponseCustomerInfo
     """ # noqa: E501
-    object: Optional[StrictStr] = None
     customer_custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference")
     name: Optional[StrictStr] = None
     email: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
     corporate: Optional[StrictBool] = False
+    object: Optional[StrictStr] = None
     customer_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["object", "customer_custom_reference", "name", "email", "phone", "corporate", "customer_id"]
+    __properties: ClassVar[List[str]] = ["customer_custom_reference", "name", "email", "phone", "corporate", "object", "customer_id"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -56,7 +53,7 @@ class OrderResponseCustomerInfo(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of OrderResponseCustomerInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -70,10 +67,12 @@ class OrderResponseCustomerInfo(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # set to None if customer_custom_reference (nullable) is None
@@ -84,7 +83,7 @@ class OrderResponseCustomerInfo(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of OrderResponseCustomerInfo from a dict"""
         if obj is None:
             return None
@@ -93,12 +92,12 @@ class OrderResponseCustomerInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "object": obj.get("object"),
             "customer_custom_reference": obj.get("customer_custom_reference"),
             "name": obj.get("name"),
             "email": obj.get("email"),
             "phone": obj.get("phone"),
             "corporate": obj.get("corporate") if obj.get("corporate") is not None else False,
+            "object": obj.get("object"),
             "customer_id": obj.get("customer_id")
         })
         return _obj

@@ -3,6 +3,7 @@
 webhook keys model
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Unique identifier of the webhook key | [optional] 
@@ -23,12 +24,12 @@ json = "{}"
 # create an instance of WebhookKeyResponse from a JSON string
 webhook_key_response_instance = WebhookKeyResponse.from_json(json)
 # print the JSON string representation of the object
-print WebhookKeyResponse.to_json()
+print(WebhookKeyResponse.to_json())
 
 # convert the object into a dict
 webhook_key_response_dict = webhook_key_response_instance.to_dict()
 # create an instance of WebhookKeyResponse from a dict
-webhook_key_response_form_dict = webhook_key_response.from_dict(webhook_key_response_dict)
+webhook_key_response_from_dict = WebhookKeyResponse.from_dict(webhook_key_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

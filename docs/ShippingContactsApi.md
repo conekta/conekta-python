@@ -19,9 +19,8 @@ Create a shipping contacts for a customer.
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.customer_shipping_contacts import CustomerShippingContacts
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
@@ -66,6 +65,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -87,6 +87,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -107,9 +108,8 @@ Delete shipping contact that corresponds to a customer ID.
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
 from conekta.rest import ApiException
@@ -153,6 +153,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -174,6 +175,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -194,9 +196,8 @@ Update shipping contact that corresponds to a customer ID.
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
 from conekta.models.customer_update_shipping_contacts import CustomerUpdateShippingContacts
@@ -242,6 +243,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -264,6 +266,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

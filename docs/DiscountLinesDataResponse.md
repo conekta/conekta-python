@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** | The amount to be deducted from the total sum of all payments, in cents. | 
@@ -21,12 +22,12 @@ json = "{}"
 # create an instance of DiscountLinesDataResponse from a JSON string
 discount_lines_data_response_instance = DiscountLinesDataResponse.from_json(json)
 # print the JSON string representation of the object
-print DiscountLinesDataResponse.to_json()
+print(DiscountLinesDataResponse.to_json())
 
 # convert the object into a dict
 discount_lines_data_response_dict = discount_lines_data_response_instance.to_dict()
 # create an instance of DiscountLinesDataResponse from a dict
-discount_lines_data_response_form_dict = discount_lines_data_response.from_dict(discount_lines_data_response_dict)
+discount_lines_data_response_from_dict = DiscountLinesDataResponse.from_dict(discount_lines_data_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

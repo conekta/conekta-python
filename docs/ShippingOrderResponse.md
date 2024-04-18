@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | **int** | Shipping amount in cents | 
@@ -23,12 +24,12 @@ json = "{}"
 # create an instance of ShippingOrderResponse from a JSON string
 shipping_order_response_instance = ShippingOrderResponse.from_json(json)
 # print the JSON string representation of the object
-print ShippingOrderResponse.to_json()
+print(ShippingOrderResponse.to_json())
 
 # convert the object into a dict
 shipping_order_response_dict = shipping_order_response_instance.to_dict()
 # create an instance of ShippingOrderResponse from a dict
-shipping_order_response_form_dict = shipping_order_response.from_dict(shipping_order_response_dict)
+shipping_order_response_from_dict = ShippingOrderResponse.from_dict(shipping_order_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

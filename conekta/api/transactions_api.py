@@ -12,28 +12,18 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictStr, field_validator
 
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
-
+from typing_extensions import Annotated
 from conekta.models.get_transactions_response import GetTransactionsResponse
 from conekta.models.transaction_response import TransactionResponse
 
-from conekta.api_client import ApiClient
+from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
 from conekta.rest import RESTResponseType
 
@@ -116,8 +106,7 @@ class TransactionsApi:
             '200': "TransactionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -195,8 +184,7 @@ class TransactionsApi:
             '200': "TransactionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -274,8 +262,7 @@ class TransactionsApi:
             '200': "TransactionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -293,19 +280,18 @@ class TransactionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -440,8 +426,7 @@ class TransactionsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetTransactionsResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -542,8 +527,7 @@ class TransactionsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetTransactionsResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -644,8 +628,7 @@ class TransactionsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetTransactionsResponse",
             '401': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -669,19 +652,18 @@ class TransactionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

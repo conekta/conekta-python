@@ -18,14 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictStr, field_validator
-from pydantic import Field
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CompanyPayoutDestinationResponse(BaseModel):
     """
@@ -45,7 +41,7 @@ class CompanyPayoutDestinationResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in ('payout_destination'):
+        if value not in set(['payout_destination']):
             raise ValueError("must be one of enum values ('payout_destination')")
         return value
 
@@ -55,14 +51,15 @@ class CompanyPayoutDestinationResponse(BaseModel):
         if value is None:
             return value
 
-        if value not in ('bank_account'):
+        if value not in set(['bank_account']):
             raise ValueError("must be one of enum values ('bank_account')")
         return value
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -75,7 +72,7 @@ class CompanyPayoutDestinationResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CompanyPayoutDestinationResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -89,16 +86,18 @@ class CompanyPayoutDestinationResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CompanyPayoutDestinationResponse from a dict"""
         if obj is None:
             return None

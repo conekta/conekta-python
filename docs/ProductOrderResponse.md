@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **antifraud_info** | **Dict[str, object]** |  | [optional] 
@@ -27,12 +28,12 @@ json = "{}"
 # create an instance of ProductOrderResponse from a JSON string
 product_order_response_instance = ProductOrderResponse.from_json(json)
 # print the JSON string representation of the object
-print ProductOrderResponse.to_json()
+print(ProductOrderResponse.to_json())
 
 # convert the object into a dict
 product_order_response_dict = product_order_response_instance.to_dict()
 # create an instance of ProductOrderResponse from a dict
-product_order_response_form_dict = product_order_response.from_dict(product_order_response_dict)
+product_order_response_from_dict = ProductOrderResponse.from_dict(product_order_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

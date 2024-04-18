@@ -3,6 +3,7 @@
 logs model
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **has_more** | **bool** | True, if there are more pages. | [optional] [readonly] 
@@ -21,12 +22,12 @@ json = "{}"
 # create an instance of LogsResponse from a JSON string
 logs_response_instance = LogsResponse.from_json(json)
 # print the JSON string representation of the object
-print LogsResponse.to_json()
+print(LogsResponse.to_json())
 
 # convert the object into a dict
 logs_response_dict = logs_response_instance.to_dict()
 # create an instance of LogsResponse from a dict
-logs_response_form_dict = logs_response.from_dict(logs_response_dict)
+logs_response_from_dict = LogsResponse.from_dict(logs_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.checkout_order_template import CheckoutOrderTemplate
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class Checkout(BaseModel):
     """
@@ -45,10 +41,11 @@ class Checkout(BaseModel):
     type: StrictStr = Field(description="It is the type of link that will be created. It must be a valid type.")
     __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "on_demand_enabled", "order_template", "payments_limit_count", "recurrent", "type"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -61,7 +58,7 @@ class Checkout(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Checkout from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -75,10 +72,12 @@ class Checkout(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of order_template
@@ -92,7 +91,7 @@ class Checkout(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Checkout from a dict"""
         if obj is None:
             return None
@@ -108,7 +107,7 @@ class Checkout(BaseModel):
             "name": obj.get("name"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
             "on_demand_enabled": obj.get("on_demand_enabled"),
-            "order_template": CheckoutOrderTemplate.from_dict(obj.get("order_template")) if obj.get("order_template") is not None else None,
+            "order_template": CheckoutOrderTemplate.from_dict(obj["order_template"]) if obj.get("order_template") is not None else None,
             "payments_limit_count": obj.get("payments_limit_count"),
             "recurrent": obj.get("recurrent"),
             "type": obj.get("type")

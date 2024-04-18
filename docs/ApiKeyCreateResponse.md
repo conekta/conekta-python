@@ -2,9 +2,9 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**authentication_token** | **str** | It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place. | [optional] 
 **active** | **bool** | Indicates if the api key is active | [optional] 
 **created_at** | **int** | Unix timestamp in seconds of when the api key was created | [optional] 
 **updated_at** | **int** | Unix timestamp in seconds of when the api key was last updated | [optional] 
@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **object** | **str** | Object name, value is &#39;api_key&#39; | [optional] 
 **prefix** | **str** | The first few characters of the authentication_token | [optional] 
 **role** | **str** | Indicates if the api key is private or public | [optional] 
+**authentication_token** | **str** | It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place. | [optional] 
 
 ## Example
 
@@ -27,12 +28,12 @@ json = "{}"
 # create an instance of ApiKeyCreateResponse from a JSON string
 api_key_create_response_instance = ApiKeyCreateResponse.from_json(json)
 # print the JSON string representation of the object
-print ApiKeyCreateResponse.to_json()
+print(ApiKeyCreateResponse.to_json())
 
 # convert the object into a dict
 api_key_create_response_dict = api_key_create_response_instance.to_dict()
 # create an instance of ApiKeyCreateResponse from a dict
-api_key_create_response_form_dict = api_key_create_response.from_dict(api_key_create_response_dict)
+api_key_create_response_from_dict = ApiKeyCreateResponse.from_dict(api_key_create_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

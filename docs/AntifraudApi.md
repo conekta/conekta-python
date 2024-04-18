@@ -20,9 +20,8 @@ Create blacklisted rule
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.blacklist_rule_response import BlacklistRuleResponse
 from conekta.models.create_risk_rules_data import CreateRiskRulesData
@@ -65,6 +64,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **create_risk_rules_data** | [**CreateRiskRulesData**](CreateRiskRulesData.md)| requested field for blacklist rule | 
@@ -84,6 +84,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successfully registered rule |  -  |
@@ -100,9 +101,8 @@ Create whitelisted rule
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.create_risk_rules_data import CreateRiskRulesData
 from conekta.models.whitelistlist_rule_response import WhitelistlistRuleResponse
@@ -145,6 +145,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
@@ -164,6 +165,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successfully registered rule |  -  |
@@ -181,9 +183,8 @@ Delete blacklisted rule
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.deleted_blacklist_rule_response import DeletedBlacklistRuleResponse
 from conekta.rest import ApiException
@@ -226,6 +227,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -246,6 +248,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successfully deleted rule |  -  |
@@ -263,9 +266,8 @@ Delete whitelisted rule
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.deleted_whitelist_rule_response import DeletedWhitelistRuleResponse
 from conekta.rest import ApiException
@@ -308,6 +310,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -328,6 +331,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successfully deleted rule |  -  |
@@ -348,9 +352,8 @@ Return all rules
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.risk_rules_list import RiskRulesList
 from conekta.rest import ApiException
@@ -391,6 +394,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
@@ -409,6 +413,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | All the rules |  -  |
@@ -427,9 +432,8 @@ Return all rules
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.risk_rules_list import RiskRulesList
 from conekta.rest import ApiException
@@ -470,6 +474,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
@@ -488,6 +493,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | All the rules |  -  |

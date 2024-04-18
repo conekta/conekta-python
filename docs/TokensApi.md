@@ -17,9 +17,8 @@ Generate a payment token, to associate it with a card
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.token import Token
 from conekta.models.token_response import TokenResponse
@@ -62,6 +61,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | [**Token**](Token.md)| requested field for token | 
@@ -81,6 +81,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |

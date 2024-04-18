@@ -3,6 +3,7 @@
 Company payout destination model
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **object** | **str** | The resource&#39;s type | [optional] 
@@ -22,12 +23,12 @@ json = "{}"
 # create an instance of CompanyPayoutDestinationResponse from a JSON string
 company_payout_destination_response_instance = CompanyPayoutDestinationResponse.from_json(json)
 # print the JSON string representation of the object
-print CompanyPayoutDestinationResponse.to_json()
+print(CompanyPayoutDestinationResponse.to_json())
 
 # convert the object into a dict
 company_payout_destination_response_dict = company_payout_destination_response_instance.to_dict()
 # create an instance of CompanyPayoutDestinationResponse from a dict
-company_payout_destination_response_form_dict = company_payout_destination_response.from_dict(company_payout_destination_response_dict)
+company_payout_destination_response_from_dict = CompanyPayoutDestinationResponse.from_dict(company_payout_destination_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

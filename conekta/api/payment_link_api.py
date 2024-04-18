@@ -12,31 +12,21 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictStr, field_validator
 
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
-
+from typing_extensions import Annotated
 from conekta.models.checkout import Checkout
 from conekta.models.checkout_response import CheckoutResponse
 from conekta.models.checkouts_response import CheckoutsResponse
 from conekta.models.email_checkout_request import EmailCheckoutRequest
 from conekta.models.sms_checkout_request import SmsCheckoutRequest
 
-from conekta.api_client import ApiClient
+from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
 from conekta.rest import RESTResponseType
 
@@ -120,8 +110,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -200,8 +189,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -280,8 +268,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -299,19 +286,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -423,8 +409,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -502,8 +487,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -581,8 +565,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -600,19 +583,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -742,8 +724,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -826,8 +807,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -910,8 +890,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -930,19 +909,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1070,8 +1048,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1150,8 +1127,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1230,8 +1206,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1249,19 +1224,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1386,8 +1360,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1478,8 +1451,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1570,8 +1542,7 @@ class PaymentLinkApi:
             '401': "Error",
             '402': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1592,19 +1563,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1735,8 +1705,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1819,8 +1788,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1903,8 +1871,7 @@ class PaymentLinkApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1923,19 +1890,18 @@ class PaymentLinkApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

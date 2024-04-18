@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
@@ -25,12 +26,12 @@ json = "{}"
 # create an instance of PaymentMethodCash from a JSON string
 payment_method_cash_instance = PaymentMethodCash.from_json(json)
 # print the JSON string representation of the object
-print PaymentMethodCash.to_json()
+print(PaymentMethodCash.to_json())
 
 # convert the object into a dict
 payment_method_cash_dict = payment_method_cash_instance.to_dict()
 # create an instance of PaymentMethodCash from a dict
-payment_method_cash_form_dict = payment_method_cash.from_dict(payment_method_cash_dict)
+payment_method_cash_from_dict = PaymentMethodCash.from_dict(payment_method_cash_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

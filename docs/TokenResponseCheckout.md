@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed_payment_methods** | **List[str]** |  | [optional] 
@@ -38,12 +39,12 @@ json = "{}"
 # create an instance of TokenResponseCheckout from a JSON string
 token_response_checkout_instance = TokenResponseCheckout.from_json(json)
 # print the JSON string representation of the object
-print TokenResponseCheckout.to_json()
+print(TokenResponseCheckout.to_json())
 
 # convert the object into a dict
 token_response_checkout_dict = token_response_checkout_instance.to_dict()
 # create an instance of TokenResponseCheckout from a dict
-token_response_checkout_form_dict = token_response_checkout.from_dict(token_response_checkout_dict)
+token_response_checkout_from_dict = TokenResponseCheckout.from_dict(token_response_checkout_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

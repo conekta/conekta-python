@@ -12,30 +12,20 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
-
-from pydantic import Field
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
-from pydantic import StrictStr, field_validator
 
+from pydantic import Field, StrictStr, field_validator
 from typing import Optional
-
+from typing_extensions import Annotated
 from conekta.models.subscription_events_response import SubscriptionEventsResponse
 from conekta.models.subscription_request import SubscriptionRequest
 from conekta.models.subscription_response import SubscriptionResponse
 from conekta.models.subscription_update_request import SubscriptionUpdateRequest
 
-from conekta.api_client import ApiClient
+from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
 from conekta.rest import RESTResponseType
 
@@ -118,8 +108,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -197,8 +186,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -276,8 +264,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -295,19 +282,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -424,8 +410,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -508,8 +493,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -592,8 +576,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -612,19 +595,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -753,8 +735,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -834,8 +815,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -915,8 +895,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -934,19 +913,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1053,8 +1031,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1127,8 +1104,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1201,8 +1177,7 @@ class SubscriptionsApi:
             '200': "SubscriptionResponse",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1219,19 +1194,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1342,8 +1316,7 @@ class SubscriptionsApi:
             '401': "Error",
             '402': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1422,8 +1395,7 @@ class SubscriptionsApi:
             '401': "Error",
             '402': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1502,8 +1474,7 @@ class SubscriptionsApi:
             '401': "Error",
             '402': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1521,19 +1492,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1647,8 +1617,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1728,8 +1697,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1809,8 +1777,7 @@ class SubscriptionsApi:
             '402': "Error",
             '404': "Error",
             '422': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1828,19 +1795,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1957,8 +1923,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2041,8 +2006,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2125,8 +2089,7 @@ class SubscriptionsApi:
             '422': "Error",
             '401': "Error",
             '404': "Error",
-            '500': "Error"
-            
+            '500': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2145,19 +2108,18 @@ class SubscriptionsApi:
         _content_type,
         _headers,
         _host_index,
-    ) -> Tuple:
+    ) -> RequestSerialized:
 
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[str, Union[str, bytes]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

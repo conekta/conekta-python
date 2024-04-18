@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **has_more** | **bool** | Indicates if there are more pages to be requested | 
@@ -20,12 +21,12 @@ json = "{}"
 # create an instance of OrderResponseProducts from a JSON string
 order_response_products_instance = OrderResponseProducts.from_json(json)
 # print the JSON string representation of the object
-print OrderResponseProducts.to_json()
+print(OrderResponseProducts.to_json())
 
 # convert the object into a dict
 order_response_products_dict = order_response_products_instance.to_dict()
 # create an instance of OrderResponseProducts from a dict
-order_response_products_form_dict = order_response_products.from_dict(order_response_products_dict)
+order_response_products_from_dict = OrderResponseProducts.from_dict(order_response_products_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

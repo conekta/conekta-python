@@ -22,9 +22,8 @@ What we do at Conekta translates into events. For example, an event of interest 
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.webhook_request import WebhookRequest
 from conekta.models.webhook_response import WebhookResponse
@@ -67,6 +66,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **webhook_request** | [**WebhookRequest**](WebhookRequest.md)| requested field for webhook | 
@@ -86,6 +86,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -102,9 +103,8 @@ Delete Webhook
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.webhook_response import WebhookResponse
 from conekta.rest import ApiException
@@ -146,6 +146,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -165,6 +166,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
@@ -182,9 +184,8 @@ Get Webhook
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.webhook_response import WebhookResponse
 from conekta.rest import ApiException
@@ -227,6 +228,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -247,6 +249,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
@@ -257,7 +260,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_webhooks**
-> GetWebhooksResponse get_webhooks(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> GetWebhooksResponse get_webhooks(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, url=url, next=next, previous=previous)
 
 Get List of Webhooks
 
@@ -266,9 +269,8 @@ Consume the list of webhooks you have, each environment supports 10 webhooks (Fo
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.get_webhooks_response import GetWebhooksResponse
 from conekta.rest import ApiException
@@ -298,12 +300,13 @@ with conekta.ApiClient(configuration) as api_client:
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
+    url = 'url_example' # str | url for webhook filter (optional)
     next = 'next_example' # str | next page (optional)
     previous = 'previous_example' # str | previous page (optional)
 
     try:
         # Get List of Webhooks
-        api_response = api_instance.get_webhooks(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+        api_response = api_instance.get_webhooks(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, url=url, next=next, previous=previous)
         print("The response of WebhooksApi->get_webhooks:\n")
         pprint(api_response)
     except Exception as e:
@@ -314,12 +317,14 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
+ **url** | **str**| url for webhook filter | [optional] 
  **next** | **str**| next page | [optional] 
  **previous** | **str**| previous page | [optional] 
 
@@ -337,6 +342,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
@@ -355,9 +361,8 @@ Send a webhook.ping event
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.webhook_response import WebhookResponse
 from conekta.rest import ApiException
@@ -399,6 +404,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -418,6 +424,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  -  |
@@ -437,9 +444,8 @@ updates an existing webhook
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.webhook_response import WebhookResponse
 from conekta.models.webhook_update_request import WebhookUpdateRequest
@@ -484,6 +490,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -505,6 +512,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

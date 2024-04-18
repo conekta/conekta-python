@@ -3,6 +3,7 @@
 api keys model
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **active** | **bool** | Indicates if the api key is active | [optional] 
@@ -25,12 +26,12 @@ json = "{}"
 # create an instance of ApiKeyResponseOnDelete from a JSON string
 api_key_response_on_delete_instance = ApiKeyResponseOnDelete.from_json(json)
 # print the JSON string representation of the object
-print ApiKeyResponseOnDelete.to_json()
+print(ApiKeyResponseOnDelete.to_json())
 
 # convert the object into a dict
 api_key_response_on_delete_dict = api_key_response_on_delete_instance.to_dict()
 # create an instance of ApiKeyResponseOnDelete from a dict
-api_key_response_on_delete_form_dict = api_key_response_on_delete.from_dict(api_key_response_on_delete_dict)
+api_key_response_on_delete_from_dict = ApiKeyResponseOnDelete.from_dict(api_key_response_on_delete_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

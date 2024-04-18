@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **has_more** | **bool** | Indicates if there are more pages to be requested | 
@@ -20,12 +21,12 @@ json = "{}"
 # create an instance of GetChargesResponse from a JSON string
 get_charges_response_instance = GetChargesResponse.from_json(json)
 # print the JSON string representation of the object
-print GetChargesResponse.to_json()
+print(GetChargesResponse.to_json())
 
 # convert the object into a dict
 get_charges_response_dict = get_charges_response_instance.to_dict()
 # create an instance of GetChargesResponse from a dict
-get_charges_response_form_dict = get_charges_response.from_dict(get_charges_response_dict)
+get_charges_response_from_dict = GetChargesResponse.from_dict(get_charges_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

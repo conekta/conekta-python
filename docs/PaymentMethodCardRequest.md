@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Type of payment method | 
@@ -17,12 +18,12 @@ json = "{}"
 # create an instance of PaymentMethodCardRequest from a JSON string
 payment_method_card_request_instance = PaymentMethodCardRequest.from_json(json)
 # print the JSON string representation of the object
-print PaymentMethodCardRequest.to_json()
+print(PaymentMethodCardRequest.to_json())
 
 # convert the object into a dict
 payment_method_card_request_dict = payment_method_card_request_instance.to_dict()
 # create an instance of PaymentMethodCardRequest from a dict
-payment_method_card_request_form_dict = payment_method_card_request.from_dict(payment_method_card_request_dict)
+payment_method_card_request_from_dict = PaymentMethodCardRequest.from_dict(payment_method_card_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

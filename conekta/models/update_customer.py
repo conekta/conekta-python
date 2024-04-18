@@ -18,19 +18,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
-from pydantic import Field
 from conekta.models.customer_fiscal_entities_request import CustomerFiscalEntitiesRequest
 from conekta.models.customer_payment_methods_request import CustomerPaymentMethodsRequest
 from conekta.models.customer_shipping_contacts import CustomerShippingContacts
 from conekta.models.subscription_request import SubscriptionRequest
 from conekta.models.update_customer_antifraud_info import UpdateCustomerAntifraudInfo
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class UpdateCustomer(BaseModel):
     """
@@ -52,10 +48,11 @@ class UpdateCustomer(BaseModel):
     subscription: Optional[SubscriptionRequest] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "default_payment_source_id", "email", "name", "phone", "plan_id", "default_shipping_contact_id", "corporate", "custom_reference", "fiscal_entities", "metadata", "payment_sources", "shipping_contacts", "subscription"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -68,7 +65,7 @@ class UpdateCustomer(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of UpdateCustomer from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -82,10 +79,12 @@ class UpdateCustomer(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of antifraud_info
@@ -123,7 +122,7 @@ class UpdateCustomer(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of UpdateCustomer from a dict"""
         if obj is None:
             return None
@@ -132,7 +131,7 @@ class UpdateCustomer(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "antifraud_info": UpdateCustomerAntifraudInfo.from_dict(obj.get("antifraud_info")) if obj.get("antifraud_info") is not None else None,
+            "antifraud_info": UpdateCustomerAntifraudInfo.from_dict(obj["antifraud_info"]) if obj.get("antifraud_info") is not None else None,
             "default_payment_source_id": obj.get("default_payment_source_id"),
             "email": obj.get("email"),
             "name": obj.get("name"),
@@ -141,11 +140,11 @@ class UpdateCustomer(BaseModel):
             "default_shipping_contact_id": obj.get("default_shipping_contact_id"),
             "corporate": obj.get("corporate") if obj.get("corporate") is not None else False,
             "custom_reference": obj.get("custom_reference"),
-            "fiscal_entities": [CustomerFiscalEntitiesRequest.from_dict(_item) for _item in obj.get("fiscal_entities")] if obj.get("fiscal_entities") is not None else None,
+            "fiscal_entities": [CustomerFiscalEntitiesRequest.from_dict(_item) for _item in obj["fiscal_entities"]] if obj.get("fiscal_entities") is not None else None,
             "metadata": obj.get("metadata"),
-            "payment_sources": [CustomerPaymentMethodsRequest.from_dict(_item) for _item in obj.get("payment_sources")] if obj.get("payment_sources") is not None else None,
-            "shipping_contacts": [CustomerShippingContacts.from_dict(_item) for _item in obj.get("shipping_contacts")] if obj.get("shipping_contacts") is not None else None,
-            "subscription": SubscriptionRequest.from_dict(obj.get("subscription")) if obj.get("subscription") is not None else None
+            "payment_sources": [CustomerPaymentMethodsRequest.from_dict(_item) for _item in obj["payment_sources"]] if obj.get("payment_sources") is not None else None,
+            "shipping_contacts": [CustomerShippingContacts.from_dict(_item) for _item in obj["shipping_contacts"]] if obj.get("shipping_contacts") is not None else None,
+            "subscription": SubscriptionRequest.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None
         })
         return _obj
 

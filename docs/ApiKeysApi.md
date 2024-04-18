@@ -21,9 +21,8 @@ Create a api key
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.api_key_create_response import ApiKeyCreateResponse
 from conekta.models.api_key_request import ApiKeyRequest
@@ -67,6 +66,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **api_key_request** | [**ApiKeyRequest**](ApiKeyRequest.md)| requested field for a api keys | 
@@ -87,6 +87,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  * Content-Type - The format of the response body <br>  * Conekta-Media-Type -  <br>  |
@@ -106,9 +107,8 @@ Deletes a api key that corresponds to a api key ID
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.delete_api_keys_response import DeleteApiKeysResponse
 from conekta.rest import ApiException
@@ -150,6 +150,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -169,6 +170,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Content-Type - The format of the response body <br>  * Conekta-Media-Type -  <br>  |
@@ -188,9 +190,8 @@ Gets a api key that corresponds to a api key ID
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.api_key_response import ApiKeyResponse
 from conekta.rest import ApiException
@@ -233,6 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -253,6 +255,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Content-Type - The format of the response body <br>  * Conekta-Media-Type -  <br>  |
@@ -272,9 +275,8 @@ Consume the list of api keys you have
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.get_api_keys_response import GetApiKeysResponse
 from conekta.rest import ApiException
@@ -320,6 +322,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
@@ -343,6 +346,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Content-Type - The format of the response body <br>  * Conekta-Media-Type -  <br>  |
@@ -361,9 +365,8 @@ Update an existing api key
 ### Example
 
 * Bearer Authentication (bearerAuth):
+
 ```python
-import time
-import os
 import conekta
 from conekta.models.api_key_response import ApiKeyResponse
 from conekta.models.api_key_update_request import ApiKeyUpdateRequest
@@ -407,6 +410,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
@@ -427,6 +431,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/vnd.conekta-v2.1.0+json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

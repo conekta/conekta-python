@@ -3,6 +3,7 @@
 a order
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **charges** | [**List[ChargeRequest]**](ChargeRequest.md) |  | [optional] 
@@ -28,12 +29,12 @@ json = "{}"
 # create an instance of OrderUpdateRequest from a JSON string
 order_update_request_instance = OrderUpdateRequest.from_json(json)
 # print the JSON string representation of the object
-print OrderUpdateRequest.to_json()
+print(OrderUpdateRequest.to_json())
 
 # convert the object into a dict
 order_update_request_dict = order_update_request_instance.to_dict()
 # create an instance of OrderUpdateRequest from a dict
-order_update_request_form_dict = order_update_request.from_dict(order_update_request_dict)
+order_update_request_from_dict = OrderUpdateRequest.from_dict(order_update_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

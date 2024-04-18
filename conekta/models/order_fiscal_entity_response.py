@@ -18,15 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.order_fiscal_entity_address_response import OrderFiscalEntityAddressResponse
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class OrderFiscalEntityResponse(BaseModel):
     """
@@ -43,10 +39,11 @@ class OrderFiscalEntityResponse(BaseModel):
     phone: Optional[StrictStr] = Field(default=None, description="Phone of the fiscal entity")
     __properties: ClassVar[List[str]] = ["address", "email", "metadata", "name", "tax_id", "id", "created_at", "object", "phone"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -59,7 +56,7 @@ class OrderFiscalEntityResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of OrderFiscalEntityResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -73,10 +70,12 @@ class OrderFiscalEntityResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of address
@@ -105,7 +104,7 @@ class OrderFiscalEntityResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of OrderFiscalEntityResponse from a dict"""
         if obj is None:
             return None
@@ -114,7 +113,7 @@ class OrderFiscalEntityResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "address": OrderFiscalEntityAddressResponse.from_dict(obj.get("address")) if obj.get("address") is not None else None,
+            "address": OrderFiscalEntityAddressResponse.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "email": obj.get("email"),
             "metadata": obj.get("metadata"),
             "name": obj.get("name"),

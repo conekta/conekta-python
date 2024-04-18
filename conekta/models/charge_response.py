@@ -18,17 +18,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictInt, StrictStr
-from pydantic import Field
 from conekta.models.charge_response_channel import ChargeResponseChannel
 from conekta.models.charge_response_payment_method import ChargeResponsePaymentMethod
 from conekta.models.charge_response_refunds import ChargeResponseRefunds
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+from typing import Optional, Set
+from typing_extensions import Self
 
 class ChargeResponse(BaseModel):
     """
@@ -54,10 +50,11 @@ class ChargeResponse(BaseModel):
     status: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["amount", "channel", "created_at", "currency", "customer_id", "description", "device_fingerprint", "failure_code", "failure_message", "id", "livemode", "object", "order_id", "paid_at", "payment_method", "reference_id", "refunds", "status"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -70,7 +67,7 @@ class ChargeResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of ChargeResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -84,10 +81,12 @@ class ChargeResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
+        excluded_fields: Set[str] = set([
+        ])
+
         _dict = self.model_dump(
             by_alias=True,
-            exclude={
-            },
+            exclude=excluded_fields,
             exclude_none=True,
         )
         # override the default output from pydantic by calling `to_dict()` of channel
@@ -117,7 +116,7 @@ class ChargeResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Dict) -> Self:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of ChargeResponse from a dict"""
         if obj is None:
             return None
@@ -127,7 +126,7 @@ class ChargeResponse(BaseModel):
 
         _obj = cls.model_validate({
             "amount": obj.get("amount"),
-            "channel": ChargeResponseChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
+            "channel": ChargeResponseChannel.from_dict(obj["channel"]) if obj.get("channel") is not None else None,
             "created_at": obj.get("created_at"),
             "currency": obj.get("currency"),
             "customer_id": obj.get("customer_id"),
@@ -140,9 +139,9 @@ class ChargeResponse(BaseModel):
             "object": obj.get("object"),
             "order_id": obj.get("order_id"),
             "paid_at": obj.get("paid_at"),
-            "payment_method": ChargeResponsePaymentMethod.from_dict(obj.get("payment_method")) if obj.get("payment_method") is not None else None,
+            "payment_method": ChargeResponsePaymentMethod.from_dict(obj["payment_method"]) if obj.get("payment_method") is not None else None,
             "reference_id": obj.get("reference_id"),
-            "refunds": ChargeResponseRefunds.from_dict(obj.get("refunds")) if obj.get("refunds") is not None else None,
+            "refunds": ChargeResponseRefunds.from_dict(obj["refunds"]) if obj.get("refunds") is not None else None,
             "status": obj.get("status")
         })
         return _obj
