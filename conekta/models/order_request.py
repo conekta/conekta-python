@@ -48,7 +48,7 @@ class OrderRequest(BaseModel):
     needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="Allows you to fill out the shipping information at checkout")
     pre_authorize: Optional[StrictBool] = Field(default=False, description="Indicates whether the order charges must be preauthorized")
     processing_mode: Optional[StrictStr] = Field(default=None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.")
-    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the redirection callback upon completion of the 3DS2 flow.")
+    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the redirection callback upon completion of the 3DS2 flow. Do not use this parameter if your order has a checkout parameter")
     shipping_contact: Optional[CustomerShippingContacts] = None
     shipping_lines: Optional[List[ShippingRequest]] = Field(default=None, description="List of [shipping costs](https://developers.conekta.com/v2.1.0/reference/orderscreateshipping). If the online store offers digital products.")
     tax_lines: Optional[List[OrderTaxRequest]] = Field(default=None, description="List of [taxes](https://developers.conekta.com/v2.1.0/reference/orderscreatetaxes) that are applied to the order.")

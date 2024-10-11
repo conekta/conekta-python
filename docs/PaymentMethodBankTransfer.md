@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **receiving_account_tax_id** | **str** |  | [optional] 
 **reference_number** | **str** |  | [optional] 
 **tracking_code** | **str** |  | [optional] 
+**customer_ip_address** | **str** |  | [optional] 
 
 ## Example
 

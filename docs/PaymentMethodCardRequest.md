@@ -6,7 +6,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Type of payment method | 
-**token_id** | **str** | Token id that will be used to create a \&quot;card\&quot; type payment method. See the (subscriptions)[https://developers.conekta.com/v2.1.0/reference/createsubscription] tutorial for more information on how to tokenize cards. | 
+**cvc** | **str** | Card security code | 
+**exp_month** | **str** | Card expiration month | 
+**exp_year** | **str** | Card expiration year | 
+**name** | **str** | Cardholder name | 
+**number** | **str** | Card number | 
+**customer_ip_address** | **str** | Optional field used to capture the customer&#39;s IP address for fraud prevention and security monitoring purposes | [optional] 
 
 ## Example
 

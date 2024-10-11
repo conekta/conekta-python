@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**amount** | **int** |  | 
+**amount** | **int** | Amount to be refunded in cents | 
 **expires_at** | **int** |  | [optional] 
-**reason** | **str** |  | 
+**reason** | **str** | Reason for the refund | 
 
 ## Example
 

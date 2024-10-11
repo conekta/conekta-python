@@ -7,17 +7,18 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
 **object** | **str** |  | 
-**account_type** | **str** |  | [optional] 
+**account_type** | **str** | Account type of the card | [optional] 
 **auth_code** | **str** |  | [optional] 
-**brand** | **str** |  | [optional] 
+**brand** | **str** | Brand of the card | [optional] 
 **contract_id** | **str** | Id sent for recurrent charges. | [optional] 
-**country** | **str** |  | [optional] 
-**exp_month** | **str** |  | [optional] 
-**exp_year** | **str** |  | [optional] 
+**country** | **str** | Country of the card | [optional] 
+**exp_month** | **str** | Expiration month of the card | [optional] 
+**exp_year** | **str** | Expiration year of the card | [optional] 
 **fraud_indicators** | **List[object]** |  | [optional] 
-**issuer** | **str** |  | [optional] 
-**last4** | **str** |  | [optional] 
-**name** | **str** |  | [optional] 
+**issuer** | **str** | Issuer of the card | [optional] 
+**last4** | **str** | Last 4 digits of the card | [optional] 
+**name** | **str** | Name of the cardholder | [optional] 
+**customer_ip_address** | **str** | Optional field used to capture the customer&#39;s IP address for fraud prevention and security monitoring purposes | [optional] 
 
 ## Example
 

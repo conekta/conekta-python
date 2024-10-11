@@ -37,7 +37,8 @@ class PaymentMethodCash(BaseModel):
     service_name: Optional[StrictStr] = None
     store: Optional[StrictStr] = None
     store_name: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "object", "auth_code", "cashier_id", "reference", "barcode_url", "expires_at", "service_name", "store", "store_name"]
+    customer_ip_address: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["type", "object", "auth_code", "cashier_id", "reference", "barcode_url", "expires_at", "service_name", "store", "store_name", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -114,7 +115,8 @@ class PaymentMethodCash(BaseModel):
             "expires_at": obj.get("expires_at"),
             "service_name": obj.get("service_name"),
             "store": obj.get("store"),
-            "store_name": obj.get("store_name")
+            "store_name": obj.get("store_name"),
+            "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj
 

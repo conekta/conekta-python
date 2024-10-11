@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_orders**
-> GetOrdersResponse get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> GetOrdersResponse get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, payment_status=payment_status, last_payment_info_status=last_payment_info_status, created_at=created_at, created_at_gte=created_at_gte, created_at_lte=created_at_lte, updated_at_gte=updated_at_gte, updated_at_lte=updated_at_lte)
 
 Get a list of Orders
 
@@ -316,10 +316,17 @@ with conekta.ApiClient(configuration) as api_client:
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
     previous = 'previous_example' # str | previous page (optional)
+    payment_status = 'paid' # str | Filters by order status (optional)
+    last_payment_info_status = 'pending_payment' # str | Filters by last payment info status (optional)
+    created_at = 1612137600 # int | created equal to (optional)
+    created_at_gte = 1612137600 # int | created at greater than or equal to (optional)
+    created_at_lte = 1612137600 # int | created at less than or equal to (optional)
+    updated_at_gte = 1612137600 # int | updated at greater than or equal to (optional)
+    updated_at_lte = 1612137600 # int | updated at less than or equal to (optional)
 
     try:
         # Get a list of Orders
-        api_response = api_instance.get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+        api_response = api_instance.get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, payment_status=payment_status, last_payment_info_status=last_payment_info_status, created_at=created_at, created_at_gte=created_at_gte, created_at_lte=created_at_lte, updated_at_gte=updated_at_gte, updated_at_lte=updated_at_lte)
         print("The response of OrdersApi->get_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -339,6 +346,13 @@ Name | Type | Description  | Notes
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 
  **previous** | **str**| previous page | [optional] 
+ **payment_status** | **str**| Filters by order status | [optional] 
+ **last_payment_info_status** | **str**| Filters by last payment info status | [optional] 
+ **created_at** | **int**| created equal to | [optional] 
+ **created_at_gte** | **int**| created at greater than or equal to | [optional] 
+ **created_at_lte** | **int**| created at less than or equal to | [optional] 
+ **updated_at_gte** | **int**| updated at greater than or equal to | [optional] 
+ **updated_at_lte** | **int**| updated at less than or equal to | [optional] 
 
 ### Return type
 

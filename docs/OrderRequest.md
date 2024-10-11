@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **needs_shipping_contact** | **bool** | Allows you to fill out the shipping information at checkout | [optional] 
 **pre_authorize** | **bool** | Indicates whether the order charges must be preauthorized | [optional] [default to False]
 **processing_mode** | **str** | Indicates the processing mode for the order, either ecommerce, recurrent or validation. | [optional] 
-**return_url** | **str** | Indicates the redirection callback upon completion of the 3DS2 flow. | [optional] 
+**return_url** | **str** | Indicates the redirection callback upon completion of the 3DS2 flow. Do not use this parameter if your order has a checkout parameter | [optional] 
 **shipping_contact** | [**CustomerShippingContacts**](CustomerShippingContacts.md) |  | [optional] 
 **shipping_lines** | [**List[ShippingRequest]**](ShippingRequest.md) | List of [shipping costs](https://developers.conekta.com/v2.1.0/reference/orderscreateshipping). If the online store offers digital products. | [optional] 
 **tax_lines** | [**List[OrderTaxRequest]**](OrderTaxRequest.md) | List of [taxes](https://developers.conekta.com/v2.1.0/reference/orderscreatetaxes) that are applied to the order. | [optional] 

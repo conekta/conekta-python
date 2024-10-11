@@ -18,19 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class OrderRefundRequest(BaseModel):
+class PaymentMethodTokenRequest(BaseModel):
     """
-    OrderRefundRequest
+    PaymentMethodTokenRequest
     """ # noqa: E501
-    amount: StrictInt = Field(description="Amount to be refunded in cents")
-    expires_at: Optional[StrictInt] = None
-    reason: StrictStr = Field(description="Reason for the refund")
-    __properties: ClassVar[List[str]] = ["amount", "expires_at", "reason"]
+    type: StrictStr = Field(description="Type of payment method")
+    token_id: StrictStr = Field(description="Token id that will be used to create a \"card\" type payment method. See the (subscriptions)[https://developers.conekta.com/v2.1.0/reference/createsubscription] tutorial for more information on how to tokenize cards.")
+    __properties: ClassVar[List[str]] = ["type", "token_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +49,7 @@ class OrderRefundRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OrderRefundRequest from a JSON string"""
+        """Create an instance of PaymentMethodTokenRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,16 +70,11 @@ class OrderRefundRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if expires_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.expires_at is None and "expires_at" in self.model_fields_set:
-            _dict['expires_at'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OrderRefundRequest from a dict"""
+        """Create an instance of PaymentMethodTokenRequest from a dict"""
         if obj is None:
             return None
 
@@ -88,9 +82,8 @@ class OrderRefundRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "amount": obj.get("amount"),
-            "expires_at": obj.get("expires_at"),
-            "reason": obj.get("reason")
+            "type": obj.get("type"),
+            "token_id": obj.get("token_id")
         })
         return _obj
 

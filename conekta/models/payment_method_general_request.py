@@ -18,30 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PaymentMethodCard(BaseModel):
+class PaymentMethodGeneralRequest(BaseModel):
     """
-    PaymentMethodCard
+    Payment method used in the charge. Go to the [payment methods](https://developers.conekta.com/reference/m%C3%A9todos-de-pago) section for more details 
     """ # noqa: E501
-    type: Optional[StrictStr] = None
-    object: StrictStr
-    account_type: Optional[StrictStr] = Field(default=None, description="Account type of the card")
-    auth_code: Optional[StrictStr] = None
-    brand: Optional[StrictStr] = Field(default=None, description="Brand of the card")
-    contract_id: Optional[StrictStr] = Field(default=None, description="Id sent for recurrent charges.")
-    country: Optional[StrictStr] = Field(default=None, description="Country of the card")
-    exp_month: Optional[StrictStr] = Field(default=None, description="Expiration month of the card")
-    exp_year: Optional[StrictStr] = Field(default=None, description="Expiration year of the card")
-    fraud_indicators: Optional[List[Any]] = None
-    issuer: Optional[StrictStr] = Field(default=None, description="Issuer of the card")
-    last4: Optional[StrictStr] = Field(default=None, description="Last 4 digits of the card")
-    name: Optional[StrictStr] = Field(default=None, description="Name of the cardholder")
+    expires_at: Optional[StrictInt] = Field(default=None, description="Method expiration date as unix timestamp")
+    monthly_installments: Optional[StrictInt] = Field(default=None, description="How many months without interest to apply, it can be 3, 6, 9, 12 or 18")
+    type: StrictStr = Field(description="Type of payment method")
+    token_id: Optional[StrictStr] = None
+    payment_source_id: Optional[StrictStr] = None
+    cvc: Optional[StrictStr] = Field(default=None, description="Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants")
+    contract_id: Optional[StrictStr] = Field(default=None, description="Optional id sent to indicate the bank contract for recurrent card charges.")
     customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
-    __properties: ClassVar[List[str]] = ["type", "object", "account_type", "auth_code", "brand", "contract_id", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name", "customer_ip_address"]
+    __properties: ClassVar[List[str]] = ["expires_at", "monthly_installments", "type", "token_id", "payment_source_id", "cvc", "contract_id", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +55,7 @@ class PaymentMethodCard(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaymentMethodCard from a JSON string"""
+        """Create an instance of PaymentMethodGeneralRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +80,7 @@ class PaymentMethodCard(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaymentMethodCard from a dict"""
+        """Create an instance of PaymentMethodGeneralRequest from a dict"""
         if obj is None:
             return None
 
@@ -94,19 +88,13 @@ class PaymentMethodCard(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "expires_at": obj.get("expires_at"),
+            "monthly_installments": obj.get("monthly_installments"),
             "type": obj.get("type"),
-            "object": obj.get("object"),
-            "account_type": obj.get("account_type"),
-            "auth_code": obj.get("auth_code"),
-            "brand": obj.get("brand"),
+            "token_id": obj.get("token_id"),
+            "payment_source_id": obj.get("payment_source_id"),
+            "cvc": obj.get("cvc"),
             "contract_id": obj.get("contract_id"),
-            "country": obj.get("country"),
-            "exp_month": obj.get("exp_month"),
-            "exp_year": obj.get("exp_year"),
-            "fraud_indicators": obj.get("fraud_indicators"),
-            "issuer": obj.get("issuer"),
-            "last4": obj.get("last4"),
-            "name": obj.get("name"),
             "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj

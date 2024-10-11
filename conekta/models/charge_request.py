@@ -28,7 +28,7 @@ class ChargeRequest(BaseModel):
     """
     The charges to be made
     """ # noqa: E501
-    amount: Optional[StrictInt] = None
+    amount: Optional[StrictInt] = Field(default=None, description="Amount to be charged in cents")
     payment_method: ChargeRequestPaymentMethod
     reference_id: Optional[StrictStr] = Field(default=None, description="Custom reference to add to the charge")
     __properties: ClassVar[List[str]] = ["amount", "payment_method", "reference_id"]
