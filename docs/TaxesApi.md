@@ -49,7 +49,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.TaxesApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     order_tax_request = conekta.OrderTaxRequest() # OrderTaxRequest | requested field for a taxes
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **order_tax_request** | [**OrderTaxRequest**](OrderTaxRequest.md)| requested field for a taxes | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -136,7 +136,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.TaxesApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     tax_id = 'tax_lin_2tQ974hSHcsdeSZHG' # str | identifier
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -157,7 +157,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **tax_id** | **str**| identifier | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -226,7 +226,7 @@ with conekta.ApiClient(configuration) as api_client:
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     tax_id = 'tax_lin_2tQ974hSHcsdeSZHG' # str | identifier
     update_order_tax_request = conekta.UpdateOrderTaxRequest() # UpdateOrderTaxRequest | requested field for taxes
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
  **id** | **str**| Identifier of the resource | 
  **tax_id** | **str**| identifier | 
  **update_order_tax_request** | [**UpdateOrderTaxRequest**](UpdateOrderTaxRequest.md)| requested field for taxes | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

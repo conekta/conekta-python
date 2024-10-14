@@ -18,22 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.plan_response import PlanResponse
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class GetPlansResponse(BaseModel):
+class PaymentMethodTokenRequest(BaseModel):
     """
-    GetPlansResponse
+    PaymentMethodTokenRequest
     """ # noqa: E501
-    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
-    object: StrictStr = Field(description="Object type, in this case is list")
-    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.")
-    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.")
-    data: Optional[List[PlanResponse]] = None
-    __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
+    type: StrictStr = Field(description="Type of payment method")
+    token_id: StrictStr = Field(description="Token id that will be used to create a \"card\" type payment method. See the (subscriptions)[https://developers.conekta.com/v2.1.0/reference/createsubscription] tutorial for more information on how to tokenize cards.")
+    __properties: ClassVar[List[str]] = ["type", "token_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +49,7 @@ class GetPlansResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetPlansResponse from a JSON string"""
+        """Create an instance of PaymentMethodTokenRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,28 +70,11 @@ class GetPlansResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
-        if self.data:
-            for _item_data in self.data:
-                if _item_data:
-                    _items.append(_item_data.to_dict())
-            _dict['data'] = _items
-        # set to None if next_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.next_page_url is None and "next_page_url" in self.model_fields_set:
-            _dict['next_page_url'] = None
-
-        # set to None if previous_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.previous_page_url is None and "previous_page_url" in self.model_fields_set:
-            _dict['previous_page_url'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetPlansResponse from a dict"""
+        """Create an instance of PaymentMethodTokenRequest from a dict"""
         if obj is None:
             return None
 
@@ -103,11 +82,8 @@ class GetPlansResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "has_more": obj.get("has_more"),
-            "object": obj.get("object"),
-            "next_page_url": obj.get("next_page_url"),
-            "previous_page_url": obj.get("previous_page_url"),
-            "data": [PlanResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
+            "type": obj.get("type"),
+            "token_id": obj.get("token_id")
         })
         return _obj
 

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,6 +30,7 @@ class SubscriptionResponse(BaseModel):
     billing_cycle_start: Optional[StrictInt] = None
     billing_cycle_end: Optional[StrictInt] = None
     canceled_at: Optional[StrictInt] = None
+    canceled_reason: Optional[StrictStr] = Field(default=None, description="Reason for cancellation. This field appears when the subscription status is 'canceled'.")
     card_id: Optional[StrictStr] = None
     charge_id: Optional[StrictStr] = None
     created_at: Optional[StrictInt] = None
@@ -44,7 +45,7 @@ class SubscriptionResponse(BaseModel):
     subscription_start: Optional[StrictInt] = None
     trial_start: Optional[StrictInt] = None
     trial_end: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["billing_cycle_start", "billing_cycle_end", "canceled_at", "card_id", "charge_id", "created_at", "customer_custom_reference", "customer_id", "id", "last_billing_cycle_order_id", "object", "paused_at", "plan_id", "status", "subscription_start", "trial_start", "trial_end"]
+    __properties: ClassVar[List[str]] = ["billing_cycle_start", "billing_cycle_end", "canceled_at", "canceled_reason", "card_id", "charge_id", "created_at", "customer_custom_reference", "customer_id", "id", "last_billing_cycle_order_id", "object", "paused_at", "plan_id", "status", "subscription_start", "trial_start", "trial_end"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -135,6 +136,7 @@ class SubscriptionResponse(BaseModel):
             "billing_cycle_start": obj.get("billing_cycle_start"),
             "billing_cycle_end": obj.get("billing_cycle_end"),
             "canceled_at": obj.get("canceled_at"),
+            "canceled_reason": obj.get("canceled_reason"),
             "card_id": obj.get("card_id"),
             "charge_id": obj.get("charge_id"),
             "created_at": obj.get("created_at"),

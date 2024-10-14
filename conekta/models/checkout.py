@@ -32,6 +32,7 @@ class Checkout(BaseModel):
     expires_at: StrictInt = Field(description="It is the time when the link will expire. It is expressed in seconds since the Unix epoch. The valid range is from 2 to 365 days (the valid range will be taken from the next day of the creation date at 00:01 hrs) ")
     monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if months without interest will be active.")
     monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, description="This field allows you to specify the number of months without interest.")
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict.")
     name: StrictStr = Field(description="Reason for charge")
     needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="This flag allows you to fill in the shipping information at checkout.")
     on_demand_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if the link will be on demand.")
@@ -39,7 +40,7 @@ class Checkout(BaseModel):
     payments_limit_count: Optional[StrictInt] = Field(default=None, description="It is the number of payments that can be made through the link.")
     recurrent: StrictBool = Field(description="false: single use. true: multiple payments")
     type: StrictStr = Field(description="It is the type of link that will be created. It must be a valid type.")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "on_demand_enabled", "order_template", "payments_limit_count", "recurrent", "type"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "three_ds_mode", "name", "needs_shipping_contact", "on_demand_enabled", "order_template", "payments_limit_count", "recurrent", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,6 +105,7 @@ class Checkout(BaseModel):
             "expires_at": obj.get("expires_at"),
             "monthly_installments_enabled": obj.get("monthly_installments_enabled"),
             "monthly_installments_options": obj.get("monthly_installments_options"),
+            "three_ds_mode": obj.get("three_ds_mode"),
             "name": obj.get("name"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
             "on_demand_enabled": obj.get("on_demand_enabled"),

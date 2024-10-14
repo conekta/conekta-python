@@ -1,14 +1,19 @@
 # ChargeRequestPaymentMethod
 
-Payment method used in the charge. Go to the [payment methods](https://developers.conekta.com/reference/m%C3%A9todos-de-pago) section for more details 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**type** | **str** | Type of payment method | 
+**cvc** | **str** | Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants | 
+**exp_month** | **str** | Card expiration month | 
+**exp_year** | **str** | Card expiration year | 
+**name** | **str** | Cardholder name | 
+**number** | **str** | Card number | 
+**customer_ip_address** | **str** | Optional field used to capture the customer&#39;s IP address for fraud prevention and security monitoring purposes | [optional] 
 **expires_at** | **int** | Method expiration date as unix timestamp | [optional] 
 **monthly_installments** | **int** | How many months without interest to apply, it can be 3, 6, 9, 12 or 18 | [optional] 
-**type** | **str** |  | 
 **token_id** | **str** |  | [optional] 
 **payment_source_id** | **str** |  | [optional] 
 **contract_id** | **str** | Optional id sent to indicate the bank contract for recurrent card charges. | [optional] 

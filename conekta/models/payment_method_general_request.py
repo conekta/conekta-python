@@ -18,22 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.event_response import EventResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SubscriptionEventsResponse(BaseModel):
+class PaymentMethodGeneralRequest(BaseModel):
     """
-    SubscriptionEventsResponse
+    Payment method used in the charge. Go to the [payment methods](https://developers.conekta.com/reference/m%C3%A9todos-de-pago) section for more details 
     """ # noqa: E501
-    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
-    object: StrictStr = Field(description="Object type, in this case is list")
-    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.")
-    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.")
-    data: Optional[List[EventResponse]] = None
-    __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
+    expires_at: Optional[StrictInt] = Field(default=None, description="Method expiration date as unix timestamp")
+    monthly_installments: Optional[StrictInt] = Field(default=None, description="How many months without interest to apply, it can be 3, 6, 9, 12 or 18")
+    type: StrictStr = Field(description="Type of payment method")
+    token_id: Optional[StrictStr] = None
+    payment_source_id: Optional[StrictStr] = None
+    cvc: Optional[StrictStr] = Field(default=None, description="Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants")
+    contract_id: Optional[StrictStr] = Field(default=None, description="Optional id sent to indicate the bank contract for recurrent card charges.")
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    __properties: ClassVar[List[str]] = ["expires_at", "monthly_installments", "type", "token_id", "payment_source_id", "cvc", "contract_id", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +55,7 @@ class SubscriptionEventsResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SubscriptionEventsResponse from a JSON string"""
+        """Create an instance of PaymentMethodGeneralRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,28 +76,11 @@ class SubscriptionEventsResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
-        if self.data:
-            for _item_data in self.data:
-                if _item_data:
-                    _items.append(_item_data.to_dict())
-            _dict['data'] = _items
-        # set to None if next_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.next_page_url is None and "next_page_url" in self.model_fields_set:
-            _dict['next_page_url'] = None
-
-        # set to None if previous_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.previous_page_url is None and "previous_page_url" in self.model_fields_set:
-            _dict['previous_page_url'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SubscriptionEventsResponse from a dict"""
+        """Create an instance of PaymentMethodGeneralRequest from a dict"""
         if obj is None:
             return None
 
@@ -103,11 +88,14 @@ class SubscriptionEventsResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "has_more": obj.get("has_more"),
-            "object": obj.get("object"),
-            "next_page_url": obj.get("next_page_url"),
-            "previous_page_url": obj.get("previous_page_url"),
-            "data": [EventResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
+            "expires_at": obj.get("expires_at"),
+            "monthly_installments": obj.get("monthly_installments"),
+            "type": obj.get("type"),
+            "token_id": obj.get("token_id"),
+            "payment_source_id": obj.get("payment_source_id"),
+            "cvc": obj.get("cvc"),
+            "contract_id": obj.get("contract_id"),
+            "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj
 

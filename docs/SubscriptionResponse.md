@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **billing_cycle_start** | **int** |  | [optional] 
 **billing_cycle_end** | **int** |  | [optional] 
 **canceled_at** | **int** |  | [optional] 
+**canceled_reason** | **str** | Reason for cancellation. This field appears when the subscription status is &#39;canceled&#39;. | [optional] 
 **card_id** | **str** |  | [optional] 
 **charge_id** | **str** |  | [optional] 
 **created_at** | **int** |  | [optional] 

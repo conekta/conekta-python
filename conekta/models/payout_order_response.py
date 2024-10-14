@@ -91,9 +91,9 @@ class PayoutOrderResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in payouts (list)
         _items = []
         if self.payouts:
-            for _item in self.payouts:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_payouts in self.payouts:
+                if _item_payouts:
+                    _items.append(_item_payouts.to_dict())
             _dict['payouts'] = _items
         return _dict
 

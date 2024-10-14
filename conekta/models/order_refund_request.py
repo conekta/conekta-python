@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,9 +27,9 @@ class OrderRefundRequest(BaseModel):
     """
     OrderRefundRequest
     """ # noqa: E501
-    amount: StrictInt
+    amount: StrictInt = Field(description="Amount to be refunded in cents")
     expires_at: Optional[StrictInt] = None
-    reason: StrictStr
+    reason: StrictStr = Field(description="Reason for the refund")
     __properties: ClassVar[List[str]] = ["amount", "expires_at", "reason"]
 
     model_config = ConfigDict(

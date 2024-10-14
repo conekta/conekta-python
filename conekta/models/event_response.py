@@ -80,9 +80,9 @@ class EventResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in webhook_logs (list)
         _items = []
         if self.webhook_logs:
-            for _item in self.webhook_logs:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_webhook_logs in self.webhook_logs:
+                if _item_webhook_logs:
+                    _items.append(_item_webhook_logs.to_dict())
             _dict['webhook_logs'] = _items
         return _dict
 

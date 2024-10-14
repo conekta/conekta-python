@@ -45,7 +45,8 @@ class PaymentMethodBankTransfer(BaseModel):
     receiving_account_tax_id: Optional[StrictStr] = None
     reference_number: Optional[StrictStr] = None
     tracking_code: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "object", "bank", "clabe", "description", "executed_at", "expires_at", "issuing_account_bank", "issuing_account_number", "issuing_account_holder_name", "issuing_account_tax_id", "payment_attempts", "receiving_account_holder_name", "receiving_account_number", "receiving_account_bank", "receiving_account_tax_id", "reference_number", "tracking_code"]
+    customer_ip_address: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["type", "object", "bank", "clabe", "description", "executed_at", "expires_at", "issuing_account_bank", "issuing_account_number", "issuing_account_holder_name", "issuing_account_tax_id", "payment_attempts", "receiving_account_holder_name", "receiving_account_number", "receiving_account_bank", "receiving_account_tax_id", "reference_number", "tracking_code", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -165,7 +166,8 @@ class PaymentMethodBankTransfer(BaseModel):
             "receiving_account_bank": obj.get("receiving_account_bank"),
             "receiving_account_tax_id": obj.get("receiving_account_tax_id"),
             "reference_number": obj.get("reference_number"),
-            "tracking_code": obj.get("tracking_code")
+            "tracking_code": obj.get("tracking_code"),
+            "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj
 

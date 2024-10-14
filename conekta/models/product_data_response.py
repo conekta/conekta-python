@@ -31,7 +31,7 @@ class ProductDataResponse(BaseModel):
     antifraud_info: Optional[Dict[str, Any]] = None
     brand: Optional[StrictStr] = Field(default=None, description="The brand of the item.")
     description: Optional[Annotated[str, Field(strict=True, max_length=250)]] = Field(default=None, description="Short description of the item")
-    metadata: Optional[Dict[str, StrictStr]] = Field(default=None, description="It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters.")
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters.")
     name: StrictStr = Field(description="The name of the item. It will be displayed in the order.")
     quantity: Annotated[int, Field(strict=True, ge=1)] = Field(description="The quantity of the item in the order.")
     sku: Optional[StrictStr] = Field(default=None, description="The stock keeping unit for the item. It is used to identify the item in the order.")

@@ -6,7 +6,7 @@ The charges to be made
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**amount** | **int** |  | [optional] 
+**amount** | **int** | Amount to be charged in cents | [optional] 
 **payment_method** | [**ChargeRequestPaymentMethod**](ChargeRequestPaymentMethod.md) |  | 
 **reference_id** | **str** | Custom reference to add to the charge | [optional] 
 
