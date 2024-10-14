@@ -49,7 +49,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.ShippingContactsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     customer_shipping_contacts = conekta.CustomerShippingContacts() # CustomerShippingContacts | requested field for customer shippings contacts
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **customer_shipping_contacts** | [**CustomerShippingContacts**](CustomerShippingContacts.md)| requested field for customer shippings contacts | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -137,7 +137,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.ShippingContactsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     shipping_contacts_id = '6307a60c41de27127515a575' # str | identifier
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -158,7 +158,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **shipping_contacts_id** | **str**| identifier | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -227,7 +227,7 @@ with conekta.ApiClient(configuration) as api_client:
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     shipping_contacts_id = '6307a60c41de27127515a575' # str | identifier
     customer_update_shipping_contacts = conekta.CustomerUpdateShippingContacts() # CustomerUpdateShippingContacts | requested field for customer update shippings contacts
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
  **id** | **str**| Identifier of the resource | 
  **shipping_contacts_id** | **str**| identifier | 
  **customer_update_shipping_contacts** | [**CustomerUpdateShippingContacts**](CustomerUpdateShippingContacts.md)| requested field for customer update shippings contacts | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

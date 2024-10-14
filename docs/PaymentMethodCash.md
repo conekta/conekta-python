@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **service_name** | **str** |  | [optional] 
 **store** | **str** |  | [optional] 
 **store_name** | **str** |  | [optional] 
+**customer_ip_address** | **str** |  | [optional] 
 
 ## Example
 

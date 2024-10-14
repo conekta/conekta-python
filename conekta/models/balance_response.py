@@ -82,65 +82,65 @@ class BalanceResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in available (list)
         _items = []
         if self.available:
-            for _item in self.available:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_available in self.available:
+                if _item_available:
+                    _items.append(_item_available.to_dict())
             _dict['available'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in cashout_retention_amount (list)
         _items = []
         if self.cashout_retention_amount:
-            for _item in self.cashout_retention_amount:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_cashout_retention_amount in self.cashout_retention_amount:
+                if _item_cashout_retention_amount:
+                    _items.append(_item_cashout_retention_amount.to_dict())
             _dict['cashout_retention_amount'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in conekta_retention (list)
         _items = []
         if self.conekta_retention:
-            for _item in self.conekta_retention:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_conekta_retention in self.conekta_retention:
+                if _item_conekta_retention:
+                    _items.append(_item_conekta_retention.to_dict())
             _dict['conekta_retention'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in gateway (list)
         _items = []
         if self.gateway:
-            for _item in self.gateway:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_gateway in self.gateway:
+                if _item_gateway:
+                    _items.append(_item_gateway.to_dict())
             _dict['gateway'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in pending (list)
         _items = []
         if self.pending:
-            for _item in self.pending:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_pending in self.pending:
+                if _item_pending:
+                    _items.append(_item_pending.to_dict())
             _dict['pending'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in retained (list)
         _items = []
         if self.retained:
-            for _item in self.retained:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_retained in self.retained:
+                if _item_retained:
+                    _items.append(_item_retained.to_dict())
             _dict['retained'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in retention_amount (list)
         _items = []
         if self.retention_amount:
-            for _item in self.retention_amount:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_retention_amount in self.retention_amount:
+                if _item_retention_amount:
+                    _items.append(_item_retention_amount.to_dict())
             _dict['retention_amount'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in target_retention_amount (list)
         _items = []
         if self.target_retention_amount:
-            for _item in self.target_retention_amount:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_target_retention_amount in self.target_retention_amount:
+                if _item_target_retention_amount:
+                    _items.append(_item_target_retention_amount.to_dict())
             _dict['target_retention_amount'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in temporarily_retained (list)
         _items = []
         if self.temporarily_retained:
-            for _item in self.temporarily_retained:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_temporarily_retained in self.temporarily_retained:
+                if _item_temporarily_retained:
+                    _items.append(_item_temporarily_retained.to_dict())
             _dict['temporarily_retained'] = _items
         return _dict
 

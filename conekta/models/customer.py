@@ -93,23 +93,23 @@ class Customer(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in fiscal_entities (list)
         _items = []
         if self.fiscal_entities:
-            for _item in self.fiscal_entities:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_fiscal_entities in self.fiscal_entities:
+                if _item_fiscal_entities:
+                    _items.append(_item_fiscal_entities.to_dict())
             _dict['fiscal_entities'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in payment_sources (list)
         _items = []
         if self.payment_sources:
-            for _item in self.payment_sources:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_payment_sources in self.payment_sources:
+                if _item_payment_sources:
+                    _items.append(_item_payment_sources.to_dict())
             _dict['payment_sources'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in shipping_contacts (list)
         _items = []
         if self.shipping_contacts:
-            for _item in self.shipping_contacts:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_shipping_contacts in self.shipping_contacts:
+                if _item_shipping_contacts:
+                    _items.append(_item_shipping_contacts.to_dict())
             _dict['shipping_contacts'] = _items
         # override the default output from pydantic by calling `to_dict()` of subscription
         if self.subscription:

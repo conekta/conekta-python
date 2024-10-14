@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **antifraud_info** | **Dict[str, object]** |  | [optional] 
 **brand** | **str** | The brand of the item. | [optional] 
 **description** | **str** | Short description of the item | [optional] 
-**metadata** | **Dict[str, str]** | It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters. | [optional] 
+**metadata** | **Dict[str, object]** | It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters. | [optional] 
 **name** | **str** | The name of the item. It will be displayed in the order. | 
 **quantity** | **int** | The quantity of the item in the order. | 
 **sku** | **str** | The stock keeping unit for the item. It is used to identify the item in the order. | [optional] 

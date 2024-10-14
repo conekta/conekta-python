@@ -17,7 +17,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr, field_validator
+from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.get_orders_response import GetOrdersResponse
@@ -301,7 +301,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -318,11 +320,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
 
         # authentication setting
@@ -601,7 +604,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -618,11 +623,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -911,7 +917,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -928,11 +936,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
 
         # authentication setting
@@ -967,6 +976,13 @@ class OrdersApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        payment_status: Annotated[Optional[StrictStr], Field(description="Filters by order status")] = None,
+        last_payment_info_status: Annotated[Optional[StrictStr], Field(description="Filters by last payment info status")] = None,
+        created_at: Annotated[Optional[StrictInt], Field(description="created equal to")] = None,
+        created_at_gte: Annotated[Optional[StrictInt], Field(description="created at greater than or equal to")] = None,
+        created_at_lte: Annotated[Optional[StrictInt], Field(description="created at less than or equal to")] = None,
+        updated_at_gte: Annotated[Optional[StrictInt], Field(description="updated at greater than or equal to")] = None,
+        updated_at_lte: Annotated[Optional[StrictInt], Field(description="updated at less than or equal to")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -996,6 +1012,20 @@ class OrdersApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param payment_status: Filters by order status
+        :type payment_status: str
+        :param last_payment_info_status: Filters by last payment info status
+        :type last_payment_info_status: str
+        :param created_at: created equal to
+        :type created_at: int
+        :param created_at_gte: created at greater than or equal to
+        :type created_at_gte: int
+        :param created_at_lte: created at less than or equal to
+        :type created_at_lte: int
+        :param updated_at_gte: updated at greater than or equal to
+        :type updated_at_gte: int
+        :param updated_at_lte: updated at less than or equal to
+        :type updated_at_lte: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1025,6 +1055,13 @@ class OrdersApi:
             search=search,
             next=next,
             previous=previous,
+            payment_status=payment_status,
+            last_payment_info_status=last_payment_info_status,
+            created_at=created_at,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            updated_at_gte=updated_at_gte,
+            updated_at_lte=updated_at_lte,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1056,6 +1093,13 @@ class OrdersApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        payment_status: Annotated[Optional[StrictStr], Field(description="Filters by order status")] = None,
+        last_payment_info_status: Annotated[Optional[StrictStr], Field(description="Filters by last payment info status")] = None,
+        created_at: Annotated[Optional[StrictInt], Field(description="created equal to")] = None,
+        created_at_gte: Annotated[Optional[StrictInt], Field(description="created at greater than or equal to")] = None,
+        created_at_lte: Annotated[Optional[StrictInt], Field(description="created at less than or equal to")] = None,
+        updated_at_gte: Annotated[Optional[StrictInt], Field(description="updated at greater than or equal to")] = None,
+        updated_at_lte: Annotated[Optional[StrictInt], Field(description="updated at less than or equal to")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1085,6 +1129,20 @@ class OrdersApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param payment_status: Filters by order status
+        :type payment_status: str
+        :param last_payment_info_status: Filters by last payment info status
+        :type last_payment_info_status: str
+        :param created_at: created equal to
+        :type created_at: int
+        :param created_at_gte: created at greater than or equal to
+        :type created_at_gte: int
+        :param created_at_lte: created at less than or equal to
+        :type created_at_lte: int
+        :param updated_at_gte: updated at greater than or equal to
+        :type updated_at_gte: int
+        :param updated_at_lte: updated at less than or equal to
+        :type updated_at_lte: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1114,6 +1172,13 @@ class OrdersApi:
             search=search,
             next=next,
             previous=previous,
+            payment_status=payment_status,
+            last_payment_info_status=last_payment_info_status,
+            created_at=created_at,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            updated_at_gte=updated_at_gte,
+            updated_at_lte=updated_at_lte,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1145,6 +1210,13 @@ class OrdersApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        payment_status: Annotated[Optional[StrictStr], Field(description="Filters by order status")] = None,
+        last_payment_info_status: Annotated[Optional[StrictStr], Field(description="Filters by last payment info status")] = None,
+        created_at: Annotated[Optional[StrictInt], Field(description="created equal to")] = None,
+        created_at_gte: Annotated[Optional[StrictInt], Field(description="created at greater than or equal to")] = None,
+        created_at_lte: Annotated[Optional[StrictInt], Field(description="created at less than or equal to")] = None,
+        updated_at_gte: Annotated[Optional[StrictInt], Field(description="updated at greater than or equal to")] = None,
+        updated_at_lte: Annotated[Optional[StrictInt], Field(description="updated at less than or equal to")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1174,6 +1246,20 @@ class OrdersApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param payment_status: Filters by order status
+        :type payment_status: str
+        :param last_payment_info_status: Filters by last payment info status
+        :type last_payment_info_status: str
+        :param created_at: created equal to
+        :type created_at: int
+        :param created_at_gte: created at greater than or equal to
+        :type created_at_gte: int
+        :param created_at_lte: created at less than or equal to
+        :type created_at_lte: int
+        :param updated_at_gte: updated at greater than or equal to
+        :type updated_at_gte: int
+        :param updated_at_lte: updated at less than or equal to
+        :type updated_at_lte: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1203,6 +1289,13 @@ class OrdersApi:
             search=search,
             next=next,
             previous=previous,
+            payment_status=payment_status,
+            last_payment_info_status=last_payment_info_status,
+            created_at=created_at,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            updated_at_gte=updated_at_gte,
+            updated_at_lte=updated_at_lte,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1229,6 +1322,13 @@ class OrdersApi:
         search,
         next,
         previous,
+        payment_status,
+        last_payment_info_status,
+        created_at,
+        created_at_gte,
+        created_at_lte,
+        updated_at_gte,
+        updated_at_lte,
         _request_auth,
         _content_type,
         _headers,
@@ -1244,7 +1344,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1265,6 +1367,34 @@ class OrdersApi:
             
             _query_params.append(('previous', previous))
             
+        if payment_status is not None:
+            
+            _query_params.append(('payment_status', payment_status))
+            
+        if last_payment_info_status is not None:
+            
+            _query_params.append(('last_payment_info.status', last_payment_info_status))
+            
+        if created_at is not None:
+            
+            _query_params.append(('created_at', created_at))
+            
+        if created_at_gte is not None:
+            
+            _query_params.append(('created_at.gte', created_at_gte))
+            
+        if created_at_lte is not None:
+            
+            _query_params.append(('created_at.lte', created_at_lte))
+            
+        if updated_at_gte is not None:
+            
+            _query_params.append(('updated_at.gte', updated_at_gte))
+            
+        if updated_at_lte is not None:
+            
+            _query_params.append(('updated_at.lte', updated_at_lte))
+            
         # process the header parameters
         if accept_language is not None:
             _header_params['Accept-Language'] = accept_language
@@ -1275,11 +1405,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
 
         # authentication setting
@@ -1574,7 +1705,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1593,11 +1726,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
 
         # authentication setting
@@ -1892,7 +2026,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1911,11 +2047,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2220,7 +2357,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2239,11 +2378,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2535,7 +2675,9 @@ class OrdersApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2552,11 +2694,12 @@ class OrdersApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.conekta-v2.1.0+json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/vnd.conekta-v2.1.0+json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:

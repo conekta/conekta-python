@@ -50,7 +50,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     plan_request = conekta.PlanRequest() # PlanRequest | requested field for plan
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -70,7 +70,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **plan_request** | [**PlanRequest**](PlanRequest.md)| requested field for plan | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -133,7 +133,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Delete Plan
@@ -152,7 +152,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 
@@ -215,7 +215,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -235,7 +235,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -298,7 +298,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
@@ -321,7 +321,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
@@ -390,7 +390,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     plan_update_request = conekta.PlanUpdateRequest() # PlanUpdateRequest | requested field for plan
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -411,7 +411,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **plan_update_request** | [**PlanUpdateRequest**](PlanUpdateRequest.md)| requested field for plan | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

@@ -39,11 +39,11 @@ class ChargeResponse(BaseModel):
     device_fingerprint: Optional[StrictStr] = None
     failure_code: Optional[StrictStr] = None
     failure_message: Optional[StrictStr] = None
-    id: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
+    id: Optional[StrictStr] = Field(default=None, description="Charge ID")
+    livemode: Optional[StrictBool] = Field(default=None, description="Whether the charge was made in live mode or not")
     object: Optional[StrictStr] = None
-    order_id: Optional[StrictStr] = None
-    paid_at: Optional[StrictInt] = None
+    order_id: Optional[StrictStr] = Field(default=None, description="Order ID")
+    paid_at: Optional[StrictInt] = Field(default=None, description="Payment date")
     payment_method: Optional[ChargeResponsePaymentMethod] = None
     reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge")
     refunds: Optional[ChargeResponseRefunds] = None

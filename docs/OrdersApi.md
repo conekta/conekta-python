@@ -52,7 +52,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -72,7 +72,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -140,7 +140,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.OrdersApi(api_client)
     order_request = conekta.OrderRequest() # OrderRequest | requested field for order
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -160,7 +160,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **order_request** | [**OrderRequest**](OrderRequest.md)| requested field for order | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -226,7 +226,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -246,7 +246,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_orders**
-> GetOrdersResponse get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> GetOrdersResponse get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, payment_status=payment_status, last_payment_info_status=last_payment_info_status, created_at=created_at, created_at_gte=created_at_gte, created_at_lte=created_at_lte, updated_at_gte=updated_at_gte, updated_at_lte=updated_at_lte)
 
 Get a list of Orders
 
@@ -310,16 +310,23 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.OrdersApi(api_client)
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
     previous = 'previous_example' # str | previous page (optional)
+    payment_status = 'paid' # str | Filters by order status (optional)
+    last_payment_info_status = 'pending_payment' # str | Filters by last payment info status (optional)
+    created_at = 1612137600 # int | created equal to (optional)
+    created_at_gte = 1612137600 # int | created at greater than or equal to (optional)
+    created_at_lte = 1612137600 # int | created at less than or equal to (optional)
+    updated_at_gte = 1612137600 # int | updated at greater than or equal to (optional)
+    updated_at_lte = 1612137600 # int | updated at less than or equal to (optional)
 
     try:
         # Get a list of Orders
-        api_response = api_instance.get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+        api_response = api_instance.get_orders(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, payment_status=payment_status, last_payment_info_status=last_payment_info_status, created_at=created_at, created_at_gte=created_at_gte, created_at_lte=created_at_lte, updated_at_gte=updated_at_gte, updated_at_lte=updated_at_lte)
         print("The response of OrdersApi->get_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -333,12 +340,19 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 
  **previous** | **str**| previous page | [optional] 
+ **payment_status** | **str**| Filters by order status | [optional] 
+ **last_payment_info_status** | **str**| Filters by last payment info status | [optional] 
+ **created_at** | **int**| created equal to | [optional] 
+ **created_at_gte** | **int**| created at greater than or equal to | [optional] 
+ **created_at_lte** | **int**| created at less than or equal to | [optional] 
+ **updated_at_gte** | **int**| updated at greater than or equal to | [optional] 
+ **updated_at_lte** | **int**| updated at less than or equal to | [optional] 
 
 ### Return type
 
@@ -402,7 +416,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     refund_id = '6407b5bee1329a000175ba11' # str | refund identifier
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -423,7 +437,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **refund_id** | **str**| refund identifier | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -492,7 +506,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     order_refund_request = conekta.OrderRefundRequest() # OrderRefundRequest | requested field for a refund
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -513,7 +527,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **order_refund_request** | [**OrderRefundRequest**](OrderRefundRequest.md)| requested field for a refund | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -581,7 +595,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     order_capture_request = conekta.OrderCaptureRequest() # OrderCaptureRequest | requested fields for capture order (optional)
 
@@ -602,7 +616,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **order_capture_request** | [**OrderCaptureRequest**](OrderCaptureRequest.md)| requested fields for capture order | [optional] 
 
@@ -671,7 +685,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.OrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     order_update_request = conekta.OrderUpdateRequest() # OrderUpdateRequest | requested field for an order
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Update Order
@@ -691,7 +705,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **order_update_request** | [**OrderUpdateRequest**](OrderUpdateRequest.md)| requested field for an order | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 

@@ -46,7 +46,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.TokensApi(api_client)
     token = conekta.Token() # Token | requested field for token
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Create Token
@@ -65,7 +65,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **token** | [**Token**](Token.md)| requested field for token | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 

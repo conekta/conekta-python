@@ -18,27 +18,27 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from conekta.models.payment_method_card_request import PaymentMethodCardRequest
 from conekta.models.payment_method_cash_request import PaymentMethodCashRequest
 from conekta.models.payment_method_spei_request import PaymentMethodSpeiRequest
+from conekta.models.payment_method_token_request import PaymentMethodTokenRequest
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CUSTOMERPAYMENTMETHODSREQUEST_ONE_OF_SCHEMAS = ["PaymentMethodCardRequest", "PaymentMethodCashRequest", "PaymentMethodSpeiRequest"]
+CUSTOMERPAYMENTMETHODSREQUEST_ONE_OF_SCHEMAS = ["PaymentMethodCashRequest", "PaymentMethodSpeiRequest", "PaymentMethodTokenRequest"]
 
 class CustomerPaymentMethodsRequest(BaseModel):
     """
     CustomerPaymentMethodsRequest
     """
-    # data type: PaymentMethodCardRequest
-    oneof_schema_1_validator: Optional[PaymentMethodCardRequest] = None
+    # data type: PaymentMethodTokenRequest
+    oneof_schema_1_validator: Optional[PaymentMethodTokenRequest] = None
     # data type: PaymentMethodCashRequest
     oneof_schema_2_validator: Optional[PaymentMethodCashRequest] = None
     # data type: PaymentMethodSpeiRequest
     oneof_schema_3_validator: Optional[PaymentMethodSpeiRequest] = None
-    actual_instance: Optional[Union[PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest]] = None
-    one_of_schemas: Set[str] = { "PaymentMethodCardRequest", "PaymentMethodCashRequest", "PaymentMethodSpeiRequest" }
+    actual_instance: Optional[Union[PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest]] = None
+    one_of_schemas: Set[str] = { "PaymentMethodCashRequest", "PaymentMethodSpeiRequest", "PaymentMethodTokenRequest" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -61,9 +61,9 @@ class CustomerPaymentMethodsRequest(BaseModel):
         instance = CustomerPaymentMethodsRequest.model_construct()
         error_messages = []
         match = 0
-        # validate data type: PaymentMethodCardRequest
-        if not isinstance(v, PaymentMethodCardRequest):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodCardRequest`")
+        # validate data type: PaymentMethodTokenRequest
+        if not isinstance(v, PaymentMethodTokenRequest):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodTokenRequest`")
         else:
             match += 1
         # validate data type: PaymentMethodCashRequest
@@ -78,10 +78,10 @@ class CustomerPaymentMethodsRequest(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -96,9 +96,9 @@ class CustomerPaymentMethodsRequest(BaseModel):
         error_messages = []
         match = 0
 
-        # deserialize data into PaymentMethodCardRequest
+        # deserialize data into PaymentMethodTokenRequest
         try:
-            instance.actual_instance = PaymentMethodCardRequest.from_json(json_str)
+            instance.actual_instance = PaymentMethodTokenRequest.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -117,10 +117,10 @@ class CustomerPaymentMethodsRequest(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into CustomerPaymentMethodsRequest with oneOf schemas: PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -134,7 +134,7 @@ class CustomerPaymentMethodsRequest(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodCardRequest, PaymentMethodCashRequest, PaymentMethodSpeiRequest]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodCashRequest, PaymentMethodSpeiRequest, PaymentMethodTokenRequest]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

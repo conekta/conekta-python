@@ -29,18 +29,19 @@ class PaymentMethodCard(BaseModel):
     """ # noqa: E501
     type: Optional[StrictStr] = None
     object: StrictStr
-    account_type: Optional[StrictStr] = None
+    account_type: Optional[StrictStr] = Field(default=None, description="Account type of the card")
     auth_code: Optional[StrictStr] = None
-    brand: Optional[StrictStr] = None
+    brand: Optional[StrictStr] = Field(default=None, description="Brand of the card")
     contract_id: Optional[StrictStr] = Field(default=None, description="Id sent for recurrent charges.")
-    country: Optional[StrictStr] = None
-    exp_month: Optional[StrictStr] = None
-    exp_year: Optional[StrictStr] = None
+    country: Optional[StrictStr] = Field(default=None, description="Country of the card")
+    exp_month: Optional[StrictStr] = Field(default=None, description="Expiration month of the card")
+    exp_year: Optional[StrictStr] = Field(default=None, description="Expiration year of the card")
     fraud_indicators: Optional[List[Any]] = None
-    issuer: Optional[StrictStr] = None
-    last4: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "object", "account_type", "auth_code", "brand", "contract_id", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name"]
+    issuer: Optional[StrictStr] = Field(default=None, description="Issuer of the card")
+    last4: Optional[StrictStr] = Field(default=None, description="Last 4 digits of the card")
+    name: Optional[StrictStr] = Field(default=None, description="Name of the cardholder")
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    __properties: ClassVar[List[str]] = ["type", "object", "account_type", "auth_code", "brand", "contract_id", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,7 +106,8 @@ class PaymentMethodCard(BaseModel):
             "fraud_indicators": obj.get("fraud_indicators"),
             "issuer": obj.get("issuer"),
             "last4": obj.get("last4"),
-            "name": obj.get("name")
+            "name": obj.get("name"),
+            "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj
 

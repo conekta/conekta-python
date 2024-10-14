@@ -49,7 +49,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
     create_risk_rules_data = conekta.CreateRiskRulesData() # CreateRiskRulesData | requested field for blacklist rule
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Create blacklisted rule
@@ -68,7 +68,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **create_risk_rules_data** | [**CreateRiskRulesData**](CreateRiskRulesData.md)| requested field for blacklist rule | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 
@@ -129,7 +129,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     create_risk_rules_data = conekta.CreateRiskRulesData() # CreateRiskRulesData |  (optional)
 
     try:
@@ -148,7 +148,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **create_risk_rules_data** | [**CreateRiskRulesData**](CreateRiskRulesData.md)|  | [optional] 
 
 ### Return type
@@ -211,7 +211,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -231,7 +231,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -294,7 +294,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -314,7 +314,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -379,7 +379,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Get list of blacklisted rules
@@ -397,7 +397,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 
@@ -459,7 +459,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Get a list of whitelisted rules
@@ -477,7 +477,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
 

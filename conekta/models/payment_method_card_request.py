@@ -19,7 +19,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,8 +29,13 @@ class PaymentMethodCardRequest(BaseModel):
     PaymentMethodCardRequest
     """ # noqa: E501
     type: StrictStr = Field(description="Type of payment method")
-    token_id: StrictStr = Field(description="Token id that will be used to create a \"card\" type payment method. See the (subscriptions)[https://developers.conekta.com/v2.1.0/reference/createsubscription] tutorial for more information on how to tokenize cards.")
-    __properties: ClassVar[List[str]] = ["type", "token_id"]
+    cvc: Annotated[str, Field(min_length=3, strict=True, max_length=4)] = Field(description="Card security code")
+    exp_month: Annotated[str, Field(min_length=2, strict=True, max_length=2)] = Field(description="Card expiration month")
+    exp_year: Annotated[str, Field(min_length=4, strict=True, max_length=4)] = Field(description="Card expiration year")
+    name: StrictStr = Field(description="Cardholder name")
+    number: StrictStr = Field(description="Card number")
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    __properties: ClassVar[List[str]] = ["type", "cvc", "exp_month", "exp_year", "name", "number", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,7 +89,12 @@ class PaymentMethodCardRequest(BaseModel):
 
         _obj = cls.model_validate({
             "type": obj.get("type"),
-            "token_id": obj.get("token_id")
+            "cvc": obj.get("cvc"),
+            "exp_month": obj.get("exp_month"),
+            "exp_year": obj.get("exp_year"),
+            "name": obj.get("name"),
+            "number": obj.get("number"),
+            "customer_ip_address": obj.get("customer_ip_address")
         })
         return _obj
 
