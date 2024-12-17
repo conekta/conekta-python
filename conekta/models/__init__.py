@@ -34,6 +34,8 @@ from conekta.models.charge_response_refunds import ChargeResponseRefunds
 from conekta.models.charge_response_refunds_data import ChargeResponseRefundsData
 from conekta.models.charge_update_request import ChargeUpdateRequest
 from conekta.models.charges_data_response import ChargesDataResponse
+from conekta.models.charges_order_response import ChargesOrderResponse
+from conekta.models.charges_order_response_all_of_data import ChargesOrderResponseAllOfData
 from conekta.models.checkout import Checkout
 from conekta.models.checkout_order_template import CheckoutOrderTemplate
 from conekta.models.checkout_order_template_customer_info import CheckoutOrderTemplateCustomerInfo

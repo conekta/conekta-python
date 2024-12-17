@@ -35,18 +35,20 @@ class Customer(BaseModel):
     antifraud_info: Optional[CustomerAntifraudInfo] = None
     corporate: Optional[StrictBool] = Field(default=False, description="It is a value that allows identifying if the email is corporate or not.")
     custom_reference: Optional[StrictStr] = Field(default=None, description="It is an undefined value.")
+    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.")
     email: StrictStr = Field(description="An email address is a series of customizable characters followed by a universal Internet symbol, the at symbol (@), the name of a host server, and a web domain ending (.mx, .com, .org, . net, etc).")
     default_payment_source_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of a payment method (payment_id)")
     default_shipping_contact_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of the shipping address (shipping_contact)")
     fiscal_entities: Optional[List[CustomerFiscalEntitiesRequest]] = None
     metadata: Optional[Dict[str, Any]] = None
     name: StrictStr = Field(description="Client's name")
+    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.")
     payment_sources: Optional[List[CustomerPaymentMethodsRequest]] = Field(default=None, description="Contains details of the payment methods that the customer has active or has used in Conekta")
     phone: StrictStr = Field(description="Is the customer's phone number")
     plan_id: Optional[StrictStr] = Field(default=None, description="Contains the ID of a plan, which could together with name, email and phone create a client directly to a subscription")
     shipping_contacts: Optional[List[CustomerShippingContacts]] = Field(default=None, description="Contains the detail of the shipping addresses that the client has active or has used in Conekta")
     subscription: Optional[SubscriptionRequest] = None
-    __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "custom_reference", "email", "default_payment_source_id", "default_shipping_contact_id", "fiscal_entities", "metadata", "name", "payment_sources", "phone", "plan_id", "shipping_contacts", "subscription"]
+    __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "custom_reference", "date_of_birth", "email", "default_payment_source_id", "default_shipping_contact_id", "fiscal_entities", "metadata", "name", "national_id", "payment_sources", "phone", "plan_id", "shipping_contacts", "subscription"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -134,12 +136,14 @@ class Customer(BaseModel):
             "antifraud_info": CustomerAntifraudInfo.from_dict(obj["antifraud_info"]) if obj.get("antifraud_info") is not None else None,
             "corporate": obj.get("corporate") if obj.get("corporate") is not None else False,
             "custom_reference": obj.get("custom_reference"),
+            "date_of_birth": obj.get("date_of_birth"),
             "email": obj.get("email"),
             "default_payment_source_id": obj.get("default_payment_source_id"),
             "default_shipping_contact_id": obj.get("default_shipping_contact_id"),
             "fiscal_entities": [CustomerFiscalEntitiesRequest.from_dict(_item) for _item in obj["fiscal_entities"]] if obj.get("fiscal_entities") is not None else None,
             "metadata": obj.get("metadata"),
             "name": obj.get("name"),
+            "national_id": obj.get("national_id"),
             "payment_sources": [CustomerPaymentMethodsRequest.from_dict(_item) for _item in obj["payment_sources"]] if obj.get("payment_sources") is not None else None,
             "phone": obj.get("phone"),
             "plan_id": obj.get("plan_id"),

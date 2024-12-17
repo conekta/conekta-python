@@ -7,11 +7,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
 **object** | **str** |  | 
+**agreement** | **str** | Agreement ID | [optional] 
 **auth_code** | **int** |  | [optional] 
 **cashier_id** | **str** |  | [optional] 
 **reference** | **str** |  | [optional] 
 **barcode_url** | **str** |  | [optional] 
 **expires_at** | **int** |  | [optional] 
+**product_type** | **str** | Product type, e.g. bbva_cash_in, cash_in, pespay_cash_in, etc. | [optional] 
 **service_name** | **str** |  | [optional] 
 **store** | **str** |  | [optional] 
 **store_name** | **str** |  | [optional] 

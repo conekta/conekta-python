@@ -54,6 +54,8 @@ conekta/models/charge_response_refunds.py
 conekta/models/charge_response_refunds_data.py
 conekta/models/charge_update_request.py
 conekta/models/charges_data_response.py
+conekta/models/charges_order_response.py
+conekta/models/charges_order_response_all_of_data.py
 conekta/models/checkout.py
 conekta/models/checkout_order_template.py
 conekta/models/checkout_order_template_customer_info.py
@@ -235,6 +237,8 @@ docs/ChargeResponseRefundsData.md
 docs/ChargeUpdateRequest.md
 docs/ChargesApi.md
 docs/ChargesDataResponse.md
+docs/ChargesOrderResponse.md
+docs/ChargesOrderResponseAllOfData.md
 docs/Checkout.md
 docs/CheckoutOrderTemplate.md
 docs/CheckoutOrderTemplateCustomerInfo.md

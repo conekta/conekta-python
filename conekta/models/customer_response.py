@@ -36,6 +36,7 @@ class CustomerResponse(BaseModel):
     corporate: Optional[StrictBool] = Field(default=None, description="true if the customer is a company")
     created_at: StrictInt = Field(description="Creation date of the object")
     custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference")
+    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.")
     default_fiscal_entity_id: Optional[StrictStr] = None
     default_shipping_contact_id: Optional[StrictStr] = None
     default_payment_source_id: Optional[StrictStr] = None
@@ -44,13 +45,14 @@ class CustomerResponse(BaseModel):
     id: StrictStr = Field(description="Customer's ID")
     livemode: StrictBool = Field(description="true if the object exists in live mode or the value false if the object exists in test mode")
     name: StrictStr = Field(description="Customer's name")
+    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.")
     metadata: Optional[Dict[str, Any]] = None
     object: StrictStr
     payment_sources: Optional[CustomerPaymentMethodsResponse] = None
     phone: Optional[StrictStr] = Field(default=None, description="Customer's phone number")
     shipping_contacts: Optional[CustomerResponseShippingContacts] = None
     subscription: Optional[SubscriptionResponse] = None
-    __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "created_at", "custom_reference", "default_fiscal_entity_id", "default_shipping_contact_id", "default_payment_source_id", "email", "fiscal_entities", "id", "livemode", "name", "metadata", "object", "payment_sources", "phone", "shipping_contacts", "subscription"]
+    __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "created_at", "custom_reference", "date_of_birth", "default_fiscal_entity_id", "default_shipping_contact_id", "default_payment_source_id", "email", "fiscal_entities", "id", "livemode", "name", "national_id", "metadata", "object", "payment_sources", "phone", "shipping_contacts", "subscription"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -137,6 +139,7 @@ class CustomerResponse(BaseModel):
             "corporate": obj.get("corporate"),
             "created_at": obj.get("created_at"),
             "custom_reference": obj.get("custom_reference"),
+            "date_of_birth": obj.get("date_of_birth"),
             "default_fiscal_entity_id": obj.get("default_fiscal_entity_id"),
             "default_shipping_contact_id": obj.get("default_shipping_contact_id"),
             "default_payment_source_id": obj.get("default_payment_source_id"),
@@ -145,6 +148,7 @@ class CustomerResponse(BaseModel):
             "id": obj.get("id"),
             "livemode": obj.get("livemode"),
             "name": obj.get("name"),
+            "national_id": obj.get("national_id"),
             "metadata": obj.get("metadata"),
             "object": obj.get("object"),
             "payment_sources": CustomerPaymentMethodsResponse.from_dict(obj["payment_sources"]) if obj.get("payment_sources") is not None else None,

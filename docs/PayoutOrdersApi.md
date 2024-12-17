@@ -4,10 +4,94 @@ All URIs are relative to *https://api.conekta.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**cancel_payout_order_by_id**](PayoutOrdersApi.md#cancel_payout_order_by_id) | **PUT** /payout_orders/{id}/cancel | Cancel Payout Order
 [**create_payout_order**](PayoutOrdersApi.md#create_payout_order) | **POST** /payout_orders | Create payout order
 [**get_payout_order_by_id**](PayoutOrdersApi.md#get_payout_order_by_id) | **GET** /payout_orders/{id} | Get Payout Order
 [**get_payout_orders**](PayoutOrdersApi.md#get_payout_orders) | **GET** /payout_orders | Get a list of Payout Orders
 
+
+# **cancel_payout_order_by_id**
+> PayoutOrderResponse cancel_payout_order_by_id(id, accept_language=accept_language)
+
+Cancel Payout Order
+
+Cancel a payout Order resource that corresponds to a payout order ID.
+
+### Example
+
+* Bearer Authentication (bearerAuth):
+
+```python
+import conekta
+from conekta.models.payout_order_response import PayoutOrderResponse
+from conekta.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.conekta.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = conekta.Configuration(
+    host = "https://api.conekta.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = conekta.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with conekta.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = conekta.PayoutOrdersApi(api_client)
+    id = '6307a60c41de27127515a575' # str | Identifier of the resource
+    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+
+    try:
+        # Cancel Payout Order
+        api_response = api_instance.cancel_payout_order_by_id(id, accept_language=accept_language)
+        print("The response of PayoutOrdersApi->cancel_payout_order_by_id:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PayoutOrdersApi->cancel_payout_order_by_id: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| Identifier of the resource | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+
+### Return type
+
+[**PayoutOrderResponse**](PayoutOrderResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.conekta-v2.1.0+json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful operation |  -  |
+**401** | authentication error |  -  |
+**404** | not found entity |  -  |
+**500** | internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_payout_order**
 > PayoutOrderResponse create_payout_order(payout_order, accept_language=accept_language)
