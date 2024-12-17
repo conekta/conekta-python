@@ -37,6 +37,7 @@ class OrderResponseCheckout(BaseModel):
     id: Optional[StrictStr] = None
     is_redirect_on_failure: Optional[StrictBool] = None
     livemode: Optional[StrictBool] = None
+    max_failed_retries: Optional[StrictInt] = Field(default=None, description="Number of retries allowed before the checkout is marked as failed")
     metadata: Optional[Dict[str, Any]] = None
     monthly_installments_enabled: Optional[StrictBool] = None
     monthly_installments_options: Optional[List[StrictInt]] = None
@@ -54,7 +55,7 @@ class OrderResponseCheckout(BaseModel):
     status: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
     url: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "is_redirect_on_failure", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "on_demand_enabled", "paid_payments_count", "recurrent", "redirection_time", "slug", "sms_sent", "success_url", "starts_at", "status", "type", "url"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "is_redirect_on_failure", "livemode", "max_failed_retries", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "on_demand_enabled", "paid_payments_count", "recurrent", "redirection_time", "slug", "sms_sent", "success_url", "starts_at", "status", "type", "url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,6 +96,11 @@ class OrderResponseCheckout(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if max_failed_retries (nullable) is None
+        # and model_fields_set contains the field
+        if self.max_failed_retries is None and "max_failed_retries" in self.model_fields_set:
+            _dict['max_failed_retries'] = None
+
         # set to None if on_demand_enabled (nullable) is None
         # and model_fields_set contains the field
         if self.on_demand_enabled is None and "on_demand_enabled" in self.model_fields_set:
@@ -127,6 +133,7 @@ class OrderResponseCheckout(BaseModel):
             "id": obj.get("id"),
             "is_redirect_on_failure": obj.get("is_redirect_on_failure"),
             "livemode": obj.get("livemode"),
+            "max_failed_retries": obj.get("max_failed_retries"),
             "metadata": obj.get("metadata"),
             "monthly_installments_enabled": obj.get("monthly_installments_enabled"),
             "monthly_installments_options": obj.get("monthly_installments_options"),

@@ -33,6 +33,7 @@ class UpdateCustomer(BaseModel):
     update customer
     """ # noqa: E501
     antifraud_info: Optional[UpdateCustomerAntifraudInfo] = None
+    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.")
     default_payment_source_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of a payment method (payment_id)")
     email: Optional[StrictStr] = Field(default=None, description="An email address is a series of customizable characters followed by a universal Internet symbol, the at symbol (@), the name of a host server, and a web domain ending (.mx, .com, .org, . net, etc).")
     name: Optional[StrictStr] = Field(default=None, description="Client's name")
@@ -43,10 +44,11 @@ class UpdateCustomer(BaseModel):
     custom_reference: Optional[StrictStr] = Field(default=None, description="It is an undefined value.")
     fiscal_entities: Optional[List[CustomerFiscalEntitiesRequest]] = None
     metadata: Optional[Dict[str, Any]] = None
+    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.")
     payment_sources: Optional[List[CustomerPaymentMethodsRequest]] = Field(default=None, description="Contains details of the payment methods that the customer has active or has used in Conekta")
     shipping_contacts: Optional[List[CustomerShippingContacts]] = Field(default=None, description="Contains the detail of the shipping addresses that the client has active or has used in Conekta")
     subscription: Optional[SubscriptionRequest] = None
-    __properties: ClassVar[List[str]] = ["antifraud_info", "default_payment_source_id", "email", "name", "phone", "plan_id", "default_shipping_contact_id", "corporate", "custom_reference", "fiscal_entities", "metadata", "payment_sources", "shipping_contacts", "subscription"]
+    __properties: ClassVar[List[str]] = ["antifraud_info", "date_of_birth", "default_payment_source_id", "email", "name", "phone", "plan_id", "default_shipping_contact_id", "corporate", "custom_reference", "fiscal_entities", "metadata", "national_id", "payment_sources", "shipping_contacts", "subscription"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -132,6 +134,7 @@ class UpdateCustomer(BaseModel):
 
         _obj = cls.model_validate({
             "antifraud_info": UpdateCustomerAntifraudInfo.from_dict(obj["antifraud_info"]) if obj.get("antifraud_info") is not None else None,
+            "date_of_birth": obj.get("date_of_birth"),
             "default_payment_source_id": obj.get("default_payment_source_id"),
             "email": obj.get("email"),
             "name": obj.get("name"),
@@ -142,6 +145,7 @@ class UpdateCustomer(BaseModel):
             "custom_reference": obj.get("custom_reference"),
             "fiscal_entities": [CustomerFiscalEntitiesRequest.from_dict(_item) for _item in obj["fiscal_entities"]] if obj.get("fiscal_entities") is not None else None,
             "metadata": obj.get("metadata"),
+            "national_id": obj.get("national_id"),
             "payment_sources": [CustomerPaymentMethodsRequest.from_dict(_item) for _item in obj["payment_sources"]] if obj.get("payment_sources") is not None else None,
             "shipping_contacts": [CustomerShippingContacts.from_dict(_item) for _item in obj["shipping_contacts"]] if obj.get("shipping_contacts") is not None else None,
             "subscription": SubscriptionRequest.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None

@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **is_redirect_on_failure** | **bool** |  | [optional] 
 **livemode** | **bool** |  | [optional] 
+**max_failed_retries** | **int** | Number of retries allowed before the checkout is marked as failed | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **monthly_installments_enabled** | **bool** |  | [optional] 
 **monthly_installments_options** | **List[int]** |  | [optional] 

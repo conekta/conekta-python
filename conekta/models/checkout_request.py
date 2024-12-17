@@ -32,12 +32,13 @@ class CheckoutRequest(BaseModel):
     failure_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of failed payment, applies only to HostedPayment.")
     monthly_installments_enabled: Optional[StrictBool] = None
     monthly_installments_options: Optional[List[StrictInt]] = None
+    max_failed_retries: Optional[StrictInt] = Field(default=None, description="Number of retries allowed before the checkout is marked as failed")
     name: Optional[StrictStr] = Field(default=None, description="Reason for payment")
     on_demand_enabled: Optional[StrictBool] = None
     redirection_time: Optional[StrictInt] = Field(default=None, description="number of seconds to wait before redirecting to the success_url")
     success_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of successful payment, applies only to HostedPayment")
     type: Optional[StrictStr] = Field(default=None, description="This field represents the type of checkout")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "name", "on_demand_enabled", "redirection_time", "success_url", "type"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "max_failed_retries", "name", "on_demand_enabled", "redirection_time", "success_url", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,6 +96,7 @@ class CheckoutRequest(BaseModel):
             "failure_url": obj.get("failure_url"),
             "monthly_installments_enabled": obj.get("monthly_installments_enabled"),
             "monthly_installments_options": obj.get("monthly_installments_options"),
+            "max_failed_retries": obj.get("max_failed_retries"),
             "name": obj.get("name"),
             "on_demand_enabled": obj.get("on_demand_enabled"),
             "redirection_time": obj.get("redirection_time"),

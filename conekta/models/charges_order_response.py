@@ -18,19 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from conekta.models.charges_order_response_all_of_data import ChargesOrderResponseAllOfData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class OrderRefundRequest(BaseModel):
+class ChargesOrderResponse(BaseModel):
     """
-    OrderRefundRequest
+    The charges associated with the order
     """ # noqa: E501
-    amount: StrictInt = Field(description="Amount to be refunded in cents")
-    expires_at: Optional[StrictInt] = None
-    reason: StrictStr = Field(description="Reason for the refund")
-    __properties: ClassVar[List[str]] = ["amount", "expires_at", "reason"]
+    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
+    object: StrictStr = Field(description="Object type, in this case is list")
+    data: Optional[List[ChargesOrderResponseAllOfData]] = None
+    __properties: ClassVar[List[str]] = ["has_more", "object", "data"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +51,7 @@ class OrderRefundRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OrderRefundRequest from a JSON string"""
+        """Create an instance of ChargesOrderResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,11 +72,18 @@ class OrderRefundRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item_data in self.data:
+                if _item_data:
+                    _items.append(_item_data.to_dict())
+            _dict['data'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OrderRefundRequest from a dict"""
+        """Create an instance of ChargesOrderResponse from a dict"""
         if obj is None:
             return None
 
@@ -83,9 +91,9 @@ class OrderRefundRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "amount": obj.get("amount"),
-            "expires_at": obj.get("expires_at"),
-            "reason": obj.get("reason")
+            "has_more": obj.get("has_more"),
+            "object": obj.get("object"),
+            "data": [ChargesOrderResponseAllOfData.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj
 

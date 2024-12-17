@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,16 +29,18 @@ class PaymentMethodCash(BaseModel):
     """ # noqa: E501
     type: Optional[StrictStr] = None
     object: StrictStr
+    agreement: Optional[StrictStr] = Field(default=None, description="Agreement ID")
     auth_code: Optional[StrictInt] = None
     cashier_id: Optional[StrictStr] = None
     reference: Optional[StrictStr] = None
     barcode_url: Optional[StrictStr] = None
     expires_at: Optional[StrictInt] = None
+    product_type: Optional[StrictStr] = Field(default=None, description="Product type, e.g. bbva_cash_in, cash_in, pespay_cash_in, etc.")
     service_name: Optional[StrictStr] = None
     store: Optional[StrictStr] = None
     store_name: Optional[StrictStr] = None
     customer_ip_address: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "object", "auth_code", "cashier_id", "reference", "barcode_url", "expires_at", "service_name", "store", "store_name", "customer_ip_address"]
+    __properties: ClassVar[List[str]] = ["type", "object", "agreement", "auth_code", "cashier_id", "reference", "barcode_url", "expires_at", "product_type", "service_name", "store", "store_name", "customer_ip_address"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,11 +110,13 @@ class PaymentMethodCash(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "object": obj.get("object"),
+            "agreement": obj.get("agreement"),
             "auth_code": obj.get("auth_code"),
             "cashier_id": obj.get("cashier_id"),
             "reference": obj.get("reference"),
             "barcode_url": obj.get("barcode_url"),
             "expires_at": obj.get("expires_at"),
+            "product_type": obj.get("product_type"),
             "service_name": obj.get("service_name"),
             "store": obj.get("store"),
             "store_name": obj.get("store_name"),
