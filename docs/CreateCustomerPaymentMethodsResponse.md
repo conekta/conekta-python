@@ -10,9 +10,10 @@ Name | Type | Description | Notes
 **object** | **str** |  | 
 **created_at** | **int** |  | 
 **parent_id** | **str** |  | [optional] 
+**agreements** | [**List[PaymentMethodCashResponseAllOfAgreements]**](PaymentMethodCashResponseAllOfAgreements.md) |  | [optional] 
 **reference** | **str** |  | [optional] 
 **barcode** | **str** |  | [optional] 
-**barcode_url** | **str** |  | [optional] 
+**barcode_url** | **str** | URL to the barcode image, reference is the same as barcode | [optional] 
 **expires_at** | **str** |  | [optional] 
 **provider** | **str** |  | [optional] 
 **last4** | **str** |  | [optional] 

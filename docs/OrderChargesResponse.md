@@ -1,4 +1,4 @@
-# OrderResponseCharges
+# OrderChargesResponse
 
 The charges associated with the order
 
@@ -13,19 +13,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from conekta.models.order_response_charges import OrderResponseCharges
+from conekta.models.order_charges_response import OrderChargesResponse
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of OrderResponseCharges from a JSON string
-order_response_charges_instance = OrderResponseCharges.from_json(json)
+# create an instance of OrderChargesResponse from a JSON string
+order_charges_response_instance = OrderChargesResponse.from_json(json)
 # print the JSON string representation of the object
-print(OrderResponseCharges.to_json())
+print(OrderChargesResponse.to_json())
 
 # convert the object into a dict
-order_response_charges_dict = order_response_charges_instance.to_dict()
-# create an instance of OrderResponseCharges from a dict
-order_response_charges_from_dict = OrderResponseCharges.from_dict(order_response_charges_dict)
+order_charges_response_dict = order_charges_response_instance.to_dict()
+# create an instance of OrderChargesResponse from a dict
+order_charges_response_from_dict = OrderChargesResponse.from_dict(order_charges_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

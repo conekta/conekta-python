@@ -6,16 +6,14 @@ webhooks model
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**deleted** | **bool** |  | [optional] 
-**development_enabled** | **bool** |  | [optional] 
-**id** | **str** |  | [optional] 
-**livemode** | **bool** |  | [optional] 
-**object** | **str** |  | [optional] 
-**production_enabled** | **bool** |  | [optional] 
-**status** | **str** |  | [optional] 
-**subscribed_events** | **List[str]** |  | [optional] 
-**synchronous** | **bool** |  | [optional] 
-**url** | **str** |  | [optional] 
+**id** | **str** | id of the webhook | [optional] 
+**description** | **str** | A name or brief explanation of what this webhook is used for | [optional] 
+**livemode** | **bool** | Indicates if the webhook is in production | [optional] 
+**active** | **bool** | Indicates if the webhook is actived or not | [optional] 
+**object** | **str** | Object name, value is &#39;webhook&#39; | [optional] 
+**status** | **str** | Indicates if the webhook is ready to receive events or failing | [optional] 
+**subscribed_events** | **List[str]** | lists the events that will be sent to the webhook | [optional] 
+**url** | **str** | url or endpoint of the webhook | [optional] 
 
 ## Example
 

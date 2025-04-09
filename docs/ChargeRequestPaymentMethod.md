@@ -6,6 +6,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Type of payment method | 
+**cancel_url** | **str** | URL to redirect the customer after a canceled payment | 
+**can_not_expire** | **bool** | Indicates if the payment method can not expire | 
+**failure_url** | **str** | URL to redirect the customer after a failed payment | 
+**product_type** | **str** | Product type of the payment method, use for the payment method to know the product type | 
+**success_url** | **str** | URL to redirect the customer after a successful payment | 
 **cvc** | **str** | Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants | 
 **exp_month** | **str** | Card expiration month | 
 **exp_year** | **str** | Card expiration year | 

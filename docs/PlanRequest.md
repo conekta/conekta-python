@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **interval** | **str** | The interval of time between each charge. | 
 **name** | **str** | The name of the plan. | 
 **trial_period_days** | **int** | The number of days the customer will have a free trial. | [optional] 
+**max_retries** | **int** | (optional) Specifies the maximum number of retry attempts for a subscription payment before it is canceled. | [optional] 
+**retry_delay_hours** | **int** | (optional)  Defines the number of hours between subscription payment retry attempts. | [optional] 
 
 ## Example
 

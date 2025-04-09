@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 
@@ -172,7 +172,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 
