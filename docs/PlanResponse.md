@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **object** | **str** |  | [optional] 
 **trial_period_days** | **int** |  | [optional] 
+**max_retries** | **int** |  | [optional] 
+**retry_delay_hours** | **int** |  | [optional] 
 
 ## Example
 

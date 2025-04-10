@@ -5,7 +5,7 @@ clean:
 	rm -rf ./dist
 
 python:
-	rm -rf docs && \
+	rm -rf docs && rm -rf test && \
 	rm -rf conekta/models && \
 	docker run --rm \
     -v ${PWD}:/local openapitools/openapi-generator-cli:v7.9.0 generate \

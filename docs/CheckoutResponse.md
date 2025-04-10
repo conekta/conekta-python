@@ -6,7 +6,7 @@ checkout response
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**allowed_payment_methods** | **List[str]** |  | [optional] 
+**allowed_payment_methods** | **List[str]** | Are the payment methods available for this link | [optional] 
 **can_not_expire** | **bool** |  | [optional] 
 **emails_sent** | **int** |  | [optional] 
 **exclude_card_networks** | **List[object]** |  | [optional] 

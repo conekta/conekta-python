@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_event**](EventsApi.md#get_event) | **GET** /events/{id} | Get Event
 [**get_events**](EventsApi.md#get_events) | **GET** /events | Get list of Events
-[**resend_event**](EventsApi.md#resend_event) | **POST** /events/{event_id}/webhook_logs/{webhook_log_id}/resend | Resend Event
+[**resend_event**](EventsApi.md#resend_event) | **POST** /events/{event_id}/resend | Resend Event
 
 
 # **get_event**
@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 
@@ -183,11 +183,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resend_event**
-> EventsResendResponse resend_event(event_id, webhook_log_id, accept_language=accept_language)
+> EventsResendResponse resend_event(event_id, resend_request, accept_language=accept_language)
 
 Resend Event
 
-Try to send an event
+Resend event to selected webhooks
 
 ### Example
 
@@ -196,6 +196,7 @@ Try to send an event
 ```python
 import conekta
 from conekta.models.events_resend_response import EventsResendResponse
+from conekta.models.resend_request import ResendRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -220,12 +221,12 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.EventsApi(api_client)
     event_id = '6463d6e35a4c3e001819e760' # str | event identifier
-    webhook_log_id = 'webhl_2tsv6NzWJHBWCkqGt' # str | webhook log identifier
+    resend_request = conekta.ResendRequest() # ResendRequest | requested fields for resend an event
     accept_language = es # str | Use for knowing which language to use (optional) (default to es)
 
     try:
         # Resend Event
-        api_response = api_instance.resend_event(event_id, webhook_log_id, accept_language=accept_language)
+        api_response = api_instance.resend_event(event_id, resend_request, accept_language=accept_language)
         print("The response of EventsApi->resend_event:\n")
         pprint(api_response)
     except Exception as e:
@@ -240,7 +241,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **event_id** | **str**| event identifier | 
- **webhook_log_id** | **str**| webhook log identifier | 
+ **resend_request** | [**ResendRequest**](ResendRequest.md)| requested fields for resend an event | 
  **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
 
 ### Return type
@@ -253,8 +254,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/vnd.conekta-v2.1.0+json
+ - **Content-Type**: application/json
+ - **Accept**: application/vnd.conekta-v2.2.0+json
 
 ### HTTP response details
 

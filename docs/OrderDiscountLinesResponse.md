@@ -1,4 +1,4 @@
-# OrderResponseDiscountLines
+# OrderDiscountLinesResponse
 
 
 ## Properties
@@ -12,19 +12,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from conekta.models.order_response_discount_lines import OrderResponseDiscountLines
+from conekta.models.order_discount_lines_response import OrderDiscountLinesResponse
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of OrderResponseDiscountLines from a JSON string
-order_response_discount_lines_instance = OrderResponseDiscountLines.from_json(json)
+# create an instance of OrderDiscountLinesResponse from a JSON string
+order_discount_lines_response_instance = OrderDiscountLinesResponse.from_json(json)
 # print the JSON string representation of the object
-print(OrderResponseDiscountLines.to_json())
+print(OrderDiscountLinesResponse.to_json())
 
 # convert the object into a dict
-order_response_discount_lines_dict = order_response_discount_lines_instance.to_dict()
-# create an instance of OrderResponseDiscountLines from a dict
-order_response_discount_lines_from_dict = OrderResponseDiscountLines.from_dict(order_response_discount_lines_dict)
+order_discount_lines_response_dict = order_discount_lines_response_instance.to_dict()
+# create an instance of OrderDiscountLinesResponse from a dict
+order_discount_lines_response_from_dict = OrderDiscountLinesResponse.from_dict(order_discount_lines_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
