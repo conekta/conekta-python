@@ -74,7 +74,7 @@ class ApiClient:
       'lang': 'python',
       'lang_version': platform.python_version(),
       'publisher': 'conekta',
-      'bindings_version': '6.0.4',
+      'bindings_version': '7.0.0',
       'uname': platform.uname()
     }
     _pool = None
@@ -97,7 +97,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'Conekta/v2 PythonBindings/6.0.4'
+        self.user_agent = 'Conekta/v2 PythonBindings/7.0.0'
         self.conekta_user_agent = json.dumps(self.data)
         self.client_side_validation = configuration.client_side_validation
 

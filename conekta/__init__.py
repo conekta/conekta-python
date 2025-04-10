@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.0.4"
+__version__ = "7.0.0"
 
 # import apis into sdk package
 from conekta.api.antifraud_api import AntifraudApi
