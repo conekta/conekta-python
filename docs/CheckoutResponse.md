@@ -7,6 +7,7 @@ checkout response
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed_payment_methods** | **List[str]** | Are the payment methods available for this link | [optional] 
+**plan_ids** | **List[str]** | List of plan IDs that are available for subscription | [optional] 
 **can_not_expire** | **bool** |  | [optional] 
 **emails_sent** | **int** |  | [optional] 
 **exclude_card_networks** | **List[object]** |  | [optional] 
