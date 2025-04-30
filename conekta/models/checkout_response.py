@@ -28,6 +28,7 @@ class CheckoutResponse(BaseModel):
     checkout response
     """ # noqa: E501
     allowed_payment_methods: Optional[List[StrictStr]] = Field(default=None, description="Are the payment methods available for this link")
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="List of plan IDs that are available for subscription")
     can_not_expire: Optional[StrictBool] = None
     emails_sent: Optional[StrictInt] = None
     exclude_card_networks: Optional[List[Dict[str, Any]]] = None
@@ -52,7 +53,7 @@ class CheckoutResponse(BaseModel):
     success_url: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
     url: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "paid_payments_count", "payments_limit_count", "recurrent", "slug", "sms_sent", "starts_at", "status", "success_url", "type", "url"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "plan_ids", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "paid_payments_count", "payments_limit_count", "recurrent", "slug", "sms_sent", "starts_at", "status", "success_url", "type", "url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -111,6 +112,7 @@ class CheckoutResponse(BaseModel):
 
         _obj = cls.model_validate({
             "allowed_payment_methods": obj.get("allowed_payment_methods"),
+            "plan_ids": obj.get("plan_ids"),
             "can_not_expire": obj.get("can_not_expire"),
             "emails_sent": obj.get("emails_sent"),
             "exclude_card_networks": obj.get("exclude_card_networks"),

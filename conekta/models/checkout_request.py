@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,7 +27,8 @@ class CheckoutRequest(BaseModel):
     """
     [Checkout](https://developers.conekta.com/v2.2.0/reference/payment-link) details 
     """ # noqa: E501
-    allowed_payment_methods: List[StrictStr] = Field(description="Are the payment methods available for this link")
+    allowed_payment_methods: List[StrictStr] = Field(description="Are the payment methods available for this link. For subscriptions, only 'card' is allowed due to the recurring nature of the payments.")
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="List of plan IDs that will be available for subscription. This field is required for subscription payments.")
     expires_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp of checkout expiration")
     failure_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of failed payment, applies only to HostedPayment.")
     monthly_installments_enabled: Optional[StrictBool] = None
@@ -38,7 +39,15 @@ class CheckoutRequest(BaseModel):
     redirection_time: Optional[StrictInt] = Field(default=None, description="number of seconds to wait before redirecting to the success_url")
     success_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of successful payment, applies only to HostedPayment")
     type: Optional[StrictStr] = Field(default=None, description="This field represents the type of checkout")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "max_failed_retries", "name", "on_demand_enabled", "redirection_time", "success_url", "type"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "plan_ids", "expires_at", "failure_url", "monthly_installments_enabled", "monthly_installments_options", "max_failed_retries", "name", "on_demand_enabled", "redirection_time", "success_url", "type"]
+
+    @field_validator('allowed_payment_methods')
+    def allowed_payment_methods_validate_enum(cls, value):
+        """Validates the enum"""
+        for i in value:
+            if i not in set(['cash', 'card', 'bank_transfer', 'bnpl']):
+                raise ValueError("each list item must be one of ('cash', 'card', 'bank_transfer', 'bnpl')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,6 +101,7 @@ class CheckoutRequest(BaseModel):
 
         _obj = cls.model_validate({
             "allowed_payment_methods": obj.get("allowed_payment_methods"),
+            "plan_ids": obj.get("plan_ids"),
             "expires_at": obj.get("expires_at"),
             "failure_url": obj.get("failure_url"),
             "monthly_installments_enabled": obj.get("monthly_installments_enabled"),

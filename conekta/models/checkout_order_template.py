@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from conekta.models.checkout_order_template_customer_info import CheckoutOrderTemplateCustomerInfo
@@ -33,8 +33,9 @@ class CheckoutOrderTemplate(BaseModel):
     currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="It is the currency in which the order will be created. It must be a valid ISO 4217 currency code.")
     customer_info: Optional[CheckoutOrderTemplateCustomerInfo] = None
     line_items: List[Product] = Field(description="They are the products to buy. Each contains the \"unit price\" and \"quantity\" parameters that are used to calculate the total amount of the order.")
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="It is a list of plan IDs that will be associated with the order.")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a set of key-value pairs that you can attach to the order. It can be used to store additional information about the order in a structured format.")
-    __properties: ClassVar[List[str]] = ["currency", "customer_info", "line_items", "metadata"]
+    __properties: ClassVar[List[str]] = ["currency", "customer_info", "line_items", "plan_ids", "metadata"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,6 +101,7 @@ class CheckoutOrderTemplate(BaseModel):
             "currency": obj.get("currency"),
             "customer_info": CheckoutOrderTemplateCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
             "line_items": [Product.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
+            "plan_ids": obj.get("plan_ids"),
             "metadata": obj.get("metadata")
         })
         return _obj
