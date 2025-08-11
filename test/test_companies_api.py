@@ -27,6 +27,13 @@ class TestCompaniesApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_create_company(self) -> None:
+        """Test case for create_company
+
+        Create Company
+        """
+        pass
+
     def test_get_companies(self) -> None:
         """Test case for get_companies
 
@@ -38,6 +45,27 @@ class TestCompaniesApi(unittest.TestCase):
         """Test case for get_company
 
         Get Company
+        """
+        pass
+
+    def test_get_company_documents(self) -> None:
+        """Test case for get_company_documents
+
+        Get Company Documents
+        """
+        pass
+
+    def test_update_company_document(self) -> None:
+        """Test case for update_company_document
+
+        Update Company Document
+        """
+        pass
+
+    def test_upload_company_document(self) -> None:
+        """Test case for upload_company_document
+
+        Upload Company Document
         """
         pass
 

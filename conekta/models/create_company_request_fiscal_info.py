@@ -18,35 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CompanyFiscalInfoAddressResponse(BaseModel):
+class CreateCompanyRequestFiscalInfo(BaseModel):
     """
-    Company fiscal info address model
+    Fiscal information for the company.
     """ # noqa: E501
-    object: Optional[StrictStr] = Field(default=None, description="The resource's type")
-    street1: Optional[StrictStr] = Field(default=None, description="Street Address")
-    street2: Optional[StrictStr] = Field(default=None, description="Colonia")
-    city: Optional[StrictStr] = Field(default=None, description="City")
-    state: Optional[StrictStr] = Field(default=None, description="State")
-    country: Optional[StrictStr] = Field(default=None, description="Country")
-    postal_code: Optional[StrictStr] = Field(default=None, description="Postal code")
-    external_number: Optional[StrictStr] = Field(default=None, description="Street number")
-    internal_number: Optional[StrictStr] = Field(default=None, description="Unit / apartment number")
-    __properties: ClassVar[List[str]] = ["object", "street1", "street2", "city", "state", "country", "postal_code", "external_number", "internal_number"]
-
-    @field_validator('object')
-    def object_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['address']):
-            raise ValueError("must be one of enum values ('address')")
-        return value
+    business_phone: Optional[StrictStr] = Field(default=None, description="The business phone number for fiscal purposes.")
+    fiscal_type: Optional[StrictStr] = Field(default=None, description="The fiscal type of the company (e.g., 'moral', 'persona_fisica').")
+    __properties: ClassVar[List[str]] = ["business_phone", "fiscal_type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -66,7 +49,7 @@ class CompanyFiscalInfoAddressResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompanyFiscalInfoAddressResponse from a JSON string"""
+        """Create an instance of CreateCompanyRequestFiscalInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,7 +74,7 @@ class CompanyFiscalInfoAddressResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompanyFiscalInfoAddressResponse from a dict"""
+        """Create an instance of CreateCompanyRequestFiscalInfo from a dict"""
         if obj is None:
             return None
 
@@ -99,15 +82,8 @@ class CompanyFiscalInfoAddressResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "object": obj.get("object"),
-            "street1": obj.get("street1"),
-            "street2": obj.get("street2"),
-            "city": obj.get("city"),
-            "state": obj.get("state"),
-            "country": obj.get("country"),
-            "postal_code": obj.get("postal_code"),
-            "external_number": obj.get("external_number"),
-            "internal_number": obj.get("internal_number")
+            "business_phone": obj.get("business_phone"),
+            "fiscal_type": obj.get("fiscal_type")
         })
         return _obj
 

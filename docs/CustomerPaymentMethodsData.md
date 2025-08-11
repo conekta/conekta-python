@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **default** | **bool** |  | [optional] 
 **visible_on_checkout** | **bool** |  | [optional] 
 **payment_source_status** | **str** |  | [optional] 
+**bank** | **str** | Bank name for the SPEI payment method | [optional] 
 
 ## Example
 

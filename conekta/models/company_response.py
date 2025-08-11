@@ -18,36 +18,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.company_fiscal_info_response import CompanyFiscalInfoResponse
-from conekta.models.company_payout_destination_response import CompanyPayoutDestinationResponse
+from conekta.models.company_response_documents_inner import CompanyResponseDocumentsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
 class CompanyResponse(BaseModel):
     """
-    Company model
+    CompanyResponse
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="The child company's unique identifier")
-    created_at: Optional[StrictInt] = Field(default=None, description="The resource's creation date (unix timestamp)")
-    name: Optional[StrictStr] = Field(default=None, description="The child company's name")
-    object: Optional[StrictStr] = Field(default=None, description="The resource's type")
-    parent_company_id: Optional[StrictStr] = Field(default=None, description="Id of the parent company")
-    use_parent_fiscal_data: Optional[StrictBool] = Field(default=None, description="Whether the parent company's fiscal data is to be used for liquidation and tax purposes")
-    payout_destination: Optional[CompanyPayoutDestinationResponse] = None
-    fiscal_info: Optional[CompanyFiscalInfoResponse] = None
-    __properties: ClassVar[List[str]] = ["id", "created_at", "name", "object", "parent_company_id", "use_parent_fiscal_data", "payout_destination", "fiscal_info"]
-
-    @field_validator('object')
-    def object_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['company']):
-            raise ValueError("must be one of enum values ('company')")
-        return value
+    id: StrictStr = Field(description="The unique identifier for the company.")
+    name: StrictStr = Field(description="The name of the company.")
+    active: StrictBool = Field(description="Indicates if the company is active.")
+    account_status: StrictStr = Field(description="The current status of the company's account.")
+    parent_company_id: Optional[StrictStr] = Field(default=None, description="The identifier of the parent company, if any.")
+    onboarding_status: StrictStr = Field(description="The current status of the company's onboarding process.")
+    documents: List[CompanyResponseDocumentsInner] = Field(description="A list of documents related to the company.")
+    created_at: StrictInt = Field(description="Timestamp of when the company was created.")
+    object: StrictStr = Field(description="The type of object, typically \"company\".")
+    __properties: ClassVar[List[str]] = ["id", "name", "active", "account_status", "parent_company_id", "onboarding_status", "documents", "created_at", "object"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,12 +78,18 @@ class CompanyResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of payout_destination
-        if self.payout_destination:
-            _dict['payout_destination'] = self.payout_destination.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of fiscal_info
-        if self.fiscal_info:
-            _dict['fiscal_info'] = self.fiscal_info.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in documents (list)
+        _items = []
+        if self.documents:
+            for _item_documents in self.documents:
+                if _item_documents:
+                    _items.append(_item_documents.to_dict())
+            _dict['documents'] = _items
+        # set to None if parent_company_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.parent_company_id is None and "parent_company_id" in self.model_fields_set:
+            _dict['parent_company_id'] = None
+
         return _dict
 
     @classmethod
@@ -107,13 +103,14 @@ class CompanyResponse(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "created_at": obj.get("created_at"),
             "name": obj.get("name"),
-            "object": obj.get("object"),
+            "active": obj.get("active"),
+            "account_status": obj.get("account_status"),
             "parent_company_id": obj.get("parent_company_id"),
-            "use_parent_fiscal_data": obj.get("use_parent_fiscal_data"),
-            "payout_destination": CompanyPayoutDestinationResponse.from_dict(obj["payout_destination"]) if obj.get("payout_destination") is not None else None,
-            "fiscal_info": CompanyFiscalInfoResponse.from_dict(obj["fiscal_info"]) if obj.get("fiscal_info") is not None else None
+            "onboarding_status": obj.get("onboarding_status"),
+            "documents": [CompanyResponseDocumentsInner.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None,
+            "created_at": obj.get("created_at"),
+            "object": obj.get("object")
         })
         return _obj
 

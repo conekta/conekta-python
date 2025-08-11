@@ -1,19 +1,19 @@
 # CompanyResponse
 
-Company model
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | The child company&#39;s unique identifier | [optional] 
-**created_at** | **int** | The resource&#39;s creation date (unix timestamp) | [optional] 
-**name** | **str** | The child company&#39;s name | [optional] 
-**object** | **str** | The resource&#39;s type | [optional] 
-**parent_company_id** | **str** | Id of the parent company | [optional] 
-**use_parent_fiscal_data** | **bool** | Whether the parent company&#39;s fiscal data is to be used for liquidation and tax purposes | [optional] 
-**payout_destination** | [**CompanyPayoutDestinationResponse**](CompanyPayoutDestinationResponse.md) |  | [optional] 
-**fiscal_info** | [**CompanyFiscalInfoResponse**](CompanyFiscalInfoResponse.md) |  | [optional] 
+**id** | **str** | The unique identifier for the company. | 
+**name** | **str** | The name of the company. | 
+**active** | **bool** | Indicates if the company is active. | 
+**account_status** | **str** | The current status of the company&#39;s account. | 
+**parent_company_id** | **str** | The identifier of the parent company, if any. | [optional] 
+**onboarding_status** | **str** | The current status of the company&#39;s onboarding process. | 
+**documents** | [**List[CompanyResponseDocumentsInner]**](CompanyResponseDocumentsInner.md) | A list of documents related to the company. | 
+**created_at** | **int** | Timestamp of when the company was created. | 
+**object** | **str** | The type of object, typically \&quot;company\&quot;. | 
 
 ## Example
 
