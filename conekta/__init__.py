@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "7.0.1"
+__version__ = "7.0.2"
 
 # import apis into sdk package
 from conekta.api.antifraud_api import AntifraudApi
@@ -82,10 +82,14 @@ from conekta.models.checkout_order_template_customer_info import CheckoutOrderTe
 from conekta.models.checkout_request import CheckoutRequest
 from conekta.models.checkout_response import CheckoutResponse
 from conekta.models.checkouts_response import CheckoutsResponse
-from conekta.models.company_fiscal_info_address_response import CompanyFiscalInfoAddressResponse
-from conekta.models.company_fiscal_info_response import CompanyFiscalInfoResponse
-from conekta.models.company_payout_destination_response import CompanyPayoutDestinationResponse
+from conekta.models.company_document_request import CompanyDocumentRequest
+from conekta.models.company_document_response import CompanyDocumentResponse
 from conekta.models.company_response import CompanyResponse
+from conekta.models.company_response_documents_inner import CompanyResponseDocumentsInner
+from conekta.models.create_company_request import CreateCompanyRequest
+from conekta.models.create_company_request_bank_account_info import CreateCompanyRequestBankAccountInfo
+from conekta.models.create_company_request_comercial_info import CreateCompanyRequestComercialInfo
+from conekta.models.create_company_request_fiscal_info import CreateCompanyRequestFiscalInfo
 from conekta.models.create_customer_fiscal_entities_response import CreateCustomerFiscalEntitiesResponse
 from conekta.models.create_customer_payment_methods_request import CreateCustomerPaymentMethodsRequest
 from conekta.models.create_customer_payment_methods_response import CreateCustomerPaymentMethodsResponse

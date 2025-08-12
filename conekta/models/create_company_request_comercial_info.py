@@ -18,24 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PaymentMethodSpeiRecurrent(BaseModel):
+class CreateCompanyRequestComercialInfo(BaseModel):
     """
-    PaymentMethodSpeiRecurrent
+    Commercial information for the company.
     """ # noqa: E501
-    type: StrictStr
-    id: StrictStr
-    object: StrictStr
-    created_at: StrictInt
-    parent_id: Optional[StrictStr] = None
-    bank: Optional[StrictStr] = Field(default=None, description="Bank name for the SPEI payment method")
-    reference: Optional[StrictStr] = None
-    expires_at: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "id", "object", "created_at", "parent_id", "bank", "reference", "expires_at"]
+    website: Optional[StrictStr] = Field(default=None, description="The company's website URL.")
+    mcc: Optional[StrictStr] = Field(default=None, description="The Merchant Category Code (MCC) for the company.")
+    merchant_support_email: Optional[StrictStr] = Field(default=None, description="Email address for merchant support.")
+    merchant_support_phone: Optional[StrictStr] = Field(default=None, description="Phone number for merchant support.")
+    __properties: ClassVar[List[str]] = ["website", "mcc", "merchant_support_email", "merchant_support_phone"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +51,7 @@ class PaymentMethodSpeiRecurrent(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaymentMethodSpeiRecurrent from a JSON string"""
+        """Create an instance of CreateCompanyRequestComercialInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,7 +76,7 @@ class PaymentMethodSpeiRecurrent(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaymentMethodSpeiRecurrent from a dict"""
+        """Create an instance of CreateCompanyRequestComercialInfo from a dict"""
         if obj is None:
             return None
 
@@ -88,14 +84,10 @@ class PaymentMethodSpeiRecurrent(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "type": obj.get("type"),
-            "id": obj.get("id"),
-            "object": obj.get("object"),
-            "created_at": obj.get("created_at"),
-            "parent_id": obj.get("parent_id"),
-            "bank": obj.get("bank"),
-            "reference": obj.get("reference"),
-            "expires_at": obj.get("expires_at")
+            "website": obj.get("website"),
+            "mcc": obj.get("mcc"),
+            "merchant_support_email": obj.get("merchant_support_email"),
+            "merchant_support_phone": obj.get("merchant_support_phone")
         })
         return _obj
 

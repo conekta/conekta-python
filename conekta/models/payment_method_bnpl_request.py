@@ -38,8 +38,8 @@ class PaymentMethodBnplRequest(BaseModel):
     @field_validator('product_type')
     def product_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['klarna_bnpl', 'creditea_bnpl']):
-            raise ValueError("must be one of enum values ('klarna_bnpl', 'creditea_bnpl')")
+        if value not in set(['aplazo_bnpl', 'creditea_bnpl']):
+            raise ValueError("must be one of enum values ('aplazo_bnpl', 'creditea_bnpl')")
         return value
 
     model_config = ConfigDict(
