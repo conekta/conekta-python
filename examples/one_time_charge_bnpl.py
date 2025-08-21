@@ -29,11 +29,11 @@ with conekta.ApiClient(configuration) as api_client:
             )
         ],
         customer_info=conekta.OrderRequestCustomerInfo(
-           conekta.CustomerInfo(
-               name='John Doe',
-               email='john.doe@example.com',
-               phone='555-555-5555'
-           )
+            conekta.CustomerInfo(
+                name='John Doe',
+                email='john.doe@example.com',
+                phone='555-555-5555'
+            )
         ),
         currency='MXN',
         charges=[ 
@@ -55,8 +55,12 @@ with conekta.ApiClient(configuration) as api_client:
 
     try:
         # Create order
-        api_response = api_instance.create_order(order, accept_language=accept_language)
+        response = api_instance.create_order(order, accept_language=accept_language)
         print("The response of OrdersApi->create_order:\n")
-        pprint(api_response)
+        pprint(response)
+        pprint("order id", response.id)
+        pprint("redirect_url", response.charges.data[0].payment_method.actual_instance.redirect_url)
+        pprint("type",  response.charges.data[0].payment_method.actual_instance.type)
     except ApiException as e:
         print("Exception when calling OrdersApi->create_order: %s\n" % e)
+        
