@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **agreement** | **str** | Agreement ID | [optional] 
 **auth_code** | **str** |  | [optional] 
 **cashier_id** | **str** |  | [optional] 
-**reference** | **str** |  | [optional] 
+**reference** | **str** | Reference for the payment | 
 **barcode_url** | **str** |  | [optional] 
 **expires_at** | **int** | Expiration date of the charge | 
 **product_type** | **str** | Product type of the charge | 
@@ -45,8 +45,9 @@ Name | Type | Description | Notes
 **tracking_code** | **str** |  | [optional] 
 **cancel_url** | **str** | URL to redirect the customer after a canceled payment | [optional] 
 **failure_url** | **str** | URL to redirect the customer after a failed payment | [optional] 
-**redirect_url** | **str** | URL to redirect the customer to complete the payment | [optional] 
+**redirect_url** | **str** | URL to redirect the customer to complete the payment | 
 **success_url** | **str** | URL to redirect the customer after a successful payment | [optional] 
+**deep_link** | **str** | Deep link for the payment, use for mobile apps/flows | 
 
 ## Example
 

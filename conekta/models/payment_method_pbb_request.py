@@ -18,19 +18,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UpdatePaymentMethods(BaseModel):
+class PaymentMethodPbbRequest(BaseModel):
     """
-    UpdatePaymentMethods
+    PaymentMethodPbbRequest
     """ # noqa: E501
-    name: Optional[StrictStr] = Field(default=None, description="The name of the payment method holder")
-    expires_at: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(default=None, description="The expiration date of the payment method in Unix timestamp format")
-    __properties: ClassVar[List[str]] = ["name", "expires_at"]
+    type: StrictStr = Field(description="Type of the payment method")
+    expires_at: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="Expiration date of the payment method, in Unix timestamp format")
+    product_type: StrictStr = Field(description="Product type of the payment method, use for the payment method to know the product type")
+    __properties: ClassVar[List[str]] = ["type", "expires_at", "product_type"]
+
+    @field_validator('product_type')
+    def product_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['bbva_pay_by_bank']):
+            raise ValueError("must be one of enum values ('bbva_pay_by_bank')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +58,7 @@ class UpdatePaymentMethods(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UpdatePaymentMethods from a JSON string"""
+        """Create an instance of PaymentMethodPbbRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +83,7 @@ class UpdatePaymentMethods(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UpdatePaymentMethods from a dict"""
+        """Create an instance of PaymentMethodPbbRequest from a dict"""
         if obj is None:
             return None
 
@@ -83,8 +91,9 @@ class UpdatePaymentMethods(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "name": obj.get("name"),
-            "expires_at": obj.get("expires_at")
+            "type": obj.get("type"),
+            "expires_at": obj.get("expires_at"),
+            "product_type": obj.get("product_type")
         })
         return _obj
 

@@ -24,13 +24,18 @@ from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UpdatePaymentMethods(BaseModel):
+class PaymentMethodPbbPayment(BaseModel):
     """
-    UpdatePaymentMethods
+    PaymentMethodPbbPayment
     """ # noqa: E501
-    name: Optional[StrictStr] = Field(default=None, description="The name of the payment method holder")
-    expires_at: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(default=None, description="The expiration date of the payment method in Unix timestamp format")
-    __properties: ClassVar[List[str]] = ["name", "expires_at"]
+    type: Optional[StrictStr] = None
+    object: StrictStr
+    deep_link: StrictStr = Field(description="Deep link for the payment, use for mobile apps/flows")
+    expires_at: Annotated[int, Field(strict=True, gt=0)] = Field(description="Expiration date of the charge")
+    product_type: StrictStr = Field(description="Product type of the charge")
+    redirect_url: StrictStr = Field(description="URL to redirect the customer to complete the payment")
+    reference: StrictStr = Field(description="Reference for the payment")
+    __properties: ClassVar[List[str]] = ["type", "object", "deep_link", "expires_at", "product_type", "redirect_url", "reference"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +55,7 @@ class UpdatePaymentMethods(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UpdatePaymentMethods from a JSON string"""
+        """Create an instance of PaymentMethodPbbPayment from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +80,7 @@ class UpdatePaymentMethods(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UpdatePaymentMethods from a dict"""
+        """Create an instance of PaymentMethodPbbPayment from a dict"""
         if obj is None:
             return None
 
@@ -83,8 +88,13 @@ class UpdatePaymentMethods(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "name": obj.get("name"),
-            "expires_at": obj.get("expires_at")
+            "type": obj.get("type"),
+            "object": obj.get("object"),
+            "deep_link": obj.get("deep_link"),
+            "expires_at": obj.get("expires_at"),
+            "product_type": obj.get("product_type"),
+            "redirect_url": obj.get("redirect_url"),
+            "reference": obj.get("reference")
         })
         return _obj
 
