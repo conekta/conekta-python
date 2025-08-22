@@ -36,21 +36,36 @@ with conekta.ApiClient(configuration) as api_client:
             )
         ),
         currency='MXN',
-        charges=[ 
+        shipping_lines= [
+            conekta.ShippingRequest(
+                amount= 500,
+                carrier= "fedex",
+                method= "phisical",
+                tracking_number= "aaxxx-xxx"
+            ),
+        ],
+        shipping_contact= conekta.CustomerShippingContacts(
+            address= conekta.CustomerShippingContactsAddress(
+                    street1= "av viva mex",
+                    postal_code= "01600",
+                    city="cdmx",
+                    country= "mx",
+                    state= "cdmx"
+            ),
+            receiver= "fran carrero"
+        ),
+        charges=[
             conekta.ChargeRequest(
                 payment_method=conekta.ChargeRequestPaymentMethod(
-                   conekta.PaymentMethodBnplRequest(
-                        product_type='aplazo_bnpl',
-                        type= 'bnpl',
-                        success_url= 'https://www.example.com/success',
-                        failure_url= 'https://www.example.com/failure',
-                        cancel_url= 'https://www.example.com/cancel',
-                    )
+                  conekta.PaymentMethodPbbRequest(
+                          product_type='bbva_pay_by_bank',
+                          type= 'pay_by_bank'
+                    ),
                 )
             )
         ]
 
-    ) 
+    )
     accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
@@ -58,9 +73,9 @@ with conekta.ApiClient(configuration) as api_client:
         response = api_instance.create_order(order, accept_language=accept_language)
         print("The response of OrdersApi->create_order:\n")
         pprint(response)
-        pprint("order id", response.id)
-        pprint("redirect_url", response.charges.data[0].payment_method.actual_instance.redirect_url)
-        pprint("type",  response.charges.data[0].payment_method.actual_instance.type)
+        pprint(f"order id: {response.id}")
+        print("redirect_url", response.charges.data[0].payment_method.actual_instance.redirect_url)
+        print("redirect_url", response.charges.data[0].payment_method.actual_instance.deep_link)
+        print("type",  response.charges.data[0].payment_method.actual_instance.type)
     except ApiException as e:
         print("Exception when calling OrdersApi->create_order: %s\n" % e)
-        

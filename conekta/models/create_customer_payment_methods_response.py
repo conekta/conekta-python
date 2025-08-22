@@ -19,13 +19,14 @@ import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
 from conekta.models.payment_method_card_response import PaymentMethodCardResponse
+from conekta.models.payment_method_cash_recurrent_response import PaymentMethodCashRecurrentResponse
 from conekta.models.payment_method_cash_response import PaymentMethodCashResponse
 from conekta.models.payment_method_spei_recurrent import PaymentMethodSpeiRecurrent
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CREATECUSTOMERPAYMENTMETHODSRESPONSE_ONE_OF_SCHEMAS = ["PaymentMethodCardResponse", "PaymentMethodCashResponse", "PaymentMethodSpeiRecurrent"]
+CREATECUSTOMERPAYMENTMETHODSRESPONSE_ONE_OF_SCHEMAS = ["PaymentMethodCardResponse", "PaymentMethodCashRecurrentResponse", "PaymentMethodCashResponse", "PaymentMethodSpeiRecurrent"]
 
 class CreateCustomerPaymentMethodsResponse(BaseModel):
     """
@@ -33,12 +34,14 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
     """
     # data type: PaymentMethodCashResponse
     oneof_schema_1_validator: Optional[PaymentMethodCashResponse] = None
+    # data type: PaymentMethodCashRecurrentResponse
+    oneof_schema_2_validator: Optional[PaymentMethodCashRecurrentResponse] = None
     # data type: PaymentMethodCardResponse
-    oneof_schema_2_validator: Optional[PaymentMethodCardResponse] = None
+    oneof_schema_3_validator: Optional[PaymentMethodCardResponse] = None
     # data type: PaymentMethodSpeiRecurrent
-    oneof_schema_3_validator: Optional[PaymentMethodSpeiRecurrent] = None
-    actual_instance: Optional[Union[PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent]] = None
-    one_of_schemas: Set[str] = { "PaymentMethodCardResponse", "PaymentMethodCashResponse", "PaymentMethodSpeiRecurrent" }
+    oneof_schema_4_validator: Optional[PaymentMethodSpeiRecurrent] = None
+    actual_instance: Optional[Union[PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent]] = None
+    one_of_schemas: Set[str] = { "PaymentMethodCardResponse", "PaymentMethodCashRecurrentResponse", "PaymentMethodCashResponse", "PaymentMethodSpeiRecurrent" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -69,6 +72,11 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodCashResponse`")
         else:
             match += 1
+        # validate data type: PaymentMethodCashRecurrentResponse
+        if not isinstance(v, PaymentMethodCashRecurrentResponse):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodCashRecurrentResponse`")
+        else:
+            match += 1
         # validate data type: PaymentMethodCardResponse
         if not isinstance(v, PaymentMethodCardResponse):
             error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodCardResponse`")
@@ -81,10 +89,10 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -114,14 +122,9 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
             instance.actual_instance = PaymentMethodCashResponse.from_json(json_str)
             return instance
 
-        # check if data type is `PaymentMethodCashResponse`
+        # check if data type is `PaymentMethodCashRecurrentResponse`
         if _data_type == "cash_recurrent":
-            instance.actual_instance = PaymentMethodCashResponse.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodCashResponse`
-        if _data_type == "oxxo_recurrent":
-            instance.actual_instance = PaymentMethodCashResponse.from_json(json_str)
+            instance.actual_instance = PaymentMethodCashRecurrentResponse.from_json(json_str)
             return instance
 
         # check if data type is `PaymentMethodSpeiRecurrent`
@@ -132,6 +135,11 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
         # check if data type is `PaymentMethodCardResponse`
         if _data_type == "payment_method_card_response":
             instance.actual_instance = PaymentMethodCardResponse.from_json(json_str)
+            return instance
+
+        # check if data type is `PaymentMethodCashRecurrentResponse`
+        if _data_type == "payment_method_cash_recurrent_response":
+            instance.actual_instance = PaymentMethodCashRecurrentResponse.from_json(json_str)
             return instance
 
         # check if data type is `PaymentMethodCashResponse`
@@ -150,6 +158,12 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into PaymentMethodCashRecurrentResponse
+        try:
+            instance.actual_instance = PaymentMethodCashRecurrentResponse.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into PaymentMethodCardResponse
         try:
             instance.actual_instance = PaymentMethodCardResponse.from_json(json_str)
@@ -165,10 +179,10 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into CreateCustomerPaymentMethodsResponse with oneOf schemas: PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -182,7 +196,7 @@ class CreateCustomerPaymentMethodsResponse(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodCardResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodCardResponse, PaymentMethodCashRecurrentResponse, PaymentMethodCashResponse, PaymentMethodSpeiRecurrent]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

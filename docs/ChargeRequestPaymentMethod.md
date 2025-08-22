@@ -6,10 +6,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Type of payment method | 
+**expires_at** | **int** | Method expiration date as unix timestamp | [optional] 
+**product_type** | **str** | Product type of the payment method, use for the payment method to know the product type | 
 **cancel_url** | **str** | URL to redirect the customer after a canceled payment | 
 **can_not_expire** | **bool** | Indicates if the payment method can not expire | 
 **failure_url** | **str** | URL to redirect the customer after a failed payment | 
-**product_type** | **str** | Product type of the payment method, use for the payment method to know the product type | 
 **success_url** | **str** | URL to redirect the customer after a successful payment | 
 **cvc** | **str** | Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants | 
 **exp_month** | **str** | Card expiration month | 
@@ -17,7 +18,6 @@ Name | Type | Description | Notes
 **name** | **str** | Cardholder name | 
 **number** | **str** | Card number | 
 **customer_ip_address** | **str** | Optional field used to capture the customer&#39;s IP address for fraud prevention and security monitoring purposes | [optional] 
-**expires_at** | **int** | Method expiration date as unix timestamp | [optional] 
 **monthly_installments** | **int** | How many months without interest to apply, it can be 3, 6, 9, 12 or 18 | [optional] 
 **token_id** | **str** |  | [optional] 
 **payment_source_id** | **str** |  | [optional] 

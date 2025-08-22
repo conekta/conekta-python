@@ -21,24 +21,27 @@ from typing import Any, List, Optional
 from conekta.models.payment_method_bnpl_request import PaymentMethodBnplRequest
 from conekta.models.payment_method_card_request import PaymentMethodCardRequest
 from conekta.models.payment_method_general_request import PaymentMethodGeneralRequest
+from conekta.models.payment_method_pbb_request import PaymentMethodPbbRequest
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CHARGEREQUESTPAYMENTMETHOD_ONE_OF_SCHEMAS = ["PaymentMethodBnplRequest", "PaymentMethodCardRequest", "PaymentMethodGeneralRequest"]
+CHARGEREQUESTPAYMENTMETHOD_ONE_OF_SCHEMAS = ["PaymentMethodBnplRequest", "PaymentMethodCardRequest", "PaymentMethodGeneralRequest", "PaymentMethodPbbRequest"]
 
 class ChargeRequestPaymentMethod(BaseModel):
     """
     ChargeRequestPaymentMethod
     """
+    # data type: PaymentMethodPbbRequest
+    oneof_schema_1_validator: Optional[PaymentMethodPbbRequest] = None
     # data type: PaymentMethodBnplRequest
-    oneof_schema_1_validator: Optional[PaymentMethodBnplRequest] = None
+    oneof_schema_2_validator: Optional[PaymentMethodBnplRequest] = None
     # data type: PaymentMethodCardRequest
-    oneof_schema_2_validator: Optional[PaymentMethodCardRequest] = None
+    oneof_schema_3_validator: Optional[PaymentMethodCardRequest] = None
     # data type: PaymentMethodGeneralRequest
-    oneof_schema_3_validator: Optional[PaymentMethodGeneralRequest] = None
-    actual_instance: Optional[Union[PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest]] = None
-    one_of_schemas: Set[str] = { "PaymentMethodBnplRequest", "PaymentMethodCardRequest", "PaymentMethodGeneralRequest" }
+    oneof_schema_4_validator: Optional[PaymentMethodGeneralRequest] = None
+    actual_instance: Optional[Union[PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest]] = None
+    one_of_schemas: Set[str] = { "PaymentMethodBnplRequest", "PaymentMethodCardRequest", "PaymentMethodGeneralRequest", "PaymentMethodPbbRequest" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -61,6 +64,11 @@ class ChargeRequestPaymentMethod(BaseModel):
         instance = ChargeRequestPaymentMethod.model_construct()
         error_messages = []
         match = 0
+        # validate data type: PaymentMethodPbbRequest
+        if not isinstance(v, PaymentMethodPbbRequest):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodPbbRequest`")
+        else:
+            match += 1
         # validate data type: PaymentMethodBnplRequest
         if not isinstance(v, PaymentMethodBnplRequest):
             error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodBnplRequest`")
@@ -78,10 +86,10 @@ class ChargeRequestPaymentMethod(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -96,6 +104,12 @@ class ChargeRequestPaymentMethod(BaseModel):
         error_messages = []
         match = 0
 
+        # deserialize data into PaymentMethodPbbRequest
+        try:
+            instance.actual_instance = PaymentMethodPbbRequest.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into PaymentMethodBnplRequest
         try:
             instance.actual_instance = PaymentMethodBnplRequest.from_json(json_str)
@@ -117,10 +131,10 @@ class ChargeRequestPaymentMethod(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ChargeRequestPaymentMethod with oneOf schemas: PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -134,7 +148,7 @@ class ChargeRequestPaymentMethod(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodBnplRequest, PaymentMethodCardRequest, PaymentMethodGeneralRequest, PaymentMethodPbbRequest]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

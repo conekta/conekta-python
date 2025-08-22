@@ -22,11 +22,12 @@ from conekta.models.payment_method_bank_transfer import PaymentMethodBankTransfe
 from conekta.models.payment_method_bnpl_payment import PaymentMethodBnplPayment
 from conekta.models.payment_method_card import PaymentMethodCard
 from conekta.models.payment_method_cash import PaymentMethodCash
+from conekta.models.payment_method_pbb_payment import PaymentMethodPbbPayment
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CHARGERESPONSEPAYMENTMETHOD_ONE_OF_SCHEMAS = ["PaymentMethodBankTransfer", "PaymentMethodBnplPayment", "PaymentMethodCard", "PaymentMethodCash"]
+CHARGERESPONSEPAYMENTMETHOD_ONE_OF_SCHEMAS = ["PaymentMethodBankTransfer", "PaymentMethodBnplPayment", "PaymentMethodCard", "PaymentMethodCash", "PaymentMethodPbbPayment"]
 
 class ChargeResponsePaymentMethod(BaseModel):
     """
@@ -40,8 +41,10 @@ class ChargeResponsePaymentMethod(BaseModel):
     oneof_schema_3_validator: Optional[PaymentMethodBankTransfer] = None
     # data type: PaymentMethodBnplPayment
     oneof_schema_4_validator: Optional[PaymentMethodBnplPayment] = None
-    actual_instance: Optional[Union[PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash]] = None
-    one_of_schemas: Set[str] = { "PaymentMethodBankTransfer", "PaymentMethodBnplPayment", "PaymentMethodCard", "PaymentMethodCash" }
+    # data type: PaymentMethodPbbPayment
+    oneof_schema_5_validator: Optional[PaymentMethodPbbPayment] = None
+    actual_instance: Optional[Union[PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment]] = None
+    one_of_schemas: Set[str] = { "PaymentMethodBankTransfer", "PaymentMethodBnplPayment", "PaymentMethodCard", "PaymentMethodCash", "PaymentMethodPbbPayment" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -87,12 +90,17 @@ class ChargeResponsePaymentMethod(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodBnplPayment`")
         else:
             match += 1
+        # validate data type: PaymentMethodPbbPayment
+        if not isinstance(v, PaymentMethodPbbPayment):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `PaymentMethodPbbPayment`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -132,6 +140,11 @@ class ChargeResponsePaymentMethod(BaseModel):
             instance.actual_instance = PaymentMethodCash.from_json(json_str)
             return instance
 
+        # check if data type is `PaymentMethodPbbPayment`
+        if _data_type == "pay_by_bank_payment":
+            instance.actual_instance = PaymentMethodPbbPayment.from_json(json_str)
+            return instance
+
         # check if data type is `PaymentMethodBankTransfer`
         if _data_type == "payment_method_bank_transfer":
             instance.actual_instance = PaymentMethodBankTransfer.from_json(json_str)
@@ -150,6 +163,11 @@ class ChargeResponsePaymentMethod(BaseModel):
         # check if data type is `PaymentMethodCash`
         if _data_type == "payment_method_cash":
             instance.actual_instance = PaymentMethodCash.from_json(json_str)
+            return instance
+
+        # check if data type is `PaymentMethodPbbPayment`
+        if _data_type == "payment_method_pbb_payment":
+            instance.actual_instance = PaymentMethodPbbPayment.from_json(json_str)
             return instance
 
         # deserialize data into PaymentMethodCash
@@ -176,13 +194,19 @@ class ChargeResponsePaymentMethod(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into PaymentMethodPbbPayment
+        try:
+            instance.actual_instance = PaymentMethodPbbPayment.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ChargeResponsePaymentMethod with oneOf schemas: PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -196,7 +220,7 @@ class ChargeResponsePaymentMethod(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], PaymentMethodBankTransfer, PaymentMethodBnplPayment, PaymentMethodCard, PaymentMethodCash, PaymentMethodPbbPayment]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

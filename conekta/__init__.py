@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "7.0.2"
+__version__ = "7.0.3"
 
 # import apis into sdk package
 from conekta.api.antifraud_api import AntifraudApi
@@ -181,10 +181,13 @@ from conekta.models.payment_method_card import PaymentMethodCard
 from conekta.models.payment_method_card_request import PaymentMethodCardRequest
 from conekta.models.payment_method_card_response import PaymentMethodCardResponse
 from conekta.models.payment_method_cash import PaymentMethodCash
+from conekta.models.payment_method_cash_recurrent_response import PaymentMethodCashRecurrentResponse
 from conekta.models.payment_method_cash_request import PaymentMethodCashRequest
 from conekta.models.payment_method_cash_response import PaymentMethodCashResponse
 from conekta.models.payment_method_cash_response_all_of_agreements import PaymentMethodCashResponseAllOfAgreements
 from conekta.models.payment_method_general_request import PaymentMethodGeneralRequest
+from conekta.models.payment_method_pbb_payment import PaymentMethodPbbPayment
+from conekta.models.payment_method_pbb_request import PaymentMethodPbbRequest
 from conekta.models.payment_method_response import PaymentMethodResponse
 from conekta.models.payment_method_spei_recurrent import PaymentMethodSpeiRecurrent
 from conekta.models.payment_method_spei_request import PaymentMethodSpeiRequest

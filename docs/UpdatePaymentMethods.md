@@ -5,7 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** |  | [optional] 
+**name** | **str** | The name of the payment method holder | [optional] 
+**expires_at** | **int** | The expiration date of the payment method in Unix timestamp format | [optional] 
 
 ## Example
 
