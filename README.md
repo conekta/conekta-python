@@ -115,6 +115,7 @@ Class | Method | HTTP request | Description
 *CompaniesApi* | [**get_companies**](docs/CompaniesApi.md#get_companies) | **GET** /companies | Get List of Companies
 *CompaniesApi* | [**get_company**](docs/CompaniesApi.md#get_company) | **GET** /companies/{id} | Get Company
 *CompaniesApi* | [**get_company_documents**](docs/CompaniesApi.md#get_company_documents) | **GET** /companies/{company_id}/documents | Get Company Documents
+*CompaniesApi* | [**get_current_company**](docs/CompaniesApi.md#get_current_company) | **GET** /companies/current | Get Current Company
 *CompaniesApi* | [**update_company_document**](docs/CompaniesApi.md#update_company_document) | **PATCH** /companies/{company_id}/document | Update Company Document
 *CompaniesApi* | [**upload_company_document**](docs/CompaniesApi.md#upload_company_document) | **POST** /companies/{company_id}/document | Upload Company Document
 *CustomersApi* | [**create_customer**](docs/CustomersApi.md#create_customer) | **POST** /customers | Create customer

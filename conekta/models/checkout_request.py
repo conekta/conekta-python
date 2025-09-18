@@ -45,8 +45,8 @@ class CheckoutRequest(BaseModel):
     def allowed_payment_methods_validate_enum(cls, value):
         """Validates the enum"""
         for i in value:
-            if i not in set(['cash', 'card', 'bank_transfer', 'bnpl']):
-                raise ValueError("each list item must be one of ('cash', 'card', 'bank_transfer', 'bnpl')")
+            if i not in set(['cash', 'card', 'bank_transfer', 'bnpl', 'pay_by_bank']):
+                raise ValueError("each list item must be one of ('cash', 'card', 'bank_transfer', 'bnpl', 'pay_by_bank')")
         return value
 
     model_config = ConfigDict(

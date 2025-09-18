@@ -32,7 +32,7 @@ class Checkout(BaseModel):
     expires_at: StrictInt = Field(description="It is the time when the link will expire. It is expressed in seconds since the Unix epoch. The valid range is from 2 to 365 days (the valid range will be taken from the next day of the creation date at 00:01 hrs) ")
     monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if months without interest will be active.")
     monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, description="This field allows you to specify the number of months without interest.")
-    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict.")
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict. This property is only applicable when 3DS is enabled. When 3DS is disabled, this field should be null.")
     name: StrictStr = Field(description="Reason for charge")
     needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="This flag allows you to fill in the shipping information at checkout.")
     on_demand_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if the link will be on demand.")
@@ -84,6 +84,11 @@ class Checkout(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of order_template
         if self.order_template:
             _dict['order_template'] = self.order_template.to_dict()
+        # set to None if three_ds_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.three_ds_mode is None and "three_ds_mode" in self.model_fields_set:
+            _dict['three_ds_mode'] = None
+
         # set to None if on_demand_enabled (nullable) is None
         # and model_fields_set contains the field
         if self.on_demand_enabled is None and "on_demand_enabled" in self.model_fields_set:
