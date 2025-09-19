@@ -52,7 +52,7 @@ class OrderRequest(BaseModel):
     shipping_contact: Optional[CustomerShippingContacts] = None
     shipping_lines: Optional[List[ShippingRequest]] = Field(default=None, description="List of [shipping costs](https://developers.conekta.com/v2.2.0/reference/orderscreateshipping). If the online store offers digital products.")
     tax_lines: Optional[List[OrderTaxRequest]] = Field(default=None, description="List of [taxes](https://developers.conekta.com/v2.2.0/reference/orderscreatetaxes) that are applied to the order.")
-    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict.")
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict. This property is only applicable when 3DS is enabled. When 3DS is disabled, this field should be null.")
     __properties: ClassVar[List[str]] = ["charges", "checkout", "currency", "customer_info", "discount_lines", "fiscal_entity", "line_items", "metadata", "needs_shipping_contact", "pre_authorize", "processing_mode", "return_url", "shipping_contact", "shipping_lines", "tax_lines", "three_ds_mode"]
 
     model_config = ConfigDict(
@@ -141,6 +141,11 @@ class OrderRequest(BaseModel):
                 if _item_tax_lines:
                     _items.append(_item_tax_lines.to_dict())
             _dict['tax_lines'] = _items
+        # set to None if three_ds_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.three_ds_mode is None and "three_ds_mode" in self.model_fields_set:
+            _dict['three_ds_mode'] = None
+
         return _dict
 
     @classmethod

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.company_response_documents_inner import CompanyResponseDocumentsInner
 from typing import Optional, Set
@@ -37,7 +37,19 @@ class CompanyResponse(BaseModel):
     documents: List[CompanyResponseDocumentsInner] = Field(description="A list of documents related to the company.")
     created_at: StrictInt = Field(description="Timestamp of when the company was created.")
     object: StrictStr = Field(description="The type of object, typically \"company\".")
-    __properties: ClassVar[List[str]] = ["id", "name", "active", "account_status", "parent_company_id", "onboarding_status", "documents", "created_at", "object"]
+    three_ds_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if 3DS authentication is enabled for the company.")
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="The 3DS mode for the company, either 'smart' or 'strict'. This property is only applicable when three_ds_enabled is true. When three_ds_enabled is false, this field will be null.")
+    __properties: ClassVar[List[str]] = ["id", "name", "active", "account_status", "parent_company_id", "onboarding_status", "documents", "created_at", "object", "three_ds_enabled", "three_ds_mode"]
+
+    @field_validator('three_ds_mode')
+    def three_ds_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['smart', 'strict']):
+            raise ValueError("must be one of enum values ('smart', 'strict')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +102,11 @@ class CompanyResponse(BaseModel):
         if self.parent_company_id is None and "parent_company_id" in self.model_fields_set:
             _dict['parent_company_id'] = None
 
+        # set to None if three_ds_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.three_ds_mode is None and "three_ds_mode" in self.model_fields_set:
+            _dict['three_ds_mode'] = None
+
         return _dict
 
     @classmethod
@@ -110,7 +127,9 @@ class CompanyResponse(BaseModel):
             "onboarding_status": obj.get("onboarding_status"),
             "documents": [CompanyResponseDocumentsInner.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None,
             "created_at": obj.get("created_at"),
-            "object": obj.get("object")
+            "object": obj.get("object"),
+            "three_ds_enabled": obj.get("three_ds_enabled"),
+            "three_ds_mode": obj.get("three_ds_mode")
         })
         return _obj
 

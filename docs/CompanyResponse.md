@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **documents** | [**List[CompanyResponseDocumentsInner]**](CompanyResponseDocumentsInner.md) | A list of documents related to the company. | 
 **created_at** | **int** | Timestamp of when the company was created. | 
 **object** | **str** | The type of object, typically \&quot;company\&quot;. | 
+**three_ds_enabled** | **bool** | Indicates if 3DS authentication is enabled for the company. | [optional] 
+**three_ds_mode** | **str** | The 3DS mode for the company, either &#39;smart&#39; or &#39;strict&#39;. This property is only applicable when three_ds_enabled is true. When three_ds_enabled is false, this field will be null. | [optional] 
 
 ## Example
 
