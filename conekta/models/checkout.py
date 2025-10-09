@@ -36,11 +36,12 @@ class Checkout(BaseModel):
     name: StrictStr = Field(description="Reason for charge")
     needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="This flag allows you to fill in the shipping information at checkout.")
     on_demand_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if the link will be on demand.")
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="It is a list of plan IDs that will be associated with the order.")
     order_template: CheckoutOrderTemplate
     payments_limit_count: Optional[StrictInt] = Field(default=None, description="It is the number of payments that can be made through the link.")
     recurrent: StrictBool = Field(description="false: single use. true: multiple payments")
     type: StrictStr = Field(description="It is the type of link that will be created. It must be a valid type.")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "three_ds_mode", "name", "needs_shipping_contact", "on_demand_enabled", "order_template", "payments_limit_count", "recurrent", "type"]
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "three_ds_mode", "name", "needs_shipping_contact", "on_demand_enabled", "plan_ids", "order_template", "payments_limit_count", "recurrent", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -114,6 +115,7 @@ class Checkout(BaseModel):
             "name": obj.get("name"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
             "on_demand_enabled": obj.get("on_demand_enabled"),
+            "plan_ids": obj.get("plan_ids"),
             "order_template": CheckoutOrderTemplate.from_dict(obj["order_template"]) if obj.get("order_template") is not None else None,
             "payments_limit_count": obj.get("payments_limit_count"),
             "recurrent": obj.get("recurrent"),
