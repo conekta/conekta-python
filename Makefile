@@ -14,4 +14,4 @@ python:
 	-g python \
 	-o /local \
 	-c /local/config-python.json \
-	--global-property modelTests=false
+	--global-property modelTests=false 
