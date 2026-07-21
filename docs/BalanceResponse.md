@@ -6,16 +6,16 @@ balance model
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**available** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s available | [optional] 
-**cashout_retention_amount** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s cashout retention amount | [optional] 
-**conekta_retention** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s conekta retention | [optional] 
-**gateway** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s gateway | [optional] 
-**pending** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s pending | [optional] 
-**retained** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s retained | [optional] 
-**retention_amount** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s retention amount | [optional] 
+**available** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s available | [optional] 
+**cashout_retention_amount** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s cashout retention amount | [optional] 
+**conekta_retention** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s conekta retention | [optional] 
+**gateway** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s gateway | [optional] 
+**pending** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s pending | [optional] 
+**retained** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s retained | [optional] 
+**retention_amount** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s retention amount | [optional] 
 **target_collateral_amount** | **object** | The balance&#39;s target collateral amount | [optional] 
-**target_retention_amount** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s target retention amount | [optional] 
-**temporarily_retained** | [**List[BalanceCommonField]**](BalanceCommonField.md) | The balance&#39;s temporarily retained | [optional] 
+**target_retention_amount** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s target retention amount | [optional] 
+**temporarily_retained** | [**List[BalanceCommonFielsResponse]**](BalanceCommonFielsResponse.md) | The balance&#39;s temporarily retained | [optional] 
 
 ## Example
 

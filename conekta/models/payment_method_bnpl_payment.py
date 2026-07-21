@@ -18,10 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodBnplPayment(BaseModel):
     """
@@ -29,16 +30,24 @@ class PaymentMethodBnplPayment(BaseModel):
     """ # noqa: E501
     type: Optional[StrictStr] = None
     object: StrictStr
-    cancel_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a canceled payment")
-    expires_at: StrictInt = Field(description="Expiration date of the charge")
-    failure_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a failed payment")
+    cancel_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a canceled payment", json_schema_extra={"examples": ["https://example.com/cancel"]})
+    expires_at: StrictInt = Field(description="Expiration date of the charge", json_schema_extra={"examples": [1683053729]})
+    failure_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a failed payment", json_schema_extra={"examples": ["https://example.com/failure"]})
     product_type: StrictStr = Field(description="Product type of the charge")
-    redirect_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to complete the payment")
-    success_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a successful payment")
+    redirect_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to complete the payment", json_schema_extra={"examples": ["https://example.com/redirect"]})
+    success_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer after a successful payment", json_schema_extra={"examples": ["https://example.com/success"]})
     __properties: ClassVar[List[str]] = ["type", "object", "cancel_url", "expires_at", "failure_url", "product_type", "redirect_url", "success_url"]
 
+    @field_validator('object')
+    def object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['bnpl_payment']):
+            raise ValueError("must be one of enum values ('bnpl_payment')")
+        return value
+
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +59,7 @@ class PaymentMethodBnplPayment(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -18,23 +18,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChargeResponseChannel(BaseModel):
     """
     ChargeResponseChannel
     """ # noqa: E501
-    segment: Optional[StrictStr] = None
-    checkout_request_id: Optional[StrictStr] = None
-    checkout_request_type: Optional[StrictStr] = None
-    id: Optional[StrictStr] = None
+    segment: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Checkout"]})
+    checkout_request_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6fca054a-8519-4c43-971e-cea35cc519bb"]})
+    checkout_request_type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["HostedPayment"]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["channel_2tNDzhA4Akmzj11AU"]})
     __properties: ClassVar[List[str]] = ["segment", "checkout_request_id", "checkout_request_type", "id"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class ChargeResponseChannel(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

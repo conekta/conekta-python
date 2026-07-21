@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -23,7 +22,7 @@ from typing_extensions import Annotated
 from conekta.models.subscription_events_response import SubscriptionEventsResponse
 from conekta.models.subscription_request import SubscriptionRequest
 from conekta.models.subscription_response import SubscriptionResponse
-from conekta.models.subscription_update_request import SubscriptionUpdateRequest
+from conekta.models.updates_a_subscription import UpdatesASubscription
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -3924,7 +3923,7 @@ class SubscriptionsApi:
         self,
         customer_id: Annotated[StrictStr, Field(description="Identifier of the customer resource")],
         id: Annotated[StrictStr, Field(description="Identifier of the subscription resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -3948,8 +3947,8 @@ class SubscriptionsApi:
         :type customer_id: str
         :param id: Identifier of the subscription resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -3979,7 +3978,7 @@ class SubscriptionsApi:
         _param = self._subscription_update_serialize(
             customer_id=customer_id,
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -4011,7 +4010,7 @@ class SubscriptionsApi:
         self,
         customer_id: Annotated[StrictStr, Field(description="Identifier of the customer resource")],
         id: Annotated[StrictStr, Field(description="Identifier of the subscription resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -4035,8 +4034,8 @@ class SubscriptionsApi:
         :type customer_id: str
         :param id: Identifier of the subscription resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -4066,7 +4065,7 @@ class SubscriptionsApi:
         _param = self._subscription_update_serialize(
             customer_id=customer_id,
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -4098,7 +4097,7 @@ class SubscriptionsApi:
         self,
         customer_id: Annotated[StrictStr, Field(description="Identifier of the customer resource")],
         id: Annotated[StrictStr, Field(description="Identifier of the subscription resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -4122,8 +4121,8 @@ class SubscriptionsApi:
         :type customer_id: str
         :param id: Identifier of the subscription resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -4153,7 +4152,7 @@ class SubscriptionsApi:
         _param = self._subscription_update_serialize(
             customer_id=customer_id,
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -4180,7 +4179,7 @@ class SubscriptionsApi:
         self,
         customer_id,
         id,
-        subscription_update_request,
+        updates_a_subscription,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -4216,8 +4215,8 @@ class SubscriptionsApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if subscription_update_request is not None:
-            _body_params = subscription_update_request
+        if updates_a_subscription is not None:
+            _body_params = updates_a_subscription
 
 
         # set the HTTP header `Accept`
@@ -4647,9 +4646,9 @@ class SubscriptionsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SubscriptionResponse",
+            '422': "Error",
             '401': "Error",
             '404': "Error",
-            '422': "Error",
             '500': "Error",
         }
         response_data = self.api_client.call_api(
@@ -4730,9 +4729,9 @@ class SubscriptionsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SubscriptionResponse",
+            '422': "Error",
             '401': "Error",
             '404': "Error",
-            '422': "Error",
             '500': "Error",
         }
         response_data = self.api_client.call_api(
@@ -4813,9 +4812,9 @@ class SubscriptionsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SubscriptionResponse",
+            '422': "Error",
             '401': "Error",
             '404': "Error",
-            '422': "Error",
             '500': "Error",
         }
         response_data = self.api_client.call_api(
@@ -4902,7 +4901,7 @@ class SubscriptionsApi:
     def update_subscription(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -4924,8 +4923,8 @@ class SubscriptionsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -4955,7 +4954,7 @@ class SubscriptionsApi:
 
         _param = self._update_subscription_serialize(
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -4986,7 +4985,7 @@ class SubscriptionsApi:
     def update_subscription_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -5008,8 +5007,8 @@ class SubscriptionsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -5039,7 +5038,7 @@ class SubscriptionsApi:
 
         _param = self._update_subscription_serialize(
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -5070,7 +5069,7 @@ class SubscriptionsApi:
     def update_subscription_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        subscription_update_request: Annotated[SubscriptionUpdateRequest, Field(description="requested field for update a subscription")],
+        updates_a_subscription: Annotated[UpdatesASubscription, Field(description="requested field for update a subscription")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -5092,8 +5091,8 @@ class SubscriptionsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param subscription_update_request: requested field for update a subscription (required)
-        :type subscription_update_request: SubscriptionUpdateRequest
+        :param updates_a_subscription: requested field for update a subscription (required)
+        :type updates_a_subscription: UpdatesASubscription
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -5123,7 +5122,7 @@ class SubscriptionsApi:
 
         _param = self._update_subscription_serialize(
             id=id,
-            subscription_update_request=subscription_update_request,
+            updates_a_subscription=updates_a_subscription,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -5149,7 +5148,7 @@ class SubscriptionsApi:
     def _update_subscription_serialize(
         self,
         id,
-        subscription_update_request,
+        updates_a_subscription,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -5183,8 +5182,8 @@ class SubscriptionsApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if subscription_update_request is not None:
-            _body_params = subscription_update_request
+        if updates_a_subscription is not None:
+            _body_params = updates_a_subscription
 
 
         # set the HTTP header `Accept`

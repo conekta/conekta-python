@@ -18,32 +18,49 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from conekta.models.checkout_order_template import CheckoutOrderTemplate
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Checkout(BaseModel):
     """
     It is a sub-resource of the Order model that can be stipulated in order to configure its corresponding checkout
     """ # noqa: E501
-    allowed_payment_methods: List[StrictStr] = Field(description="Those are the payment methods that will be available for the link")
-    expires_at: StrictInt = Field(description="It is the time when the link will expire. It is expressed in seconds since the Unix epoch. The valid range is from 2 to 365 days (the valid range will be taken from the next day of the creation date at 00:01 hrs) ")
-    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if months without interest will be active.")
-    monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, description="This field allows you to specify the number of months without interest.")
-    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict.")
-    name: StrictStr = Field(description="Reason for charge")
-    needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="This flag allows you to fill in the shipping information at checkout.")
-    on_demand_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if the link will be on demand.")
+    allowed_payment_methods: List[StrictStr] = Field(description="Those are the payment methods that will be available for the link", json_schema_extra={"examples": [["cash", "card", "bank_transfer", "bnpl", "pay_by_bank"]]})
+    exclude_card_networks: Optional[List[StrictStr]] = Field(default=None, description="List of card networks to exclude from the checkout. This field is only applicable for card payments.", json_schema_extra={"examples": [["visa", "amex"]]})
+    expires_at: Annotated[int, Field(strict=True, ge=1)] = Field(description="It is the time when the link will expire.  It is expressed in seconds since the Unix epoch. The valid range is from 5 minutes to 365 days from the creation date. ", json_schema_extra={"examples": [1680397724]})
+    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if months without interest will be active.", json_schema_extra={"examples": [True]})
+    monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, description="This field allows you to specify the number of months without interest.", json_schema_extra={"examples": [[3, 6, 12]]})
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict. This property is only applicable when 3DS is enabled. When 3DS is disabled, this field should be null.")
+    name: StrictStr = Field(description="Reason for charge", json_schema_extra={"examples": ["Payment Link Name 1594138857"]})
+    needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="This flag allows you to fill in the shipping information at checkout.", json_schema_extra={"examples": [False]})
+    on_demand_enabled: Optional[StrictBool] = Field(default=None, description="This flag allows you to specify if the link will be on demand.", json_schema_extra={"examples": [True]})
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="It is a list of plan IDs that will be associated with the order.", json_schema_extra={"examples": [["plan_123", "plan_456"]]})
     order_template: CheckoutOrderTemplate
-    payments_limit_count: Optional[StrictInt] = Field(default=None, description="It is the number of payments that can be made through the link.")
-    recurrent: StrictBool = Field(description="false: single use. true: multiple payments")
-    type: StrictStr = Field(description="It is the type of link that will be created. It must be a valid type.")
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "three_ds_mode", "name", "needs_shipping_contact", "on_demand_enabled", "order_template", "payments_limit_count", "recurrent", "type"]
+    payments_limit_count: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(default=None, description="It is the number of payments that can be made through the link.", json_schema_extra={"examples": [5]})
+    success_url: Optional[StrictStr] = Field(default=None, description="The URL to redirect to after a successful payment.", json_schema_extra={"examples": ["https://www.conekta.com/success"]})
+    recurrent: StrictBool = Field(description="false: single use. true: multiple payments", json_schema_extra={"examples": [False]})
+    type: StrictStr = Field(description="It is the type of link that will be created. It must be a valid type.", json_schema_extra={"examples": ["PaymentLink"]})
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "exclude_card_networks", "expires_at", "monthly_installments_enabled", "monthly_installments_options", "three_ds_mode", "name", "needs_shipping_contact", "on_demand_enabled", "plan_ids", "order_template", "payments_limit_count", "success_url", "recurrent", "type"]
+
+    @field_validator('exclude_card_networks')
+    def exclude_card_networks_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['visa', 'mastercard', 'amex']):
+                raise ValueError("each list item must be one of ('visa', 'mastercard', 'amex')")
+        return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +72,7 @@ class Checkout(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -84,11 +100,6 @@ class Checkout(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of order_template
         if self.order_template:
             _dict['order_template'] = self.order_template.to_dict()
-        # set to None if on_demand_enabled (nullable) is None
-        # and model_fields_set contains the field
-        if self.on_demand_enabled is None and "on_demand_enabled" in self.model_fields_set:
-            _dict['on_demand_enabled'] = None
-
         return _dict
 
     @classmethod
@@ -102,6 +113,7 @@ class Checkout(BaseModel):
 
         _obj = cls.model_validate({
             "allowed_payment_methods": obj.get("allowed_payment_methods"),
+            "exclude_card_networks": obj.get("exclude_card_networks"),
             "expires_at": obj.get("expires_at"),
             "monthly_installments_enabled": obj.get("monthly_installments_enabled"),
             "monthly_installments_options": obj.get("monthly_installments_options"),
@@ -109,8 +121,10 @@ class Checkout(BaseModel):
             "name": obj.get("name"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
             "on_demand_enabled": obj.get("on_demand_enabled"),
+            "plan_ids": obj.get("plan_ids"),
             "order_template": CheckoutOrderTemplate.from_dict(obj["order_template"]) if obj.get("order_template") is not None else None,
             "payments_limit_count": obj.get("payments_limit_count"),
+            "success_url": obj.get("success_url"),
             "recurrent": obj.get("recurrent"),
             "type": obj.get("type")
         })

@@ -23,14 +23,15 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodPbbRequest(BaseModel):
     """
     PaymentMethodPbbRequest
     """ # noqa: E501
-    type: StrictStr = Field(description="Type of the payment method")
-    expires_at: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="Expiration date of the payment method, in Unix timestamp format")
-    product_type: StrictStr = Field(description="Product type of the payment method, use for the payment method to know the product type")
+    type: StrictStr = Field(description="Type of the payment method", json_schema_extra={"examples": ["pay_by_bank"]})
+    expires_at: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="Expiration date of the payment method, in Unix timestamp format", json_schema_extra={"examples": [1680397724]})
+    product_type: StrictStr = Field(description="Product type of the payment method, use for the payment method to know the product type", json_schema_extra={"examples": ["bbva_pay_by_bank"]})
     __properties: ClassVar[List[str]] = ["type", "expires_at", "product_type"]
 
     @field_validator('product_type')
@@ -41,7 +42,8 @@ class PaymentMethodPbbRequest(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +55,7 @@ class PaymentMethodPbbRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

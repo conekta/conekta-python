@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**get_companies**](CompaniesApi.md#get_companies) | **GET** /companies | Get List of Companies
 [**get_company**](CompaniesApi.md#get_company) | **GET** /companies/{id} | Get Company
 [**get_company_documents**](CompaniesApi.md#get_company_documents) | **GET** /companies/{company_id}/documents | Get Company Documents
+[**get_current_company**](CompaniesApi.md#get_current_company) | **GET** /companies/current | Get Current Company
 [**update_company_document**](CompaniesApi.md#update_company_document) | **PATCH** /companies/{company_id}/document | Update Company Document
 [**upload_company_document**](CompaniesApi.md#upload_company_document) | **POST** /companies/{company_id}/document | Upload Company Document
 
@@ -130,7 +131,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CompaniesApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
@@ -152,7 +153,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 
@@ -217,7 +218,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CompaniesApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get Company
@@ -236,7 +237,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -300,7 +301,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CompaniesApi(api_client)
     company_id = '6307a60c41de27127515a575' # str | The unique identifier of the company.
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get Company Documents
@@ -319,7 +320,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **company_id** | **str**| The unique identifier of the company. | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -341,6 +342,86 @@ Name | Type | Description  | Notes
 **200** | A list of documents for the company. |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
 **401** | authentication error |  -  |
 **404** | not found entity |  -  |
+**500** | internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_current_company**
+> CompanyResponse get_current_company(accept_language=accept_language)
+
+Get Current Company
+
+Retrieves information about the currently authenticated company. This endpoint returns the same data as the standard company endpoint but automatically uses the current company's context.
+
+### Example
+
+* Bearer Authentication (bearerAuth):
+
+```python
+import conekta
+from conekta.models.company_response import CompanyResponse
+from conekta.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.conekta.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = conekta.Configuration(
+    host = "https://api.conekta.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = conekta.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with conekta.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = conekta.CompaniesApi(api_client)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+
+    try:
+        # Get Current Company
+        api_response = api_instance.get_current_company(accept_language=accept_language)
+        print("The response of CompaniesApi->get_current_company:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->get_current_company: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+
+### Return type
+
+[**CompanyResponse**](CompanyResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/vnd.conekta-v2.2.0+json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | successful |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
+**401** | authentication error |  -  |
 **500** | internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -385,7 +466,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.CompaniesApi(api_client)
     company_id = '6827206b1ec60400015eb09a' # str | The unique identifier of the company.
     company_document_request = conekta.CompanyDocumentRequest() # CompanyDocumentRequest | Document information to update.
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Update Company Document
@@ -405,7 +486,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **company_id** | **str**| The unique identifier of the company. | 
  **company_document_request** | [**CompanyDocumentRequest**](CompanyDocumentRequest.md)| Document information to update. | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -471,7 +552,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.CompaniesApi(api_client)
     company_id = '6827206b1ec60400015eb09a' # str | The unique identifier of the company.
     company_document_request = conekta.CompanyDocumentRequest() # CompanyDocumentRequest | Document information to upload.
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Upload Company Document
@@ -491,7 +572,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **company_id** | **str**| The unique identifier of the company. | 
  **company_document_request** | [**CompanyDocumentRequest**](CompanyDocumentRequest.md)| Document information to upload. | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 

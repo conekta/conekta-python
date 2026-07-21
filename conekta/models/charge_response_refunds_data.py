@@ -22,22 +22,24 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChargeResponseRefundsData(BaseModel):
     """
     ChargeResponseRefundsData
     """ # noqa: E501
-    amount: StrictInt
-    auth_code: Optional[StrictStr] = None
-    created_at: StrictInt
-    expires_at: Optional[StrictInt] = Field(default=None, description="refund expiration date")
-    id: StrictStr
-    object: StrictStr
-    status: Optional[StrictStr] = Field(default=None, description="refund status")
+    amount: StrictInt = Field(json_schema_extra={"examples": [-15000]})
+    auth_code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["867372"]})
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1678226878]})
+    expires_at: Optional[StrictInt] = Field(default=None, description="refund expiration date", json_schema_extra={"examples": [1678226878]})
+    id: StrictStr = Field(json_schema_extra={"examples": ["6407b5bee1329a000175ba11"]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["refund"]})
+    status: Optional[StrictStr] = Field(default=None, description="refund status", json_schema_extra={"examples": ["pending"]})
     __properties: ClassVar[List[str]] = ["amount", "auth_code", "created_at", "expires_at", "id", "object", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class ChargeResponseRefundsData(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

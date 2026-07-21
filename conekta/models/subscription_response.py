@@ -22,33 +22,35 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SubscriptionResponse(BaseModel):
     """
     subscription model
     """ # noqa: E501
-    billing_cycle_start: Optional[StrictInt] = None
-    billing_cycle_end: Optional[StrictInt] = None
-    canceled_at: Optional[StrictInt] = None
-    canceled_reason: Optional[StrictStr] = Field(default=None, description="Reason for cancellation. This field appears when the subscription status is 'canceled'.")
-    card_id: Optional[StrictStr] = None
-    charge_id: Optional[StrictStr] = None
-    created_at: Optional[StrictInt] = None
-    customer_custom_reference: Optional[StrictStr] = None
-    customer_id: Optional[StrictStr] = None
-    id: Optional[StrictStr] = None
-    last_billing_cycle_order_id: Optional[StrictStr] = None
-    object: Optional[StrictStr] = None
-    paused_at: Optional[StrictInt] = None
-    plan_id: Optional[StrictStr] = None
-    status: Optional[StrictStr] = None
-    subscription_start: Optional[StrictInt] = None
-    trial_start: Optional[StrictInt] = None
-    trial_end: Optional[StrictInt] = None
+    billing_cycle_start: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626827]})
+    billing_cycle_end: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626827]})
+    canceled_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1678258162]})
+    canceled_reason: Optional[StrictStr] = Field(default=None, description="Reason for cancellation. This field appears when the subscription status is 'canceled'.", json_schema_extra={"examples": ["user_cancelation"]})
+    card_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["src_2tKcHxhTz7xU5SymL"]})
+    charge_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["2tKcHxhTz7xU5SymL"]})
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626837]})
+    customer_custom_reference: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["dotnet_123456"]})
+    customer_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["cus_2tKcHxhTz7xU5SymF"]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["gold-plan"]})
+    last_billing_cycle_order_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["ord_2tSoMP7bZJbLiq4z8"]})
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["subscription"]})
+    paused_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1678258162]})
+    plan_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["plan_2tXx672QLQ68CkmMn"]})
+    status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["past_due"]})
+    subscription_start: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626837]})
+    trial_start: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626837]})
+    trial_end: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677626837]})
     __properties: ClassVar[List[str]] = ["billing_cycle_start", "billing_cycle_end", "canceled_at", "canceled_reason", "card_id", "charge_id", "created_at", "customer_custom_reference", "customer_id", "id", "last_billing_cycle_order_id", "object", "paused_at", "plan_id", "status", "subscription_start", "trial_start", "trial_end"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -60,8 +62,7 @@ class SubscriptionResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -86,41 +87,6 @@ class SubscriptionResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if billing_cycle_start (nullable) is None
-        # and model_fields_set contains the field
-        if self.billing_cycle_start is None and "billing_cycle_start" in self.model_fields_set:
-            _dict['billing_cycle_start'] = None
-
-        # set to None if billing_cycle_end (nullable) is None
-        # and model_fields_set contains the field
-        if self.billing_cycle_end is None and "billing_cycle_end" in self.model_fields_set:
-            _dict['billing_cycle_end'] = None
-
-        # set to None if canceled_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.canceled_at is None and "canceled_at" in self.model_fields_set:
-            _dict['canceled_at'] = None
-
-        # set to None if charge_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.charge_id is None and "charge_id" in self.model_fields_set:
-            _dict['charge_id'] = None
-
-        # set to None if paused_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.paused_at is None and "paused_at" in self.model_fields_set:
-            _dict['paused_at'] = None
-
-        # set to None if trial_start (nullable) is None
-        # and model_fields_set contains the field
-        if self.trial_start is None and "trial_start" in self.model_fields_set:
-            _dict['trial_start'] = None
-
-        # set to None if trial_end (nullable) is None
-        # and model_fields_set contains the field
-        if self.trial_end is None and "trial_end" in self.model_fields_set:
-            _dict['trial_end'] = None
-
         return _dict
 
     @classmethod

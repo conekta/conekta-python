@@ -50,7 +50,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.PaymentMethodsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     create_customer_payment_methods_request = {"type":"card","token_id":"tok_test_visa_4242"} # CreateCustomerPaymentMethodsRequest | requested field for customer payment methods
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **create_customer_payment_methods_request** | [**CreateCustomerPaymentMethodsRequest**](CreateCustomerPaymentMethodsRequest.md)| requested field for customer payment methods | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -138,7 +138,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.PaymentMethodsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     payment_method_id = 'src_2tQ974hSHcsdeSZHG' # str | Identifier of the payment method
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -159,7 +159,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **payment_method_id** | **str**| Identifier of the payment method | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -225,7 +225,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PaymentMethodsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     next = 'next_example' # str | next page (optional)
@@ -249,7 +249,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **next** | **str**| next page | [optional] 
@@ -281,7 +281,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_customer_payment_methods**
-> UpdateCustomerPaymentMethodsResponse update_customer_payment_methods(id, payment_method_id, update_payment_methods, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> UpdateCustomerPaymentMethodsResponse update_customer_payment_methods(id, payment_method_id, update_payment_methods_card, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update Payment Method
 
@@ -294,7 +294,7 @@ Gets a payment Method that corresponds to a customer ID.
 ```python
 import conekta
 from conekta.models.update_customer_payment_methods_response import UpdateCustomerPaymentMethodsResponse
-from conekta.models.update_payment_methods import UpdatePaymentMethods
+from conekta.models.update_payment_methods_card import UpdatePaymentMethodsCard
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -320,13 +320,13 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.PaymentMethodsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     payment_method_id = 'src_2tQ974hSHcsdeSZHG' # str | Identifier of the payment method
-    update_payment_methods = conekta.UpdatePaymentMethods() # UpdatePaymentMethods | requested field for customer payment methods
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    update_payment_methods_card = conekta.UpdatePaymentMethodsCard() # UpdatePaymentMethodsCard | requested field for customer payment methods
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update Payment Method
-        api_response = api_instance.update_customer_payment_methods(id, payment_method_id, update_payment_methods, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.update_customer_payment_methods(id, payment_method_id, update_payment_methods_card, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of PaymentMethodsApi->update_customer_payment_methods:\n")
         pprint(api_response)
     except Exception as e:
@@ -342,8 +342,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **payment_method_id** | **str**| Identifier of the payment method | 
- **update_payment_methods** | [**UpdatePaymentMethods**](UpdatePaymentMethods.md)| requested field for customer payment methods | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **update_payment_methods_card** | [**UpdatePaymentMethodsCard**](UpdatePaymentMethodsCard.md)| requested field for customer payment methods | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

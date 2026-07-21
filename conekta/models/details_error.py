@@ -18,23 +18,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DetailsError(BaseModel):
     """
     DetailsError
     """ # noqa: E501
-    code: Optional[StrictStr] = None
+    code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["conekta.errors.authentication.missing_key"]})
     param: Optional[StrictStr] = None
-    message: Optional[StrictStr] = None
-    debug_message: Optional[StrictStr] = None
+    message: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Acceso no autorizado."]})
+    debug_message: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Please include your access key in your request."]})
     __properties: ClassVar[List[str]] = ["code", "param", "message", "debug_message"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class DetailsError(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -72,11 +73,6 @@ class DetailsError(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if param (nullable) is None
-        # and model_fields_set contains the field
-        if self.param is None and "param" in self.model_fields_set:
-            _dict['param'] = None
-
         return _dict
 
     @classmethod

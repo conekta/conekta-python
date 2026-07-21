@@ -22,23 +22,25 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TransferDestinationResponse(BaseModel):
     """
     Method used to make the transfer.
     """ # noqa: E501
-    account_holder: Optional[StrictStr] = Field(default=None, description="Name of the account holder.")
-    account_number: Optional[StrictStr] = Field(default=None, description="Account number of the bank account.")
-    bank: Optional[StrictStr] = Field(default=None, description="Name of the bank.")
-    created_at: Optional[StrictInt] = Field(default=None, description="Date and time of creation of the transfer.")
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the transfer.")
-    object: Optional[StrictStr] = Field(default=None, description="Object name, which is bank_transfer_payout_method.")
-    payee_id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the payee.")
-    type: Optional[StrictStr] = Field(default=None, description="Type of the payee.")
+    account_holder: Optional[StrictStr] = Field(default=None, description="Name of the account holder.", json_schema_extra={"examples": ["John Doe"]})
+    account_number: Optional[StrictStr] = Field(default=None, description="Account number of the bank account.", json_schema_extra={"examples": ["012180023547896764"]})
+    bank: Optional[StrictStr] = Field(default=None, description="Name of the bank.", json_schema_extra={"examples": ["BBVA Bancomer"]})
+    created_at: Optional[StrictInt] = Field(default=None, description="Date and time of creation of the transfer.", json_schema_extra={"examples": [1553273553]})
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the transfer.", json_schema_extra={"examples": ["pytmtd_2ide3qwTdDvNBosEC"]})
+    object: Optional[StrictStr] = Field(default=None, description="Object name, which is bank_transfer_payout_method.", json_schema_extra={"examples": ["bank_transfer_payout_method"]})
+    payee_id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the payee.", json_schema_extra={"examples": ["payee_2icdDewRxDENBos85"]})
+    type: Optional[StrictStr] = Field(default=None, description="Type of the payee.", json_schema_extra={"examples": ["BankTransferPayoutMethod"]})
     __properties: ClassVar[List[str]] = ["account_holder", "account_number", "bank", "created_at", "id", "object", "payee_id", "type"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class TransferDestinationResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

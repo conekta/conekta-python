@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **object** | **str** |  | 
 **created_at** | **int** |  | 
 **parent_id** | **str** |  | [optional] 
-**agreements** | [**List[PaymentMethodCashResponseAllOfAgreements]**](PaymentMethodCashResponseAllOfAgreements.md) |  | [optional] 
+**agreements** | [**List[CashAgreementsResponse]**](CashAgreementsResponse.md) |  | [optional] 
 **reference** | **str** |  | [optional] 
 **barcode** | **str** |  | [optional] 
 **barcode_url** | **str** | URL to the barcode image, reference is the same as barcode | [optional] 

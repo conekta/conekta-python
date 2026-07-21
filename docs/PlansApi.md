@@ -50,7 +50,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     plan_request = conekta.PlanRequest() # PlanRequest | requested field for plan
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -70,7 +70,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **plan_request** | [**PlanRequest**](PlanRequest.md)| requested field for plan | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -133,7 +133,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Delete Plan
@@ -152,7 +152,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -215,7 +215,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -235,7 +235,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_plans**
-> GetPlansResponse get_plans(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> GetPlansResponse get_plans(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, currency=currency, frequency=frequency)
 
 Get A List of Plans
 
@@ -298,16 +298,18 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
     previous = 'previous_example' # str | previous page (optional)
+    currency = 'MXN' # str | currency of the object to be retrieved (optional)
+    frequency = 1 # int | frequency of the object to be retrieved (optional)
 
     try:
         # Get A List of Plans
-        api_response = api_instance.get_plans(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+        api_response = api_instance.get_plans(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous, currency=currency, frequency=frequency)
         print("The response of PlansApi->get_plans:\n")
         pprint(api_response)
     except Exception as e:
@@ -321,12 +323,14 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 
  **previous** | **str**| previous page | [optional] 
+ **currency** | **str**| currency of the object to be retrieved | [optional] 
+ **frequency** | **int**| frequency of the object to be retrieved | [optional] 
 
 ### Return type
 
@@ -353,7 +357,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_plan**
-> PlanResponse update_plan(id, plan_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> PlanResponse update_plan(id, update_plan, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update Plan
 
@@ -364,7 +368,7 @@ Update Plan
 ```python
 import conekta
 from conekta.models.plan_response import PlanResponse
-from conekta.models.plan_update_request import PlanUpdateRequest
+from conekta.models.update_plan import UpdatePlan
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -389,13 +393,13 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PlansApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    plan_update_request = conekta.PlanUpdateRequest() # PlanUpdateRequest | requested field for plan
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    update_plan = conekta.UpdatePlan() # UpdatePlan | requested field for plan
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update Plan
-        api_response = api_instance.update_plan(id, plan_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.update_plan(id, update_plan, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of PlansApi->update_plan:\n")
         pprint(api_response)
     except Exception as e:
@@ -410,8 +414,8 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **plan_update_request** | [**PlanUpdateRequest**](PlanUpdateRequest.md)| requested field for plan | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **update_plan** | [**UpdatePlan**](UpdatePlan.md)| requested field for plan | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

@@ -21,37 +21,39 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.customer_antifraud_info import CustomerAntifraudInfo
-from conekta.models.customer_fiscal_entities_request import CustomerFiscalEntitiesRequest
 from conekta.models.customer_payment_methods_request import CustomerPaymentMethodsRequest
-from conekta.models.customer_shipping_contacts import CustomerShippingContacts
+from conekta.models.customer_shipping_contacts_request import CustomerShippingContactsRequest
+from conekta.models.fiscal_entity_request import FiscalEntityRequest
 from conekta.models.subscription_request import SubscriptionRequest
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Customer(BaseModel):
     """
     a customer
     """ # noqa: E501
     antifraud_info: Optional[CustomerAntifraudInfo] = None
-    corporate: Optional[StrictBool] = Field(default=False, description="It is a value that allows identifying if the email is corporate or not.")
+    corporate: Optional[StrictBool] = Field(default=False, description="It is a value that allows identifying if the email is corporate or not.", json_schema_extra={"examples": [False]})
     custom_reference: Optional[StrictStr] = Field(default=None, description="It is an undefined value.")
-    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.")
-    email: StrictStr = Field(description="An email address is a series of customizable characters followed by a universal Internet symbol, the at symbol (@), the name of a host server, and a web domain ending (.mx, .com, .org, . net, etc).")
-    default_payment_source_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of a payment method (payment_id)")
-    default_shipping_contact_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of the shipping address (shipping_contact)")
-    fiscal_entities: Optional[List[CustomerFiscalEntitiesRequest]] = None
+    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.", json_schema_extra={"examples": ["24/07/1992"]})
+    email: StrictStr = Field(description="An email address is a series of customizable characters followed by a universal Internet symbol, the at symbol (@), the name of a host server, and a web domain ending (.mx, .com, .org, . net, etc).", json_schema_extra={"examples": ["miguel@gmail.com"]})
+    default_payment_source_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of a payment method (payment_id)", json_schema_extra={"examples": ["src_1a2b3c4d5e6f7g8h"]})
+    default_shipping_contact_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify in the response, the Conekta ID of the shipping address (shipping_contact)", json_schema_extra={"examples": ["ship_cont_1a2b3c4d5e6f7g8h"]})
+    fiscal_entities: Optional[List[FiscalEntityRequest]] = None
     metadata: Optional[Dict[str, Any]] = None
-    name: StrictStr = Field(description="Client's name")
-    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.")
+    name: StrictStr = Field(description="Client's name", json_schema_extra={"examples": ["miguel"]})
+    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.", json_schema_extra={"examples": ["HEGG560427MVZRRL04"]})
     payment_sources: Optional[List[CustomerPaymentMethodsRequest]] = Field(default=None, description="Contains details of the payment methods that the customer has active or has used in Conekta")
-    phone: StrictStr = Field(description="Is the customer's phone number")
-    plan_id: Optional[StrictStr] = Field(default=None, description="Contains the ID of a plan, which could together with name, email and phone create a client directly to a subscription")
-    shipping_contacts: Optional[List[CustomerShippingContacts]] = Field(default=None, description="Contains the detail of the shipping addresses that the client has active or has used in Conekta")
+    phone: StrictStr = Field(description="Is the customer's phone number", json_schema_extra={"examples": ["+5215555555555"]})
+    plan_id: Optional[StrictStr] = Field(default=None, description="Contains the ID of a plan, which could together with name, email and phone create a client directly to a subscription", json_schema_extra={"examples": ["plan_987234823"]})
+    shipping_contacts: Optional[List[CustomerShippingContactsRequest]] = Field(default=None, description="Contains the detail of the shipping addresses that the client has active or has used in Conekta")
     subscription: Optional[SubscriptionRequest] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "custom_reference", "date_of_birth", "email", "default_payment_source_id", "default_shipping_contact_id", "fiscal_entities", "metadata", "name", "national_id", "payment_sources", "phone", "plan_id", "shipping_contacts", "subscription"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -63,8 +65,7 @@ class Customer(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -116,11 +117,6 @@ class Customer(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of subscription
         if self.subscription:
             _dict['subscription'] = self.subscription.to_dict()
-        # set to None if antifraud_info (nullable) is None
-        # and model_fields_set contains the field
-        if self.antifraud_info is None and "antifraud_info" in self.model_fields_set:
-            _dict['antifraud_info'] = None
-
         return _dict
 
     @classmethod
@@ -140,14 +136,14 @@ class Customer(BaseModel):
             "email": obj.get("email"),
             "default_payment_source_id": obj.get("default_payment_source_id"),
             "default_shipping_contact_id": obj.get("default_shipping_contact_id"),
-            "fiscal_entities": [CustomerFiscalEntitiesRequest.from_dict(_item) for _item in obj["fiscal_entities"]] if obj.get("fiscal_entities") is not None else None,
+            "fiscal_entities": [FiscalEntityRequest.from_dict(_item) for _item in obj["fiscal_entities"]] if obj.get("fiscal_entities") is not None else None,
             "metadata": obj.get("metadata"),
             "name": obj.get("name"),
             "national_id": obj.get("national_id"),
             "payment_sources": [CustomerPaymentMethodsRequest.from_dict(_item) for _item in obj["payment_sources"]] if obj.get("payment_sources") is not None else None,
             "phone": obj.get("phone"),
             "plan_id": obj.get("plan_id"),
-            "shipping_contacts": [CustomerShippingContacts.from_dict(_item) for _item in obj["shipping_contacts"]] if obj.get("shipping_contacts") is not None else None,
+            "shipping_contacts": [CustomerShippingContactsRequest.from_dict(_item) for _item in obj["shipping_contacts"]] if obj.get("shipping_contacts") is not None else None,
             "subscription": SubscriptionRequest.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None
         })
         return _obj

@@ -5,16 +5,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**created_at** | **int** |  | [optional] 
+**id** | **str** |  | [optional] 
+**object** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
 **receiver** | **str** |  | [optional] 
 **between_streets** | **str** |  | [optional] 
-**address** | [**CustomerShippingContactsResponseAddress**](CustomerShippingContactsResponseAddress.md) |  | [optional] 
+**address** | [**CustomerShippingContactsAddress**](CustomerShippingContactsAddress.md) |  | [optional] 
 **parent_id** | **str** |  | [optional] 
 **default** | **bool** |  | [optional] 
-**id** | **str** |  | [optional] 
-**created_at** | **int** |  | [optional] 
 **metadata** | **Dict[str, object]** | Metadata associated with the shipping contact | [optional] 
-**object** | **str** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
 
 ## Example

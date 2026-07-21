@@ -24,9 +24,10 @@ from conekta.models.customer_antifraud_info_response import CustomerAntifraudInf
 from conekta.models.customer_fiscal_entities_response import CustomerFiscalEntitiesResponse
 from conekta.models.customer_payment_methods_response import CustomerPaymentMethodsResponse
 from conekta.models.customer_response_shipping_contacts import CustomerResponseShippingContacts
-from conekta.models.subscription_response import SubscriptionResponse
+from conekta.models.customer_subscription_response import CustomerSubscriptionResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CustomerResponse(BaseModel):
     """
@@ -34,28 +35,29 @@ class CustomerResponse(BaseModel):
     """ # noqa: E501
     antifraud_info: Optional[CustomerAntifraudInfoResponse] = None
     corporate: Optional[StrictBool] = Field(default=None, description="true if the customer is a company")
-    created_at: StrictInt = Field(description="Creation date of the object")
-    custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference")
-    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.")
-    default_fiscal_entity_id: Optional[StrictStr] = None
-    default_shipping_contact_id: Optional[StrictStr] = None
-    default_payment_source_id: Optional[StrictStr] = None
-    email: Optional[StrictStr] = None
+    created_at: StrictInt = Field(description="Creation date of the object", json_schema_extra={"examples": [1485151007]})
+    custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference", json_schema_extra={"examples": ["custom_reference"]})
+    date_of_birth: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the date of birth of the client.", json_schema_extra={"examples": ["24/07/1992"]})
+    default_fiscal_entity_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["fis_ent_2tKqqAfqPi21oCmEJ"]})
+    default_shipping_contact_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["ship_cont_2tKZsTYcsryyu7Ah8"]})
+    default_payment_source_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["src_2tHJfJ79KyUwpxTio"]})
+    email: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Felipe@gmail.com"]})
     fiscal_entities: Optional[CustomerFiscalEntitiesResponse] = None
-    id: StrictStr = Field(description="Customer's ID")
-    livemode: StrictBool = Field(description="true if the object exists in live mode or the value false if the object exists in test mode")
-    name: StrictStr = Field(description="Customer's name")
-    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.")
+    id: StrictStr = Field(description="Customer's ID", json_schema_extra={"examples": ["cus_2tHJfJ79KyUwpxTik"]})
+    livemode: StrictBool = Field(description="true if the object exists in live mode or the value false if the object exists in test mode", json_schema_extra={"examples": [True]})
+    name: StrictStr = Field(description="Customer's name", json_schema_extra={"examples": ["Felipe"]})
+    national_id: Optional[StrictStr] = Field(default=None, description="It is a parameter that allows to identify the national identification number of the client.", json_schema_extra={"examples": ["HEGG560427MVZRRL04"]})
     metadata: Optional[Dict[str, Any]] = None
-    object: StrictStr
+    object: StrictStr = Field(json_schema_extra={"examples": ["customer"]})
     payment_sources: Optional[CustomerPaymentMethodsResponse] = None
-    phone: Optional[StrictStr] = Field(default=None, description="Customer's phone number")
+    phone: Optional[StrictStr] = Field(default=None, description="Customer's phone number", json_schema_extra={"examples": ["+5215555555555"]})
     shipping_contacts: Optional[CustomerResponseShippingContacts] = None
-    subscription: Optional[SubscriptionResponse] = None
+    subscription: Optional[CustomerSubscriptionResponse] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "corporate", "created_at", "custom_reference", "date_of_birth", "default_fiscal_entity_id", "default_shipping_contact_id", "default_payment_source_id", "email", "fiscal_entities", "id", "livemode", "name", "national_id", "metadata", "object", "payment_sources", "phone", "shipping_contacts", "subscription"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -67,8 +69,7 @@ class CustomerResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -108,21 +109,6 @@ class CustomerResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of subscription
         if self.subscription:
             _dict['subscription'] = self.subscription.to_dict()
-        # set to None if antifraud_info (nullable) is None
-        # and model_fields_set contains the field
-        if self.antifraud_info is None and "antifraud_info" in self.model_fields_set:
-            _dict['antifraud_info'] = None
-
-        # set to None if default_fiscal_entity_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.default_fiscal_entity_id is None and "default_fiscal_entity_id" in self.model_fields_set:
-            _dict['default_fiscal_entity_id'] = None
-
-        # set to None if default_payment_source_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.default_payment_source_id is None and "default_payment_source_id" in self.model_fields_set:
-            _dict['default_payment_source_id'] = None
-
         return _dict
 
     @classmethod
@@ -154,7 +140,7 @@ class CustomerResponse(BaseModel):
             "payment_sources": CustomerPaymentMethodsResponse.from_dict(obj["payment_sources"]) if obj.get("payment_sources") is not None else None,
             "phone": obj.get("phone"),
             "shipping_contacts": CustomerResponseShippingContacts.from_dict(obj["shipping_contacts"]) if obj.get("shipping_contacts") is not None else None,
-            "subscription": SubscriptionResponse.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None
+            "subscription": CustomerSubscriptionResponse.from_dict(obj["subscription"]) if obj.get("subscription") is not None else None
         })
         return _obj
 

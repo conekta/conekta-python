@@ -23,35 +23,39 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.charge_response_channel import ChargeResponseChannel
 from conekta.models.charge_response_payment_method import ChargeResponsePaymentMethod
 from conekta.models.charge_response_refunds import ChargeResponseRefunds
+from conekta.models.chargeback_response import ChargebackResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChargeResponse(BaseModel):
     """
     ChargeResponse
     """ # noqa: E501
-    amount: StrictInt
+    amount: StrictInt = Field(json_schema_extra={"examples": [4321]})
     channel: Optional[ChargeResponseChannel] = None
-    created_at: StrictInt
-    currency: StrictStr
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1676386026]})
+    currency: StrictStr = Field(json_schema_extra={"examples": ["MXN"]})
     customer_id: Optional[StrictStr] = None
-    description: Optional[StrictStr] = None
-    device_fingerprint: Optional[StrictStr] = None
-    failure_code: Optional[StrictStr] = None
-    failure_message: Optional[StrictStr] = None
-    id: StrictStr = Field(description="Charge ID")
-    livemode: StrictBool = Field(description="Whether the charge was made in live mode or not")
-    object: StrictStr
-    order_id: StrictStr = Field(description="Order ID")
-    paid_at: Optional[StrictInt] = Field(default=None, description="Payment date")
+    description: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Payment from order"]})
+    device_fingerprint: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6FR3chaU4Y1nGAW5NAGd1rcjAKa142Ba"]})
+    failure_code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["suspected_fraud"]})
+    failure_message: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Este cargo ha sido declinado porque el comportamiento del comprador es sospechoso."]})
+    id: StrictStr = Field(description="Charge ID", json_schema_extra={"examples": ["63efa757cf65380001aec040"]})
+    livemode: StrictBool = Field(description="Whether the charge was made in live mode or not", json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["charge"]})
+    order_id: StrictStr = Field(description="Order ID", json_schema_extra={"examples": ["ord_2tN73UdUSNrYRPD9r"]})
+    paid_at: Optional[StrictInt] = Field(default=None, description="charge Payment date", json_schema_extra={"examples": [1676390742]})
     payment_method: Optional[ChargeResponsePaymentMethod] = None
-    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge")
+    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge", json_schema_extra={"examples": ["ref_2tN73UdUSNrYRPD9r"]})
     refunds: Optional[ChargeResponseRefunds] = None
-    status: StrictStr = Field(description="Charge status")
-    __properties: ClassVar[List[str]] = ["amount", "channel", "created_at", "currency", "customer_id", "description", "device_fingerprint", "failure_code", "failure_message", "id", "livemode", "object", "order_id", "paid_at", "payment_method", "reference_id", "refunds", "status"]
+    chargeback: Optional[ChargebackResponse] = None
+    status: StrictStr = Field(description="Charge status", json_schema_extra={"examples": ["pending_payment"]})
+    __properties: ClassVar[List[str]] = ["amount", "channel", "created_at", "currency", "customer_id", "description", "device_fingerprint", "failure_code", "failure_message", "id", "livemode", "object", "order_id", "paid_at", "payment_method", "reference_id", "refunds", "chargeback", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -63,8 +67,7 @@ class ChargeResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -98,21 +101,9 @@ class ChargeResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of refunds
         if self.refunds:
             _dict['refunds'] = self.refunds.to_dict()
-        # set to None if paid_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.paid_at is None and "paid_at" in self.model_fields_set:
-            _dict['paid_at'] = None
-
-        # set to None if reference_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.reference_id is None and "reference_id" in self.model_fields_set:
-            _dict['reference_id'] = None
-
-        # set to None if refunds (nullable) is None
-        # and model_fields_set contains the field
-        if self.refunds is None and "refunds" in self.model_fields_set:
-            _dict['refunds'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of chargeback
+        if self.chargeback:
+            _dict['chargeback'] = self.chargeback.to_dict()
         return _dict
 
     @classmethod
@@ -142,6 +133,7 @@ class ChargeResponse(BaseModel):
             "payment_method": ChargeResponsePaymentMethod.from_dict(obj["payment_method"]) if obj.get("payment_method") is not None else None,
             "reference_id": obj.get("reference_id"),
             "refunds": ChargeResponseRefunds.from_dict(obj["refunds"]) if obj.get("refunds") is not None else None,
+            "chargeback": ChargebackResponse.from_dict(obj["chargeback"]) if obj.get("chargeback") is not None else None,
             "status": obj.get("status")
         })
         return _obj

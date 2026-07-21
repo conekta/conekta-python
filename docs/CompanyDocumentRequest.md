@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **content_type** | **str** | MIME type of the file. Allowed values depend on the &#x60;file_classification&#x60;. - &#x60;image/jpeg&#x60; - &#x60;image/png&#x60; - &#x60;application/pdf&#x60;  | 
 **international** | **bool** | Indicates if the document is international. Defaults to false. | [optional] 
 **file_name** | **str** | Name of the file being uploaded. | 
-**file_data** | **bytearray** | Base64 encoded content of the file. | 
+**file_data** | **bytes** | Base64 encoded content of the file. | 
 
 ## Example
 

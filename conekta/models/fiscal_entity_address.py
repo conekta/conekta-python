@@ -22,22 +22,24 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class FiscalEntityAddress(BaseModel):
     """
     Address of the fiscal entity
     """ # noqa: E501
-    street1: StrictStr = Field(description="Street name and number")
-    street2: Optional[StrictStr] = Field(default=None, description="Street name and number")
-    postal_code: StrictStr = Field(description="Postal code")
-    city: StrictStr = Field(description="City")
-    state: Optional[StrictStr] = Field(default=None, description="State")
-    country: StrictStr = Field(description="this field follows the [ISO 3166-1 alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)")
-    external_number: StrictStr = Field(description="External number")
+    street1: StrictStr = Field(description="Street name and number", json_schema_extra={"examples": ["Nuevo Leon 254"]})
+    street2: Optional[StrictStr] = Field(default=None, description="Street name and number", json_schema_extra={"examples": ["Departamento 404"]})
+    postal_code: StrictStr = Field(description="Postal code", json_schema_extra={"examples": ["06100"]})
+    city: StrictStr = Field(description="City", json_schema_extra={"examples": ["Ciudad de Mexico"]})
+    state: Optional[StrictStr] = Field(default=None, description="State", json_schema_extra={"examples": ["Ciudad de Mexico"]})
+    country: StrictStr = Field(description="this field follows the [ISO 3166-1 alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)", json_schema_extra={"examples": ["MX"]})
+    external_number: StrictStr = Field(description="External number", json_schema_extra={"examples": ["123"]})
     __properties: ClassVar[List[str]] = ["street1", "street2", "postal_code", "city", "state", "country", "external_number"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class FiscalEntityAddress(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,11 +76,6 @@ class FiscalEntityAddress(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if street2 (nullable) is None
-        # and model_fields_set contains the field
-        if self.street2 is None and "street2" in self.model_fields_set:
-            _dict['street2'] = None
-
         return _dict
 
     @classmethod

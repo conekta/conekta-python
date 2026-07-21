@@ -23,24 +23,26 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.order_fiscal_entity_address_response import OrderFiscalEntityAddressResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderFiscalEntityResponse(BaseModel):
     """
     Fiscal entity of the order, Currently it is a purely informative field
     """ # noqa: E501
     address: OrderFiscalEntityAddressResponse
-    email: Optional[StrictStr] = Field(default=None, description="Email of the fiscal entity")
+    email: Optional[StrictStr] = Field(default=None, description="Email of the fiscal entity", json_schema_extra={"examples": ["test@gmail.com"]})
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Metadata associated with the fiscal entity")
-    name: Optional[StrictStr] = Field(default=None, description="Name of the fiscal entity")
-    tax_id: Optional[StrictStr] = Field(default=None, description="Tax ID of the fiscal entity")
-    id: StrictStr = Field(description="ID of the fiscal entity")
-    created_at: StrictInt = Field(description="The time at which the object was created in seconds since the Unix epoch")
-    object: StrictStr
-    phone: Optional[StrictStr] = Field(default=None, description="Phone of the fiscal entity")
+    name: Optional[StrictStr] = Field(default=None, description="Name of the fiscal entity", json_schema_extra={"examples": ["Conekta Inc"]})
+    tax_id: Optional[StrictStr] = Field(default=None, description="Tax ID of the fiscal entity", json_schema_extra={"examples": ["324234234"]})
+    id: StrictStr = Field(description="ID of the fiscal entity", json_schema_extra={"examples": ["fis_ent_2tN85VYaSMyDvjB3M"]})
+    created_at: StrictInt = Field(description="The time at which the object was created in seconds since the Unix epoch", json_schema_extra={"examples": [1676328434]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["fiscal_entity"]})
+    phone: Optional[StrictStr] = Field(default=None, description="Phone of the fiscal entity", json_schema_extra={"examples": ["+525511223344"]})
     __properties: ClassVar[List[str]] = ["address", "email", "metadata", "name", "tax_id", "id", "created_at", "object", "phone"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -52,8 +54,7 @@ class OrderFiscalEntityResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -81,26 +82,6 @@ class OrderFiscalEntityResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
-        # set to None if email (nullable) is None
-        # and model_fields_set contains the field
-        if self.email is None and "email" in self.model_fields_set:
-            _dict['email'] = None
-
-        # set to None if name (nullable) is None
-        # and model_fields_set contains the field
-        if self.name is None and "name" in self.model_fields_set:
-            _dict['name'] = None
-
-        # set to None if tax_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.tax_id is None and "tax_id" in self.model_fields_set:
-            _dict['tax_id'] = None
-
-        # set to None if phone (nullable) is None
-        # and model_fields_set contains the field
-        if self.phone is None and "phone" in self.model_fields_set:
-            _dict['phone'] = None
-
         return _dict
 
     @classmethod

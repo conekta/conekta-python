@@ -22,28 +22,30 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodBnplRequest(BaseModel):
     """
     PaymentMethodBnplRequest
     """ # noqa: E501
-    type: StrictStr = Field(description="Type of the payment method")
-    cancel_url: StrictStr = Field(description="URL to redirect the customer after a canceled payment")
-    can_not_expire: StrictBool = Field(description="Indicates if the payment method can not expire")
-    failure_url: StrictStr = Field(description="URL to redirect the customer after a failed payment")
-    product_type: StrictStr = Field(description="Product type of the payment method, use for the payment method to know the product type")
-    success_url: StrictStr = Field(description="URL to redirect the customer after a successful payment")
+    type: StrictStr = Field(description="Type of the payment method", json_schema_extra={"examples": ["bnpl"]})
+    cancel_url: StrictStr = Field(description="URL to redirect the customer after a canceled payment", json_schema_extra={"examples": ["https://example.com/cancel"]})
+    can_not_expire: StrictBool = Field(description="Indicates if the payment method can not expire", json_schema_extra={"examples": [True]})
+    failure_url: StrictStr = Field(description="URL to redirect the customer after a failed payment", json_schema_extra={"examples": ["https://example.com/failure"]})
+    product_type: StrictStr = Field(description="Product type of the payment method, use for the payment method to know the product type", json_schema_extra={"examples": ["aplazo_bnpl"]})
+    success_url: StrictStr = Field(description="URL to redirect the customer after a successful payment", json_schema_extra={"examples": ["https://example.com/success"]})
     __properties: ClassVar[List[str]] = ["type", "cancel_url", "can_not_expire", "failure_url", "product_type", "success_url"]
 
     @field_validator('product_type')
     def product_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['aplazo_bnpl', 'creditea_bnpl']):
-            raise ValueError("must be one of enum values ('aplazo_bnpl', 'creditea_bnpl')")
+        if value not in set(['aplazo_bnpl', 'azteca_bnpl', 'coppel_bnpl', 'creditea_bnpl']):
+            raise ValueError("must be one of enum values ('aplazo_bnpl', 'azteca_bnpl', 'coppel_bnpl', 'creditea_bnpl')")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +57,7 @@ class PaymentMethodBnplRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

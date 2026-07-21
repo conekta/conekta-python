@@ -20,28 +20,30 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.balance_common_field import BalanceCommonField
+from conekta.models.balance_common_fiels_response import BalanceCommonFielsResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class BalanceResponse(BaseModel):
     """
     balance model
     """ # noqa: E501
-    available: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's available")
-    cashout_retention_amount: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's cashout retention amount")
-    conekta_retention: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's conekta retention")
-    gateway: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's gateway")
-    pending: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's pending")
-    retained: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's retained")
-    retention_amount: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's retention amount")
+    available: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's available")
+    cashout_retention_amount: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's cashout retention amount")
+    conekta_retention: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's conekta retention")
+    gateway: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's gateway")
+    pending: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's pending")
+    retained: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's retained")
+    retention_amount: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's retention amount")
     target_collateral_amount: Optional[Dict[str, Any]] = Field(default=None, description="The balance's target collateral amount")
-    target_retention_amount: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's target retention amount")
-    temporarily_retained: Optional[List[BalanceCommonField]] = Field(default=None, description="The balance's temporarily retained")
+    target_retention_amount: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's target retention amount")
+    temporarily_retained: Optional[List[BalanceCommonFielsResponse]] = Field(default=None, description="The balance's temporarily retained")
     __properties: ClassVar[List[str]] = ["available", "cashout_retention_amount", "conekta_retention", "gateway", "pending", "retained", "retention_amount", "target_collateral_amount", "target_retention_amount", "temporarily_retained"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +55,7 @@ class BalanceResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -154,16 +155,16 @@ class BalanceResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "available": [BalanceCommonField.from_dict(_item) for _item in obj["available"]] if obj.get("available") is not None else None,
-            "cashout_retention_amount": [BalanceCommonField.from_dict(_item) for _item in obj["cashout_retention_amount"]] if obj.get("cashout_retention_amount") is not None else None,
-            "conekta_retention": [BalanceCommonField.from_dict(_item) for _item in obj["conekta_retention"]] if obj.get("conekta_retention") is not None else None,
-            "gateway": [BalanceCommonField.from_dict(_item) for _item in obj["gateway"]] if obj.get("gateway") is not None else None,
-            "pending": [BalanceCommonField.from_dict(_item) for _item in obj["pending"]] if obj.get("pending") is not None else None,
-            "retained": [BalanceCommonField.from_dict(_item) for _item in obj["retained"]] if obj.get("retained") is not None else None,
-            "retention_amount": [BalanceCommonField.from_dict(_item) for _item in obj["retention_amount"]] if obj.get("retention_amount") is not None else None,
+            "available": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["available"]] if obj.get("available") is not None else None,
+            "cashout_retention_amount": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["cashout_retention_amount"]] if obj.get("cashout_retention_amount") is not None else None,
+            "conekta_retention": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["conekta_retention"]] if obj.get("conekta_retention") is not None else None,
+            "gateway": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["gateway"]] if obj.get("gateway") is not None else None,
+            "pending": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["pending"]] if obj.get("pending") is not None else None,
+            "retained": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["retained"]] if obj.get("retained") is not None else None,
+            "retention_amount": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["retention_amount"]] if obj.get("retention_amount") is not None else None,
             "target_collateral_amount": obj.get("target_collateral_amount"),
-            "target_retention_amount": [BalanceCommonField.from_dict(_item) for _item in obj["target_retention_amount"]] if obj.get("target_retention_amount") is not None else None,
-            "temporarily_retained": [BalanceCommonField.from_dict(_item) for _item in obj["temporarily_retained"]] if obj.get("temporarily_retained") is not None else None
+            "target_retention_amount": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["target_retention_amount"]] if obj.get("target_retention_amount") is not None else None,
+            "temporarily_retained": [BalanceCommonFielsResponse.from_dict(_item) for _item in obj["temporarily_retained"]] if obj.get("temporarily_retained") is not None else None
         })
         return _obj
 

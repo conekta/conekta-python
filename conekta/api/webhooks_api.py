@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -21,9 +20,9 @@ from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.get_webhooks_response import GetWebhooksResponse
+from conekta.models.update_webhook import UpdateWebhook
 from conekta.models.webhook_request import WebhookRequest
 from conekta.models.webhook_response import WebhookResponse
-from conekta.models.webhook_update_request import WebhookUpdateRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -1573,7 +1572,7 @@ class WebhooksApi:
     def update_webhook(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        webhook_update_request: Annotated[WebhookUpdateRequest, Field(description="requested fields in order to update a webhook")],
+        update_webhook: Annotated[UpdateWebhook, Field(description="requested fields in order to update a webhook")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1595,8 +1594,8 @@ class WebhooksApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param webhook_update_request: requested fields in order to update a webhook (required)
-        :type webhook_update_request: WebhookUpdateRequest
+        :param update_webhook: requested fields in order to update a webhook (required)
+        :type update_webhook: UpdateWebhook
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1625,7 +1624,7 @@ class WebhooksApi:
 
         _param = self._update_webhook_serialize(
             id=id,
-            webhook_update_request=webhook_update_request,
+            update_webhook=update_webhook,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1655,7 +1654,7 @@ class WebhooksApi:
     def update_webhook_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        webhook_update_request: Annotated[WebhookUpdateRequest, Field(description="requested fields in order to update a webhook")],
+        update_webhook: Annotated[UpdateWebhook, Field(description="requested fields in order to update a webhook")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1677,8 +1676,8 @@ class WebhooksApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param webhook_update_request: requested fields in order to update a webhook (required)
-        :type webhook_update_request: WebhookUpdateRequest
+        :param update_webhook: requested fields in order to update a webhook (required)
+        :type update_webhook: UpdateWebhook
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1707,7 +1706,7 @@ class WebhooksApi:
 
         _param = self._update_webhook_serialize(
             id=id,
-            webhook_update_request=webhook_update_request,
+            update_webhook=update_webhook,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1737,7 +1736,7 @@ class WebhooksApi:
     def update_webhook_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        webhook_update_request: Annotated[WebhookUpdateRequest, Field(description="requested fields in order to update a webhook")],
+        update_webhook: Annotated[UpdateWebhook, Field(description="requested fields in order to update a webhook")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1759,8 +1758,8 @@ class WebhooksApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param webhook_update_request: requested fields in order to update a webhook (required)
-        :type webhook_update_request: WebhookUpdateRequest
+        :param update_webhook: requested fields in order to update a webhook (required)
+        :type update_webhook: UpdateWebhook
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1789,7 +1788,7 @@ class WebhooksApi:
 
         _param = self._update_webhook_serialize(
             id=id,
-            webhook_update_request=webhook_update_request,
+            update_webhook=update_webhook,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1814,7 +1813,7 @@ class WebhooksApi:
     def _update_webhook_serialize(
         self,
         id,
-        webhook_update_request,
+        update_webhook,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -1848,8 +1847,8 @@ class WebhooksApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if webhook_update_request is not None:
-            _body_params = webhook_update_request
+        if update_webhook is not None:
+            _body_params = update_webhook
 
 
         # set the HTTP header `Accept`

@@ -8,11 +8,12 @@ Method | HTTP request | Description
 
 
 # **create_token**
-> TokenResponse create_token(token, accept_language=accept_language)
+> TokenResponse create_token(token_request, accept_language=accept_language)
 
 Create Token
 
-Generate a payment token, to associate it with a card 
+Generate a payment token, to associate it with a card, Endpoint could be use directly only for PCI compliance account
+
 
 ### Example
 
@@ -20,7 +21,7 @@ Generate a payment token, to associate it with a card
 
 ```python
 import conekta
-from conekta.models.token import Token
+from conekta.models.token_request import TokenRequest
 from conekta.models.token_response import TokenResponse
 from conekta.rest import ApiException
 from pprint import pprint
@@ -45,12 +46,12 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.TokensApi(api_client)
-    token = conekta.Token() # Token | requested field for token
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    token_request = conekta.TokenRequest() # TokenRequest | requested field for token
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Create Token
-        api_response = api_instance.create_token(token, accept_language=accept_language)
+        api_response = api_instance.create_token(token_request, accept_language=accept_language)
         print("The response of TokensApi->create_token:\n")
         pprint(api_response)
     except Exception as e:
@@ -64,8 +65,8 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **token** | [**Token**](Token.md)| requested field for token | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **token_request** | [**TokenRequest**](TokenRequest.md)| requested field for token | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 

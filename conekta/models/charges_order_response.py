@@ -20,21 +20,25 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.charges_order_response_all_of_data import ChargesOrderResponseAllOfData
+from conekta.models.charge_response import ChargeResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChargesOrderResponse(BaseModel):
     """
     The charges associated with the order
     """ # noqa: E501
-    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
-    object: StrictStr = Field(description="Object type, in this case is list")
-    data: Optional[List[ChargesOrderResponseAllOfData]] = None
-    __properties: ClassVar[List[str]] = ["has_more", "object", "data"]
+    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested", json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(description="Object type, in this case is list", json_schema_extra={"examples": ["list"]})
+    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&next=chrg_1"]})
+    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&previous=chrg_1"]})
+    data: Optional[List[ChargeResponse]] = None
+    __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +50,7 @@ class ChargesOrderResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -93,7 +96,9 @@ class ChargesOrderResponse(BaseModel):
         _obj = cls.model_validate({
             "has_more": obj.get("has_more"),
             "object": obj.get("object"),
-            "data": [ChargesOrderResponseAllOfData.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
+            "next_page_url": obj.get("next_page_url"),
+            "previous_page_url": obj.get("previous_page_url"),
+            "data": [ChargeResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj
 

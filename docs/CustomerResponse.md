@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 **payment_sources** | [**CustomerPaymentMethodsResponse**](CustomerPaymentMethodsResponse.md) |  | [optional] 
 **phone** | **str** | Customer&#39;s phone number | [optional] 
 **shipping_contacts** | [**CustomerResponseShippingContacts**](CustomerResponseShippingContacts.md) |  | [optional] 
-**subscription** | [**SubscriptionResponse**](SubscriptionResponse.md) |  | [optional] 
+**subscription** | [**CustomerSubscriptionResponse**](CustomerSubscriptionResponse.md) |  | [optional] 
 
 ## Example
 

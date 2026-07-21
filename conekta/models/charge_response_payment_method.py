@@ -116,9 +116,10 @@ class ChargeResponsePaymentMethod(BaseModel):
         match = 0
 
         # use oneOf discriminator to lookup the data type
-        _data_type = json.loads(json_str).get("object")
+        _discriminator_property = "object"
+        _data_type = json.loads(json_str).get(_discriminator_property)
         if not _data_type:
-            raise ValueError("Failed to lookup data type from the field `object` in the input.")
+            raise ValueError(f"Failed to lookup data type from the field `{_discriminator_property}` in the input.")
 
         # check if data type is `PaymentMethodBankTransfer`
         if _data_type == "bank_transfer_payment":
@@ -142,31 +143,6 @@ class ChargeResponsePaymentMethod(BaseModel):
 
         # check if data type is `PaymentMethodPbbPayment`
         if _data_type == "pay_by_bank_payment":
-            instance.actual_instance = PaymentMethodPbbPayment.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodBankTransfer`
-        if _data_type == "payment_method_bank_transfer":
-            instance.actual_instance = PaymentMethodBankTransfer.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodBnplPayment`
-        if _data_type == "payment_method_bnpl_payment":
-            instance.actual_instance = PaymentMethodBnplPayment.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodCard`
-        if _data_type == "payment_method_card":
-            instance.actual_instance = PaymentMethodCard.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodCash`
-        if _data_type == "payment_method_cash":
-            instance.actual_instance = PaymentMethodCash.from_json(json_str)
-            return instance
-
-        # check if data type is `PaymentMethodPbbPayment`
-        if _data_type == "payment_method_pbb_payment":
             instance.actual_instance = PaymentMethodPbbPayment.from_json(json_str)
             return instance
 

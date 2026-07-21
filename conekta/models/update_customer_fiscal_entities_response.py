@@ -18,31 +18,33 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.customer_address import CustomerAddress
+from conekta.models.fiscal_entity_request_address import FiscalEntityRequestAddress
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class UpdateCustomerFiscalEntitiesResponse(BaseModel):
     """
     UpdateCustomerFiscalEntitiesResponse
     """ # noqa: E501
-    address: CustomerAddress
+    address: FiscalEntityRequestAddress
     tax_id: Optional[StrictStr] = None
     email: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
-    metadata: Optional[Dict[str, Dict[str, Any]]] = None
-    company_name: Optional[StrictStr] = None
-    id: StrictStr
-    object: StrictStr
-    created_at: StrictInt
-    parent_id: Optional[StrictStr] = None
+    metadata: Optional[Any] = None
+    company_name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["conekta"]})
+    id: StrictStr = Field(json_schema_extra={"examples": ["fis_ent_2tKZsTYcsryyu7Ah8"]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["fiscal_entities"]})
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1675715413]})
+    parent_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["cus_2tKcHxhTz7xU5SymF"]})
     default: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = ["address", "tax_id", "email", "phone", "metadata", "company_name", "id", "object", "created_at", "parent_id", "default"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class UpdateCustomerFiscalEntitiesResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -83,6 +84,11 @@ class UpdateCustomerFiscalEntitiesResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
+        # set to None if metadata (nullable) is None
+        # and model_fields_set contains the field
+        if self.metadata is None and "metadata" in self.model_fields_set:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod
@@ -95,11 +101,10 @@ class UpdateCustomerFiscalEntitiesResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "address": CustomerAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
+            "address": FiscalEntityRequestAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "tax_id": obj.get("tax_id"),
             "email": obj.get("email"),
             "phone": obj.get("phone"),
-            "metadata": obj.get("metadata"),
             "company_name": obj.get("company_name"),
             "id": obj.get("id"),
             "object": obj.get("object"),

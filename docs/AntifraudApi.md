@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **create_rule_blacklist**
-> BlacklistRuleResponse create_rule_blacklist(create_risk_rules_data, accept_language=accept_language)
+> BlacklistRuleResponse create_rule_blacklist(create_rule_whitelist_request, accept_language=accept_language)
 
 Create blacklisted rule
 
@@ -24,7 +24,7 @@ Create blacklisted rule
 ```python
 import conekta
 from conekta.models.blacklist_rule_response import BlacklistRuleResponse
-from conekta.models.create_risk_rules_data import CreateRiskRulesData
+from conekta.models.create_rule_whitelist_request import CreateRuleWhitelistRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -48,12 +48,12 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    create_risk_rules_data = conekta.CreateRiskRulesData() # CreateRiskRulesData | requested field for blacklist rule
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    create_rule_whitelist_request = conekta.CreateRuleWhitelistRequest() # CreateRuleWhitelistRequest | requested field for blacklist rule
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Create blacklisted rule
-        api_response = api_instance.create_rule_blacklist(create_risk_rules_data, accept_language=accept_language)
+        api_response = api_instance.create_rule_blacklist(create_rule_whitelist_request, accept_language=accept_language)
         print("The response of AntifraudApi->create_rule_blacklist:\n")
         pprint(api_response)
     except Exception as e:
@@ -67,8 +67,8 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **create_risk_rules_data** | [**CreateRiskRulesData**](CreateRiskRulesData.md)| requested field for blacklist rule | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **create_rule_whitelist_request** | [**CreateRuleWhitelistRequest**](CreateRuleWhitelistRequest.md)| requested field for blacklist rule | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_rule_whitelist**
-> WhitelistlistRuleResponse create_rule_whitelist(accept_language=accept_language, create_risk_rules_data=create_risk_rules_data)
+> WhitelistlistRuleResponse create_rule_whitelist(accept_language=accept_language, create_rule_whitelist_request=create_rule_whitelist_request)
 
 Create whitelisted rule
 
@@ -104,7 +104,7 @@ Create whitelisted rule
 
 ```python
 import conekta
-from conekta.models.create_risk_rules_data import CreateRiskRulesData
+from conekta.models.create_rule_whitelist_request import CreateRuleWhitelistRequest
 from conekta.models.whitelistlist_rule_response import WhitelistlistRuleResponse
 from conekta.rest import ApiException
 from pprint import pprint
@@ -129,12 +129,12 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
-    create_risk_rules_data = conekta.CreateRiskRulesData() # CreateRiskRulesData |  (optional)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
+    create_rule_whitelist_request = conekta.CreateRuleWhitelistRequest() # CreateRuleWhitelistRequest |  (optional)
 
     try:
         # Create whitelisted rule
-        api_response = api_instance.create_rule_whitelist(accept_language=accept_language, create_risk_rules_data=create_risk_rules_data)
+        api_response = api_instance.create_rule_whitelist(accept_language=accept_language, create_rule_whitelist_request=create_rule_whitelist_request)
         print("The response of AntifraudApi->create_rule_whitelist:\n")
         pprint(api_response)
     except Exception as e:
@@ -148,8 +148,8 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
- **create_risk_rules_data** | [**CreateRiskRulesData**](CreateRiskRulesData.md)|  | [optional] 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
+ **create_rule_whitelist_request** | [**CreateRuleWhitelistRequest**](CreateRuleWhitelistRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -211,7 +211,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -231,7 +231,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -294,7 +294,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -314,7 +314,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -379,7 +379,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get list of blacklisted rules
@@ -397,7 +397,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -459,7 +459,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.AntifraudApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get a list of whitelisted rules
@@ -477,7 +477,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 

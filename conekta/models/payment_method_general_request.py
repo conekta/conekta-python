@@ -22,23 +22,25 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodGeneralRequest(BaseModel):
     """
     Payment method used in the charge. Go to the [payment methods](https://developers.conekta.com/reference/m%C3%A9todos-de-pago) section for more details 
     """ # noqa: E501
-    expires_at: Optional[StrictInt] = Field(default=None, description="Method expiration date as unix timestamp")
+    expires_at: Optional[StrictInt] = Field(default=None, description="Method expiration date as unix timestamp", json_schema_extra={"examples": [1677196303]})
     monthly_installments: Optional[StrictInt] = Field(default=None, description="How many months without interest to apply, it can be 3, 6, 9, 12 or 18")
-    type: StrictStr = Field(description="Type of payment method")
-    token_id: Optional[StrictStr] = None
-    payment_source_id: Optional[StrictStr] = None
-    cvc: Optional[StrictStr] = Field(default=None, description="Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants")
-    contract_id: Optional[StrictStr] = Field(default=None, description="Optional id sent to indicate the bank contract for recurrent card charges.")
-    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    type: StrictStr = Field(description="Type of payment method", json_schema_extra={"examples": ["card"]})
+    token_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["tok_2897348234"]})
+    payment_source_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["src_2tLkkyfMPh6v7pFry"]})
+    cvc: Optional[StrictStr] = Field(default=None, description="Optional, It is a value that allows identifying the security code of the card. Only for PCI merchants", json_schema_extra={"examples": ["123"]})
+    contract_id: Optional[StrictStr] = Field(default=None, description="Optional id sent to indicate the bank contract for recurrent card charges.", json_schema_extra={"examples": ["S781317595"]})
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes", json_schema_extra={"examples": ["0.0.0.0"]})
     __properties: ClassVar[List[str]] = ["expires_at", "monthly_installments", "type", "token_id", "payment_source_id", "cvc", "contract_id", "customer_ip_address"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class PaymentMethodGeneralRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

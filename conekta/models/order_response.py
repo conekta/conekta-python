@@ -29,38 +29,44 @@ from conekta.models.order_response_checkout import OrderResponseCheckout
 from conekta.models.order_response_customer_info import OrderResponseCustomerInfo
 from conekta.models.order_response_products import OrderResponseProducts
 from conekta.models.order_response_shipping_contact import OrderResponseShippingContact
+from conekta.models.order_shipping_lines_response import OrderShippingLinesResponse
+from conekta.models.order_tax_lines_response import OrderTaxLinesResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderResponse(BaseModel):
     """
     order response
     """ # noqa: E501
-    amount: Optional[StrictInt] = Field(default=None, description="The total amount to be collected in cents")
-    amount_refunded: Optional[StrictInt] = Field(default=None, description="The total amount refunded in cents")
+    amount: Optional[StrictInt] = Field(default=None, description="The total amount to be collected in cents", json_schema_extra={"examples": [21605]})
+    amount_refunded: Optional[StrictInt] = Field(default=None, description="The total amount refunded in cents", json_schema_extra={"examples": [0]})
     channel: Optional[OrderChannelResponse] = None
     charges: Optional[OrderChargesResponse] = None
     checkout: Optional[OrderResponseCheckout] = None
-    created_at: Optional[StrictInt] = Field(default=None, description="The time at which the object was created in seconds since the Unix epoch")
-    currency: Optional[StrictStr] = Field(default=None, description="The three-letter ISO 4217 currency code. The currency of the order.")
+    created_at: Optional[StrictInt] = Field(default=None, description="The time at which the object was created in seconds since the Unix epoch", json_schema_extra={"examples": [1676328434]})
+    currency: Optional[StrictStr] = Field(default=None, description="The three-letter ISO 4217 currency code. The currency of the order.", json_schema_extra={"examples": ["MXN"]})
     customer_info: Optional[OrderResponseCustomerInfo] = None
     discount_lines: Optional[OrderDiscountLinesResponse] = None
+    tax_lines: Optional[OrderTaxLinesResponse] = None
+    shipping_lines: Optional[OrderShippingLinesResponse] = None
     fiscal_entity: Optional[OrderFiscalEntityResponse] = None
-    id: Optional[StrictStr] = None
-    is_refundable: Optional[StrictBool] = None
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["ord_2tMtQQpDvfnNjiuFG"]})
+    is_refundable: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
     line_items: Optional[OrderResponseProducts] = None
-    livemode: Optional[StrictBool] = Field(default=None, description="Whether the object exists in live mode or test mode")
+    livemode: Optional[StrictBool] = Field(default=None, description="Whether the object exists in live mode or test mode", json_schema_extra={"examples": [False]})
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.")
     next_action: Optional[OrderNextActionResponse] = None
-    object: Optional[StrictStr] = Field(default=None, description="String representing the object’s type. Objects of the same type share the same value.")
-    payment_status: Optional[StrictStr] = Field(default=None, description="The payment status of the order.")
-    processing_mode: Optional[StrictStr] = Field(default=None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.")
+    object: Optional[StrictStr] = Field(default=None, description="String representing the object’s type. Objects of the same type share the same value.", json_schema_extra={"examples": ["order"]})
+    payment_status: Optional[StrictStr] = Field(default=None, description="The payment status of the order.", json_schema_extra={"examples": ["paid"]})
+    processing_mode: Optional[StrictStr] = Field(default=None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.", json_schema_extra={"examples": ["ecommerce"]})
     shipping_contact: Optional[OrderResponseShippingContact] = None
-    updated_at: Optional[StrictInt] = Field(default=None, description="The time at which the object was last updated in seconds since the Unix epoch")
-    __properties: ClassVar[List[str]] = ["amount", "amount_refunded", "channel", "charges", "checkout", "created_at", "currency", "customer_info", "discount_lines", "fiscal_entity", "id", "is_refundable", "line_items", "livemode", "metadata", "next_action", "object", "payment_status", "processing_mode", "shipping_contact", "updated_at"]
+    updated_at: Optional[StrictInt] = Field(default=None, description="The time at which the object was last updated in seconds since the Unix epoch", json_schema_extra={"examples": [1676328434]})
+    __properties: ClassVar[List[str]] = ["amount", "amount_refunded", "channel", "charges", "checkout", "created_at", "currency", "customer_info", "discount_lines", "tax_lines", "shipping_lines", "fiscal_entity", "id", "is_refundable", "line_items", "livemode", "metadata", "next_action", "object", "payment_status", "processing_mode", "shipping_contact", "updated_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -72,8 +78,7 @@ class OrderResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -113,6 +118,12 @@ class OrderResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of discount_lines
         if self.discount_lines:
             _dict['discount_lines'] = self.discount_lines.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tax_lines
+        if self.tax_lines:
+            _dict['tax_lines'] = self.tax_lines.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of shipping_lines
+        if self.shipping_lines:
+            _dict['shipping_lines'] = self.shipping_lines.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fiscal_entity
         if self.fiscal_entity:
             _dict['fiscal_entity'] = self.fiscal_entity.to_dict()
@@ -125,11 +136,6 @@ class OrderResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of shipping_contact
         if self.shipping_contact:
             _dict['shipping_contact'] = self.shipping_contact.to_dict()
-        # set to None if fiscal_entity (nullable) is None
-        # and model_fields_set contains the field
-        if self.fiscal_entity is None and "fiscal_entity" in self.model_fields_set:
-            _dict['fiscal_entity'] = None
-
         return _dict
 
     @classmethod
@@ -151,6 +157,8 @@ class OrderResponse(BaseModel):
             "currency": obj.get("currency"),
             "customer_info": OrderResponseCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
             "discount_lines": OrderDiscountLinesResponse.from_dict(obj["discount_lines"]) if obj.get("discount_lines") is not None else None,
+            "tax_lines": OrderTaxLinesResponse.from_dict(obj["tax_lines"]) if obj.get("tax_lines") is not None else None,
+            "shipping_lines": OrderShippingLinesResponse.from_dict(obj["shipping_lines"]) if obj.get("shipping_lines") is not None else None,
             "fiscal_entity": OrderFiscalEntityResponse.from_dict(obj["fiscal_entity"]) if obj.get("fiscal_entity") is not None else None,
             "id": obj.get("id"),
             "is_refundable": obj.get("is_refundable"),

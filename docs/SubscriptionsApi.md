@@ -60,7 +60,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -80,7 +80,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -147,7 +147,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     subscription_request = conekta.SubscriptionRequest() # SubscriptionRequest | requested field for subscriptions
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **subscription_request** | [**SubscriptionRequest**](SubscriptionRequest.md)| requested field for subscriptions | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -234,7 +234,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get Subscription [Deprecated]
@@ -253,7 +253,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -317,7 +317,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -337,7 +337,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -404,7 +404,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -424,7 +424,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -490,7 +490,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -510,7 +510,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -578,7 +578,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -599,7 +599,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -666,7 +666,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     subscription_request = conekta.SubscriptionRequest() # SubscriptionRequest | requested field for subscriptions
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -687,7 +687,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **subscription_request** | [**SubscriptionRequest**](SubscriptionRequest.md)| requested field for subscriptions | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -754,7 +754,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
@@ -779,7 +779,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
@@ -848,7 +848,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
@@ -872,7 +872,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
@@ -942,7 +942,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -963,7 +963,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -1029,7 +1029,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -1050,7 +1050,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -1078,7 +1078,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **subscription_update**
-> SubscriptionResponse subscription_update(customer_id, id, subscription_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> SubscriptionResponse subscription_update(customer_id, id, updates_a_subscription, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update Subscription
 
@@ -1091,7 +1091,7 @@ Update a specific subscription
 ```python
 import conekta
 from conekta.models.subscription_response import SubscriptionResponse
-from conekta.models.subscription_update_request import SubscriptionUpdateRequest
+from conekta.models.updates_a_subscription import UpdatesASubscription
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -1117,13 +1117,13 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    subscription_update_request = conekta.SubscriptionUpdateRequest() # SubscriptionUpdateRequest | requested field for update a subscription
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    updates_a_subscription = conekta.UpdatesASubscription() # UpdatesASubscription | requested field for update a subscription
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update Subscription
-        api_response = api_instance.subscription_update(customer_id, id, subscription_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.subscription_update(customer_id, id, updates_a_subscription, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of SubscriptionsApi->subscription_update:\n")
         pprint(api_response)
     except Exception as e:
@@ -1139,8 +1139,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **subscription_update_request** | [**SubscriptionUpdateRequest**](SubscriptionUpdateRequest.md)| requested field for update a subscription | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **updates_a_subscription** | [**UpdatesASubscription**](UpdatesASubscription.md)| requested field for update a subscription | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -1207,7 +1207,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -1228,7 +1228,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -1294,7 +1294,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.SubscriptionsApi(api_client)
     customer_id = 'cus_2tGzG1GxtDAZHEGPH' # str | Identifier of the customer resource
     id = 'sub_2tGzG1GxtDAZHEGPH' # str | Identifier of the subscription resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -1315,7 +1315,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| Identifier of the customer resource | 
  **id** | **str**| Identifier of the subscription resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -1336,15 +1336,15 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful |  * Date - The date and time that the response was sent <br>  * Content-Type - The format of the response body <br>  * Content-Length - The length of the response body in bytes <br>  * Connection - The type of connection used to transfer the response <br>  * Conekta-Media-Type -  <br>  |
+**422** | parameter validation error |  -  |
 **401** | authentication error |  -  |
 **404** | not found entity |  -  |
-**422** | parameter validation error |  -  |
 **500** | internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_subscription**
-> SubscriptionResponse update_subscription(id, subscription_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> SubscriptionResponse update_subscription(id, updates_a_subscription, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update Subscription [Deprecated]
 
@@ -1357,7 +1357,7 @@ DEPRECATED: This endpoint will be removed in version 2.3.0. You can modify the s
 ```python
 import conekta
 from conekta.models.subscription_response import SubscriptionResponse
-from conekta.models.subscription_update_request import SubscriptionUpdateRequest
+from conekta.models.updates_a_subscription import UpdatesASubscription
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -1382,13 +1382,13 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.SubscriptionsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    subscription_update_request = conekta.SubscriptionUpdateRequest() # SubscriptionUpdateRequest | requested field for update a subscription
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    updates_a_subscription = conekta.UpdatesASubscription() # UpdatesASubscription | requested field for update a subscription
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update Subscription [Deprecated]
-        api_response = api_instance.update_subscription(id, subscription_update_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.update_subscription(id, updates_a_subscription, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of SubscriptionsApi->update_subscription:\n")
         pprint(api_response)
     except Exception as e:
@@ -1403,8 +1403,8 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **subscription_update_request** | [**SubscriptionUpdateRequest**](SubscriptionUpdateRequest.md)| requested field for update a subscription | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **updates_a_subscription** | [**UpdatesASubscription**](UpdatesASubscription.md)| requested field for update a subscription | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

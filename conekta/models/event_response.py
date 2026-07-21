@@ -18,28 +18,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.webhook_log import WebhookLog
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class EventResponse(BaseModel):
     """
     event model
     """ # noqa: E501
-    created_at: Optional[StrictInt] = None
-    data: Optional[Dict[str, Any]] = None
-    id: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
-    object: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1661445644]})
+    data: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"action": "ping", "livemode": True}]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6307a60c41de27127515a575"]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["event"]})
+    type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["webhook_ping"]})
     webhook_logs: Optional[List[WebhookLog]] = None
-    webhook_status: Optional[StrictStr] = None
+    webhook_status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["successful"]})
     __properties: ClassVar[List[str]] = ["created_at", "data", "id", "livemode", "object", "type", "webhook_logs", "webhook_status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -51,8 +53,7 @@ class EventResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

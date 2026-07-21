@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **plan_ids** | **List[str]** | List of plan IDs that are available for subscription | [optional] 
 **can_not_expire** | **bool** |  | [optional] 
 **emails_sent** | **int** |  | [optional] 
-**exclude_card_networks** | **List[object]** |  | [optional] 
+**exclude_card_networks** | **List[str]** |  | [optional] 
 **expires_at** | **int** |  | [optional] 
 **failure_url** | **str** |  | [optional] 
 **force_3ds_flow** | **bool** |  | [optional] 
@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **sms_sent** | **int** |  | [optional] 
 **starts_at** | **int** |  | [optional] 
 **status** | **str** |  | [optional] 
-**success_url** | **str** |  | [optional] 
+**success_url** | **str** | The URL to redirect to after a successful payment. | [optional] 
 **type** | **str** |  | [optional] 
 **url** | **str** |  | [optional] 
 

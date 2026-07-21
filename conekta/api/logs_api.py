@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -20,8 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
-from conekta.models.log_response import LogResponse
-from conekta.models.logs_response import LogsResponse
+from conekta.models.log_response_for_request import LogResponseForRequest
+from conekta.models.logs_response_for_request import LogsResponseForRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -59,7 +58,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LogResponse:
+    ) -> LogResponseForRequest:
         """Get Log
 
         Get the details of a specific log
@@ -103,7 +102,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogResponse",
+            '200': "LogResponseForRequest",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -137,7 +136,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LogResponse]:
+    ) -> ApiResponse[LogResponseForRequest]:
         """Get Log
 
         Get the details of a specific log
@@ -181,7 +180,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogResponse",
+            '200': "LogResponseForRequest",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -259,7 +258,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogResponse",
+            '200': "LogResponseForRequest",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -362,7 +361,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LogsResponse:
+    ) -> LogsResponseForRequest:
         """Get List Of Logs
 
         Get log details in the form of a list
@@ -415,7 +414,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogsResponse",
+            '200': "LogsResponseForRequest",
             '401': "Error",
             '500': "Error",
         }
@@ -451,7 +450,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LogsResponse]:
+    ) -> ApiResponse[LogsResponseForRequest]:
         """Get List Of Logs
 
         Get log details in the form of a list
@@ -504,7 +503,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogsResponse",
+            '200': "LogsResponseForRequest",
             '401': "Error",
             '500': "Error",
         }
@@ -593,7 +592,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LogsResponse",
+            '200': "LogsResponseForRequest",
             '401': "Error",
             '500': "Error",
         }

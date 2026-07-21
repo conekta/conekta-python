@@ -1,24 +1,30 @@
-[tool.poetry]
+[project]
 name = "conekta"
-version = "7.0.3"
+version = "7.1.0"
 description = "Conekta API"
-authors = ["Engineering Conekta <engineering@conekta.com>"]
-license = "MIT-LICENSE"
+authors = [
+  {name = "Engineering Conekta",email = "engineering@conekta.com"},
+]
+license = { text = "MIT-LICENSE" }
 readme = "README.md"
-repository = "https://github.com/conekta/conekta-python"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Conekta API"]
-include = ["conekta/py.typed"]
+requires-python = ">=3.9"
 
-[tool.poetry.dependencies]
-python = "^3.8"
+dependencies = [
+  "urllib3 (>=2.6.3,<3.0.0)",
+  "python-dateutil (>=2.8.2)",
+  "pydantic (>=2.11)",
+  "typing-extensions (>=4.7.1)",
+]
 
-urllib3 = ">= 1.25.3 < 3.0.0"
-python-dateutil = ">= 2.8.2"
-pydantic = ">= 2"
-typing-extensions = ">= 4.7.1"
+[project.urls]
+Repository = "https://github.com/conekta/conekta-python"
 
-[tool.poetry.dev-dependencies]
-pytest = ">= 7.2.1"
+[tool.poetry]
+requires-poetry = ">=2.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">= 8.4.2"
 pytest-cov = ">= 2.8.1"
 tox = ">= 3.9.0"
 flake8 = ">= 4.0.0"
@@ -49,7 +55,7 @@ warn_unused_ignores = true
 
 ## Getting these passing should be easy
 strict_equality = true
-strict_concatenate = true
+extra_checks = true
 
 ## Strongly recommend enabling this one as soon as you can
 check_untyped_defs = true
@@ -70,3 +76,20 @@ disallow_any_generics = true
 #
 ### This one can be tricky to get passing if you use a lot of untyped libraries
 #warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = [
+  "conekta.configuration",
+]
+warn_unused_ignores = true
+strict_equality = true
+extra_checks = true
+check_untyped_defs = true
+disallow_subclassing_any = true
+disallow_untyped_decorators = true
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_reexport = true
+warn_return_any = true

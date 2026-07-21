@@ -23,20 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ShippingRequest(BaseModel):
     """
     ShippingRequest
     """ # noqa: E501
-    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="Shipping amount in cents")
-    carrier: Optional[StrictStr] = Field(default=None, description="Carrier name for the shipment")
-    tracking_number: Optional[StrictStr] = Field(default=None, description="Tracking number can be used to track the shipment")
-    method: Optional[StrictStr] = Field(default=None, description="Method of shipment")
-    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Hash where the user can send additional information for each 'shipping'.")
+    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="Shipping amount in cents", json_schema_extra={"examples": [100]})
+    carrier: Optional[StrictStr] = Field(default=None, description="Carrier name for the shipment", json_schema_extra={"examples": ["FEDEX"]})
+    tracking_number: Optional[StrictStr] = Field(default=None, description="Tracking number can be used to track the shipment", json_schema_extra={"examples": ["TRACK123"]})
+    method: Optional[StrictStr] = Field(default=None, description="Method of shipment", json_schema_extra={"examples": ["Same day"]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Hash where the user can send additional information for each 'shipping'.", json_schema_extra={"examples": [{"key": "value"}]})
     __properties: ClassVar[List[str]] = ["amount", "carrier", "tracking_number", "method", "metadata"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class ShippingRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

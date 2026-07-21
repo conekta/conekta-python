@@ -23,28 +23,30 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PlanResponse(BaseModel):
     """
     plans model
     """ # noqa: E501
-    amount: Optional[StrictInt] = None
-    created_at: Optional[StrictInt] = None
-    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = None
-    expiry_count: Optional[StrictInt] = None
-    frequency: Optional[StrictInt] = None
-    id: Optional[StrictStr] = None
-    interval: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
-    name: Optional[StrictStr] = None
-    object: Optional[StrictStr] = None
-    trial_period_days: Optional[StrictInt] = None
-    max_retries: Optional[StrictInt] = None
-    retry_delay_hours: Optional[StrictInt] = None
+    amount: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [10000]})
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1666900846]})
+    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = Field(default=None, json_schema_extra={"examples": ["MXN"]})
+    expiry_count: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [12]})
+    frequency: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["gold-plan"]})
+    interval: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["month"]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Extra Plan3"]})
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["plan"]})
+    trial_period_days: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    max_retries: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [3]})
+    retry_delay_hours: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [48]})
     __properties: ClassVar[List[str]] = ["amount", "created_at", "currency", "expiry_count", "frequency", "id", "interval", "livemode", "name", "object", "trial_period_days", "max_retries", "retry_delay_hours"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -56,8 +58,7 @@ class PlanResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -82,16 +83,6 @@ class PlanResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if expiry_count (nullable) is None
-        # and model_fields_set contains the field
-        if self.expiry_count is None and "expiry_count" in self.model_fields_set:
-            _dict['expiry_count'] = None
-
-        # set to None if trial_period_days (nullable) is None
-        # and model_fields_set contains the field
-        if self.trial_period_days is None and "trial_period_days" in self.model_fields_set:
-            _dict['trial_period_days'] = None
-
         return _dict
 
     @classmethod

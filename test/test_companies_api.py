@@ -55,6 +55,13 @@ class TestCompaniesApi(unittest.TestCase):
         """
         pass
 
+    def test_get_current_company(self) -> None:
+        """Test case for get_current_company
+
+        Get Current Company
+        """
+        pass
+
     def test_update_company_document(self) -> None:
         """Test case for update_company_document
 

@@ -6,13 +6,13 @@ The customer information of the payout order.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **str** | The id of the customer. | 
 **customer_custom_reference** | **str** | Custom reference | [optional] 
 **name** | **str** |  | [optional] 
 **email** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
 **corporate** | **bool** |  | [optional] [default to False]
 **object** | **str** |  | [optional] 
-**id** | **str** | The id of the customer. | 
 
 ## Example
 

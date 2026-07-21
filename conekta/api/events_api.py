@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -23,7 +22,7 @@ from typing_extensions import Annotated
 from conekta.models.event_response import EventResponse
 from conekta.models.events_resend_response import EventsResendResponse
 from conekta.models.get_events_response import GetEventsResponse
-from conekta.models.resend_request import ResendRequest
+from conekta.models.resend_event_request import ResendEventRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -694,7 +693,7 @@ class EventsApi:
     def resend_event(
         self,
         event_id: Annotated[StrictStr, Field(description="event identifier")],
-        resend_request: Annotated[ResendRequest, Field(description="requested fields for resend an event")],
+        resend_event_request: Annotated[ResendEventRequest, Field(description="requested fields for resend an event")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -715,8 +714,8 @@ class EventsApi:
 
         :param event_id: event identifier (required)
         :type event_id: str
-        :param resend_request: requested fields for resend an event (required)
-        :type resend_request: ResendRequest
+        :param resend_event_request: requested fields for resend an event (required)
+        :type resend_event_request: ResendEventRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -743,7 +742,7 @@ class EventsApi:
 
         _param = self._resend_event_serialize(
             event_id=event_id,
-            resend_request=resend_request,
+            resend_event_request=resend_event_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -772,7 +771,7 @@ class EventsApi:
     def resend_event_with_http_info(
         self,
         event_id: Annotated[StrictStr, Field(description="event identifier")],
-        resend_request: Annotated[ResendRequest, Field(description="requested fields for resend an event")],
+        resend_event_request: Annotated[ResendEventRequest, Field(description="requested fields for resend an event")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -793,8 +792,8 @@ class EventsApi:
 
         :param event_id: event identifier (required)
         :type event_id: str
-        :param resend_request: requested fields for resend an event (required)
-        :type resend_request: ResendRequest
+        :param resend_event_request: requested fields for resend an event (required)
+        :type resend_event_request: ResendEventRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -821,7 +820,7 @@ class EventsApi:
 
         _param = self._resend_event_serialize(
             event_id=event_id,
-            resend_request=resend_request,
+            resend_event_request=resend_event_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -850,7 +849,7 @@ class EventsApi:
     def resend_event_without_preload_content(
         self,
         event_id: Annotated[StrictStr, Field(description="event identifier")],
-        resend_request: Annotated[ResendRequest, Field(description="requested fields for resend an event")],
+        resend_event_request: Annotated[ResendEventRequest, Field(description="requested fields for resend an event")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -871,8 +870,8 @@ class EventsApi:
 
         :param event_id: event identifier (required)
         :type event_id: str
-        :param resend_request: requested fields for resend an event (required)
-        :type resend_request: ResendRequest
+        :param resend_event_request: requested fields for resend an event (required)
+        :type resend_event_request: ResendEventRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -899,7 +898,7 @@ class EventsApi:
 
         _param = self._resend_event_serialize(
             event_id=event_id,
-            resend_request=resend_request,
+            resend_event_request=resend_event_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -923,7 +922,7 @@ class EventsApi:
     def _resend_event_serialize(
         self,
         event_id,
-        resend_request,
+        resend_event_request,
         accept_language,
         _request_auth,
         _content_type,
@@ -954,8 +953,8 @@ class EventsApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if resend_request is not None:
-            _body_params = resend_request
+        if resend_event_request is not None:
+            _body_params = resend_event_request
 
 
         # set the HTTP header `Accept`

@@ -23,18 +23,20 @@ from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderDiscountLinesRequest(BaseModel):
     """
     List of discounts that apply to the order.
     """ # noqa: E501
-    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be deducted from the total sum of all payments, in cents.")
-    code: StrictStr = Field(description="Discount code.")
-    type: StrictStr = Field(description="It can be 'loyalty', 'campaign', 'coupon' o 'sign'")
+    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be deducted from the total sum of all payments, in cents.", json_schema_extra={"examples": [500]})
+    code: StrictStr = Field(description="Discount code.", json_schema_extra={"examples": ["123"]})
+    type: StrictStr = Field(description="It can be 'loyalty', 'campaign', 'coupon' o 'sign'", json_schema_extra={"examples": ["loyalty"]})
     __properties: ClassVar[List[str]] = ["amount", "code", "type"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class OrderDiscountLinesRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -21,8 +20,8 @@ from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.order_tax_request import OrderTaxRequest
-from conekta.models.update_order_tax_request import UpdateOrderTaxRequest
-from conekta.models.update_order_tax_response import UpdateOrderTaxResponse
+from conekta.models.order_tax_response import OrderTaxResponse
+from conekta.models.orders_update_taxes_request import OrdersUpdateTaxesRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -61,7 +60,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UpdateOrderTaxResponse:
+    ) -> OrderTaxResponse:
         """Create Tax
 
         Create new taxes for an existing orden
@@ -108,7 +107,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -143,7 +142,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UpdateOrderTaxResponse]:
+    ) -> ApiResponse[OrderTaxResponse]:
         """Create Tax
 
         Create new taxes for an existing orden
@@ -190,7 +189,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -272,7 +271,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '404': "Error",
             '500': "Error",
@@ -389,7 +388,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UpdateOrderTaxResponse:
+    ) -> OrderTaxResponse:
         """Delete Tax
 
         Delete taxes for an existing orden
@@ -436,7 +435,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -472,7 +471,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UpdateOrderTaxResponse]:
+    ) -> ApiResponse[OrderTaxResponse]:
         """Delete Tax
 
         Delete taxes for an existing orden
@@ -519,7 +518,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -602,7 +601,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -693,7 +692,7 @@ class TaxesApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         tax_id: Annotated[StrictStr, Field(description="identifier")],
-        update_order_tax_request: Annotated[UpdateOrderTaxRequest, Field(description="requested field for taxes")],
+        orders_update_taxes_request: Annotated[OrdersUpdateTaxesRequest, Field(description="requested field for taxes")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -708,7 +707,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UpdateOrderTaxResponse:
+    ) -> OrderTaxResponse:
         """Update Tax
 
         Update taxes for an existing orden
@@ -717,8 +716,8 @@ class TaxesApi:
         :type id: str
         :param tax_id: identifier (required)
         :type tax_id: str
-        :param update_order_tax_request: requested field for taxes (required)
-        :type update_order_tax_request: UpdateOrderTaxRequest
+        :param orders_update_taxes_request: requested field for taxes (required)
+        :type orders_update_taxes_request: OrdersUpdateTaxesRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -748,7 +747,7 @@ class TaxesApi:
         _param = self._orders_update_taxes_serialize(
             id=id,
             tax_id=tax_id,
-            update_order_tax_request=update_order_tax_request,
+            orders_update_taxes_request=orders_update_taxes_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -758,7 +757,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -780,7 +779,7 @@ class TaxesApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         tax_id: Annotated[StrictStr, Field(description="identifier")],
-        update_order_tax_request: Annotated[UpdateOrderTaxRequest, Field(description="requested field for taxes")],
+        orders_update_taxes_request: Annotated[OrdersUpdateTaxesRequest, Field(description="requested field for taxes")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -795,7 +794,7 @@ class TaxesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UpdateOrderTaxResponse]:
+    ) -> ApiResponse[OrderTaxResponse]:
         """Update Tax
 
         Update taxes for an existing orden
@@ -804,8 +803,8 @@ class TaxesApi:
         :type id: str
         :param tax_id: identifier (required)
         :type tax_id: str
-        :param update_order_tax_request: requested field for taxes (required)
-        :type update_order_tax_request: UpdateOrderTaxRequest
+        :param orders_update_taxes_request: requested field for taxes (required)
+        :type orders_update_taxes_request: OrdersUpdateTaxesRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -835,7 +834,7 @@ class TaxesApi:
         _param = self._orders_update_taxes_serialize(
             id=id,
             tax_id=tax_id,
-            update_order_tax_request=update_order_tax_request,
+            orders_update_taxes_request=orders_update_taxes_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -845,7 +844,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -867,7 +866,7 @@ class TaxesApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         tax_id: Annotated[StrictStr, Field(description="identifier")],
-        update_order_tax_request: Annotated[UpdateOrderTaxRequest, Field(description="requested field for taxes")],
+        orders_update_taxes_request: Annotated[OrdersUpdateTaxesRequest, Field(description="requested field for taxes")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -891,8 +890,8 @@ class TaxesApi:
         :type id: str
         :param tax_id: identifier (required)
         :type tax_id: str
-        :param update_order_tax_request: requested field for taxes (required)
-        :type update_order_tax_request: UpdateOrderTaxRequest
+        :param orders_update_taxes_request: requested field for taxes (required)
+        :type orders_update_taxes_request: OrdersUpdateTaxesRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -922,7 +921,7 @@ class TaxesApi:
         _param = self._orders_update_taxes_serialize(
             id=id,
             tax_id=tax_id,
-            update_order_tax_request=update_order_tax_request,
+            orders_update_taxes_request=orders_update_taxes_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -932,7 +931,7 @@ class TaxesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateOrderTaxResponse",
+            '200': "OrderTaxResponse",
             '401': "Error",
             '422': "Error",
             '404': "Error",
@@ -949,7 +948,7 @@ class TaxesApi:
         self,
         id,
         tax_id,
-        update_order_tax_request,
+        orders_update_taxes_request,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -985,8 +984,8 @@ class TaxesApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if update_order_tax_request is not None:
-            _body_params = update_order_tax_request
+        if orders_update_taxes_request is not None:
+            _body_params = orders_update_taxes_request
 
 
         # set the HTTP header `Accept`

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -20,9 +19,9 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
-from conekta.models.customer_shipping_contacts import CustomerShippingContacts
+from conekta.models.customer_shipping_contacts_request import CustomerShippingContactsRequest
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
-from conekta.models.customer_update_shipping_contacts import CustomerUpdateShippingContacts
+from conekta.models.customer_update_shipping_contacts_request import CustomerUpdateShippingContactsRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -46,7 +45,7 @@ class ShippingContactsApi:
     def create_customer_shipping_contacts(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_shipping_contacts: Annotated[CustomerShippingContacts, Field(description="requested field for customer shippings contacts")],
+        customer_shipping_contacts_request: Annotated[CustomerShippingContactsRequest, Field(description="requested field for customer shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -68,8 +67,8 @@ class ShippingContactsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_shipping_contacts: requested field for customer shippings contacts (required)
-        :type customer_shipping_contacts: CustomerShippingContacts
+        :param customer_shipping_contacts_request: requested field for customer shippings contacts (required)
+        :type customer_shipping_contacts_request: CustomerShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -98,7 +97,7 @@ class ShippingContactsApi:
 
         _param = self._create_customer_shipping_contacts_serialize(
             id=id,
-            customer_shipping_contacts=customer_shipping_contacts,
+            customer_shipping_contacts_request=customer_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -129,7 +128,7 @@ class ShippingContactsApi:
     def create_customer_shipping_contacts_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_shipping_contacts: Annotated[CustomerShippingContacts, Field(description="requested field for customer shippings contacts")],
+        customer_shipping_contacts_request: Annotated[CustomerShippingContactsRequest, Field(description="requested field for customer shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -151,8 +150,8 @@ class ShippingContactsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_shipping_contacts: requested field for customer shippings contacts (required)
-        :type customer_shipping_contacts: CustomerShippingContacts
+        :param customer_shipping_contacts_request: requested field for customer shippings contacts (required)
+        :type customer_shipping_contacts_request: CustomerShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -181,7 +180,7 @@ class ShippingContactsApi:
 
         _param = self._create_customer_shipping_contacts_serialize(
             id=id,
-            customer_shipping_contacts=customer_shipping_contacts,
+            customer_shipping_contacts_request=customer_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -212,7 +211,7 @@ class ShippingContactsApi:
     def create_customer_shipping_contacts_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_shipping_contacts: Annotated[CustomerShippingContacts, Field(description="requested field for customer shippings contacts")],
+        customer_shipping_contacts_request: Annotated[CustomerShippingContactsRequest, Field(description="requested field for customer shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -234,8 +233,8 @@ class ShippingContactsApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_shipping_contacts: requested field for customer shippings contacts (required)
-        :type customer_shipping_contacts: CustomerShippingContacts
+        :param customer_shipping_contacts_request: requested field for customer shippings contacts (required)
+        :type customer_shipping_contacts_request: CustomerShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -264,7 +263,7 @@ class ShippingContactsApi:
 
         _param = self._create_customer_shipping_contacts_serialize(
             id=id,
-            customer_shipping_contacts=customer_shipping_contacts,
+            customer_shipping_contacts_request=customer_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -290,7 +289,7 @@ class ShippingContactsApi:
     def _create_customer_shipping_contacts_serialize(
         self,
         id,
-        customer_shipping_contacts,
+        customer_shipping_contacts_request,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -324,8 +323,8 @@ class ShippingContactsApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if customer_shipping_contacts is not None:
-            _body_params = customer_shipping_contacts
+        if customer_shipping_contacts_request is not None:
+            _body_params = customer_shipping_contacts_request
 
 
         # set the HTTP header `Accept`
@@ -696,7 +695,7 @@ class ShippingContactsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         shipping_contacts_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_shipping_contacts: Annotated[CustomerUpdateShippingContacts, Field(description="requested field for customer update shippings contacts")],
+        customer_update_shipping_contacts_request: Annotated[CustomerUpdateShippingContactsRequest, Field(description="requested field for customer update shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -720,8 +719,8 @@ class ShippingContactsApi:
         :type id: str
         :param shipping_contacts_id: identifier (required)
         :type shipping_contacts_id: str
-        :param customer_update_shipping_contacts: requested field for customer update shippings contacts (required)
-        :type customer_update_shipping_contacts: CustomerUpdateShippingContacts
+        :param customer_update_shipping_contacts_request: requested field for customer update shippings contacts (required)
+        :type customer_update_shipping_contacts_request: CustomerUpdateShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -751,7 +750,7 @@ class ShippingContactsApi:
         _param = self._update_customer_shipping_contacts_serialize(
             id=id,
             shipping_contacts_id=shipping_contacts_id,
-            customer_update_shipping_contacts=customer_update_shipping_contacts,
+            customer_update_shipping_contacts_request=customer_update_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -783,7 +782,7 @@ class ShippingContactsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         shipping_contacts_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_shipping_contacts: Annotated[CustomerUpdateShippingContacts, Field(description="requested field for customer update shippings contacts")],
+        customer_update_shipping_contacts_request: Annotated[CustomerUpdateShippingContactsRequest, Field(description="requested field for customer update shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -807,8 +806,8 @@ class ShippingContactsApi:
         :type id: str
         :param shipping_contacts_id: identifier (required)
         :type shipping_contacts_id: str
-        :param customer_update_shipping_contacts: requested field for customer update shippings contacts (required)
-        :type customer_update_shipping_contacts: CustomerUpdateShippingContacts
+        :param customer_update_shipping_contacts_request: requested field for customer update shippings contacts (required)
+        :type customer_update_shipping_contacts_request: CustomerUpdateShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -838,7 +837,7 @@ class ShippingContactsApi:
         _param = self._update_customer_shipping_contacts_serialize(
             id=id,
             shipping_contacts_id=shipping_contacts_id,
-            customer_update_shipping_contacts=customer_update_shipping_contacts,
+            customer_update_shipping_contacts_request=customer_update_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -870,7 +869,7 @@ class ShippingContactsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         shipping_contacts_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_shipping_contacts: Annotated[CustomerUpdateShippingContacts, Field(description="requested field for customer update shippings contacts")],
+        customer_update_shipping_contacts_request: Annotated[CustomerUpdateShippingContactsRequest, Field(description="requested field for customer update shippings contacts")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -894,8 +893,8 @@ class ShippingContactsApi:
         :type id: str
         :param shipping_contacts_id: identifier (required)
         :type shipping_contacts_id: str
-        :param customer_update_shipping_contacts: requested field for customer update shippings contacts (required)
-        :type customer_update_shipping_contacts: CustomerUpdateShippingContacts
+        :param customer_update_shipping_contacts_request: requested field for customer update shippings contacts (required)
+        :type customer_update_shipping_contacts_request: CustomerUpdateShippingContactsRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -925,7 +924,7 @@ class ShippingContactsApi:
         _param = self._update_customer_shipping_contacts_serialize(
             id=id,
             shipping_contacts_id=shipping_contacts_id,
-            customer_update_shipping_contacts=customer_update_shipping_contacts,
+            customer_update_shipping_contacts_request=customer_update_shipping_contacts_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -952,7 +951,7 @@ class ShippingContactsApi:
         self,
         id,
         shipping_contacts_id,
-        customer_update_shipping_contacts,
+        customer_update_shipping_contacts_request,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -988,8 +987,8 @@ class ShippingContactsApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if customer_update_shipping_contacts is not None:
-            _body_params = customer_update_shipping_contacts
+        if customer_update_shipping_contacts_request is not None:
+            _body_params = customer_update_shipping_contacts_request
 
 
         # set the HTTP header `Accept`

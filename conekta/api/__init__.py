@@ -19,6 +19,7 @@ from conekta.api.products_api import ProductsApi
 from conekta.api.shipping_contacts_api import ShippingContactsApi
 from conekta.api.shippings_api import ShippingsApi
 from conekta.api.subscriptions_api import SubscriptionsApi
+from conekta.api.subscriptions_customer_portal_api import SubscriptionsCustomerPortalApi
 from conekta.api.taxes_api import TaxesApi
 from conekta.api.tokens_api import TokensApi
 from conekta.api.transactions_api import TransactionsApi

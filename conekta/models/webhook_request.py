@@ -23,24 +23,26 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class WebhookRequest(BaseModel):
     """
     a webhook
     """ # noqa: E501
-    url: Annotated[str, Field(strict=True)] = Field(description="Here you must place the URL of your Webhook remember that you must program what you will do with the events received. Also do not forget to handle the HTTPS protocol for greater security.")
-    subscribed_events: Optional[List[StrictStr]] = Field(default=None, description="events that will be sent to the webhook")
+    url: Annotated[str, Field(strict=True)] = Field(description="Here you must place the URL of your Webhook remember that you must program what you will do with the events received. Also do not forget to handle the HTTPS protocol for greater security.", json_schema_extra={"examples": ["https://webhook.site/89277eaa-a8e4-4306-8dc5-f55c80703dc8"]})
+    subscribed_events: Optional[List[StrictStr]] = Field(default=None, description="events that will be sent to the webhook", json_schema_extra={"examples": ["customer.created"]})
     __properties: ClassVar[List[str]] = ["url", "subscribed_events"]
 
-    @field_validator('url')
+    @field_validator('url', mode="before")
     def url_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"^(?!.*(localhost|127\.0\.0\.1)).*$", value):
+        if isinstance(value, str) and not re.match(r"^(?!.*(localhost|127\.0\.0\.1)).*$", value):
             raise ValueError(r"must validate the regular expression /^(?!.*(localhost|127\.0\.0\.1)).*$/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -52,8 +54,7 @@ class WebhookRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

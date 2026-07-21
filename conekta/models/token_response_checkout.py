@@ -22,38 +22,40 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TokenResponseCheckout(BaseModel):
     """
     TokenResponseCheckout
     """ # noqa: E501
     allowed_payment_methods: Optional[List[StrictStr]] = None
-    can_not_expire: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout can not expire.")
-    emails_sent: Optional[StrictInt] = None
+    can_not_expire: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout can not expire.", json_schema_extra={"examples": [False]})
+    emails_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
     exclude_card_networks: Optional[List[StrictStr]] = None
-    expires_at: Optional[StrictInt] = Field(default=None, description="Date and time when the checkout expires.")
-    failure_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to if the payment process fails.")
-    force_3ds_flow: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout forces the 3DS flow.")
-    id: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
-    metadata: Optional[Dict[str, Any]] = None
-    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout allows monthly installments.")
+    expires_at: Optional[StrictInt] = Field(default=None, description="Date and time when the checkout expires.", json_schema_extra={"examples": [1675715413]})
+    failure_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to if the payment process fails.", json_schema_extra={"examples": ["https://example.com/failure"]})
+    force_3ds_flow: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout forces the 3DS flow.", json_schema_extra={"examples": [False]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["524f9d2f-8c2e-4e64-a33d-6006711a91bd"]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"key": "value"}]})
+    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout allows monthly installments.", json_schema_extra={"examples": [False]})
     monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, description="List of monthly installments options.")
-    name: Optional[StrictStr] = None
-    needs_shipping_contact: Optional[StrictBool] = None
-    object: Optional[StrictStr] = Field(default=None, description="Indicates the type of object, in this case checkout.")
-    on_demand_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout allows on demand payments.")
-    paid_payments_count: Optional[StrictInt] = Field(default=None, description="Number of payments that have been paid.")
-    recurrent: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout is recurrent.")
-    sms_sent: Optional[StrictInt] = None
-    starts_at: Optional[StrictInt] = Field(default=None, description="Date and time when the checkout starts.")
-    status: Optional[StrictStr] = Field(default=None, description="Status of the checkout.")
-    success_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to after the payment process is completed.")
-    type: Optional[StrictStr] = Field(default=None, description="Type of checkout.")
+    name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["tok-2toNoPZpJgRU4PvgZ"]})
+    needs_shipping_contact: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    object: Optional[StrictStr] = Field(default=None, description="Indicates the type of object, in this case checkout.", json_schema_extra={"examples": ["checkout"]})
+    on_demand_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout allows on demand payments.", json_schema_extra={"examples": [False]})
+    paid_payments_count: Optional[StrictInt] = Field(default=None, description="Number of payments that have been paid.", json_schema_extra={"examples": [0]})
+    recurrent: Optional[StrictBool] = Field(default=None, description="Indicates if the checkout is recurrent.", json_schema_extra={"examples": [False]})
+    sms_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    starts_at: Optional[StrictInt] = Field(default=None, description="Date and time when the checkout starts.", json_schema_extra={"examples": [1675715413]})
+    status: Optional[StrictStr] = Field(default=None, description="Status of the checkout.", json_schema_extra={"examples": ["Issued"]})
+    success_url: Optional[StrictStr] = Field(default=None, description="URL to redirect the customer to after the payment process is completed.", json_schema_extra={"examples": ["https://example.com/success"]})
+    type: Optional[StrictStr] = Field(default=None, description="Type of checkout.", json_schema_extra={"examples": ["Integration"]})
     __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "on_demand_enabled", "paid_payments_count", "recurrent", "sms_sent", "starts_at", "status", "success_url", "type"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -65,8 +67,7 @@ class TokenResponseCheckout(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

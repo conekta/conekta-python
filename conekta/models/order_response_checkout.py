@@ -18,47 +18,61 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderResponseCheckout(BaseModel):
     """
     OrderResponseCheckout
     """ # noqa: E501
-    allowed_payment_methods: Optional[List[StrictStr]] = Field(default=None, description="Are the payment methods available for this link")
-    can_not_expire: Optional[StrictBool] = None
-    emails_sent: Optional[StrictInt] = None
-    exclude_card_networks: Optional[List[Dict[str, Any]]] = None
-    expires_at: Optional[StrictInt] = None
-    failure_url: Optional[StrictStr] = None
-    force_3ds_flow: Optional[StrictBool] = None
-    id: Optional[StrictStr] = None
-    is_redirect_on_failure: Optional[StrictBool] = None
-    livemode: Optional[StrictBool] = None
-    max_failed_retries: Optional[StrictInt] = Field(default=None, description="Number of retries allowed before the checkout is marked as failed")
+    allowed_payment_methods: List[StrictStr] = Field(description="Are the payment methods available for this link", json_schema_extra={"examples": [["cash", "card", "bank_transfer", "bnpl", "pay_by_bank", "apple", "google"]]})
+    can_not_expire: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    emails_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    exclude_card_networks: Optional[List[StrictStr]] = Field(default=None, json_schema_extra={"examples": [["visa", "amex"]]})
+    expires_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1676613599]})
+    failure_url: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://187.216.228.66:2222/SysVentasPagos/Acceso.aspx"]})
+    force_3ds_flow: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    force_save_card: Optional[StrictBool] = Field(default=None, description="Indicates whether the card used for the payment should be saved for future purchases. This field is only applicable for card payments.", json_schema_extra={"examples": [False]})
+    id: StrictStr = Field(json_schema_extra={"examples": ["6fca054a-8519-4c43-971e-cea35cc519bb"]})
+    is_redirect_on_failure: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    max_failed_retries: Optional[StrictInt] = Field(default=None, description="Number of retries allowed before the checkout is marked as failed", json_schema_extra={"examples": [3]})
     metadata: Optional[Dict[str, Any]] = None
-    monthly_installments_enabled: Optional[StrictBool] = None
+    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
     monthly_installments_options: Optional[List[StrictInt]] = None
-    name: Optional[StrictStr] = None
-    needs_shipping_contact: Optional[StrictBool] = None
-    object: Optional[StrictStr] = None
-    on_demand_enabled: Optional[StrictBool] = None
-    paid_payments_count: Optional[StrictInt] = None
-    recurrent: Optional[StrictBool] = None
-    redirection_time: Optional[StrictInt] = Field(default=None, description="number of seconds to wait before redirecting to the success_url")
-    slug: Optional[StrictStr] = None
-    sms_sent: Optional[StrictInt] = None
-    success_url: Optional[StrictStr] = None
-    starts_at: Optional[StrictInt] = None
-    status: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    url: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "is_redirect_on_failure", "livemode", "max_failed_retries", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "on_demand_enabled", "paid_payments_count", "recurrent", "redirection_time", "slug", "sms_sent", "success_url", "starts_at", "status", "type", "url"]
+    name: StrictStr = Field(json_schema_extra={"examples": ["ord-2tNDzhA4Akmzj11AS"]})
+    needs_shipping_contact: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["checkout"]})
+    on_demand_enabled: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    paid_payments_count: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    recurrent: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    redirection_time: Optional[StrictInt] = Field(default=None, description="number of seconds to wait before redirecting to the success_url", json_schema_extra={"examples": [2]})
+    slug: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6fca054a85194c43971ecea35cc519bb"]})
+    sms_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    success_url: Optional[StrictStr] = Field(default=None, description="Redirection url back to the site in case of successful payment, applies only to HostedPayment", json_schema_extra={"examples": ["http://187.216.228.66:2222/SysVentasPagos/Acceso.aspx"]})
+    starts_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1676354400]})
+    status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Issued"]})
+    type: StrictStr = Field(description="This field represents the type of checkout, which determines the user experience during the payment process. 'HostedPayment' will redirect the customer to a Conekta-hosted page to complete the payment, while 'Integration' allows the payment process to be handled entirely on your site using Conekta's APIs and SDKs.", json_schema_extra={"examples": ["HostedPayment"]})
+    url: Optional[StrictStr] = Field(default=None, description="Indicate the url of the Conekta component to complete the payment. For HostedPayment, this will be a Conekta-hosted page", json_schema_extra={"examples": ["https://pay.conekta.io/checkout/6fca054a85194c43971ecea35cc519bb"]})
+    __properties: ClassVar[List[str]] = ["allowed_payment_methods", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "force_save_card", "id", "is_redirect_on_failure", "livemode", "max_failed_retries", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "on_demand_enabled", "paid_payments_count", "recurrent", "redirection_time", "slug", "sms_sent", "success_url", "starts_at", "status", "type", "url"]
+
+    @field_validator('exclude_card_networks')
+    def exclude_card_networks_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['visa', 'mastercard', 'amex']):
+                raise ValueError("each list item must be one of ('visa', 'mastercard', 'amex')")
+        return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -70,8 +84,7 @@ class OrderResponseCheckout(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -96,21 +109,6 @@ class OrderResponseCheckout(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if max_failed_retries (nullable) is None
-        # and model_fields_set contains the field
-        if self.max_failed_retries is None and "max_failed_retries" in self.model_fields_set:
-            _dict['max_failed_retries'] = None
-
-        # set to None if on_demand_enabled (nullable) is None
-        # and model_fields_set contains the field
-        if self.on_demand_enabled is None and "on_demand_enabled" in self.model_fields_set:
-            _dict['on_demand_enabled'] = None
-
-        # set to None if redirection_time (nullable) is None
-        # and model_fields_set contains the field
-        if self.redirection_time is None and "redirection_time" in self.model_fields_set:
-            _dict['redirection_time'] = None
-
         return _dict
 
     @classmethod
@@ -130,6 +128,7 @@ class OrderResponseCheckout(BaseModel):
             "expires_at": obj.get("expires_at"),
             "failure_url": obj.get("failure_url"),
             "force_3ds_flow": obj.get("force_3ds_flow"),
+            "force_save_card": obj.get("force_save_card"),
             "id": obj.get("id"),
             "is_redirect_on_failure": obj.get("is_redirect_on_failure"),
             "livemode": obj.get("livemode"),

@@ -23,19 +23,21 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.details_error import DetailsError
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Error(BaseModel):
     """
     err model
     """ # noqa: E501
     details: Optional[List[DetailsError]] = None
-    log_id: Optional[StrictStr] = Field(default=None, description="log id")
-    type: Optional[StrictStr] = None
-    object: Optional[StrictStr] = None
+    log_id: Optional[StrictStr] = Field(default=None, description="log id", json_schema_extra={"examples": ["507f1f77bcf86cd799439011"]})
+    type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["authentication_error"]})
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["error"]})
     __properties: ClassVar[List[str]] = ["details", "log_id", "type", "object"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -47,8 +49,7 @@ class Error(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -80,11 +81,6 @@ class Error(BaseModel):
                 if _item_details:
                     _items.append(_item_details.to_dict())
             _dict['details'] = _items
-        # set to None if log_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.log_id is None and "log_id" in self.model_fields_set:
-            _dict['log_id'] = None
-
         return _dict
 
     @classmethod

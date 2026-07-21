@@ -22,21 +22,23 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class WebhookKeyCreateResponse(BaseModel):
     """
     webhook keys model
     """ # noqa: E501
-    active: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook key is active")
-    created_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds with the creation date of the webhook key")
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the webhook key")
-    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook key is in live mode")
-    object: Optional[StrictStr] = Field(default=None, description="Object name, value is webhook_key")
-    public_key: Optional[StrictStr] = Field(default=None, description="Public key to be used in the webhook")
+    active: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook key is active", json_schema_extra={"examples": [True]})
+    created_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds with the creation date of the webhook key", json_schema_extra={"examples": [1577836800]})
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the webhook key", json_schema_extra={"examples": ["62730ba6fb7dfd6a712f118e"]})
+    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook key is in live mode", json_schema_extra={"examples": [False]})
+    object: Optional[StrictStr] = Field(default=None, description="Object name, value is webhook_key", json_schema_extra={"examples": ["webhook_key"]})
+    public_key: Optional[StrictStr] = Field(default=None, description="Public key to be used in the webhook", json_schema_extra={"examples": ["-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqULpUc6D6mSAq5a0yLY/\\noOjd1mWm6q+QI8y/FI4STr2F+XgKeNnMxSqnyFrHtKQ/ut4Zi45WFnJLfEQL7aW5\\n67yE2dWyo6GaL7yZUfLC0Y3sHPGzaGtvDF36ISW7LliYNoMiA3Bx5/1Sr0G23pGW\\n0Mp8IO1Nlz0sJWuU/d7zCz/UN6cl9g/BP4eaQ7deS56YuWcj5sTlwqFTlwN12kpA\\nIzMZ7gnvYQnZTpPny5lben6QEuxTvZcPApcyOweiESjMnXfkfWOyuYtgMrbsU6oL\\nA6sWa6j0pePW7AYeBqB4tyAlenkCSqzHg8bMk5Bm7hiT6I9Pls774lJbnOYmmuNE\\n8QIDAQAB\\n-----END PUBLIC KEY-----\\n"]})
     __properties: ClassVar[List[str]] = ["active", "created_at", "id", "livemode", "object", "public_key"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class WebhookKeyCreateResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

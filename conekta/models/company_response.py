@@ -18,29 +18,43 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.company_response_documents_inner import CompanyResponseDocumentsInner
+from conekta.models.company_document_response import CompanyDocumentResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CompanyResponse(BaseModel):
     """
     CompanyResponse
     """ # noqa: E501
-    id: StrictStr = Field(description="The unique identifier for the company.")
-    name: StrictStr = Field(description="The name of the company.")
-    active: StrictBool = Field(description="Indicates if the company is active.")
-    account_status: StrictStr = Field(description="The current status of the company's account.")
-    parent_company_id: Optional[StrictStr] = Field(default=None, description="The identifier of the parent company, if any.")
-    onboarding_status: StrictStr = Field(description="The current status of the company's onboarding process.")
-    documents: List[CompanyResponseDocumentsInner] = Field(description="A list of documents related to the company.")
-    created_at: StrictInt = Field(description="Timestamp of when the company was created.")
-    object: StrictStr = Field(description="The type of object, typically \"company\".")
-    __properties: ClassVar[List[str]] = ["id", "name", "active", "account_status", "parent_company_id", "onboarding_status", "documents", "created_at", "object"]
+    id: StrictStr = Field(description="The unique identifier for the company.", json_schema_extra={"examples": ["6827305a1ec60400015eb116"]})
+    name: StrictStr = Field(description="The name of the company.", json_schema_extra={"examples": ["test"]})
+    active: StrictBool = Field(description="Indicates if the company is active.", json_schema_extra={"examples": [False]})
+    account_status: StrictStr = Field(description="The current status of the company's account.", json_schema_extra={"examples": ["signed_up"]})
+    parent_company_id: Optional[StrictStr] = Field(default=None, description="The identifier of the parent company, if any.", json_schema_extra={"examples": ["680bf1da38716d00013543bc"]})
+    onboarding_status: StrictStr = Field(description="The current status of the company's onboarding process.", json_schema_extra={"examples": ["pending"]})
+    documents: List[CompanyDocumentResponse] = Field(description="A list of documents related to the company.")
+    created_at: StrictInt = Field(description="Timestamp of when the company was created.", json_schema_extra={"examples": [1748968241]})
+    object: StrictStr = Field(description="The type of object, typically \"company\".", json_schema_extra={"examples": ["company"]})
+    three_ds_enabled: Optional[StrictBool] = Field(default=None, description="Indicates if 3DS authentication is enabled for the company.", json_schema_extra={"examples": [True]})
+    three_ds_mode: Optional[StrictStr] = Field(default=None, description="The 3DS mode for the company, either 'smart' or 'strict'. This property is only applicable when three_ds_enabled is true. When three_ds_enabled is false, this field will be null.", json_schema_extra={"examples": ["strict"]})
+    __properties: ClassVar[List[str]] = ["id", "name", "active", "account_status", "parent_company_id", "onboarding_status", "documents", "created_at", "object", "three_ds_enabled", "three_ds_mode"]
+
+    @field_validator('three_ds_mode')
+    def three_ds_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['smart', 'strict']):
+            raise ValueError("must be one of enum values ('smart', 'strict')")
+        return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -52,8 +66,7 @@ class CompanyResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -85,11 +98,6 @@ class CompanyResponse(BaseModel):
                 if _item_documents:
                     _items.append(_item_documents.to_dict())
             _dict['documents'] = _items
-        # set to None if parent_company_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.parent_company_id is None and "parent_company_id" in self.model_fields_set:
-            _dict['parent_company_id'] = None
-
         return _dict
 
     @classmethod
@@ -108,9 +116,11 @@ class CompanyResponse(BaseModel):
             "account_status": obj.get("account_status"),
             "parent_company_id": obj.get("parent_company_id"),
             "onboarding_status": obj.get("onboarding_status"),
-            "documents": [CompanyResponseDocumentsInner.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None,
+            "documents": [CompanyDocumentResponse.from_dict(_item) for _item in obj["documents"]] if obj.get("documents") is not None else None,
             "created_at": obj.get("created_at"),
-            "object": obj.get("object")
+            "object": obj.get("object"),
+            "three_ds_enabled": obj.get("three_ds_enabled"),
+            "three_ds_mode": obj.get("three_ds_mode")
         })
         return _obj
 

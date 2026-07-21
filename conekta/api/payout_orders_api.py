@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -20,7 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
-from conekta.models.payout_order import PayoutOrder
+from conekta.models.payout_order_request import PayoutOrderRequest
 from conekta.models.payout_order_response import PayoutOrderResponse
 from conekta.models.payout_orders_response import PayoutOrdersResponse
 
@@ -330,7 +329,7 @@ class PayoutOrdersApi:
     @validate_call
     def create_payout_order(
         self,
-        payout_order: Annotated[PayoutOrder, Field(description="requested field for payout order")],
+        payout_order_request: Annotated[PayoutOrderRequest, Field(description="requested field for payout order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -349,8 +348,8 @@ class PayoutOrdersApi:
 
         Create a new payout order.
 
-        :param payout_order: requested field for payout order (required)
-        :type payout_order: PayoutOrder
+        :param payout_order_request: requested field for payout order (required)
+        :type payout_order_request: PayoutOrderRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -376,7 +375,7 @@ class PayoutOrdersApi:
         """ # noqa: E501
 
         _param = self._create_payout_order_serialize(
-            payout_order=payout_order,
+            payout_order_request=payout_order_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -406,7 +405,7 @@ class PayoutOrdersApi:
     @validate_call
     def create_payout_order_with_http_info(
         self,
-        payout_order: Annotated[PayoutOrder, Field(description="requested field for payout order")],
+        payout_order_request: Annotated[PayoutOrderRequest, Field(description="requested field for payout order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -425,8 +424,8 @@ class PayoutOrdersApi:
 
         Create a new payout order.
 
-        :param payout_order: requested field for payout order (required)
-        :type payout_order: PayoutOrder
+        :param payout_order_request: requested field for payout order (required)
+        :type payout_order_request: PayoutOrderRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -452,7 +451,7 @@ class PayoutOrdersApi:
         """ # noqa: E501
 
         _param = self._create_payout_order_serialize(
-            payout_order=payout_order,
+            payout_order_request=payout_order_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -482,7 +481,7 @@ class PayoutOrdersApi:
     @validate_call
     def create_payout_order_without_preload_content(
         self,
-        payout_order: Annotated[PayoutOrder, Field(description="requested field for payout order")],
+        payout_order_request: Annotated[PayoutOrderRequest, Field(description="requested field for payout order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -501,8 +500,8 @@ class PayoutOrdersApi:
 
         Create a new payout order.
 
-        :param payout_order: requested field for payout order (required)
-        :type payout_order: PayoutOrder
+        :param payout_order_request: requested field for payout order (required)
+        :type payout_order_request: PayoutOrderRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -528,7 +527,7 @@ class PayoutOrdersApi:
         """ # noqa: E501
 
         _param = self._create_payout_order_serialize(
-            payout_order=payout_order,
+            payout_order_request=payout_order_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -553,7 +552,7 @@ class PayoutOrdersApi:
 
     def _create_payout_order_serialize(
         self,
-        payout_order,
+        payout_order_request,
         accept_language,
         _request_auth,
         _content_type,
@@ -582,8 +581,8 @@ class PayoutOrdersApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if payout_order is not None:
-            _body_params = payout_order
+        if payout_order_request is not None:
+            _body_params = payout_order_request
 
 
         # set the HTTP header `Accept`

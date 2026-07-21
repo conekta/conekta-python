@@ -22,23 +22,25 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PayoutOrderPayoutsItem(BaseModel):
     """
     PayoutOrderPayoutsItem
     """ # noqa: E501
-    amount: StrictInt = Field(description="The amount of the payout.")
-    currency: StrictStr = Field(description="The currency in which the payout is made.")
-    expires_at: Optional[StrictInt] = Field(default=None, description="The expiration date of the payout.")
-    id: StrictStr = Field(description="The id of the payout.")
-    livemode: StrictBool = Field(description="The live mode of the payout.")
-    object: StrictStr = Field(description="The object of the payout.")
-    payout_order_id: Optional[StrictStr] = Field(default=None, description="The id of the payout order.")
-    status: Optional[StrictStr] = Field(default=None, description="The status of the payout.")
+    amount: StrictInt = Field(description="The amount of the payout.", json_schema_extra={"examples": [3000]})
+    currency: StrictStr = Field(description="The currency in which the payout is made.", json_schema_extra={"examples": ["MXN"]})
+    expires_at: Optional[StrictInt] = Field(default=None, description="The expiration date of the payout.", json_schema_extra={"examples": [1677626837]})
+    id: StrictStr = Field(description="The id of the payout.", json_schema_extra={"examples": ["payout_2vZwsRAhhGp2dFDJx"]})
+    livemode: StrictBool = Field(description="The live mode of the payout.", json_schema_extra={"examples": [True]})
+    object: StrictStr = Field(description="The object of the payout.", json_schema_extra={"examples": ["payout"]})
+    payout_order_id: Optional[StrictStr] = Field(default=None, description="The id of the payout order.", json_schema_extra={"examples": ["f2654d66-d740-457a-9a8c-f96b5196f44e"]})
+    status: Optional[StrictStr] = Field(default=None, description="The status of the payout.", json_schema_extra={"examples": ["open"]})
     __properties: ClassVar[List[str]] = ["amount", "currency", "expires_at", "id", "livemode", "object", "payout_order_id", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class PayoutOrderPayoutsItem(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

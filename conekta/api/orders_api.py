@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -25,7 +24,7 @@ from conekta.models.order_capture_request import OrderCaptureRequest
 from conekta.models.order_refund_request import OrderRefundRequest
 from conekta.models.order_request import OrderRequest
 from conekta.models.order_response import OrderResponse
-from conekta.models.order_update_request import OrderUpdateRequest
+from conekta.models.order_update import OrderUpdate
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -673,6 +672,7 @@ class OrdersApi:
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
+        client: Annotated[Optional[StrictStr], Field(description="client of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -696,6 +696,8 @@ class OrdersApi:
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
         :type x_child_company_id: str
+        :param client: client of the object to be retrieved
+        :type client: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -722,6 +724,7 @@ class OrdersApi:
             id=id,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
+            client=client,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -751,6 +754,7 @@ class OrdersApi:
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
+        client: Annotated[Optional[StrictStr], Field(description="client of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -774,6 +778,8 @@ class OrdersApi:
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
         :type x_child_company_id: str
+        :param client: client of the object to be retrieved
+        :type client: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -800,6 +806,7 @@ class OrdersApi:
             id=id,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
+            client=client,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -829,6 +836,7 @@ class OrdersApi:
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
+        client: Annotated[Optional[StrictStr], Field(description="client of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -852,6 +860,8 @@ class OrdersApi:
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
         :type x_child_company_id: str
+        :param client: client of the object to be retrieved
+        :type client: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -878,6 +888,7 @@ class OrdersApi:
             id=id,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
+            client=client,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -902,6 +913,7 @@ class OrdersApi:
         id,
         accept_language,
         x_child_company_id,
+        client,
         _request_auth,
         _content_type,
         _headers,
@@ -926,6 +938,10 @@ class OrdersApi:
         if id is not None:
             _path_params['id'] = id
         # process the query parameters
+        if client is not None:
+            
+            _query_params.append(('client', client))
+            
         # process the header parameters
         if accept_language is not None:
             _header_params['Accept-Language'] = accept_language
@@ -2426,7 +2442,7 @@ class OrdersApi:
     def update_order(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        order_update_request: Annotated[OrderUpdateRequest, Field(description="requested field for an order")],
+        order_update: Annotated[OrderUpdate, Field(description="requested field for an order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -2447,8 +2463,8 @@ class OrdersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param order_update_request: requested field for an order (required)
-        :type order_update_request: OrderUpdateRequest
+        :param order_update: requested field for an order (required)
+        :type order_update: OrderUpdate
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2475,7 +2491,7 @@ class OrdersApi:
 
         _param = self._update_order_serialize(
             id=id,
-            order_update_request=order_update_request,
+            order_update=order_update,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2505,7 +2521,7 @@ class OrdersApi:
     def update_order_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        order_update_request: Annotated[OrderUpdateRequest, Field(description="requested field for an order")],
+        order_update: Annotated[OrderUpdate, Field(description="requested field for an order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -2526,8 +2542,8 @@ class OrdersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param order_update_request: requested field for an order (required)
-        :type order_update_request: OrderUpdateRequest
+        :param order_update: requested field for an order (required)
+        :type order_update: OrderUpdate
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2554,7 +2570,7 @@ class OrdersApi:
 
         _param = self._update_order_serialize(
             id=id,
-            order_update_request=order_update_request,
+            order_update=order_update,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2584,7 +2600,7 @@ class OrdersApi:
     def update_order_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        order_update_request: Annotated[OrderUpdateRequest, Field(description="requested field for an order")],
+        order_update: Annotated[OrderUpdate, Field(description="requested field for an order")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -2605,8 +2621,8 @@ class OrdersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param order_update_request: requested field for an order (required)
-        :type order_update_request: OrderUpdateRequest
+        :param order_update: requested field for an order (required)
+        :type order_update: OrderUpdate
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2633,7 +2649,7 @@ class OrdersApi:
 
         _param = self._update_order_serialize(
             id=id,
-            order_update_request=order_update_request,
+            order_update=order_update,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2658,7 +2674,7 @@ class OrdersApi:
     def _update_order_serialize(
         self,
         id,
-        order_update_request,
+        order_update,
         accept_language,
         _request_auth,
         _content_type,
@@ -2689,8 +2705,8 @@ class OrdersApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if order_update_request is not None:
-            _body_params = order_update_request
+        if order_update is not None:
+            _body_params = order_update
 
 
         # set the HTTP header `Accept`
