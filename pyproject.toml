@@ -1,6 +1,6 @@
 [project]
 name = "conekta"
-version = "7.1.0"
+version = "9.0.0"
 description = "Conekta API"
 authors = [
   {name = "Engineering Conekta",email = "engineering@conekta.com"},

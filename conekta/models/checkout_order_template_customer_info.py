@@ -24,11 +24,11 @@ from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-ORDERREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoCustomerId"]
+CHECKOUTORDERTEMPLATECUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoCustomerId"]
 
-class OrderRequestCustomerInfo(BaseModel):
+class CheckoutOrderTemplateCustomerInfo(BaseModel):
     """
-    Customer information
+    It is the information of the customer who will be created when receiving a new payment.
     """
     # data type: CustomerInfo
     oneof_schema_1_validator: Optional[CustomerInfo] = None
@@ -55,7 +55,7 @@ class OrderRequestCustomerInfo(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
-        instance = OrderRequestCustomerInfo.model_construct()
+        instance = CheckoutOrderTemplateCustomerInfo.model_construct()
         error_messages = []
         match = 0
         # validate data type: CustomerInfo
@@ -70,10 +70,10 @@ class OrderRequestCustomerInfo(BaseModel):
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in CheckoutOrderTemplateCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in CheckoutOrderTemplateCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -103,10 +103,10 @@ class OrderRequestCustomerInfo(BaseModel):
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into CheckoutOrderTemplateCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into CheckoutOrderTemplateCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         else:
             return instance
 

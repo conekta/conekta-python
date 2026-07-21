@@ -10,7 +10,7 @@ python:
 	rm -rf conekta/api && \
 	docker run --rm \
     -v ${PWD}:/local openapitools/openapi-generator-cli:v7.24.0 generate \
-	-i https://raw.githubusercontent.com/conekta/openapi/main/_build/api.yaml \
+	-i https://raw.githubusercontent.com/conekta/openapi/refs/heads/release/v2.3.0/_build/api.yaml \
 	-g python \
 	-o /local \
 	-c /local/config-python.json \
