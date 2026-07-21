@@ -22,22 +22,25 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CustomerShippingContactsAddress(BaseModel):
     """
-    Address of the person who will receive the order
+    CustomerShippingContactsAddress
     """ # noqa: E501
-    street1: Optional[StrictStr] = None
-    street2: Optional[StrictStr] = None
-    postal_code: Optional[StrictStr] = None
-    city: Optional[StrictStr] = None
-    state: Optional[StrictStr] = None
-    country: Optional[StrictStr] = Field(default=None, description="this field follows the [ISO 3166-1 alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)")
-    residential: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["street1", "street2", "postal_code", "city", "state", "country", "residential"]
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["shipping_address"]})
+    street1: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Nuevo Leon 254"]})
+    street2: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Departamento 404"]})
+    postal_code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["06100"]})
+    city: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Ciudad de Mexico"]})
+    state: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Ciudad de Mexico"]})
+    country: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["MX"]})
+    residential: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    __properties: ClassVar[List[str]] = ["object", "street1", "street2", "postal_code", "city", "state", "country", "residential"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +52,7 @@ class CustomerShippingContactsAddress(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,11 +77,6 @@ class CustomerShippingContactsAddress(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if residential (nullable) is None
-        # and model_fields_set contains the field
-        if self.residential is None and "residential" in self.model_fields_set:
-            _dict['residential'] = None
-
         return _dict
 
     @classmethod
@@ -92,6 +89,7 @@ class CustomerShippingContactsAddress(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "object": obj.get("object"),
             "street1": obj.get("street1"),
             "street2": obj.get("street2"),
             "postal_code": obj.get("postal_code"),

@@ -25,29 +25,31 @@ from conekta.models.payout_order_payouts_item import PayoutOrderPayoutsItem
 from conekta.models.payout_order_response_customer_info import PayoutOrderResponseCustomerInfo
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PayoutOrderResponse(BaseModel):
     """
     payout order model response
     """ # noqa: E501
-    allowed_payout_methods: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="The payout methods that are allowed for the payout order.")
-    amount: StrictInt = Field(description="The amount of the payout order.")
-    created_at: StrictInt = Field(description="The creation date of the payout order.")
-    currency: StrictStr = Field(description="The currency in which the payout order is made.")
+    allowed_payout_methods: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="The payout methods that are allowed for the payout order.", json_schema_extra={"examples": [["cashout"]]})
+    amount: StrictInt = Field(description="The amount of the payout order.", json_schema_extra={"examples": [100]})
+    created_at: StrictInt = Field(description="The creation date of the payout order.", json_schema_extra={"examples": [1677626837]})
+    currency: StrictStr = Field(description="The currency in which the payout order is made.", json_schema_extra={"examples": ["MXN"]})
     customer_info: PayoutOrderResponseCustomerInfo
-    expires_at: Optional[StrictInt] = Field(default=None, description="The expiration date of the payout order.")
-    id: StrictStr = Field(description="The id of the payout order.")
-    livemode: StrictBool = Field(description="The live mode of the payout order.")
-    object: StrictStr = Field(description="The object of the payout order.")
-    metadata: Optional[Dict[str, Any]] = Field(default=None, description="The metadata of the payout order.")
+    expires_at: StrictInt = Field(description="The expiration date of the payout order.", json_schema_extra={"examples": [1677626837]})
+    id: StrictStr = Field(description="The id of the payout order.", json_schema_extra={"examples": ["f2654d66-d740-457a-9a8c-f96b5196f44e"]})
+    livemode: StrictBool = Field(description="The live mode of the payout order.", json_schema_extra={"examples": [True]})
+    object: StrictStr = Field(description="The object of the payout order.", json_schema_extra={"examples": ["payout_order"]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="The metadata of the payout order.", json_schema_extra={"examples": [{"custom_client_id": "12345"}]})
     payouts: List[PayoutOrderPayoutsItem] = Field(description="The payout information of the payout order.")
-    reason: StrictStr = Field(description="The reason for the payout order.")
-    status: Optional[StrictStr] = Field(default=None, description="The status of the payout order.")
-    updated_at: StrictInt = Field(description="The update date of the payout order.")
+    reason: StrictStr = Field(description="The reason for the payout order.", json_schema_extra={"examples": ["Payout order for the customer"]})
+    status: StrictStr = Field(description="The status of the payout order.", json_schema_extra={"examples": ["open"]})
+    updated_at: StrictInt = Field(description="The update date of the payout order.", json_schema_extra={"examples": [1677626837]})
     __properties: ClassVar[List[str]] = ["allowed_payout_methods", "amount", "created_at", "currency", "customer_info", "expires_at", "id", "livemode", "object", "metadata", "payouts", "reason", "status", "updated_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -59,8 +61,7 @@ class PayoutOrderResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,18 +10,19 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr, field_validator
+from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.get_plans_response import GetPlansResponse
 from conekta.models.plan_request import PlanRequest
 from conekta.models.plan_response import PlanResponse
-from conekta.models.plan_update_request import PlanUpdateRequest
+from conekta.models.update_plan import UpdatePlan
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -950,6 +949,8 @@ class PlansApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        currency: Annotated[Optional[StrictStr], Field(description="currency of the object to be retrieved")] = None,
+        frequency: Annotated[Optional[StrictInt], Field(description="frequency of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -978,6 +979,10 @@ class PlansApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param currency: currency of the object to be retrieved
+        :type currency: str
+        :param frequency: frequency of the object to be retrieved
+        :type frequency: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1007,6 +1012,8 @@ class PlansApi:
             search=search,
             next=next,
             previous=previous,
+            currency=currency,
+            frequency=frequency,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1039,6 +1046,8 @@ class PlansApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        currency: Annotated[Optional[StrictStr], Field(description="currency of the object to be retrieved")] = None,
+        frequency: Annotated[Optional[StrictInt], Field(description="frequency of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1067,6 +1076,10 @@ class PlansApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param currency: currency of the object to be retrieved
+        :type currency: str
+        :param frequency: frequency of the object to be retrieved
+        :type frequency: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1096,6 +1109,8 @@ class PlansApi:
             search=search,
             next=next,
             previous=previous,
+            currency=currency,
+            frequency=frequency,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1128,6 +1143,8 @@ class PlansApi:
         search: Annotated[Optional[StrictStr], Field(description="General order search, e.g. by mail, reference etc.")] = None,
         next: Annotated[Optional[StrictStr], Field(description="next page")] = None,
         previous: Annotated[Optional[StrictStr], Field(description="previous page")] = None,
+        currency: Annotated[Optional[StrictStr], Field(description="currency of the object to be retrieved")] = None,
+        frequency: Annotated[Optional[StrictInt], Field(description="frequency of the object to be retrieved")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1156,6 +1173,10 @@ class PlansApi:
         :type next: str
         :param previous: previous page
         :type previous: str
+        :param currency: currency of the object to be retrieved
+        :type currency: str
+        :param frequency: frequency of the object to be retrieved
+        :type frequency: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1185,6 +1206,8 @@ class PlansApi:
             search=search,
             next=next,
             previous=previous,
+            currency=currency,
+            frequency=frequency,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1212,6 +1235,8 @@ class PlansApi:
         search,
         next,
         previous,
+        currency,
+        frequency,
         _request_auth,
         _content_type,
         _headers,
@@ -1249,6 +1274,14 @@ class PlansApi:
         if previous is not None:
             
             _query_params.append(('previous', previous))
+            
+        if currency is not None:
+            
+            _query_params.append(('currency', currency))
+            
+        if frequency is not None:
+            
+            _query_params.append(('frequency', frequency))
             
         # process the header parameters
         if accept_language is not None:
@@ -1295,7 +1328,7 @@ class PlansApi:
     def update_plan(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        plan_update_request: Annotated[PlanUpdateRequest, Field(description="requested field for plan")],
+        update_plan: Annotated[UpdatePlan, Field(description="requested field for plan")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1316,8 +1349,8 @@ class PlansApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param plan_update_request: requested field for plan (required)
-        :type plan_update_request: PlanUpdateRequest
+        :param update_plan: requested field for plan (required)
+        :type update_plan: UpdatePlan
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1346,7 +1379,7 @@ class PlansApi:
 
         _param = self._update_plan_serialize(
             id=id,
-            plan_update_request=plan_update_request,
+            update_plan=update_plan,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1377,7 +1410,7 @@ class PlansApi:
     def update_plan_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        plan_update_request: Annotated[PlanUpdateRequest, Field(description="requested field for plan")],
+        update_plan: Annotated[UpdatePlan, Field(description="requested field for plan")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1398,8 +1431,8 @@ class PlansApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param plan_update_request: requested field for plan (required)
-        :type plan_update_request: PlanUpdateRequest
+        :param update_plan: requested field for plan (required)
+        :type update_plan: UpdatePlan
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1428,7 +1461,7 @@ class PlansApi:
 
         _param = self._update_plan_serialize(
             id=id,
-            plan_update_request=plan_update_request,
+            update_plan=update_plan,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1459,7 +1492,7 @@ class PlansApi:
     def update_plan_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        plan_update_request: Annotated[PlanUpdateRequest, Field(description="requested field for plan")],
+        update_plan: Annotated[UpdatePlan, Field(description="requested field for plan")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1480,8 +1513,8 @@ class PlansApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param plan_update_request: requested field for plan (required)
-        :type plan_update_request: PlanUpdateRequest
+        :param update_plan: requested field for plan (required)
+        :type update_plan: UpdatePlan
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1510,7 +1543,7 @@ class PlansApi:
 
         _param = self._update_plan_serialize(
             id=id,
-            plan_update_request=plan_update_request,
+            update_plan=update_plan,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1536,7 +1569,7 @@ class PlansApi:
     def _update_plan_serialize(
         self,
         id,
-        plan_update_request,
+        update_plan,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -1570,8 +1603,8 @@ class PlansApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if plan_update_request is not None:
-            _body_params = plan_update_request
+        if update_plan is not None:
+            _body_params = update_plan
 
 
         # set the HTTP header `Accept`

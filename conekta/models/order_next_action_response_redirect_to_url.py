@@ -22,17 +22,19 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderNextActionResponseRedirectToUrl(BaseModel):
     """
     contains the following attributes that will guide to continue the flow
     """ # noqa: E501
-    url: Optional[StrictStr] = Field(default=None, description="pay.conekta.com/{id} Indicates the url of the Conekta component to authenticate the flow through 3DS2.")
-    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the url to which the 3DS2 flow returns at the end, when the integration is redirected.")
+    url: Optional[StrictStr] = Field(default=None, description="pay.conekta.com/{id} Indicates the url of the Conekta component to authenticate the flow through 3DS2.", json_schema_extra={"examples": ["https://pay.conekta.com/6fca054a85194c43971ecea35cc519bb"]})
+    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the url to which the 3DS2 flow returns at the end, when the integration is redirected.", json_schema_extra={"examples": ["https://my-website.com\""]})
     __properties: ClassVar[List[str]] = ["url", "return_url"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -44,8 +46,7 @@ class OrderNextActionResponseRedirectToUrl(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

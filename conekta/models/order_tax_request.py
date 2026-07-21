@@ -23,18 +23,20 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderTaxRequest(BaseModel):
     """
     create new taxes for an existing order
     """ # noqa: E501
-    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be collected for tax in cents")
-    description: Annotated[str, Field(min_length=2, strict=True)] = Field(description="description or tax's name")
-    metadata: Optional[Dict[str, Any]] = None
+    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be collected for tax in cents", json_schema_extra={"examples": [100]})
+    description: Annotated[str, Field(min_length=2, strict=True)] = Field(description="description or tax's name", json_schema_extra={"examples": ["testing"]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"key": "value"}]})
     __properties: ClassVar[List[str]] = ["amount", "description", "metadata"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class OrderTaxRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

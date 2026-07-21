@@ -18,7 +18,9 @@ Method | HTTP request | Description
 
 Create customer
 
-The purpose of business is to create and keep a customer, you will learn what elements you need to create a customer. Remember the credit and debit card tokenization process: [https://developers.conekta.com/page/web-checkout-tokenizer](https://developers.conekta.com/page/web-checkout-tokenizer) 
+The purpose of business is to create and keep a customer, you will learn what elements you need to create a customer.
+Remember the credit and debit card tokenization process: [https://developers.conekta.com/page/web-checkout-tokenizer](https://developers.conekta.com/page/web-checkout-tokenizer)
+
 
 ### Example
 
@@ -52,7 +54,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CustomersApi(api_client)
     customer = conekta.Customer() # Customer | requested field for customer
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -72,7 +74,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer** | [**Customer**](Customer.md)| requested field for customer | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -101,7 +103,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_customer_fiscal_entities**
-> CreateCustomerFiscalEntitiesResponse create_customer_fiscal_entities(id, customer_fiscal_entities_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> CreateCustomerFiscalEntitiesResponse create_customer_fiscal_entities(id, fiscal_entity_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Create Fiscal Entity
 
@@ -114,7 +116,7 @@ Create Fiscal entity resource that corresponds to a customer ID.
 ```python
 import conekta
 from conekta.models.create_customer_fiscal_entities_response import CreateCustomerFiscalEntitiesResponse
-from conekta.models.customer_fiscal_entities_request import CustomerFiscalEntitiesRequest
+from conekta.models.fiscal_entity_request import FiscalEntityRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -139,13 +141,13 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CustomersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    customer_fiscal_entities_request = conekta.CustomerFiscalEntitiesRequest() # CustomerFiscalEntitiesRequest | requested field for customer fiscal entities
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    fiscal_entity_request = conekta.FiscalEntityRequest() # FiscalEntityRequest | requested field for customer fiscal entities
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Create Fiscal Entity
-        api_response = api_instance.create_customer_fiscal_entities(id, customer_fiscal_entities_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.create_customer_fiscal_entities(id, fiscal_entity_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of CustomersApi->create_customer_fiscal_entities:\n")
         pprint(api_response)
     except Exception as e:
@@ -160,8 +162,8 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **customer_fiscal_entities_request** | [**CustomerFiscalEntitiesRequest**](CustomerFiscalEntitiesRequest.md)| requested field for customer fiscal entities | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **fiscal_entity_request** | [**FiscalEntityRequest**](FiscalEntityRequest.md)| requested field for customer fiscal entities | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -227,7 +229,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CustomersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -247,7 +249,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -313,7 +315,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CustomersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -333,7 +335,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -397,7 +399,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.CustomersApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
@@ -420,7 +422,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
@@ -490,7 +492,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.CustomersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     update_customer = conekta.UpdateCustomer() # UpdateCustomer | requested field for customer
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -511,7 +513,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **update_customer** | [**UpdateCustomer**](UpdateCustomer.md)| requested field for customer | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -540,7 +542,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_customer_fiscal_entities**
-> UpdateCustomerFiscalEntitiesResponse update_customer_fiscal_entities(id, fiscal_entities_id, customer_update_fiscal_entities_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> UpdateCustomerFiscalEntitiesResponse update_customer_fiscal_entities(id, fiscal_entities_id, update_fiscal_entity_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update  Fiscal Entity
 
@@ -552,8 +554,8 @@ Update Fiscal Entity resource that corresponds to a customer ID.
 
 ```python
 import conekta
-from conekta.models.customer_update_fiscal_entities_request import CustomerUpdateFiscalEntitiesRequest
 from conekta.models.update_customer_fiscal_entities_response import UpdateCustomerFiscalEntitiesResponse
+from conekta.models.update_fiscal_entity_request import UpdateFiscalEntityRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -579,13 +581,13 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.CustomersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     fiscal_entities_id = 'fis_ent_2tQ8HkkfbauaKP9Ho' # str | identifier
-    customer_update_fiscal_entities_request = conekta.CustomerUpdateFiscalEntitiesRequest() # CustomerUpdateFiscalEntitiesRequest | requested field for customer update fiscal entities
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    update_fiscal_entity_request = conekta.UpdateFiscalEntityRequest() # UpdateFiscalEntityRequest | requested field for customer update fiscal entities
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update  Fiscal Entity
-        api_response = api_instance.update_customer_fiscal_entities(id, fiscal_entities_id, customer_update_fiscal_entities_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.update_customer_fiscal_entities(id, fiscal_entities_id, update_fiscal_entity_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of CustomersApi->update_customer_fiscal_entities:\n")
         pprint(api_response)
     except Exception as e:
@@ -601,8 +603,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **fiscal_entities_id** | **str**| identifier | 
- **customer_update_fiscal_entities_request** | [**CustomerUpdateFiscalEntitiesRequest**](CustomerUpdateFiscalEntitiesRequest.md)| requested field for customer update fiscal entities | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **update_fiscal_entity_request** | [**UpdateFiscalEntityRequest**](UpdateFiscalEntityRequest.md)| requested field for customer update fiscal entities | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

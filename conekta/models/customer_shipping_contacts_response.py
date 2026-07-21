@@ -20,29 +20,31 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.customer_shipping_contacts_response_address import CustomerShippingContactsResponseAddress
+from conekta.models.customer_shipping_contacts_address import CustomerShippingContactsAddress
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CustomerShippingContactsResponse(BaseModel):
     """
     Contains the detail of the shipping addresses that the client has active or has used in Conekta
     """ # noqa: E501
-    phone: Optional[StrictStr] = None
-    receiver: Optional[StrictStr] = None
-    between_streets: Optional[StrictStr] = None
-    address: Optional[CustomerShippingContactsResponseAddress] = None
+    phone: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["+525511223344"]})
+    receiver: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Marvin Fuller"]})
+    between_streets: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Ackerman Crescent"]})
+    address: Optional[CustomerShippingContactsAddress] = None
     parent_id: Optional[StrictStr] = None
-    default: Optional[StrictBool] = None
-    id: Optional[StrictStr] = None
-    created_at: Optional[StrictInt] = None
+    default: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["adr_1234567890"]})
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1675715413]})
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Metadata associated with the shipping contact")
-    object: Optional[StrictStr] = None
-    deleted: Optional[StrictBool] = None
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["shipping_contact"]})
+    deleted: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
     __properties: ClassVar[List[str]] = ["phone", "receiver", "between_streets", "address", "parent_id", "default", "id", "created_at", "metadata", "object", "deleted"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class CustomerShippingContactsResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -83,11 +84,6 @@ class CustomerShippingContactsResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
-        # set to None if between_streets (nullable) is None
-        # and model_fields_set contains the field
-        if self.between_streets is None and "between_streets" in self.model_fields_set:
-            _dict['between_streets'] = None
-
         return _dict
 
     @classmethod
@@ -103,7 +99,7 @@ class CustomerShippingContactsResponse(BaseModel):
             "phone": obj.get("phone"),
             "receiver": obj.get("receiver"),
             "between_streets": obj.get("between_streets"),
-            "address": CustomerShippingContactsResponseAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
+            "address": CustomerShippingContactsAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "parent_id": obj.get("parent_id"),
             "default": obj.get("default"),
             "id": obj.get("id"),

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **object** | **str** |  | 
 **created_at** | **int** |  | 
 **parent_id** | **str** |  | [optional] 
-**agreements** | [**List[PaymentMethodCashResponseAllOfAgreements]**](PaymentMethodCashResponseAllOfAgreements.md) |  | [optional] 
+**agreements** | [**List[CashAgreementsResponse]**](CashAgreementsResponse.md) |  | [optional] 
 **reference** | **str** |  | [optional] 
 **barcode** | **str** |  | [optional] 
 **barcode_url** | **str** | URL to the barcode image, reference is the same as barcode | [optional] 
@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **exp_month** | **str** |  | [optional] 
 **exp_year** | **str** |  | [optional] 
 **brand** | **str** |  | [optional] 
+**issuer** | **str** | Name of the institution that issued the card | [optional] 
 **name** | **str** |  | [optional] 
 **default** | **bool** |  | [optional] 
 **visible_on_checkout** | **bool** |  | [optional] 

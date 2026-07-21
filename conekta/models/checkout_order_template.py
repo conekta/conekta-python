@@ -21,23 +21,29 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from conekta.models.checkout_order_template_customer_info import CheckoutOrderTemplateCustomerInfo
+from conekta.models.order_discount_lines_request import OrderDiscountLinesRequest
+from conekta.models.order_request_customer_info import OrderRequestCustomerInfo
+from conekta.models.order_tax_request import OrderTaxRequest
 from conekta.models.product import Product
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CheckoutOrderTemplate(BaseModel):
     """
     It maintains the attributes with which the order will be created when receiving a new payment.
     """ # noqa: E501
-    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="It is the currency in which the order will be created. It must be a valid ISO 4217 currency code.")
-    customer_info: Optional[CheckoutOrderTemplateCustomerInfo] = None
+    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="It is the currency in which the order will be created. It must be a valid ISO 4217 currency code.", json_schema_extra={"examples": ["MXN"]})
+    customer_info: Optional[OrderRequestCustomerInfo] = None
     line_items: List[Product] = Field(description="They are the products to buy. Each contains the \"unit price\" and \"quantity\" parameters that are used to calculate the total amount of the order.")
-    metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a set of key-value pairs that you can attach to the order. It can be used to store additional information about the order in a structured format.")
-    __properties: ClassVar[List[str]] = ["currency", "customer_info", "line_items", "metadata"]
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a set of key-value pairs that you can attach to the order. It can be used to store additional information about the order in a structured format.", json_schema_extra={"examples": [{"key": "value"}]})
+    tax_lines: Optional[List[OrderTaxRequest]] = Field(default=None, description="List of [taxes](https://developers.conekta.com/v2.2.0/reference/orderscreatetaxes) that are applied to the order.")
+    discount_lines: Optional[List[OrderDiscountLinesRequest]] = Field(default=None, description="List of [discounts](https://developers.conekta.com/v2.2.0/reference/orderscreatediscountline) that are applied to the order.")
+    __properties: ClassVar[List[str]] = ["currency", "customer_info", "line_items", "metadata", "tax_lines", "discount_lines"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +55,7 @@ class CheckoutOrderTemplate(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -85,6 +90,20 @@ class CheckoutOrderTemplate(BaseModel):
                 if _item_line_items:
                     _items.append(_item_line_items.to_dict())
             _dict['line_items'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in tax_lines (list)
+        _items = []
+        if self.tax_lines:
+            for _item_tax_lines in self.tax_lines:
+                if _item_tax_lines:
+                    _items.append(_item_tax_lines.to_dict())
+            _dict['tax_lines'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in discount_lines (list)
+        _items = []
+        if self.discount_lines:
+            for _item_discount_lines in self.discount_lines:
+                if _item_discount_lines:
+                    _items.append(_item_discount_lines.to_dict())
+            _dict['discount_lines'] = _items
         return _dict
 
     @classmethod
@@ -98,9 +117,11 @@ class CheckoutOrderTemplate(BaseModel):
 
         _obj = cls.model_validate({
             "currency": obj.get("currency"),
-            "customer_info": CheckoutOrderTemplateCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
+            "customer_info": OrderRequestCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
             "line_items": [Product.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
-            "metadata": obj.get("metadata")
+            "metadata": obj.get("metadata"),
+            "tax_lines": [OrderTaxRequest.from_dict(_item) for _item in obj["tax_lines"]] if obj.get("tax_lines") is not None else None,
+            "discount_lines": [OrderDiscountLinesRequest.from_dict(_item) for _item in obj["discount_lines"]] if obj.get("discount_lines") is not None else None
         })
         return _obj
 

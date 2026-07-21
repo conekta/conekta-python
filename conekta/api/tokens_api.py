@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -20,7 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
-from conekta.models.token import Token
+from conekta.models.token_request import TokenRequest
 from conekta.models.token_response import TokenResponse
 
 from conekta.api_client import ApiClient, RequestSerialized
@@ -44,7 +43,7 @@ class TokensApi:
     @validate_call
     def create_token(
         self,
-        token: Annotated[Token, Field(description="requested field for token")],
+        token_request: Annotated[TokenRequest, Field(description="requested field for token")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -61,10 +60,10 @@ class TokensApi:
     ) -> TokenResponse:
         """Create Token
 
-        Generate a payment token, to associate it with a card 
+        Generate a payment token, to associate it with a card, Endpoint could be use directly only for PCI compliance account 
 
-        :param token: requested field for token (required)
-        :type token: Token
+        :param token_request: requested field for token (required)
+        :type token_request: TokenRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -90,7 +89,7 @@ class TokensApi:
         """ # noqa: E501
 
         _param = self._create_token_serialize(
-            token=token,
+            token_request=token_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -118,7 +117,7 @@ class TokensApi:
     @validate_call
     def create_token_with_http_info(
         self,
-        token: Annotated[Token, Field(description="requested field for token")],
+        token_request: Annotated[TokenRequest, Field(description="requested field for token")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -135,10 +134,10 @@ class TokensApi:
     ) -> ApiResponse[TokenResponse]:
         """Create Token
 
-        Generate a payment token, to associate it with a card 
+        Generate a payment token, to associate it with a card, Endpoint could be use directly only for PCI compliance account 
 
-        :param token: requested field for token (required)
-        :type token: Token
+        :param token_request: requested field for token (required)
+        :type token_request: TokenRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -164,7 +163,7 @@ class TokensApi:
         """ # noqa: E501
 
         _param = self._create_token_serialize(
-            token=token,
+            token_request=token_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -192,7 +191,7 @@ class TokensApi:
     @validate_call
     def create_token_without_preload_content(
         self,
-        token: Annotated[Token, Field(description="requested field for token")],
+        token_request: Annotated[TokenRequest, Field(description="requested field for token")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -209,10 +208,10 @@ class TokensApi:
     ) -> RESTResponseType:
         """Create Token
 
-        Generate a payment token, to associate it with a card 
+        Generate a payment token, to associate it with a card, Endpoint could be use directly only for PCI compliance account 
 
-        :param token: requested field for token (required)
-        :type token: Token
+        :param token_request: requested field for token (required)
+        :type token_request: TokenRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -238,7 +237,7 @@ class TokensApi:
         """ # noqa: E501
 
         _param = self._create_token_serialize(
-            token=token,
+            token_request=token_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -261,7 +260,7 @@ class TokensApi:
 
     def _create_token_serialize(
         self,
-        token,
+        token_request,
         accept_language,
         _request_auth,
         _content_type,
@@ -290,8 +289,8 @@ class TokensApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if token is not None:
-            _body_params = token
+        if token_request is not None:
+            _body_params = token_request
 
 
         # set the HTTP header `Accept`

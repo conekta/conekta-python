@@ -22,8 +22,8 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from conekta.models.charge_request import ChargeRequest
-from conekta.models.checkout_request import CheckoutRequest
-from conekta.models.customer_shipping_contacts import CustomerShippingContacts
+from conekta.models.customer_shipping_contacts_request import CustomerShippingContactsRequest
+from conekta.models.order_checkout_request import OrderCheckoutRequest
 from conekta.models.order_discount_lines_request import OrderDiscountLinesRequest
 from conekta.models.order_fiscal_entity_request import OrderFiscalEntityRequest
 from conekta.models.order_request_customer_info import OrderRequestCustomerInfo
@@ -32,31 +32,33 @@ from conekta.models.product import Product
 from conekta.models.shipping_request import ShippingRequest
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderRequest(BaseModel):
     """
     a order
     """ # noqa: E501
     charges: Optional[List[ChargeRequest]] = Field(default=None, description="List of [charges](https://developers.conekta.com/v2.2.0/reference/orderscreatecharge) that are applied to the order")
-    checkout: Optional[CheckoutRequest] = None
-    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="Currency with which the payment will be made. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)")
+    checkout: Optional[OrderCheckoutRequest] = None
+    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="Currency with which the payment will be made. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)", json_schema_extra={"examples": ["MXN"]})
     customer_info: OrderRequestCustomerInfo
-    discount_lines: Optional[List[OrderDiscountLinesRequest]] = Field(default=None, description="List of [discounts](https://developers.conekta.com/v2.2.0/reference/orderscreatediscountline) that are applied to the order. You must have at least one discount.")
+    discount_lines: Optional[List[OrderDiscountLinesRequest]] = Field(default=None, description="List of [discounts](https://developers.conekta.com/v2.2.0/reference/orderscreatediscountline) that are applied to the order.")
     fiscal_entity: Optional[OrderFiscalEntityRequest] = None
     line_items: List[Product] = Field(description="List of [products](https://developers.conekta.com/v2.2.0/reference/orderscreateproduct) that are sold in the order. You must have at least one product.")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Metadata associated with the order")
-    needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="Allows you to fill out the shipping information at checkout")
-    pre_authorize: Optional[StrictBool] = Field(default=False, description="Indicates whether the order charges must be preauthorized")
-    processing_mode: Optional[StrictStr] = Field(default=None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.")
-    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the redirection callback upon completion of the 3DS2 flow. Do not use this parameter if your order has a checkout parameter")
-    shipping_contact: Optional[CustomerShippingContacts] = None
+    needs_shipping_contact: Optional[StrictBool] = Field(default=None, description="Allows you to fill out the shipping information at checkout", json_schema_extra={"examples": [False]})
+    pre_authorize: Optional[StrictBool] = Field(default=None, description="Indicates whether the order charges must be preauthorized")
+    processing_mode: Optional[StrictStr] = Field(default=None, description="Indicates the processing mode for the order, either ecommerce, recurrent or validation.", json_schema_extra={"examples": ["ecommerce"]})
+    return_url: Optional[StrictStr] = Field(default=None, description="Indicates the redirection callback upon completion of the 3DS2 flow. Do not use this parameter if your order has a checkout parameter", json_schema_extra={"examples": ["https://my-website.com"]})
+    shipping_contact: Optional[CustomerShippingContactsRequest] = None
     shipping_lines: Optional[List[ShippingRequest]] = Field(default=None, description="List of [shipping costs](https://developers.conekta.com/v2.2.0/reference/orderscreateshipping). If the online store offers digital products.")
     tax_lines: Optional[List[OrderTaxRequest]] = Field(default=None, description="List of [taxes](https://developers.conekta.com/v2.2.0/reference/orderscreatetaxes) that are applied to the order.")
     three_ds_mode: Optional[StrictStr] = Field(default=None, description="Indicates the 3DS2 mode for the order, either smart or strict. This property is only applicable when 3DS is enabled. When 3DS is disabled, this field should be null.")
     __properties: ClassVar[List[str]] = ["charges", "checkout", "currency", "customer_info", "discount_lines", "fiscal_entity", "line_items", "metadata", "needs_shipping_contact", "pre_authorize", "processing_mode", "return_url", "shipping_contact", "shipping_lines", "tax_lines", "three_ds_mode"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -68,8 +70,7 @@ class OrderRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -141,11 +142,6 @@ class OrderRequest(BaseModel):
                 if _item_tax_lines:
                     _items.append(_item_tax_lines.to_dict())
             _dict['tax_lines'] = _items
-        # set to None if three_ds_mode (nullable) is None
-        # and model_fields_set contains the field
-        if self.three_ds_mode is None and "three_ds_mode" in self.model_fields_set:
-            _dict['three_ds_mode'] = None
-
         return _dict
 
     @classmethod
@@ -159,7 +155,7 @@ class OrderRequest(BaseModel):
 
         _obj = cls.model_validate({
             "charges": [ChargeRequest.from_dict(_item) for _item in obj["charges"]] if obj.get("charges") is not None else None,
-            "checkout": CheckoutRequest.from_dict(obj["checkout"]) if obj.get("checkout") is not None else None,
+            "checkout": OrderCheckoutRequest.from_dict(obj["checkout"]) if obj.get("checkout") is not None else None,
             "currency": obj.get("currency"),
             "customer_info": OrderRequestCustomerInfo.from_dict(obj["customer_info"]) if obj.get("customer_info") is not None else None,
             "discount_lines": [OrderDiscountLinesRequest.from_dict(_item) for _item in obj["discount_lines"]] if obj.get("discount_lines") is not None else None,
@@ -167,10 +163,10 @@ class OrderRequest(BaseModel):
             "line_items": [Product.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
             "metadata": obj.get("metadata"),
             "needs_shipping_contact": obj.get("needs_shipping_contact"),
-            "pre_authorize": obj.get("pre_authorize") if obj.get("pre_authorize") is not None else False,
+            "pre_authorize": obj.get("pre_authorize"),
             "processing_mode": obj.get("processing_mode"),
             "return_url": obj.get("return_url"),
-            "shipping_contact": CustomerShippingContacts.from_dict(obj["shipping_contact"]) if obj.get("shipping_contact") is not None else None,
+            "shipping_contact": CustomerShippingContactsRequest.from_dict(obj["shipping_contact"]) if obj.get("shipping_contact") is not None else None,
             "shipping_lines": [ShippingRequest.from_dict(_item) for _item in obj["shipping_lines"]] if obj.get("shipping_lines") is not None else None,
             "tax_lines": [OrderTaxRequest.from_dict(_item) for _item in obj["tax_lines"]] if obj.get("tax_lines") is not None else None,
             "three_ds_mode": obj.get("three_ds_mode")

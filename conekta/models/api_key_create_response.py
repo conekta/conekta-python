@@ -22,27 +22,29 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ApiKeyCreateResponse(BaseModel):
     """
     ApiKeyCreateResponse
     """ # noqa: E501
-    active: Optional[StrictBool] = Field(default=None, description="Indicates if the api key is active")
-    created_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was created")
-    updated_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was last updated")
+    authentication_token: Optional[StrictStr] = Field(default=None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.", json_schema_extra={"examples": ["key_rpHzxufNgjFCdprEEFZRTKi"]})
+    active: Optional[StrictBool] = Field(default=None, description="Indicates if the api key is active", json_schema_extra={"examples": [True]})
+    created_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was created", json_schema_extra={"examples": [1684167881]})
+    updated_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was last updated", json_schema_extra={"examples": [1684167923]})
     deactivated_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds of when the api key was deleted")
     last_used_at: Optional[StrictInt] = Field(default=None, description="Unix timestamp in seconds with the api key was used")
-    description: Optional[StrictStr] = Field(default=None, description="A name or brief explanation of what this api key is used for")
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the api key")
-    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the api key is in production")
-    object: Optional[StrictStr] = Field(default=None, description="Object name, value is 'api_key'")
-    prefix: Optional[StrictStr] = Field(default=None, description="The first few characters of the authentication_token")
-    role: Optional[StrictStr] = Field(default=None, description="Indicates if the api key is private or public")
-    authentication_token: Optional[StrictStr] = Field(default=None, description="It is occupied as a user when authenticated with basic authentication, with a blank password. This value will only appear once, in the request to create a new key. Copy and save it in a safe place.")
-    __properties: ClassVar[List[str]] = ["active", "created_at", "updated_at", "deactivated_at", "last_used_at", "description", "id", "livemode", "object", "prefix", "role", "authentication_token"]
+    description: Optional[StrictStr] = Field(default=None, description="A name or brief explanation of what this api key is used for", json_schema_extra={"examples": ["online store"]})
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the api key", json_schema_extra={"examples": ["64625cc9f3e02c00163f5e4d"]})
+    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the api key is in production", json_schema_extra={"examples": [False]})
+    object: Optional[StrictStr] = Field(default=None, description="Object name, value is 'api_key'", json_schema_extra={"examples": ["api_key"]})
+    prefix: Optional[StrictStr] = Field(default=None, description="The first few characters of the authentication_token", json_schema_extra={"examples": ["key_rp"]})
+    role: Optional[StrictStr] = Field(default=None, description="Indicates if the api key is private or public", json_schema_extra={"examples": ["private"]})
+    __properties: ClassVar[List[str]] = ["authentication_token", "active", "created_at", "updated_at", "deactivated_at", "last_used_at", "description", "id", "livemode", "object", "prefix", "role"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class ApiKeyCreateResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -80,16 +81,6 @@ class ApiKeyCreateResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if deactivated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.deactivated_at is None and "deactivated_at" in self.model_fields_set:
-            _dict['deactivated_at'] = None
-
-        # set to None if last_used_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
-            _dict['last_used_at'] = None
-
         return _dict
 
     @classmethod
@@ -102,6 +93,7 @@ class ApiKeyCreateResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "authentication_token": obj.get("authentication_token"),
             "active": obj.get("active"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
@@ -112,8 +104,7 @@ class ApiKeyCreateResponse(BaseModel):
             "livemode": obj.get("livemode"),
             "object": obj.get("object"),
             "prefix": obj.get("prefix"),
-            "role": obj.get("role"),
-            "authentication_token": obj.get("authentication_token")
+            "role": obj.get("role")
         })
         return _obj
 

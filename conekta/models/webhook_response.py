@@ -22,23 +22,25 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class WebhookResponse(BaseModel):
     """
     webhooks model
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="id of the webhook")
-    description: Optional[StrictStr] = Field(default=None, description="A name or brief explanation of what this webhook is used for")
-    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook is in production")
-    active: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook is actived or not")
-    object: Optional[StrictStr] = Field(default=None, description="Object name, value is 'webhook'")
-    status: Optional[StrictStr] = Field(default=None, description="Indicates if the webhook is ready to receive events or failing")
-    subscribed_events: Optional[List[StrictStr]] = Field(default=None, description="lists the events that will be sent to the webhook")
-    url: Optional[StrictStr] = Field(default=None, description="url or endpoint of the webhook")
+    id: Optional[StrictStr] = Field(default=None, description="id of the webhook", json_schema_extra={"examples": ["6307a60c41de27127515a575"]})
+    description: Optional[StrictStr] = Field(default=None, description="A name or brief explanation of what this webhook is used for", json_schema_extra={"examples": ["Server payments processor"]})
+    livemode: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook is in production", json_schema_extra={"examples": [True]})
+    active: Optional[StrictBool] = Field(default=None, description="Indicates if the webhook is actived or not", json_schema_extra={"examples": [True]})
+    object: Optional[StrictStr] = Field(default=None, description="Object name, value is 'webhook'", json_schema_extra={"examples": ["event"]})
+    status: Optional[StrictStr] = Field(default=None, description="Indicates if the webhook is ready to receive events or failing", json_schema_extra={"examples": ["listening"]})
+    subscribed_events: Optional[List[StrictStr]] = Field(default=None, description="lists the events that will be sent to the webhook", json_schema_extra={"examples": [["charge.created", "charge.paid", "charge.under_fraud_review", "charge.fraudulent", "charge.refunded", "charge.preauthorized", "charge.declined", "charge.canceled", "charge.reversed", "charge.pending_confirmation"]]})
+    url: Optional[StrictStr] = Field(default=None, description="url or endpoint of the webhook", json_schema_extra={"examples": ["https://username:password@mockoon.conekta.io/payments-api/cash/merchant_approval"]})
     __properties: ClassVar[List[str]] = ["id", "description", "livemode", "active", "object", "status", "subscribed_events", "url"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class WebhookResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

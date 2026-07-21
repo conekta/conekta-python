@@ -11,14 +11,14 @@ Name | Type | Description | Notes
 **created_at** | **int** | The creation date of the payout order. | 
 **currency** | **str** | The currency in which the payout order is made. | [default to 'MXN']
 **customer_info** | [**PayoutOrderResponseCustomerInfo**](PayoutOrderResponseCustomerInfo.md) |  | 
-**expires_at** | **int** | The expiration date of the payout order. | [optional] 
+**expires_at** | **int** | The expiration date of the payout order. | 
 **id** | **str** | The id of the payout order. | 
 **livemode** | **bool** | The live mode of the payout order. | 
 **object** | **str** | The object of the payout order. | 
 **metadata** | **Dict[str, object]** | The metadata of the payout order. | [optional] 
 **payouts** | [**List[PayoutOrderPayoutsItem]**](PayoutOrderPayoutsItem.md) | The payout information of the payout order. | 
 **reason** | **str** | The reason for the payout order. | 
-**status** | **str** | The status of the payout order. | [optional] 
+**status** | **str** | The status of the payout order. | 
 **updated_at** | **int** | The update date of the payout order. | 
 
 ## Example

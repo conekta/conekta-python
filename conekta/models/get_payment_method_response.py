@@ -23,20 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.get_customer_payment_method_data_response import GetCustomerPaymentMethodDataResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class GetPaymentMethodResponse(BaseModel):
     """
     GetPaymentMethodResponse
     """ # noqa: E501
-    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
-    object: StrictStr = Field(description="Object type, in this case is list")
-    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.")
-    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.")
+    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested", json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(description="Object type, in this case is list", json_schema_extra={"examples": ["list"]})
+    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&next=chrg_1"]})
+    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&previous=chrg_1"]})
     data: Optional[List[GetCustomerPaymentMethodDataResponse]] = None
     __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class GetPaymentMethodResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -81,16 +82,6 @@ class GetPaymentMethodResponse(BaseModel):
                 if _item_data:
                     _items.append(_item_data.to_dict())
             _dict['data'] = _items
-        # set to None if next_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.next_page_url is None and "next_page_url" in self.model_fields_set:
-            _dict['next_page_url'] = None
-
-        # set to None if previous_page_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.previous_page_url is None and "previous_page_url" in self.model_fields_set:
-            _dict['previous_page_url'] = None
-
         return _dict
 
     @classmethod

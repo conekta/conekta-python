@@ -18,22 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SubscriptionRequest(BaseModel):
     """
     It is a parameter that allows to identify in the response, the detailed content of the plans to which the client has subscribed
     """ # noqa: E501
-    plan_id: StrictStr
-    card_id: Optional[StrictStr] = None
-    trial_end: Optional[StrictInt] = None
+    plan_id: StrictStr = Field(json_schema_extra={"examples": ["f84gdgf5g48r15fd21g8w424fd1"]})
+    card_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["src_2qUCNd5AyQqfPMBuV"]})
+    trial_end: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1484040996]})
     __properties: ClassVar[List[str]] = ["plan_id", "card_id", "trial_end"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class SubscriptionRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

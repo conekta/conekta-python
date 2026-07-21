@@ -22,22 +22,24 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class RiskRulesData(BaseModel):
     """
     RiskRulesData
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="rule id")
-    var_field: Optional[StrictStr] = Field(default=None, description="field to be used for the rule", alias="field")
-    created_at: Optional[StrictStr] = Field(default=None, description="rule creation date")
-    value: Optional[StrictStr] = Field(default=None, description="value to be used for the rule")
-    is_global: Optional[StrictBool] = Field(default=None, description="if the rule is global")
-    is_test: Optional[StrictBool] = Field(default=None, description="if the rule is test")
-    description: Optional[StrictStr] = Field(default=None, description="description of the rule")
+    id: Optional[StrictStr] = Field(default=None, description="rule id", json_schema_extra={"examples": ["618c3f2fdb8b8da9be376af9"]})
+    var_field: Optional[StrictStr] = Field(default=None, description="field to be used for the rule", alias="field", json_schema_extra={"examples": ["email"]})
+    created_at: Optional[StrictStr] = Field(default=None, description="rule creation date", json_schema_extra={"examples": ["2021-11-10T21:52:47.339+00:00"]})
+    value: Optional[StrictStr] = Field(default=None, description="value to be used for the rule", json_schema_extra={"examples": ["email@example.com"]})
+    is_global: Optional[StrictBool] = Field(default=None, description="if the rule is global", json_schema_extra={"examples": [False]})
+    is_test: Optional[StrictBool] = Field(default=None, description="if the rule is test", json_schema_extra={"examples": [False]})
+    description: Optional[StrictStr] = Field(default=None, description="description of the rule", json_schema_extra={"examples": ["secure customer example@example.com"]})
     __properties: ClassVar[List[str]] = ["id", "field", "created_at", "value", "is_global", "is_test", "description"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class RiskRulesData(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

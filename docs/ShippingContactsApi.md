@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **create_customer_shipping_contacts**
-> CustomerShippingContactsResponse create_customer_shipping_contacts(id, customer_shipping_contacts, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> CustomerShippingContactsResponse create_customer_shipping_contacts(id, customer_shipping_contacts_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Create a shipping contacts
 
@@ -22,7 +22,7 @@ Create a shipping contacts for a customer.
 
 ```python
 import conekta
-from conekta.models.customer_shipping_contacts import CustomerShippingContacts
+from conekta.models.customer_shipping_contacts_request import CustomerShippingContactsRequest
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
 from conekta.rest import ApiException
 from pprint import pprint
@@ -48,13 +48,13 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.ShippingContactsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    customer_shipping_contacts = conekta.CustomerShippingContacts() # CustomerShippingContacts | requested field for customer shippings contacts
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    customer_shipping_contacts_request = conekta.CustomerShippingContactsRequest() # CustomerShippingContactsRequest | requested field for customer shippings contacts
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Create a shipping contacts
-        api_response = api_instance.create_customer_shipping_contacts(id, customer_shipping_contacts, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.create_customer_shipping_contacts(id, customer_shipping_contacts_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of ShippingContactsApi->create_customer_shipping_contacts:\n")
         pprint(api_response)
     except Exception as e:
@@ -69,8 +69,8 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **customer_shipping_contacts** | [**CustomerShippingContacts**](CustomerShippingContacts.md)| requested field for customer shippings contacts | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **customer_shipping_contacts_request** | [**CustomerShippingContactsRequest**](CustomerShippingContactsRequest.md)| requested field for customer shippings contacts | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -137,7 +137,7 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.ShippingContactsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     shipping_contacts_id = '6307a60c41de27127515a575' # str | identifier
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -158,7 +158,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **shipping_contacts_id** | **str**| identifier | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
@@ -187,7 +187,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_customer_shipping_contacts**
-> CustomerShippingContactsResponse update_customer_shipping_contacts(id, shipping_contacts_id, customer_update_shipping_contacts, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> CustomerShippingContactsResponse update_customer_shipping_contacts(id, shipping_contacts_id, customer_update_shipping_contacts_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Update shipping contacts
 
@@ -200,7 +200,7 @@ Update shipping contact that corresponds to a customer ID.
 ```python
 import conekta
 from conekta.models.customer_shipping_contacts_response import CustomerShippingContactsResponse
-from conekta.models.customer_update_shipping_contacts import CustomerUpdateShippingContacts
+from conekta.models.customer_update_shipping_contacts_request import CustomerUpdateShippingContactsRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -226,13 +226,13 @@ with conekta.ApiClient(configuration) as api_client:
     api_instance = conekta.ShippingContactsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
     shipping_contacts_id = '6307a60c41de27127515a575' # str | identifier
-    customer_update_shipping_contacts = conekta.CustomerUpdateShippingContacts() # CustomerUpdateShippingContacts | requested field for customer update shippings contacts
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    customer_update_shipping_contacts_request = conekta.CustomerUpdateShippingContactsRequest() # CustomerUpdateShippingContactsRequest | requested field for customer update shippings contacts
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
         # Update shipping contacts
-        api_response = api_instance.update_customer_shipping_contacts(id, shipping_contacts_id, customer_update_shipping_contacts, accept_language=accept_language, x_child_company_id=x_child_company_id)
+        api_response = api_instance.update_customer_shipping_contacts(id, shipping_contacts_id, customer_update_shipping_contacts_request, accept_language=accept_language, x_child_company_id=x_child_company_id)
         print("The response of ShippingContactsApi->update_customer_shipping_contacts:\n")
         pprint(api_response)
     except Exception as e:
@@ -248,8 +248,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
  **shipping_contacts_id** | **str**| identifier | 
- **customer_update_shipping_contacts** | [**CustomerUpdateShippingContacts**](CustomerUpdateShippingContacts.md)| requested field for customer update shippings contacts | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **customer_update_shipping_contacts_request** | [**CustomerUpdateShippingContactsRequest**](CustomerUpdateShippingContactsRequest.md)| requested field for customer update shippings contacts | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type

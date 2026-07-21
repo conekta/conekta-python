@@ -18,45 +18,58 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CheckoutResponse(BaseModel):
     """
     checkout response
     """ # noqa: E501
-    allowed_payment_methods: Optional[List[StrictStr]] = Field(default=None, description="Are the payment methods available for this link")
-    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="List of plan IDs that are available for subscription")
-    can_not_expire: Optional[StrictBool] = None
-    emails_sent: Optional[StrictInt] = None
-    exclude_card_networks: Optional[List[Dict[str, Any]]] = None
-    expires_at: Optional[StrictInt] = None
-    failure_url: Optional[StrictStr] = None
-    force_3ds_flow: Optional[StrictBool] = None
-    id: StrictStr
-    livemode: StrictBool
-    metadata: Optional[Dict[str, Any]] = None
-    monthly_installments_enabled: Optional[StrictBool] = None
-    monthly_installments_options: Optional[List[StrictInt]] = None
-    name: StrictStr = Field(description="Reason for charge")
-    needs_shipping_contact: Optional[StrictBool] = None
-    object: StrictStr
-    paid_payments_count: Optional[StrictInt] = None
-    payments_limit_count: Optional[StrictInt] = None
-    recurrent: Optional[StrictBool] = None
-    slug: Optional[StrictStr] = None
-    sms_sent: Optional[StrictInt] = None
-    starts_at: Optional[StrictInt] = None
-    status: Optional[StrictStr] = None
-    success_url: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    url: Optional[StrictStr] = None
+    allowed_payment_methods: Optional[List[StrictStr]] = Field(default=None, description="Are the payment methods available for this link", json_schema_extra={"examples": [["cash", "card", "bank_transfer", "bnpl", "pay_by_bank"]]})
+    plan_ids: Optional[List[StrictStr]] = Field(default=None, description="List of plan IDs that are available for subscription", json_schema_extra={"examples": [["plan_123", "plan_456"]]})
+    can_not_expire: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    emails_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    exclude_card_networks: Optional[List[StrictStr]] = Field(default=None, json_schema_extra={"examples": [["visa", "amex"]]})
+    expires_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1680397724]})
+    failure_url: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["https://pay.conekta.com/failure"]})
+    force_3ds_flow: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    id: StrictStr = Field(json_schema_extra={"examples": ["b0bf16c4-18b9-445e-ba24-01604f329dbf"]})
+    livemode: StrictBool = Field(json_schema_extra={"examples": [True]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"key": "value"}]})
+    monthly_installments_enabled: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    monthly_installments_options: Optional[List[StrictInt]] = Field(default=None, json_schema_extra={"examples": [[3, 6, 12]]})
+    name: StrictStr = Field(description="Reason for charge", json_schema_extra={"examples": ["Payment Link Name 1594138857"]})
+    needs_shipping_contact: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["checkout"]})
+    paid_payments_count: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    payments_limit_count: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [5]})
+    recurrent: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    slug: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["b0bf16c418b9445eba2401604f329dbf"]})
+    sms_sent: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [0]})
+    starts_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1677650400]})
+    status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Issued"]})
+    success_url: Optional[StrictStr] = Field(default=None, description="The URL to redirect to after a successful payment.", json_schema_extra={"examples": ["https://pay.conekta.com/success"]})
+    type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["PaymentLink"]})
+    url: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["https://pay.conekta.com/link/b0bf16c418b9445eba2401604f329dbf"]})
     __properties: ClassVar[List[str]] = ["allowed_payment_methods", "plan_ids", "can_not_expire", "emails_sent", "exclude_card_networks", "expires_at", "failure_url", "force_3ds_flow", "id", "livemode", "metadata", "monthly_installments_enabled", "monthly_installments_options", "name", "needs_shipping_contact", "object", "paid_payments_count", "payments_limit_count", "recurrent", "slug", "sms_sent", "starts_at", "status", "success_url", "type", "url"]
 
+    @field_validator('exclude_card_networks')
+    def exclude_card_networks_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['visa', 'mastercard', 'amex']):
+                raise ValueError("each list item must be one of ('visa', 'mastercard', 'amex')")
+        return value
+
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -68,8 +81,7 @@ class CheckoutResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -94,11 +106,6 @@ class CheckoutResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if payments_limit_count (nullable) is None
-        # and model_fields_set contains the field
-        if self.payments_limit_count is None and "payments_limit_count" in self.model_fields_set:
-            _dict['payments_limit_count'] = None
-
         return _dict
 
     @classmethod

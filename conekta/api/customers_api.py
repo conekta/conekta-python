@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -22,12 +21,12 @@ from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.create_customer_fiscal_entities_response import CreateCustomerFiscalEntitiesResponse
 from conekta.models.customer import Customer
-from conekta.models.customer_fiscal_entities_request import CustomerFiscalEntitiesRequest
 from conekta.models.customer_response import CustomerResponse
-from conekta.models.customer_update_fiscal_entities_request import CustomerUpdateFiscalEntitiesRequest
 from conekta.models.customers_response import CustomersResponse
+from conekta.models.fiscal_entity_request import FiscalEntityRequest
 from conekta.models.update_customer import UpdateCustomer
 from conekta.models.update_customer_fiscal_entities_response import UpdateCustomerFiscalEntitiesResponse
+from conekta.models.update_fiscal_entity_request import UpdateFiscalEntityRequest
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -367,7 +366,7 @@ class CustomersApi:
     def create_customer_fiscal_entities(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_fiscal_entities_request: Annotated[CustomerFiscalEntitiesRequest, Field(description="requested field for customer fiscal entities")],
+        fiscal_entity_request: Annotated[FiscalEntityRequest, Field(description="requested field for customer fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -389,8 +388,8 @@ class CustomersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_fiscal_entities_request: requested field for customer fiscal entities (required)
-        :type customer_fiscal_entities_request: CustomerFiscalEntitiesRequest
+        :param fiscal_entity_request: requested field for customer fiscal entities (required)
+        :type fiscal_entity_request: FiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -419,7 +418,7 @@ class CustomersApi:
 
         _param = self._create_customer_fiscal_entities_serialize(
             id=id,
-            customer_fiscal_entities_request=customer_fiscal_entities_request,
+            fiscal_entity_request=fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -450,7 +449,7 @@ class CustomersApi:
     def create_customer_fiscal_entities_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_fiscal_entities_request: Annotated[CustomerFiscalEntitiesRequest, Field(description="requested field for customer fiscal entities")],
+        fiscal_entity_request: Annotated[FiscalEntityRequest, Field(description="requested field for customer fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -472,8 +471,8 @@ class CustomersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_fiscal_entities_request: requested field for customer fiscal entities (required)
-        :type customer_fiscal_entities_request: CustomerFiscalEntitiesRequest
+        :param fiscal_entity_request: requested field for customer fiscal entities (required)
+        :type fiscal_entity_request: FiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -502,7 +501,7 @@ class CustomersApi:
 
         _param = self._create_customer_fiscal_entities_serialize(
             id=id,
-            customer_fiscal_entities_request=customer_fiscal_entities_request,
+            fiscal_entity_request=fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -533,7 +532,7 @@ class CustomersApi:
     def create_customer_fiscal_entities_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
-        customer_fiscal_entities_request: Annotated[CustomerFiscalEntitiesRequest, Field(description="requested field for customer fiscal entities")],
+        fiscal_entity_request: Annotated[FiscalEntityRequest, Field(description="requested field for customer fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -555,8 +554,8 @@ class CustomersApi:
 
         :param id: Identifier of the resource (required)
         :type id: str
-        :param customer_fiscal_entities_request: requested field for customer fiscal entities (required)
-        :type customer_fiscal_entities_request: CustomerFiscalEntitiesRequest
+        :param fiscal_entity_request: requested field for customer fiscal entities (required)
+        :type fiscal_entity_request: FiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -585,7 +584,7 @@ class CustomersApi:
 
         _param = self._create_customer_fiscal_entities_serialize(
             id=id,
-            customer_fiscal_entities_request=customer_fiscal_entities_request,
+            fiscal_entity_request=fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -611,7 +610,7 @@ class CustomersApi:
     def _create_customer_fiscal_entities_serialize(
         self,
         id,
-        customer_fiscal_entities_request,
+        fiscal_entity_request,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -645,8 +644,8 @@ class CustomersApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if customer_fiscal_entities_request is not None:
-            _body_params = customer_fiscal_entities_request
+        if fiscal_entity_request is not None:
+            _body_params = fiscal_entity_request
 
 
         # set the HTTP header `Accept`
@@ -1983,7 +1982,7 @@ class CustomersApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         fiscal_entities_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_fiscal_entities_request: Annotated[CustomerUpdateFiscalEntitiesRequest, Field(description="requested field for customer update fiscal entities")],
+        update_fiscal_entity_request: Annotated[UpdateFiscalEntityRequest, Field(description="requested field for customer update fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -2007,8 +2006,8 @@ class CustomersApi:
         :type id: str
         :param fiscal_entities_id: identifier (required)
         :type fiscal_entities_id: str
-        :param customer_update_fiscal_entities_request: requested field for customer update fiscal entities (required)
-        :type customer_update_fiscal_entities_request: CustomerUpdateFiscalEntitiesRequest
+        :param update_fiscal_entity_request: requested field for customer update fiscal entities (required)
+        :type update_fiscal_entity_request: UpdateFiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -2038,7 +2037,7 @@ class CustomersApi:
         _param = self._update_customer_fiscal_entities_serialize(
             id=id,
             fiscal_entities_id=fiscal_entities_id,
-            customer_update_fiscal_entities_request=customer_update_fiscal_entities_request,
+            update_fiscal_entity_request=update_fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -2070,7 +2069,7 @@ class CustomersApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         fiscal_entities_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_fiscal_entities_request: Annotated[CustomerUpdateFiscalEntitiesRequest, Field(description="requested field for customer update fiscal entities")],
+        update_fiscal_entity_request: Annotated[UpdateFiscalEntityRequest, Field(description="requested field for customer update fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -2094,8 +2093,8 @@ class CustomersApi:
         :type id: str
         :param fiscal_entities_id: identifier (required)
         :type fiscal_entities_id: str
-        :param customer_update_fiscal_entities_request: requested field for customer update fiscal entities (required)
-        :type customer_update_fiscal_entities_request: CustomerUpdateFiscalEntitiesRequest
+        :param update_fiscal_entity_request: requested field for customer update fiscal entities (required)
+        :type update_fiscal_entity_request: UpdateFiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -2125,7 +2124,7 @@ class CustomersApi:
         _param = self._update_customer_fiscal_entities_serialize(
             id=id,
             fiscal_entities_id=fiscal_entities_id,
-            customer_update_fiscal_entities_request=customer_update_fiscal_entities_request,
+            update_fiscal_entity_request=update_fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -2157,7 +2156,7 @@ class CustomersApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         fiscal_entities_id: Annotated[StrictStr, Field(description="identifier")],
-        customer_update_fiscal_entities_request: Annotated[CustomerUpdateFiscalEntitiesRequest, Field(description="requested field for customer update fiscal entities")],
+        update_fiscal_entity_request: Annotated[UpdateFiscalEntityRequest, Field(description="requested field for customer update fiscal entities")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -2181,8 +2180,8 @@ class CustomersApi:
         :type id: str
         :param fiscal_entities_id: identifier (required)
         :type fiscal_entities_id: str
-        :param customer_update_fiscal_entities_request: requested field for customer update fiscal entities (required)
-        :type customer_update_fiscal_entities_request: CustomerUpdateFiscalEntitiesRequest
+        :param update_fiscal_entity_request: requested field for customer update fiscal entities (required)
+        :type update_fiscal_entity_request: UpdateFiscalEntityRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -2212,7 +2211,7 @@ class CustomersApi:
         _param = self._update_customer_fiscal_entities_serialize(
             id=id,
             fiscal_entities_id=fiscal_entities_id,
-            customer_update_fiscal_entities_request=customer_update_fiscal_entities_request,
+            update_fiscal_entity_request=update_fiscal_entity_request,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -2239,7 +2238,7 @@ class CustomersApi:
         self,
         id,
         fiscal_entities_id,
-        customer_update_fiscal_entities_request,
+        update_fiscal_entity_request,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -2275,8 +2274,8 @@ class CustomersApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if customer_update_fiscal_entities_request is not None:
-            _body_params = customer_update_fiscal_entities_request
+        if update_fiscal_entity_request is not None:
+            _body_params = update_fiscal_entity_request
 
 
         # set the HTTP header `Accept`

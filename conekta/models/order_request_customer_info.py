@@ -19,12 +19,12 @@ import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
 from conekta.models.customer_info import CustomerInfo
-from conekta.models.customer_info_just_customer_id import CustomerInfoJustCustomerId
+from conekta.models.customer_info_customer_id import CustomerInfoCustomerId
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-ORDERREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoJustCustomerId"]
+ORDERREQUESTCUSTOMERINFO_ONE_OF_SCHEMAS = ["CustomerInfo", "CustomerInfoCustomerId"]
 
 class OrderRequestCustomerInfo(BaseModel):
     """
@@ -32,10 +32,10 @@ class OrderRequestCustomerInfo(BaseModel):
     """
     # data type: CustomerInfo
     oneof_schema_1_validator: Optional[CustomerInfo] = None
-    # data type: CustomerInfoJustCustomerId
-    oneof_schema_2_validator: Optional[CustomerInfoJustCustomerId] = None
-    actual_instance: Optional[Union[CustomerInfo, CustomerInfoJustCustomerId]] = None
-    one_of_schemas: Set[str] = { "CustomerInfo", "CustomerInfoJustCustomerId" }
+    # data type: CustomerInfoCustomerId
+    oneof_schema_2_validator: Optional[CustomerInfoCustomerId] = None
+    actual_instance: Optional[Union[CustomerInfo, CustomerInfoCustomerId]] = None
+    one_of_schemas: Set[str] = { "CustomerInfo", "CustomerInfoCustomerId" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -63,17 +63,17 @@ class OrderRequestCustomerInfo(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `CustomerInfo`")
         else:
             match += 1
-        # validate data type: CustomerInfoJustCustomerId
-        if not isinstance(v, CustomerInfoJustCustomerId):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CustomerInfoJustCustomerId`")
+        # validate data type: CustomerInfoCustomerId
+        if not isinstance(v, CustomerInfoCustomerId):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `CustomerInfoCustomerId`")
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -94,19 +94,19 @@ class OrderRequestCustomerInfo(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # deserialize data into CustomerInfoJustCustomerId
+        # deserialize data into CustomerInfoCustomerId
         try:
-            instance.actual_instance = CustomerInfoJustCustomerId.from_json(json_str)
+            instance.actual_instance = CustomerInfoCustomerId.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoJustCustomerId. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into OrderRequestCustomerInfo with oneOf schemas: CustomerInfo, CustomerInfoCustomerId. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -120,7 +120,7 @@ class OrderRequestCustomerInfo(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], CustomerInfo, CustomerInfoJustCustomerId]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], CustomerInfo, CustomerInfoCustomerId]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_log_by_id**
-> LogResponse get_log_by_id(id, accept_language=accept_language, x_child_company_id=x_child_company_id)
+> LogResponseForRequest get_log_by_id(id, accept_language=accept_language, x_child_company_id=x_child_company_id)
 
 Get Log
 
@@ -21,7 +21,7 @@ Get the details of a specific log
 
 ```python
 import conekta
-from conekta.models.log_response import LogResponse
+from conekta.models.log_response_for_request import LogResponseForRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -46,7 +46,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.LogsApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
 
     try:
@@ -66,12 +66,12 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
 
 ### Return type
 
-[**LogResponse**](LogResponse.md)
+[**LogResponseForRequest**](LogResponseForRequest.md)
 
 ### Authorization
 
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_logs**
-> LogsResponse get_logs(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
+> LogsResponseForRequest get_logs(accept_language=accept_language, x_child_company_id=x_child_company_id, limit=limit, search=search, next=next, previous=previous)
 
 Get List Of Logs
 
@@ -106,7 +106,7 @@ Get log details in the form of a list
 
 ```python
 import conekta
-from conekta.models.logs_response import LogsResponse
+from conekta.models.logs_response_for_request import LogsResponseForRequest
 from conekta.rest import ApiException
 from pprint import pprint
 
@@ -130,7 +130,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.LogsApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     x_child_company_id = '6441b6376b60c3a638da80af' # str | In the case of a holding company, the company id of the child company to which will process the request. (optional)
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
@@ -153,7 +153,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **x_child_company_id** | **str**| In the case of a holding company, the company id of the child company to which will process the request. | [optional] 
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**LogsResponse**](LogsResponse.md)
+[**LogsResponseForRequest**](LogsResponseForRequest.md)
 
 ### Authorization
 

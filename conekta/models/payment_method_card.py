@@ -22,29 +22,31 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodCard(BaseModel):
     """
     PaymentMethodCard
     """ # noqa: E501
     type: Optional[StrictStr] = None
-    object: StrictStr
-    account_type: Optional[StrictStr] = Field(default=None, description="Account type of the card")
-    auth_code: Optional[StrictStr] = None
-    brand: Optional[StrictStr] = Field(default=None, description="Brand of the card")
-    contract_id: Optional[StrictStr] = Field(default=None, description="Id sent for recurrent charges.")
-    country: Optional[StrictStr] = Field(default=None, description="Country of the card")
-    exp_month: Optional[StrictStr] = Field(default=None, description="Expiration month of the card")
-    exp_year: Optional[StrictStr] = Field(default=None, description="Expiration year of the card")
+    object: StrictStr = Field(json_schema_extra={"examples": ["payment_source"]})
+    account_type: Optional[StrictStr] = Field(default=None, description="Account type of the card", json_schema_extra={"examples": ["Credit"]})
+    auth_code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["867372"]})
+    brand: Optional[StrictStr] = Field(default=None, description="Brand of the card", json_schema_extra={"examples": ["visa"]})
+    contract_id: Optional[StrictStr] = Field(default=None, description="Id sent for recurrent charges.", json_schema_extra={"examples": ["S781317595"]})
+    country: Optional[StrictStr] = Field(default=None, description="Country of the card", json_schema_extra={"examples": ["MX"]})
+    exp_month: Optional[StrictStr] = Field(default=None, description="Expiration month of the card", json_schema_extra={"examples": ["02"]})
+    exp_year: Optional[StrictStr] = Field(default=None, description="Expiration year of the card", json_schema_extra={"examples": ["2026"]})
     fraud_indicators: Optional[List[Any]] = None
-    issuer: Optional[StrictStr] = Field(default=None, description="Issuer of the card")
-    last4: Optional[StrictStr] = Field(default=None, description="Last 4 digits of the card")
-    name: Optional[StrictStr] = Field(default=None, description="Name of the cardholder")
-    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    issuer: Optional[StrictStr] = Field(default=None, description="Issuer of the card", json_schema_extra={"examples": ["BANAMEX"]})
+    last4: Optional[StrictStr] = Field(default=None, description="Last 4 digits of the card", json_schema_extra={"examples": ["4242"]})
+    name: Optional[StrictStr] = Field(default=None, description="Name of the cardholder", json_schema_extra={"examples": ["Fulanito Perez"]})
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes", json_schema_extra={"examples": ["0.0.0.0"]})
     __properties: ClassVar[List[str]] = ["type", "object", "account_type", "auth_code", "brand", "contract_id", "country", "exp_month", "exp_year", "fraud_indicators", "issuer", "last4", "name", "customer_ip_address"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -56,8 +58,7 @@ class PaymentMethodCard(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

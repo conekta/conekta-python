@@ -24,34 +24,36 @@ from conekta.models.charge_order_response_payment_method import ChargeOrderRespo
 from conekta.models.charge_response_channel import ChargeResponseChannel
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChargeOrderResponse(BaseModel):
     """
     ChargeOrderResponse
     """ # noqa: E501
-    amount: Optional[StrictInt] = None
+    amount: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [4321]})
     channel: Optional[ChargeResponseChannel] = None
-    created_at: Optional[StrictInt] = None
-    currency: Optional[StrictStr] = None
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1676386026]})
+    currency: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["MXN"]})
     customer_id: Optional[StrictStr] = None
-    description: Optional[StrictStr] = None
-    device_fingerprint: Optional[StrictStr] = None
-    failure_code: Optional[StrictStr] = None
-    failure_message: Optional[StrictStr] = None
-    id: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
+    description: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Payment from order"]})
+    device_fingerprint: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6FR3chaU4Y1nGAW5NAGd1rcjAKa142Ba"]})
+    failure_code: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["suspected_fraud"]})
+    failure_message: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Este cargo ha sido declinado porque el comportamiento del comprador es sospechoso."]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["63efa757cf65380001aec040"]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
     monthly_installments: Optional[StrictInt] = None
     object: Optional[StrictStr] = None
-    order_id: Optional[StrictStr] = None
-    paid_at: Optional[StrictInt] = None
+    order_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["ord_2tN73UdUSNrYRPD9r"]})
+    paid_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1676390742]})
     payment_method: Optional[ChargeOrderResponsePaymentMethod] = None
-    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge")
-    refunds: Optional[List[Dict[str, Any]]] = None
-    status: Optional[StrictStr] = None
+    reference_id: Optional[StrictStr] = Field(default=None, description="Reference ID of the charge", json_schema_extra={"examples": ["ref_2tN73UdUSNrYRPD9r"]})
+    refunds: Optional[List[Any]] = None
+    status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["pending_payment"]})
     __properties: ClassVar[List[str]] = ["amount", "channel", "created_at", "currency", "customer_id", "description", "device_fingerprint", "failure_code", "failure_message", "id", "livemode", "monthly_installments", "object", "order_id", "paid_at", "payment_method", "reference_id", "refunds", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -63,8 +65,7 @@ class ChargeOrderResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -95,26 +96,6 @@ class ChargeOrderResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payment_method
         if self.payment_method:
             _dict['payment_method'] = self.payment_method.to_dict()
-        # set to None if device_fingerprint (nullable) is None
-        # and model_fields_set contains the field
-        if self.device_fingerprint is None and "device_fingerprint" in self.model_fields_set:
-            _dict['device_fingerprint'] = None
-
-        # set to None if monthly_installments (nullable) is None
-        # and model_fields_set contains the field
-        if self.monthly_installments is None and "monthly_installments" in self.model_fields_set:
-            _dict['monthly_installments'] = None
-
-        # set to None if paid_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.paid_at is None and "paid_at" in self.model_fields_set:
-            _dict['paid_at'] = None
-
-        # set to None if reference_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.reference_id is None and "reference_id" in self.model_fields_set:
-            _dict['reference_id'] = None
-
         return _dict
 
     @classmethod

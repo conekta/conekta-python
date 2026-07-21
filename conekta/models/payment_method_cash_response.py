@@ -20,29 +20,31 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.payment_method_cash_response_all_of_agreements import PaymentMethodCashResponseAllOfAgreements
+from conekta.models.cash_agreements_response import CashAgreementsResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodCashResponse(BaseModel):
     """
     PaymentMethodCashResponse
     """ # noqa: E501
     type: StrictStr
-    id: StrictStr
-    object: StrictStr
-    created_at: StrictInt
-    parent_id: Optional[StrictStr] = None
-    agreements: Optional[List[PaymentMethodCashResponseAllOfAgreements]] = None
-    reference: Optional[StrictStr] = None
-    barcode: Optional[StrictStr] = None
-    barcode_url: Optional[StrictStr] = Field(default=None, description="URL to the barcode image, reference is the same as barcode")
-    expires_at: Optional[StrictInt] = None
-    provider: Optional[StrictStr] = None
+    id: StrictStr = Field(json_schema_extra={"examples": ["src_2s8K1B3PBKDontpi9"]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["payment_source"]})
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1675715413]})
+    parent_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["cus_2s8K1B3PBKDontpi8"]})
+    agreements: Optional[List[CashAgreementsResponse]] = None
+    reference: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["93000262276908"]})
+    barcode: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["93000262276908"]})
+    barcode_url: Optional[StrictStr] = Field(default=None, description="URL to the barcode image, reference is the same as barcode", json_schema_extra={"examples": ["https://barcodes.conekta.com/644ebf80f2243197aad6cd8810375b905b613dbe.png"]})
+    expires_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1742483424]})
+    provider: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Cash"]})
     __properties: ClassVar[List[str]] = ["type", "id", "object", "created_at", "parent_id", "agreements", "reference", "barcode", "barcode_url", "expires_at", "provider"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class PaymentMethodCashResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -104,7 +105,7 @@ class PaymentMethodCashResponse(BaseModel):
             "object": obj.get("object"),
             "created_at": obj.get("created_at"),
             "parent_id": obj.get("parent_id"),
-            "agreements": [PaymentMethodCashResponseAllOfAgreements.from_dict(_item) for _item in obj["agreements"]] if obj.get("agreements") is not None else None,
+            "agreements": [CashAgreementsResponse.from_dict(_item) for _item in obj["agreements"]] if obj.get("agreements") is not None else None,
             "reference": obj.get("reference"),
             "barcode": obj.get("barcode"),
             "barcode_url": obj.get("barcode_url"),

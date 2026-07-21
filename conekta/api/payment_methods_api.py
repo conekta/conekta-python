@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -24,7 +23,7 @@ from conekta.models.create_customer_payment_methods_request import CreateCustome
 from conekta.models.create_customer_payment_methods_response import CreateCustomerPaymentMethodsResponse
 from conekta.models.get_payment_method_response import GetPaymentMethodResponse
 from conekta.models.update_customer_payment_methods_response import UpdateCustomerPaymentMethodsResponse
-from conekta.models.update_payment_methods import UpdatePaymentMethods
+from conekta.models.update_payment_methods_card import UpdatePaymentMethodsCard
 
 from conekta.api_client import ApiClient, RequestSerialized
 from conekta.api_response import ApiResponse
@@ -1066,7 +1065,7 @@ class PaymentMethodsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         payment_method_id: Annotated[StrictStr, Field(description="Identifier of the payment method")],
-        update_payment_methods: Annotated[UpdatePaymentMethods, Field(description="requested field for customer payment methods")],
+        update_payment_methods_card: Annotated[UpdatePaymentMethodsCard, Field(description="requested field for customer payment methods")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1090,8 +1089,8 @@ class PaymentMethodsApi:
         :type id: str
         :param payment_method_id: Identifier of the payment method (required)
         :type payment_method_id: str
-        :param update_payment_methods: requested field for customer payment methods (required)
-        :type update_payment_methods: UpdatePaymentMethods
+        :param update_payment_methods_card: requested field for customer payment methods (required)
+        :type update_payment_methods_card: UpdatePaymentMethodsCard
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1121,7 +1120,7 @@ class PaymentMethodsApi:
         _param = self._update_customer_payment_methods_serialize(
             id=id,
             payment_method_id=payment_method_id,
-            update_payment_methods=update_payment_methods,
+            update_payment_methods_card=update_payment_methods_card,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1153,7 +1152,7 @@ class PaymentMethodsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         payment_method_id: Annotated[StrictStr, Field(description="Identifier of the payment method")],
-        update_payment_methods: Annotated[UpdatePaymentMethods, Field(description="requested field for customer payment methods")],
+        update_payment_methods_card: Annotated[UpdatePaymentMethodsCard, Field(description="requested field for customer payment methods")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1177,8 +1176,8 @@ class PaymentMethodsApi:
         :type id: str
         :param payment_method_id: Identifier of the payment method (required)
         :type payment_method_id: str
-        :param update_payment_methods: requested field for customer payment methods (required)
-        :type update_payment_methods: UpdatePaymentMethods
+        :param update_payment_methods_card: requested field for customer payment methods (required)
+        :type update_payment_methods_card: UpdatePaymentMethodsCard
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1208,7 +1207,7 @@ class PaymentMethodsApi:
         _param = self._update_customer_payment_methods_serialize(
             id=id,
             payment_method_id=payment_method_id,
-            update_payment_methods=update_payment_methods,
+            update_payment_methods_card=update_payment_methods_card,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1240,7 +1239,7 @@ class PaymentMethodsApi:
         self,
         id: Annotated[StrictStr, Field(description="Identifier of the resource")],
         payment_method_id: Annotated[StrictStr, Field(description="Identifier of the payment method")],
-        update_payment_methods: Annotated[UpdatePaymentMethods, Field(description="requested field for customer payment methods")],
+        update_payment_methods_card: Annotated[UpdatePaymentMethodsCard, Field(description="requested field for customer payment methods")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         x_child_company_id: Annotated[Optional[StrictStr], Field(description="In the case of a holding company, the company id of the child company to which will process the request.")] = None,
         _request_timeout: Union[
@@ -1264,8 +1263,8 @@ class PaymentMethodsApi:
         :type id: str
         :param payment_method_id: Identifier of the payment method (required)
         :type payment_method_id: str
-        :param update_payment_methods: requested field for customer payment methods (required)
-        :type update_payment_methods: UpdatePaymentMethods
+        :param update_payment_methods_card: requested field for customer payment methods (required)
+        :type update_payment_methods_card: UpdatePaymentMethodsCard
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param x_child_company_id: In the case of a holding company, the company id of the child company to which will process the request.
@@ -1295,7 +1294,7 @@ class PaymentMethodsApi:
         _param = self._update_customer_payment_methods_serialize(
             id=id,
             payment_method_id=payment_method_id,
-            update_payment_methods=update_payment_methods,
+            update_payment_methods_card=update_payment_methods_card,
             accept_language=accept_language,
             x_child_company_id=x_child_company_id,
             _request_auth=_request_auth,
@@ -1322,7 +1321,7 @@ class PaymentMethodsApi:
         self,
         id,
         payment_method_id,
-        update_payment_methods,
+        update_payment_methods_card,
         accept_language,
         x_child_company_id,
         _request_auth,
@@ -1358,8 +1357,8 @@ class PaymentMethodsApi:
             _header_params['X-Child-Company-Id'] = x_child_company_id
         # process the form parameters
         # process the body parameter
-        if update_payment_methods is not None:
-            _body_params = update_payment_methods
+        if update_payment_methods_card is not None:
+            _body_params = update_payment_methods_card
 
 
         # set the HTTP header `Accept`

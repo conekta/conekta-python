@@ -23,21 +23,23 @@ from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DiscountLinesResponse(BaseModel):
     """
     DiscountLinesResponse
     """ # noqa: E501
-    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be deducted from the total sum of all payments, in cents.")
-    code: StrictStr = Field(description="Discount code.")
-    type: StrictStr = Field(description="It can be 'loyalty', 'campaign', 'coupon' o 'sign'")
-    id: StrictStr = Field(description="The discount line id")
-    object: StrictStr = Field(description="The object name")
-    parent_id: StrictStr = Field(description="The order id")
+    amount: Annotated[int, Field(strict=True, ge=0)] = Field(description="The amount to be deducted from the total sum of all payments, in cents.", json_schema_extra={"examples": [500]})
+    code: StrictStr = Field(description="Discount code.", json_schema_extra={"examples": ["123"]})
+    type: StrictStr = Field(description="It can be 'loyalty', 'campaign', 'coupon' o 'sign'", json_schema_extra={"examples": ["loyalty"]})
+    id: StrictStr = Field(description="The discount line id", json_schema_extra={"examples": ["dis_lin_2tQQ58HPgPw7StE8z"]})
+    object: StrictStr = Field(description="The object name", json_schema_extra={"examples": ["discount_line"]})
+    parent_id: StrictStr = Field(description="The order id", json_schema_extra={"examples": ["ord_2tPAmKCEJqh8RE6nY"]})
     __properties: ClassVar[List[str]] = ["amount", "code", "type", "id", "object", "parent_id"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class DiscountLinesResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

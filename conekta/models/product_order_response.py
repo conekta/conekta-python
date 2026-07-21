@@ -23,27 +23,29 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ProductOrderResponse(BaseModel):
     """
     ProductOrderResponse
     """ # noqa: E501
-    antifraud_info: Optional[Dict[str, Any]] = None
-    brand: Optional[StrictStr] = Field(default=None, description="The brand of the item.")
-    description: Optional[Annotated[str, Field(strict=True, max_length=250)]] = Field(default=None, description="Short description of the item")
-    metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters.")
-    name: StrictStr = Field(description="The name of the item. It will be displayed in the order.")
-    quantity: Annotated[int, Field(strict=True, ge=1)] = Field(description="The quantity of the item in the order.")
-    sku: Optional[StrictStr] = Field(default=None, description="The stock keeping unit for the item. It is used to identify the item in the order.")
-    tags: Optional[List[StrictStr]] = Field(default=None, description="List of tags for the item. It is used to identify the item in the order.")
-    unit_price: Annotated[int, Field(strict=True, ge=0)] = Field(description="The price of the item in cents.")
+    antifraud_info: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"key": "value"}]})
+    brand: Optional[StrictStr] = Field(default=None, description="The brand of the item.", json_schema_extra={"examples": ["Cohiba"]})
+    description: Optional[Annotated[str, Field(strict=True, max_length=250)]] = Field(default=None, description="Short description of the item", json_schema_extra={"examples": ["Imported From Mex."]})
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="It is a key/value hash that can hold custom fields. Maximum 100 elements and allows special characters.", json_schema_extra={"examples": [{"key": "value"}]})
+    name: StrictStr = Field(description="The name of the item. It will be displayed in the order.", json_schema_extra={"examples": ["Box of Cohiba S1s"]})
+    quantity: Annotated[int, Field(strict=True, ge=1)] = Field(description="The quantity of the item in the order.", json_schema_extra={"examples": [1]})
+    sku: Optional[StrictStr] = Field(default=None, description="The stock keeping unit for the item. It is used to identify the item in the order.", json_schema_extra={"examples": ["XYZ12345"]})
+    tags: Optional[List[StrictStr]] = Field(default=None, description="List of tags for the item. It is used to identify the item in the order.", json_schema_extra={"examples": [["food", "mexican food"]]})
+    unit_price: Annotated[int, Field(strict=True, ge=0)] = Field(description="The price of the item in cents.", json_schema_extra={"examples": [20000]})
     id: Optional[StrictStr] = None
     object: Optional[StrictStr] = None
     parent_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "brand", "description", "metadata", "name", "quantity", "sku", "tags", "unit_price", "id", "object", "parent_id"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +57,7 @@ class ProductOrderResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

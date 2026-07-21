@@ -18,26 +18,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class WebhookLog(BaseModel):
     """
     WebhookLog
     """ # noqa: E501
-    failed_attempts: Optional[StrictInt] = None
-    id: Optional[StrictStr] = None
-    last_attempted_at: Optional[StrictInt] = None
-    last_http_response_status: Optional[StrictInt] = None
-    object: Optional[StrictStr] = None
-    response_data: Optional[Dict[str, Any]] = None
-    url: Optional[StrictStr] = None
+    failed_attempts: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [10]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["webhl_2svd2sh6GbqzyWBNZ"]})
+    last_attempted_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1669651274]})
+    last_http_response_status: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [200]})
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["webhook_log"]})
+    response_data: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"amount": 3000, "payable": True}]})
+    url: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["https://username:password@mockoon.conekta.io/payments-api/cash/merchant_approval"]})
     __properties: ClassVar[List[str]] = ["failed_attempts", "id", "last_attempted_at", "last_http_response_status", "object", "response_data", "url"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class WebhookLog(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

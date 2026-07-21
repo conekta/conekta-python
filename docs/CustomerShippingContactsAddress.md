@@ -1,17 +1,17 @@
 # CustomerShippingContactsAddress
 
-Address of the person who will receive the order
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**object** | **str** |  | [optional] 
 **street1** | **str** |  | [optional] 
 **street2** | **str** |  | [optional] 
 **postal_code** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **state** | **str** |  | [optional] 
-**country** | **str** | this field follows the [ISO 3166-1 alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) | [optional] 
+**country** | **str** |  | [optional] 
 **residential** | **bool** |  | [optional] 
 
 ## Example

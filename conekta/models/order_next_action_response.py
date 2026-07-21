@@ -23,17 +23,19 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.order_next_action_response_redirect_to_url import OrderNextActionResponseRedirectToUrl
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderNextActionResponse(BaseModel):
     """
     contains the following attributes that will guide to continue the flow
     """ # noqa: E501
     redirect_to_url: Optional[OrderNextActionResponseRedirectToUrl] = None
-    type: Optional[StrictStr] = Field(default=None, description="Indicates the type of action to be taken")
+    type: Optional[StrictStr] = Field(default=None, description="Indicates the type of action to be taken", json_schema_extra={"examples": ["redirect_to_url"]})
     __properties: ClassVar[List[str]] = ["redirect_to_url", "type"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class OrderNextActionResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

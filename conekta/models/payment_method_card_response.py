@@ -18,34 +18,37 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodCardResponse(BaseModel):
     """
     PaymentMethodCardResponse
     """ # noqa: E501
     type: StrictStr
-    id: StrictStr
-    object: StrictStr
-    created_at: StrictInt
-    parent_id: Optional[StrictStr] = None
-    last4: Optional[StrictStr] = None
-    bin: Optional[StrictStr] = None
-    card_type: Optional[StrictStr] = None
-    exp_month: Optional[StrictStr] = None
-    exp_year: Optional[StrictStr] = None
-    brand: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
+    id: StrictStr = Field(json_schema_extra={"examples": ["src_2s8K1B3PBKDontpi9"]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["payment_source"]})
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1675715413]})
+    parent_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["cus_2s8K1B3PBKDontpi8"]})
+    last4: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6410"]})
+    bin: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["40276657"]})
+    card_type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["debit"]})
+    exp_month: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["10"]})
+    exp_year: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["25"]})
+    brand: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["visa"]})
+    issuer: Optional[StrictStr] = Field(default=None, description="Name of the institution that issued the card", json_schema_extra={"examples": ["santander"]})
+    name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Fulano Perez\""]})
     default: Optional[StrictBool] = None
     visible_on_checkout: Optional[StrictBool] = None
-    payment_source_status: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["type", "id", "object", "created_at", "parent_id", "last4", "bin", "card_type", "exp_month", "exp_year", "brand", "name", "default", "visible_on_checkout", "payment_source_status"]
+    payment_source_status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["active"]})
+    __properties: ClassVar[List[str]] = ["type", "id", "object", "created_at", "parent_id", "last4", "bin", "card_type", "exp_month", "exp_year", "brand", "issuer", "name", "default", "visible_on_checkout", "payment_source_status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -57,8 +60,7 @@ class PaymentMethodCardResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -106,6 +108,7 @@ class PaymentMethodCardResponse(BaseModel):
             "exp_month": obj.get("exp_month"),
             "exp_year": obj.get("exp_year"),
             "brand": obj.get("brand"),
+            "issuer": obj.get("issuer"),
             "name": obj.get("name"),
             "default": obj.get("default"),
             "visible_on_checkout": obj.get("visible_on_checkout"),

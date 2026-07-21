@@ -18,10 +18,11 @@ Name | Type | Description | Notes
 **livemode** | **bool** | Whether the charge was made in live mode or not | 
 **object** | **str** |  | 
 **order_id** | **str** | Order ID | 
-**paid_at** | **int** | Payment date | [optional] 
+**paid_at** | **int** | charge Payment date | [optional] 
 **payment_method** | [**ChargeResponsePaymentMethod**](ChargeResponsePaymentMethod.md) |  | [optional] 
 **reference_id** | **str** | Reference ID of the charge | [optional] 
 **refunds** | [**ChargeResponseRefunds**](ChargeResponseRefunds.md) |  | [optional] 
+**chargeback** | [**ChargebackResponse**](ChargebackResponse.md) |  | [optional] 
 **status** | **str** | Charge status | 
 
 ## Example

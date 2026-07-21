@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **phone** | **str** | Phone contact | [optional] 
 **receiver** | **str** | Name of the person who will receive the order | [optional] 
 **between_streets** | **str** | The street names between which the order will be delivered. | [optional] 
-**address** | [**CustomerShippingContactsAddress**](CustomerShippingContactsAddress.md) |  | 
+**address** | [**CustomerShippingContactsRequestAddress**](CustomerShippingContactsRequestAddress.md) |  | 
 **parent_id** | **str** |  | [optional] 
 **default** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 

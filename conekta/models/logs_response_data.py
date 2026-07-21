@@ -18,39 +18,41 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class LogsResponseData(BaseModel):
     """
     LogsResponseData
     """ # noqa: E501
-    created_at: Optional[StrictInt] = None
-    id: Optional[StrictStr] = None
-    ip_address: Optional[StrictStr] = None
-    livemode: Optional[StrictBool] = None
-    loggable_id: Optional[StrictStr] = None
-    loggable_type: Optional[StrictStr] = None
-    method: Optional[StrictStr] = None
+    created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1661445644]})
+    id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["6307a60c41de27127515a575"]})
+    ip_address: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["54.235.131.48"]})
+    livemode: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})
+    loggable_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["ord_87632467832"]})
+    loggable_type: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["order"]})
+    method: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["POST"]})
     oauth_token_id: Optional[StrictStr] = None
-    query_string: Optional[Dict[str, Any]] = None
-    related: Optional[StrictStr] = None
-    request_body: Optional[Dict[str, Any]] = None
-    request_headers: Optional[Dict[str, StrictStr]] = None
+    query_string: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"amount": 3000, "payable": True}]})
+    related: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["FilterResource"]})
+    request_body: Optional[Dict[str, Any]] = Field(default=None, json_schema_extra={"examples": [{"filters": {"amount": {"amount_from": 0, "amount_to": 0}, "created_at": {"date_from": 1653627600, "date_to": 1661489999}, "filterName": "Payments", "sort_by": "created_at", "sort_direction": "desc", "status": [], "type": []}, "id": "78e65162-0f37-4942-847c-9bf7081d54c2", "page": "0", "report_type": "charges", "testMode": False}]})
+    request_headers: Optional[Any] = Field(default=None, json_schema_extra={"examples": [{"Accept": "application/vnd.conekta-v2.2.0+json", "Accept-Encoding": "gzip, deflate, br", "Accept-Language": "es-419, es; q=0.9, en; q=0.8", "Activitypermission": "orders:read", "Apiversion": "2.2.0"}]})
     response_body: Optional[Dict[str, Any]] = None
-    response_headers: Optional[Dict[str, StrictStr]] = None
-    searchable_tags: Optional[List[StrictStr]] = None
-    status: Optional[StrictStr] = None
-    updated_at: Optional[StrictStr] = None
-    url: Optional[StrictStr] = None
-    user_account_id: Optional[StrictStr] = None
-    version: Optional[StrictStr] = None
+    response_headers: Optional[Any] = Field(default=None, json_schema_extra={"examples": [{"Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Prototype-Version, Authorization, Accept, Date, Version, X-Forwarded-For, Host, Connection, X-Forwarded-Proto, X-Forwarded-Port, X-Amzn-Trace-Id, Accept-Encoding, Accept-Language, Referer, Origin, Activitypermission, Apiversion, Entityid, Livemode, Sec-Ch-Ua, Sec-Ch-Ua-Mobile, Sec-Ch-Ua-Platform, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, X-Datadog-Parent-Id, X-Datadog-Sampling-Priority, X-Datadog-Trace-Id, X-Forwarded-Host, X-Forwarded-Server, X-Real-Ip", "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS", "Access-Control-Allow-Origin": "*", "Access-Control-Max-Age": "1728000", "Conekta-Media-Type": "conekta-v2.2.0; format=application/json", "Content-Type": "application/json; charset=utf-8", "Referrer-Policy": "strict-origin-when-cross-origin", "Strict-Transport-Security": "max-age=31536000; includeSubDomains", "X-Content-Type-Options": "nosniff", "X-Download-Options": "noopen", "X-Frame-Options": "SAMEORIGIN", "X-Permitted-Cross-Domain-Policies": "none", "X-XSS-Protection": "1; mode=block"}]})
+    searchable_tags: Optional[List[StrictStr]] = Field(default=None, json_schema_extra={"examples": [["6307a60c41de27127515a575", "6307a60c41de27127515a571"]]})
+    status: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": [200]})
+    updated_at: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["2022-08-25T16:40:44.887+00:00"]})
+    url: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["/filter_resource"]})
+    user_account_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["5a0b7001edbb6e1725b0b2c6"]})
+    version: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["2.2.0"]})
     __properties: ClassVar[List[str]] = ["created_at", "id", "ip_address", "livemode", "loggable_id", "loggable_type", "method", "oauth_token_id", "query_string", "related", "request_body", "request_headers", "response_body", "response_headers", "searchable_tags", "status", "updated_at", "url", "user_account_id", "version"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -62,8 +64,7 @@ class LogsResponseData(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -88,20 +89,15 @@ class LogsResponseData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if loggable_id (nullable) is None
+        # set to None if request_headers (nullable) is None
         # and model_fields_set contains the field
-        if self.loggable_id is None and "loggable_id" in self.model_fields_set:
-            _dict['loggable_id'] = None
+        if self.request_headers is None and "request_headers" in self.model_fields_set:
+            _dict['request_headers'] = None
 
-        # set to None if loggable_type (nullable) is None
+        # set to None if response_headers (nullable) is None
         # and model_fields_set contains the field
-        if self.loggable_type is None and "loggable_type" in self.model_fields_set:
-            _dict['loggable_type'] = None
-
-        # set to None if oauth_token_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.oauth_token_id is None and "oauth_token_id" in self.model_fields_set:
-            _dict['oauth_token_id'] = None
+        if self.response_headers is None and "response_headers" in self.model_fields_set:
+            _dict['response_headers'] = None
 
         return _dict
 
@@ -126,9 +122,7 @@ class LogsResponseData(BaseModel):
             "query_string": obj.get("query_string"),
             "related": obj.get("related"),
             "request_body": obj.get("request_body"),
-            "request_headers": obj.get("request_headers"),
             "response_body": obj.get("response_body"),
-            "response_headers": obj.get("response_headers"),
             "searchable_tags": obj.get("searchable_tags"),
             "status": obj.get("status"),
             "updated_at": obj.get("updated_at"),

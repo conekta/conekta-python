@@ -23,24 +23,26 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class UpdateProduct(BaseModel):
     """
     UpdateProduct
     """ # noqa: E501
-    antifraud_info: Optional[Dict[str, Dict[str, Any]]] = None
+    antifraud_info: Optional[Any] = None
     description: Optional[Annotated[str, Field(strict=True, max_length=250)]] = None
     sku: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    unit_price: Optional[Annotated[int, Field(strict=True, ge=0)]] = None
-    quantity: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
+    name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Box of Cohiba S1s"]})
+    unit_price: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, json_schema_extra={"examples": [20000]})
+    quantity: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(default=None, json_schema_extra={"examples": [1]})
     tags: Optional[List[StrictStr]] = None
     brand: Optional[StrictStr] = None
-    metadata: Optional[Dict[str, StrictStr]] = None
+    metadata: Optional[Any] = None
     __properties: ClassVar[List[str]] = ["antifraud_info", "description", "sku", "name", "unit_price", "quantity", "tags", "brand", "metadata"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -52,8 +54,7 @@ class UpdateProduct(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -78,6 +79,16 @@ class UpdateProduct(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if antifraud_info (nullable) is None
+        # and model_fields_set contains the field
+        if self.antifraud_info is None and "antifraud_info" in self.model_fields_set:
+            _dict['antifraud_info'] = None
+
+        # set to None if metadata (nullable) is None
+        # and model_fields_set contains the field
+        if self.metadata is None and "metadata" in self.model_fields_set:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod
@@ -90,7 +101,6 @@ class UpdateProduct(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "antifraud_info": obj.get("antifraud_info"),
             "description": obj.get("description"),
             "sku": obj.get("sku"),
             "name": obj.get("name"),
@@ -98,7 +108,6 @@ class UpdateProduct(BaseModel):
             "quantity": obj.get("quantity"),
             "tags": obj.get("tags"),
             "brand": obj.get("brand"),
-            "metadata": obj.get("metadata")
         })
         return _obj
 

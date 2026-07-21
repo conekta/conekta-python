@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**object** | **str** |  | [optional] 
 **customer_custom_reference** | **str** | Custom reference | [optional] 
 **name** | **str** |  | [optional] 
 **email** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
 **corporate** | **bool** |  | [optional] [default to False]
-**object** | **str** |  | [optional] 
 **customer_id** | **str** |  | [optional] 
 
 ## Example

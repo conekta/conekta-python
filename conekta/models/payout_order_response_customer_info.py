@@ -22,22 +22,24 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PayoutOrderResponseCustomerInfo(BaseModel):
     """
     The customer information of the payout order.
     """ # noqa: E501
-    customer_custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference")
-    name: Optional[StrictStr] = None
-    email: Optional[StrictStr] = None
-    phone: Optional[StrictStr] = None
+    id: StrictStr = Field(description="The id of the customer.", json_schema_extra={"examples": ["cus_23874283647"]})
+    customer_custom_reference: Optional[StrictStr] = Field(default=None, description="Custom reference", json_schema_extra={"examples": ["custom_reference"]})
+    name: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["DevTest"]})
+    email: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["test@conekta.com"]})
+    phone: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["5522997233"]})
     corporate: Optional[StrictBool] = False
-    object: Optional[StrictStr] = None
-    id: StrictStr = Field(description="The id of the customer.")
-    __properties: ClassVar[List[str]] = ["customer_custom_reference", "name", "email", "phone", "corporate", "object", "id"]
+    object: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["customer_info"]})
+    __properties: ClassVar[List[str]] = ["id", "customer_custom_reference", "name", "email", "phone", "corporate", "object"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class PayoutOrderResponseCustomerInfo(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,11 +76,6 @@ class PayoutOrderResponseCustomerInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if customer_custom_reference (nullable) is None
-        # and model_fields_set contains the field
-        if self.customer_custom_reference is None and "customer_custom_reference" in self.model_fields_set:
-            _dict['customer_custom_reference'] = None
-
         return _dict
 
     @classmethod
@@ -92,13 +88,13 @@ class PayoutOrderResponseCustomerInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "customer_custom_reference": obj.get("customer_custom_reference"),
             "name": obj.get("name"),
             "email": obj.get("email"),
             "phone": obj.get("phone"),
             "corporate": obj.get("corporate") if obj.get("corporate") is not None else False,
-            "object": obj.get("object"),
-            "id": obj.get("id")
+            "object": obj.get("object")
         })
         return _obj
 

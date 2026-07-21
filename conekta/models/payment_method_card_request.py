@@ -23,22 +23,24 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodCardRequest(BaseModel):
     """
     PaymentMethodCardRequest
     """ # noqa: E501
-    type: StrictStr = Field(description="Type of payment method")
-    cvc: Annotated[str, Field(min_length=3, strict=True, max_length=4)] = Field(description="Card security code")
-    exp_month: Annotated[str, Field(min_length=2, strict=True, max_length=2)] = Field(description="Card expiration month")
-    exp_year: Annotated[str, Field(min_length=4, strict=True, max_length=4)] = Field(description="Card expiration year")
-    name: StrictStr = Field(description="Cardholder name")
-    number: StrictStr = Field(description="Card number")
-    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes")
+    type: StrictStr = Field(description="Type of payment method", json_schema_extra={"examples": ["card | cash | spei | bnpl | pay_by_bank"]})
+    cvc: Annotated[str, Field(min_length=3, strict=True, max_length=4)] = Field(description="Card security code", json_schema_extra={"examples": ["198"]})
+    exp_month: Annotated[str, Field(min_length=2, strict=True, max_length=2)] = Field(description="Card expiration month", json_schema_extra={"examples": ["12"]})
+    exp_year: Annotated[str, Field(min_length=4, strict=True, max_length=4)] = Field(description="Card expiration year", json_schema_extra={"examples": ["2025"]})
+    name: StrictStr = Field(description="Cardholder name", json_schema_extra={"examples": ["John Doe"]})
+    number: StrictStr = Field(description="Card number", json_schema_extra={"examples": ["4242424242424242"]})
+    customer_ip_address: Optional[StrictStr] = Field(default=None, description="Optional field used to capture the customer's IP address for fraud prevention and security monitoring purposes", json_schema_extra={"examples": ["0.0.0.0"]})
     __properties: ClassVar[List[str]] = ["type", "cvc", "exp_month", "exp_year", "name", "number", "customer_ip_address"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class PaymentMethodCardRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

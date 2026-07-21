@@ -20,29 +20,31 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from conekta.models.customer_shipping_contacts_address import CustomerShippingContactsAddress
+from conekta.models.customer_shipping_contacts_request_address import CustomerShippingContactsRequestAddress
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CustomerShippingContactsDataResponse(BaseModel):
     """
     CustomerShippingContactsDataResponse
     """ # noqa: E501
-    phone: Optional[StrictStr] = Field(default=None, description="Phone contact")
-    receiver: Optional[StrictStr] = Field(default=None, description="Name of the person who will receive the order")
-    between_streets: Optional[StrictStr] = Field(default=None, description="The street names between which the order will be delivered.")
-    address: CustomerShippingContactsAddress
+    phone: Optional[StrictStr] = Field(default=None, description="Phone contact", json_schema_extra={"examples": ["+525511223344"]})
+    receiver: Optional[StrictStr] = Field(default=None, description="Name of the person who will receive the order", json_schema_extra={"examples": ["Marvin Fuller"]})
+    between_streets: Optional[StrictStr] = Field(default=None, description="The street names between which the order will be delivered.", json_schema_extra={"examples": ["Ackerman Crescent"]})
+    address: CustomerShippingContactsRequestAddress
     parent_id: Optional[StrictStr] = None
     default: Optional[StrictBool] = None
     deleted: Optional[StrictBool] = None
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Metadata associated with the shipping contact")
-    id: StrictStr
-    object: StrictStr
-    created_at: StrictInt
+    id: StrictStr = Field(json_schema_extra={"examples": ["ship_cont_2tKZsTYcsryyu7Ah8"]})
+    object: StrictStr = Field(json_schema_extra={"examples": ["shipping_contact"]})
+    created_at: StrictInt = Field(json_schema_extra={"examples": [1675715413]})
     __properties: ClassVar[List[str]] = ["phone", "receiver", "between_streets", "address", "parent_id", "default", "deleted", "metadata", "id", "object", "created_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class CustomerShippingContactsDataResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -83,16 +84,6 @@ class CustomerShippingContactsDataResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
-        # set to None if default (nullable) is None
-        # and model_fields_set contains the field
-        if self.default is None and "default" in self.model_fields_set:
-            _dict['default'] = None
-
-        # set to None if deleted (nullable) is None
-        # and model_fields_set contains the field
-        if self.deleted is None and "deleted" in self.model_fields_set:
-            _dict['deleted'] = None
-
         return _dict
 
     @classmethod
@@ -108,7 +99,7 @@ class CustomerShippingContactsDataResponse(BaseModel):
             "phone": obj.get("phone"),
             "receiver": obj.get("receiver"),
             "between_streets": obj.get("between_streets"),
-            "address": CustomerShippingContactsAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
+            "address": CustomerShippingContactsRequestAddress.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "parent_id": obj.get("parent_id"),
             "default": obj.get("default"),
             "deleted": obj.get("deleted"),

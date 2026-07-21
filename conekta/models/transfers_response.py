@@ -24,25 +24,27 @@ from typing_extensions import Annotated
 from conekta.models.transfer_method_response import TransferMethodResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TransfersResponse(BaseModel):
     """
     A transfer represents the action of sending an amount to a business bank account including the status, amount and method used to make the transfer.
     """ # noqa: E501
-    amount: Optional[StrictInt] = Field(default=None, description="Amount in cents of the transfer.")
-    created_at: Optional[StrictInt] = Field(default=None, description="Date and time of creation of the transfer.")
-    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = Field(default=None, description="The currency of the transfer. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)")
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the transfer.")
-    livemode: Optional[StrictBool] = Field(default=None, description="Indicates whether the transfer was created in live mode or test mode.")
+    amount: Optional[StrictInt] = Field(default=None, description="Amount in cents of the transfer.", json_schema_extra={"examples": [10000]})
+    created_at: Optional[StrictInt] = Field(default=None, description="Date and time of creation of the transfer.", json_schema_extra={"examples": [1553273553]})
+    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = Field(default=None, description="The currency of the transfer. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)", json_schema_extra={"examples": ["MXN"]})
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the transfer.", json_schema_extra={"examples": ["5b0337d4dD344ef954fe1X4b6"]})
+    livemode: Optional[StrictBool] = Field(default=None, description="Indicates whether the transfer was created in live mode or test mode.", json_schema_extra={"examples": [True]})
     method: Optional[TransferMethodResponse] = None
-    object: Optional[StrictStr] = Field(default=None, description="Object name, which is transfer.")
-    statement_description: Optional[StrictStr] = Field(default=None, description="Description of the transfer.")
-    statement_reference: Optional[StrictStr] = Field(default=None, description="Reference number of the transfer.")
-    status: Optional[StrictStr] = Field(default=None, description="Code indicating transfer status.")
+    object: Optional[StrictStr] = Field(default=None, description="Object name, which is transfer.", json_schema_extra={"examples": ["transfer"]})
+    statement_description: Optional[StrictStr] = Field(default=None, description="Description of the transfer.", json_schema_extra={"examples": ["Conekta 4401234"]})
+    statement_reference: Optional[StrictStr] = Field(default=None, description="Reference number of the transfer.", json_schema_extra={"examples": ["4401234"]})
+    status: Optional[StrictStr] = Field(default=None, description="Code indicating transfer status.", json_schema_extra={"examples": ["pending"]})
     __properties: ClassVar[List[str]] = ["amount", "created_at", "currency", "id", "livemode", "method", "object", "statement_description", "statement_reference", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class TransfersResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

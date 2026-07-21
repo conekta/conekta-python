@@ -22,19 +22,21 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateCompanyRequestComercialInfo(BaseModel):
     """
     Commercial information for the company.
     """ # noqa: E501
-    website: Optional[StrictStr] = Field(default=None, description="The company's website URL.")
-    mcc: Optional[StrictStr] = Field(default=None, description="The Merchant Category Code (MCC) for the company.")
-    merchant_support_email: Optional[StrictStr] = Field(default=None, description="Email address for merchant support.")
-    merchant_support_phone: Optional[StrictStr] = Field(default=None, description="Phone number for merchant support.")
+    website: Optional[StrictStr] = Field(default=None, description="The company's website URL.", json_schema_extra={"examples": ["http://www.test.com"]})
+    mcc: Optional[StrictStr] = Field(default=None, description="The Merchant Category Code (MCC) for the company.", json_schema_extra={"examples": ["5812"]})
+    merchant_support_email: Optional[StrictStr] = Field(default=None, description="Email address for merchant support.", json_schema_extra={"examples": ["test@test.com"]})
+    merchant_support_phone: Optional[StrictStr] = Field(default=None, description="Phone number for merchant support.", json_schema_extra={"examples": ["5300000000"]})
     __properties: ClassVar[List[str]] = ["website", "mcc", "merchant_support_email", "merchant_support_phone"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class CreateCompanyRequestComercialInfo(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

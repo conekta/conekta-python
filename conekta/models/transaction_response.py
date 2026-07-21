@@ -23,26 +23,28 @@ from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TransactionResponse(BaseModel):
     """
     The Transaction object represents the actions or steps of an order. Statuses can be: unprocessed, pending, available, owen, paid_out, voided, capture, capture_reversal, liquidation, liquidation_reversal, payout, payout_reversal, refund, refund_reversal, chargeback, chargeback_reversal, rounding_adjustment, won_chargeback, transferred, and transferred.
     """ # noqa: E501
-    amount: StrictInt = Field(description="The amount of the transaction.")
-    charge: StrictStr = Field(description="Randomly assigned unique order identifier associated with the charge.")
-    created_at: StrictInt = Field(description="Date and time of creation of the transaction in Unix format.")
-    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="The currency of the transaction. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)")
-    fee: StrictInt = Field(description="The amount to be deducted for taxes and commissions.")
-    id: StrictStr = Field(description="Unique identifier of the transaction.")
-    livemode: StrictBool = Field(description="Indicates whether the transaction was created in live mode or test mode.")
-    net: StrictInt = Field(description="The net amount after deducting commissions and taxes.")
-    object: StrictStr = Field(description="Object name, which is transaction.")
-    status: StrictStr = Field(description="Code indicating transaction status.")
-    type: StrictStr = Field(description="Transaction Type")
+    amount: StrictInt = Field(description="The amount of the transaction.", json_schema_extra={"examples": [1000]})
+    charge: StrictStr = Field(description="Randomly assigned unique order identifier associated with the charge.", json_schema_extra={"examples": ["5ee7ec58885a45585e6d9f8m"]})
+    created_at: StrictInt = Field(description="Date and time of creation of the transaction in Unix format.", json_schema_extra={"examples": [1553273553]})
+    currency: Annotated[str, Field(strict=True, max_length=3)] = Field(description="The currency of the transaction. It uses the 3-letter code of the [International Standard ISO 4217.](https://es.wikipedia.org/wiki/ISO_4217)", json_schema_extra={"examples": ["MXN"]})
+    fee: StrictInt = Field(description="The amount to be deducted for taxes and commissions.", json_schema_extra={"examples": [560]})
+    id: StrictStr = Field(description="Unique identifier of the transaction.", json_schema_extra={"examples": ["5ee7ec5b8dea41085erb7f9e"]})
+    livemode: StrictBool = Field(description="Indicates whether the transaction was created in live mode or test mode.", json_schema_extra={"examples": [True]})
+    net: StrictInt = Field(description="The net amount after deducting commissions and taxes.", json_schema_extra={"examples": [440]})
+    object: StrictStr = Field(description="Object name, which is transaction.", json_schema_extra={"examples": ["transaction"]})
+    status: StrictStr = Field(description="Code indicating transaction status.", json_schema_extra={"examples": ["pending"]})
+    type: StrictStr = Field(description="Transaction Type", json_schema_extra={"examples": ["capture"]})
     __properties: ClassVar[List[str]] = ["amount", "charge", "created_at", "currency", "fee", "id", "livemode", "net", "object", "status", "type"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +56,7 @@ class TransactionResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

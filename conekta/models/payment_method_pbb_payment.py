@@ -23,22 +23,24 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentMethodPbbPayment(BaseModel):
     """
     PaymentMethodPbbPayment
     """ # noqa: E501
     type: Optional[StrictStr] = None
-    object: StrictStr
-    deep_link: StrictStr = Field(description="Deep link for the payment, use for mobile apps/flows")
-    expires_at: Annotated[int, Field(strict=True, gt=0)] = Field(description="Expiration date of the charge")
+    object: StrictStr = Field(json_schema_extra={"examples": ["payment_source"]})
+    deep_link: StrictStr = Field(description="Deep link for the payment, use for mobile apps/flows", json_schema_extra={"examples": ["https://mgm.bbva.mx/WA3b/pbb?AGREEMENT=002484374&AMOUNT=1&CONCEPT=PagoDirecto&CURRENCY=MXN&REFERENCE=22277523174328893295"]})
+    expires_at: Annotated[int, Field(strict=True, ge=0)] = Field(description="Expiration date of the charge", json_schema_extra={"examples": [1683053729]})
     product_type: StrictStr = Field(description="Product type of the charge")
-    redirect_url: StrictStr = Field(description="URL to redirect the customer to complete the payment")
-    reference: StrictStr = Field(description="Reference for the payment")
+    redirect_url: StrictStr = Field(description="URL to redirect the customer to complete the payment", json_schema_extra={"examples": ["https://example.com/redirect"]})
+    reference: StrictStr = Field(description="Reference for the payment", json_schema_extra={"examples": ["22277523174328893295"]})
     __properties: ClassVar[List[str]] = ["type", "object", "deep_link", "expires_at", "product_type", "redirect_url", "reference"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class PaymentMethodPbbPayment(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

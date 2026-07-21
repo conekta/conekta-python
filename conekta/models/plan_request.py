@@ -23,21 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PlanRequest(BaseModel):
     """
     a plan
     """ # noqa: E501
-    amount: Annotated[int, Field(strict=True, ge=1)] = Field(description="The amount in cents that will be charged on the interval specified.")
-    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = Field(default=None, description="ISO 4217 for currencies, for the Mexican peso it is MXN/USD")
-    expiry_count: Optional[StrictInt] = Field(default=None, description="Number of repetitions of the frequency NUMBER OF CHARGES TO BE MADE, considering the interval and frequency, this evolves over time, but is subject to the expiration count.")
-    frequency: Annotated[int, Field(strict=True, ge=1)] = Field(description="Frequency of the charge, which together with the interval, can be every 3 weeks, every 4 months, every 2 years, every 5 fortnights")
-    id: Optional[StrictStr] = Field(default=None, description="internal reference id")
+    amount: Annotated[int, Field(strict=True, ge=1)] = Field(description="The amount in cents that will be charged on the interval specified.", json_schema_extra={"examples": [10000]})
+    currency: Optional[Annotated[str, Field(strict=True, max_length=3)]] = Field(default=None, description="ISO 4217 for currencies, for the Mexican peso it is MXN/USD", json_schema_extra={"examples": ["MXN"]})
+    expiry_count: Optional[StrictInt] = Field(default=None, description="Number of repetitions of the frequency NUMBER OF CHARGES TO BE MADE, considering the interval and frequency, this evolves over time, but is subject to the expiration count.", json_schema_extra={"examples": [12]})
+    frequency: Annotated[int, Field(strict=True, ge=1)] = Field(description="Frequency of the charge, which together with the interval, can be every 3 weeks, every 4 months, every 2 years, every 5 fortnights", json_schema_extra={"examples": [1]})
+    id: Optional[StrictStr] = Field(default=None, description="internal reference id", json_schema_extra={"examples": ["plan_24234"]})
     interval: StrictStr = Field(description="The interval of time between each charge.")
-    name: StrictStr = Field(description="The name of the plan.")
-    trial_period_days: Optional[StrictInt] = Field(default=None, description="The number of days the customer will have a free trial.")
-    max_retries: Optional[Annotated[int, Field(strict=True, ge=3)]] = Field(default=None, description="(optional) Specifies the maximum number of retry attempts for a subscription payment before it is canceled.")
-    retry_delay_hours: Optional[Annotated[int, Field(strict=True, ge=48)]] = Field(default=None, description="(optional)  Defines the number of hours between subscription payment retry attempts.")
+    name: StrictStr = Field(description="The name of the plan.", json_schema_extra={"examples": ["Extra Plan3"]})
+    trial_period_days: Optional[StrictInt] = Field(default=None, description="The number of days the customer will have a free trial.", json_schema_extra={"examples": [0]})
+    max_retries: Optional[Annotated[int, Field(strict=True, ge=3)]] = Field(default=None, description="(optional) Specifies the maximum number of retry attempts for a subscription payment before it is canceled.", json_schema_extra={"examples": [3]})
+    retry_delay_hours: Optional[Annotated[int, Field(strict=True, ge=48)]] = Field(default=None, description="(optional)  Defines the number of hours between subscription payment retry attempts.", json_schema_extra={"examples": [50]})
     __properties: ClassVar[List[str]] = ["amount", "currency", "expiry_count", "frequency", "id", "interval", "name", "trial_period_days", "max_retries", "retry_delay_hours"]
 
     @field_validator('interval')
@@ -48,7 +49,8 @@ class PlanRequest(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -60,8 +62,7 @@ class PlanRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

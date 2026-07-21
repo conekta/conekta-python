@@ -23,18 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional
 from conekta.models.discount_lines_data_response import DiscountLinesDataResponse
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class OrderDiscountLinesResponse(BaseModel):
     """
-    OrderDiscountLinesResponse
+    List of discounts that are applied to the order
     """ # noqa: E501
-    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested")
-    object: StrictStr = Field(description="Object type, in this case is list")
+    has_more: StrictBool = Field(description="Indicates if there are more pages to be requested", json_schema_extra={"examples": [False]})
+    object: StrictStr = Field(description="Object type, in this case is list", json_schema_extra={"examples": ["list"]})
+    next_page_url: Optional[StrictStr] = Field(default=None, description="URL of the next page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&next=chrg_1"]})
+    previous_page_url: Optional[StrictStr] = Field(default=None, description="Url of the previous page.", json_schema_extra={"examples": ["https://api.conekta.io/resources?limit=10&previous=chrg_1"]})
     data: Optional[List[DiscountLinesDataResponse]] = None
-    __properties: ClassVar[List[str]] = ["has_more", "object", "data"]
+    __properties: ClassVar[List[str]] = ["has_more", "object", "next_page_url", "previous_page_url", "data"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +50,7 @@ class OrderDiscountLinesResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -93,6 +96,8 @@ class OrderDiscountLinesResponse(BaseModel):
         _obj = cls.model_validate({
             "has_more": obj.get("has_more"),
             "object": obj.get("object"),
+            "next_page_url": obj.get("next_page_url"),
+            "previous_page_url": obj.get("previous_page_url"),
             "data": [DiscountLinesDataResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj

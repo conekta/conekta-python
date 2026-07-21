@@ -48,7 +48,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PayoutOrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Cancel Payout Order
@@ -67,7 +67,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_payout_order**
-> PayoutOrderResponse create_payout_order(payout_order, accept_language=accept_language)
+> PayoutOrderResponse create_payout_order(payout_order_request, accept_language=accept_language)
 
 Create payout order
 
@@ -106,7 +106,7 @@ Create a new payout order.
 
 ```python
 import conekta
-from conekta.models.payout_order import PayoutOrder
+from conekta.models.payout_order_request import PayoutOrderRequest
 from conekta.models.payout_order_response import PayoutOrderResponse
 from conekta.rest import ApiException
 from pprint import pprint
@@ -131,12 +131,12 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PayoutOrdersApi(api_client)
-    payout_order = conekta.PayoutOrder() # PayoutOrder | requested field for payout order
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    payout_order_request = conekta.PayoutOrderRequest() # PayoutOrderRequest | requested field for payout order
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Create payout order
-        api_response = api_instance.create_payout_order(payout_order, accept_language=accept_language)
+        api_response = api_instance.create_payout_order(payout_order_request, accept_language=accept_language)
         print("The response of PayoutOrdersApi->create_payout_order:\n")
         pprint(api_response)
     except Exception as e:
@@ -150,8 +150,8 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **payout_order** | [**PayoutOrder**](PayoutOrder.md)| requested field for payout order | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **payout_order_request** | [**PayoutOrderRequest**](PayoutOrderRequest.md)| requested field for payout order | 
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -217,7 +217,7 @@ with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PayoutOrdersApi(api_client)
     id = '6307a60c41de27127515a575' # str | Identifier of the resource
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
 
     try:
         # Get Payout Order
@@ -236,7 +236,7 @@ with conekta.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Identifier of the resource | 
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
 
 ### Return type
 
@@ -299,7 +299,7 @@ configuration = conekta.Configuration(
 with conekta.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = conekta.PayoutOrdersApi(api_client)
-    accept_language = es # str | Use for knowing which language to use (optional) (default to es)
+    accept_language = 'es' # str | Use for knowing which language to use (optional) (default to 'es')
     limit = 20 # int | The numbers of items to return, the maximum value is 250 (optional) (default to 20)
     search = 'search_example' # str | General order search, e.g. by mail, reference etc. (optional)
     next = 'next_example' # str | next page (optional)
@@ -321,7 +321,7 @@ with conekta.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accept_language** | **str**| Use for knowing which language to use | [optional] [default to es]
+ **accept_language** | **str**| Use for knowing which language to use | [optional] [default to &#39;es&#39;]
  **limit** | **int**| The numbers of items to return, the maximum value is 250 | [optional] [default to 20]
  **search** | **str**| General order search, e.g. by mail, reference etc. | [optional] 
  **next** | **str**| next page | [optional] 

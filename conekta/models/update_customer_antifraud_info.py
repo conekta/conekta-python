@@ -18,21 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class UpdateCustomerAntifraudInfo(BaseModel):
     """
     UpdateCustomerAntifraudInfo
     """ # noqa: E501
-    account_created_at: Optional[StrictInt] = None
-    first_paid_at: Optional[StrictInt] = None
+    account_created_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1484040996]})
+    first_paid_at: Optional[StrictInt] = Field(default=None, json_schema_extra={"examples": [1485151007]})
     __properties: ClassVar[List[str]] = ["account_created_at", "first_paid_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -44,8 +46,7 @@ class UpdateCustomerAntifraudInfo(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

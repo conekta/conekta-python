@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     Conekta API
 
@@ -12,6 +10,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -21,7 +20,7 @@ from pydantic import Field, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from conekta.models.blacklist_rule_response import BlacklistRuleResponse
-from conekta.models.create_risk_rules_data import CreateRiskRulesData
+from conekta.models.create_rule_whitelist_request import CreateRuleWhitelistRequest
 from conekta.models.deleted_blacklist_rule_response import DeletedBlacklistRuleResponse
 from conekta.models.deleted_whitelist_rule_response import DeletedWhitelistRuleResponse
 from conekta.models.risk_rules_list import RiskRulesList
@@ -48,7 +47,7 @@ class AntifraudApi:
     @validate_call
     def create_rule_blacklist(
         self,
-        create_risk_rules_data: Annotated[CreateRiskRulesData, Field(description="requested field for blacklist rule")],
+        create_rule_whitelist_request: Annotated[CreateRuleWhitelistRequest, Field(description="requested field for blacklist rule")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -66,8 +65,8 @@ class AntifraudApi:
         """Create blacklisted rule
 
 
-        :param create_risk_rules_data: requested field for blacklist rule (required)
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request: requested field for blacklist rule (required)
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -93,7 +92,7 @@ class AntifraudApi:
         """ # noqa: E501
 
         _param = self._create_rule_blacklist_serialize(
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -120,7 +119,7 @@ class AntifraudApi:
     @validate_call
     def create_rule_blacklist_with_http_info(
         self,
-        create_risk_rules_data: Annotated[CreateRiskRulesData, Field(description="requested field for blacklist rule")],
+        create_rule_whitelist_request: Annotated[CreateRuleWhitelistRequest, Field(description="requested field for blacklist rule")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -138,8 +137,8 @@ class AntifraudApi:
         """Create blacklisted rule
 
 
-        :param create_risk_rules_data: requested field for blacklist rule (required)
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request: requested field for blacklist rule (required)
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -165,7 +164,7 @@ class AntifraudApi:
         """ # noqa: E501
 
         _param = self._create_rule_blacklist_serialize(
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -192,7 +191,7 @@ class AntifraudApi:
     @validate_call
     def create_rule_blacklist_without_preload_content(
         self,
-        create_risk_rules_data: Annotated[CreateRiskRulesData, Field(description="requested field for blacklist rule")],
+        create_rule_whitelist_request: Annotated[CreateRuleWhitelistRequest, Field(description="requested field for blacklist rule")],
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
         _request_timeout: Union[
             None,
@@ -210,8 +209,8 @@ class AntifraudApi:
         """Create blacklisted rule
 
 
-        :param create_risk_rules_data: requested field for blacklist rule (required)
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request: requested field for blacklist rule (required)
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
         :param _request_timeout: timeout setting for this request. If one
@@ -237,7 +236,7 @@ class AntifraudApi:
         """ # noqa: E501
 
         _param = self._create_rule_blacklist_serialize(
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -259,7 +258,7 @@ class AntifraudApi:
 
     def _create_rule_blacklist_serialize(
         self,
-        create_risk_rules_data,
+        create_rule_whitelist_request,
         accept_language,
         _request_auth,
         _content_type,
@@ -288,8 +287,8 @@ class AntifraudApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if create_risk_rules_data is not None:
-            _body_params = create_risk_rules_data
+        if create_rule_whitelist_request is not None:
+            _body_params = create_rule_whitelist_request
 
 
         # set the HTTP header `Accept`
@@ -341,7 +340,7 @@ class AntifraudApi:
     def create_rule_whitelist(
         self,
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
-        create_risk_rules_data: Optional[CreateRiskRulesData] = None,
+        create_rule_whitelist_request: Optional[CreateRuleWhitelistRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -360,8 +359,8 @@ class AntifraudApi:
 
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
-        :param create_risk_rules_data:
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request:
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -386,7 +385,7 @@ class AntifraudApi:
 
         _param = self._create_rule_whitelist_serialize(
             accept_language=accept_language,
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -414,7 +413,7 @@ class AntifraudApi:
     def create_rule_whitelist_with_http_info(
         self,
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
-        create_risk_rules_data: Optional[CreateRiskRulesData] = None,
+        create_rule_whitelist_request: Optional[CreateRuleWhitelistRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -433,8 +432,8 @@ class AntifraudApi:
 
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
-        :param create_risk_rules_data:
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request:
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -459,7 +458,7 @@ class AntifraudApi:
 
         _param = self._create_rule_whitelist_serialize(
             accept_language=accept_language,
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -487,7 +486,7 @@ class AntifraudApi:
     def create_rule_whitelist_without_preload_content(
         self,
         accept_language: Annotated[Optional[StrictStr], Field(description="Use for knowing which language to use")] = None,
-        create_risk_rules_data: Optional[CreateRiskRulesData] = None,
+        create_rule_whitelist_request: Optional[CreateRuleWhitelistRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -506,8 +505,8 @@ class AntifraudApi:
 
         :param accept_language: Use for knowing which language to use
         :type accept_language: str
-        :param create_risk_rules_data:
-        :type create_risk_rules_data: CreateRiskRulesData
+        :param create_rule_whitelist_request:
+        :type create_rule_whitelist_request: CreateRuleWhitelistRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -532,7 +531,7 @@ class AntifraudApi:
 
         _param = self._create_rule_whitelist_serialize(
             accept_language=accept_language,
-            create_risk_rules_data=create_risk_rules_data,
+            create_rule_whitelist_request=create_rule_whitelist_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -555,7 +554,7 @@ class AntifraudApi:
     def _create_rule_whitelist_serialize(
         self,
         accept_language,
-        create_risk_rules_data,
+        create_rule_whitelist_request,
         _request_auth,
         _content_type,
         _headers,
@@ -583,8 +582,8 @@ class AntifraudApi:
             _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
-        if create_risk_rules_data is not None:
-            _body_params = create_risk_rules_data
+        if create_rule_whitelist_request is not None:
+            _body_params = create_rule_whitelist_request
 
 
         # set the HTTP header `Accept`
