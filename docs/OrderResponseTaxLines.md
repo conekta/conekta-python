@@ -1,6 +1,6 @@
-# OrderShippingLinesResponse
+# OrderResponseTaxLines
 
-List of shipping costs applied to the order
+List of taxes that are applied to the order
 
 ## Properties
 
@@ -10,24 +10,24 @@ Name | Type | Description | Notes
 **object** | **str** | Object type, in this case is list | 
 **next_page_url** | **str** | URL of the next page. | [optional] 
 **previous_page_url** | **str** | Url of the previous page. | [optional] 
-**data** | [**List[ShippingLinesDataResponse]**](ShippingLinesDataResponse.md) |  | [optional] 
+**data** | [**List[TaxLinesDataResponse]**](TaxLinesDataResponse.md) |  | [optional] 
 
 ## Example
 
 ```python
-from conekta.models.order_shipping_lines_response import OrderShippingLinesResponse
+from conekta.models.order_response_tax_lines import OrderResponseTaxLines
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of OrderShippingLinesResponse from a JSON string
-order_shipping_lines_response_instance = OrderShippingLinesResponse.from_json(json)
+# create an instance of OrderResponseTaxLines from a JSON string
+order_response_tax_lines_instance = OrderResponseTaxLines.from_json(json)
 # print the JSON string representation of the object
-print(OrderShippingLinesResponse.to_json())
+print(OrderResponseTaxLines.to_json())
 
 # convert the object into a dict
-order_shipping_lines_response_dict = order_shipping_lines_response_instance.to_dict()
-# create an instance of OrderShippingLinesResponse from a dict
-order_shipping_lines_response_from_dict = OrderShippingLinesResponse.from_dict(order_shipping_lines_response_dict)
+order_response_tax_lines_dict = order_response_tax_lines_instance.to_dict()
+# create an instance of OrderResponseTaxLines from a dict
+order_response_tax_lines_from_dict = OrderResponseTaxLines.from_dict(order_response_tax_lines_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

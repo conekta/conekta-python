@@ -5,7 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**allowed_payment_methods** | **List[str]** | Are the payment methods available for this link | 
+**allowed_payment_methods** | **List[str]** | Are the payment methods available for this link | [optional] 
+**excluded_payment_methods** | **List[str]** | Payment methods excluded from the checkout. This field is only returned when excluded_payment_methods is provided in the request. | [optional] 
 **can_not_expire** | **bool** |  | [optional] 
 **emails_sent** | **int** |  | [optional] 
 **exclude_card_networks** | **List[str]** |  | [optional] 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 **force_save_card** | **bool** | Indicates whether the card used for the payment should be saved for future purchases. This field is only applicable for card payments. | [optional] 
 **id** | **str** |  | 
 **is_redirect_on_failure** | **bool** |  | [optional] 
-**livemode** | **bool** |  | [optional] 
+**livemode** | **bool** |  | 
 **max_failed_retries** | **int** | Number of retries allowed before the checkout is marked as failed | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
 **monthly_installments_enabled** | **bool** |  | [optional] 

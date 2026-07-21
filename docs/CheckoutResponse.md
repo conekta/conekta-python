@@ -7,6 +7,7 @@ checkout response
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **allowed_payment_methods** | **List[str]** | Are the payment methods available for this link | [optional] 
+**excluded_payment_methods** | **List[str]** | Payment methods excluded from the checkout. This field is only returned when excluded_payment_methods is provided in the request. | [optional] 
 **plan_ids** | **List[str]** | List of plan IDs that are available for subscription | [optional] 
 **can_not_expire** | **bool** |  | [optional] 
 **emails_sent** | **int** |  | [optional] 
